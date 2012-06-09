@@ -9,10 +9,10 @@
 	<meta name="DC.subject"       content="EnDe - Encoder, Decoder, Converter, Transformer, Calculator for various codings used in the wild wide web " >
 	<meta name="DC.description"   content="EnDe - Encoder, Decoder, Converter, Transformer, Calculator for various codings used in the wild wide web " >
 	<meta name="DC.language"      content="en" >
-	<meta name="DC.rights"        content="http://ende.my-stp.net/license.txt" >
-	<meta name="DC.license"       content="http://ende.my-stp.net/license.txt" >
-	<meta name="DC.modified"      content="12/01/23" >
-	<meta name="DC.Source"        content="@(#) EnDe.html 3.32 12/01/23 21:50:26"  >
+	<meta name="DC.rights"        content="https://github.com/EnDe/EnDe license.txt" >
+	<meta name="DC.license"       content="https://github.com/EnDe/EnDe license.txt" >
+	<meta name="DC.modified"      content="12/06/09" >
+	<meta name="DC.Source"        content="@(#) EnDe.html 3.35 12/06/09 17:39:43"  >
 	<meta name="DC.Date"          content="07-apr-07" >
 	<meta name="DC.creator"       content="Achim Hoffmann" >
 	<meta name="DC.Author"        content="Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net" >
@@ -30,6 +30,8 @@
 	<script language="JavaScript1.3" type="text/javascript" charset="utf-8" src="sha512.js"></script>
 	<script language="JavaScript1.3" type="text/javascript" charset="utf-8" src="blowfish.js"></script>
 	<script language="JavaScript1.3" type="text/javascript" charset="utf-8" src="EnDeB64.js"></script>
+	<script language="JavaScript1.3" type="text/javascript" charset="utf-8" src="EnDeIP.js"></script>
+	<script language="JavaScript1.3" type="text/javascript" charset="utf-8" src="EnDeTS.js"></script>
 	<script language="JavaScript1.3" type="text/javascript" charset="utf-8" src="EnDeMaps.js"></script>
 	<script language="JavaScript1.3" type="text/javascript" charset="utf-8" src="EnDeVersion.js"></script>
 	<script language="JavaScript1.3" type="text/javascript" charset="utf-8" src="EnDeFile.js"></script>
@@ -76,15 +78,22 @@
 		<div    id="EnDeDOM.DBX.opt">
 			<label class="bold"> trace levels: </label>
 			<label for="EnDeDOM.DBX.Trace"><input id="EnDeDOM.DBX.Trace" type="checkbox" onClick="return EnDeGUI.settrace(this);"> trace</label>
+			<label for="EnDeDOM.DBX.EnDe">  <input id="EnDeDOM.DBX.EnDe" type="checkbox" onClick="return EnDeGUI.settrace(this);"> EnDe (API) </label>
 			<label for="EnDeDOM.DBX.Obj">   <input id="EnDeDOM.DBX.Obj"  type="checkbox" onClick="return EnDeGUI.settrace(this);"> Obj  </label>
 			<label for="EnDeDOM.DBX.txt">   <input id="EnDeDOM.DBX.txt"  type="checkbox" onClick="return EnDeGUI.settrace(this);"> txt  </label>
 			<label for="EnDeDOM.DBX.Menu">  <input id="EnDeDOM.DBX.Menu" type="checkbox" onClick="return EnDeGUI.settrace(this);"> Menu </label>
 			<label for="EnDeDOM.DBX.File">  <input id="EnDeDOM.DBX.File" type="checkbox" onClick="return EnDeGUI.settrace(this);"> File </label>
 			<label for="EnDeDOM.DBX.Text">  <input id="EnDeDOM.DBX.Text" type="checkbox" onClick="return EnDeGUI.settrace(this);"> Text </label>
 			<label for="EnDeDOM.DBX.Form">  <input id="EnDeDOM.DBX.Form" type="checkbox" onClick="return EnDeGUI.settrace(this);"> Form </label>
+			<label for="EnDeDOM.DBX.Maps">  <input id="EnDeDOM.DBX.Maps" type="checkbox" onClick="return EnDeGUI.settrace(this);"> Maps </label>
 			<label for="EnDeDOM.DBX.B64">   <input id="EnDeDOM.DBX.B64"  type="checkbox" onClick="return EnDeGUI.settrace(this);"> B64  </label>
-			<label for="EnDeDOM.DBX.User">	<input id="EnDeDOM.DBX.User" type="checkbox" onClick="return EnDeGUI.settrace(this);"> User </label>
-			<label for="EnDeDOM.DBX.Maps">	<input id="EnDeDOM.DBX.Maps" type="checkbox" onClick="return EnDeGUI.settrace(this);"> Maps </label>
+			<label for="EnDeDOM.DBX.User">  <input id="EnDeDOM.DBX.User" type="checkbox" onClick="return EnDeGUI.settrace(this);"> User </label>
+<!--
+			<br>
+			<label for="EnDeDOM.DBX.IP">    <input id="EnDeDOM.DBX.IP"   type="checkbox" onClick="return EnDeGUI.settrace(this);"> IP   </label>
+			<label for="EnDeDOM.DBX.TS">    <input id="EnDeDOM.DBX.TS"   type="checkbox" onClick="return EnDeGUI.settrace(this);"> TS   </label>
+			<label for="EnDeDOM.DBX.UCS">   <input id="EnDeDOM.DBX.UCS"  type="checkbox" onClick="return EnDeGUI.settrace(this);"> UCS  </label>
+-->
 			<hr>
 		</div>
 		<div  id="EnDeDOM.DBX">
@@ -912,7 +921,7 @@
 
 	<div class="owasp">
 		<a href="http://www.owasp.org/index.php/Category:OWASP_EnDe"    title="OWASP EnDe"><img src="img/ende-128x128.png" alt="EnDe Icon" width=32 height=32 ></a>&#160;
-		<a href="http://ende.my-stp.net/home.html" id="EnDeDOM.home"    title="home"><ende>EnDe</ende></a>&#160;
+		<a href="https://github.com/EnDe/EnDe"     id="EnDeDOM.home"    title="home"><ende>EnDe</ende></a>&#160;
 		<a href="http://www.owasp.org/index.php/Category:OWASP_Project" title="OWASP Projects"><img src="img/owasp.ico" alt="OWASP Icon" ></a>
 	</div>
 	<div class="blind" id="UA"> <!-- added by init() --></div>
@@ -957,6 +966,7 @@ EnDeGUI.titles  = {
 	'EnDeDOM.DBX.bf':   "trace/debug output header",
 	'EnDeDOM.DBX.bu':   "check for updates, show current and new version",
 	'EnDeDOM.DBX.Trace':"toggle general trace output",
+	'EnDeDOM.DBX.EnDe': "toggle trace output for EnDe API functions",
 	'EnDeDOM.DBX.Obj':  "toggle trace output for generating HTML objects",
 	'EnDeDOM.DBX.txt':  "toggle trace output for converting to internal data",
 	'EnDeDOM.DBX.Menu': "toggle trace output for generating menus",
@@ -966,6 +976,9 @@ EnDeGUI.titles  = {
 	'EnDeDOM.DBX.B64':  "toggle trace output for EnDeB64.js (baseXX functions)",
 	'EnDeDOM.DBX.User': "toggle trace output for EnDeUser.js (user functions)",
 	'EnDeDOM.DBX.Maps': "toggle trace output for EnDeMaps.js (building character maps)",
+	'EnDeDOM.DBX.IP':   "toggle trace output for EnDeIP.js (IP convertion functions)",
+	'EnDeDOM.DBX.TS':   "toggle trace output for EnDeTS.js (timestamp convertion functions)",
+	'EnDeDOM.DBX.UCS':  "toggle trace output for EnDeUCS.js (Unicode en-/de functions)",
 	'EnDeDOM.TST.bf':   "Test output header",
 	'EnDeDOM.TST.b1':   "start test with data from given file (see Load File)",
 	'EnDeDOM.TST.b2':   "start test with data from Encoding textarea input field",

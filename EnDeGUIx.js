@@ -93,7 +93,7 @@
 #?      trace output. This allows to enable tracing for individual objects.
 #?
 #? VERSION
-#?      @(#) EnDeGUIx.js 1.20 12/01/22 14:17:28
+#?      @(#) EnDeGUIx.js 3.1 12/06/10 12:54:14
 #?
 #? AUTHOR
 #?      10-aug-10 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -105,7 +105,7 @@
 // ========================================================================= //
 
 var EnDeGUIx = new function() {
-	this.SID = '1.20';
+	this.SID = '3.1';
 }
 EnDeGUI.__files = {     // hash to hold data for menu from files
 	/* source file          - file where menu is defined (will be read from)
@@ -379,6 +379,7 @@ EnDeGUI.txt = new function() {
 			bbb = this.ME + '.menu: **ERRORs found in file:\n' + this.errors;
 			_dpr( bbb );
 			EnDeGUI.alert( bbb );
+			this.errors = '';
 		}
 // #dbx print groups# var t=''; for (var idx in EnDeGUI.Obj.groups) { t+=idx+'\n';} alert(t);
 	}; // .menu

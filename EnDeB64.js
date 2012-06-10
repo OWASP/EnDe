@@ -43,7 +43,7 @@
 #?           document explicitly states otherwise."
 #?
 #?      Other resources:
-#?          http://www.crockford.com/wrmg/base32.html 
+#?          http://www.crockford.com/wrmg/base32.html
 #?          http://en.wikipedia.org/wiki/Base64
 #?      Url64 based on: RFC1521
 #?     	    http://help.sap.com/SAPHELP_NW04S/helpdata/EN/cb/7d533b8286ad4fb7ab481f5866b6b3/content.htm
@@ -62,9 +62,11 @@
 #?      This file executes some initializations of EnDe.* when loaded see at
 #?      end of file here. This requires that some object are already defined
 #?      in EnDe.js.
+#?      Usage of EnDe.Text.Entity() must be only for debugging as this object
+#?      EnDe.Text is not yet part or the librray.
 #?
 #? VERSION
-#?      @(#) EnDeB64.js 1.14 12/01/27 22:42:21
+#?      @(#) EnDeB64.js 3.1 12/06/05 00:02:10
 #?
 #? AUTHOR
 #?      29-mai-10 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -78,7 +80,7 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.B64    = new function() {
-	this.SID    = '1.14';
+	this.SID    = '3.1';
 	this.sid    = function() {       return(EnDe.sid() + '.B64'); };
 
 	this.trace  = false;
@@ -104,7 +106,7 @@ EnDe.B64    = new function() {
 	this.b10    = EnDe.CONST.CHR.DIGITS;                // [0-9]
 	this.b26    = this.LC  + this.b10;                  // [a-z0-9]
 	this.base64 = this.UC  + this.LC  + this.b10;       // [A-Za-z0-9] temporary, for useage below
-    	/* Note that for Base64 sequence *must* be A-Za-z0-9 !  */
+	/* Note that for Base64 sequence *must* be A-Za-z0-9 !  */
 	// no ToDo: above 4 assignments most likely fail in IE8
 	// Base-XX constants
 	this.line   = 76;                                   // max line size according RFC1521
@@ -362,7 +364,7 @@ EnDe.B64    = new function() {
 		  case 'base32c':
 		  case 'base32h':
 		  case 'base32z': while ((bux.length%8)>0) { bux[bux.length] = EnDe.B64.pad; }; break;
-		  case 'base64':  
+		  case 'base64':
 		  case 'base64f':
 		  case 'base64p':
 		  case 'base64q':
@@ -382,7 +384,7 @@ EnDe.B64    = new function() {
 		} else {
 			bux = bux.join('');
 		}
-		__dbx('EnDe.B64.EN.d_N: >>' + EnDe.Text.Entity(bux) + '<<' );
+		__dbx('EnDe.B64.EN.d_N: >>' + EnDe.Text.Entity(bux) + '<<');
 		return bux;
 	}; // .b_N
 
@@ -416,7 +418,7 @@ EnDe.B64    = new function() {
 		} else {
 			return bux.join('');
 		}
-		__dbx('EnDe.B64.EN.b64: >>' + EnDe.Text.Entity(bux) + '<<' );
+		__dbx('EnDe.B64.EN.b64: >>' + EnDe.Text.Entity(bux) + '<<');
 	}; // .b64
 
 	this.u64      = function(src,linewrap) {
@@ -469,13 +471,13 @@ EnDe.B64    = new function() {
 		  case 'base85':
 		  case 'base91':
 		  case 'base94':
-		  case 'base95':    return this.b_N( type, src, linewrap); break;
-		  case 'base64old': return this.b64(       src, linewrap); break;
-		  case 'url64'    : return this.u64(       src, linewrap); break;
+		  case 'base95':    return this.b_N(type, src, linewrap); break;
+		  case 'base64old': return this.b64(      src, linewrap); break;
+		  case 'url64':     return this.u64(      src, linewrap); break;
 			// number encodings
 		  case 'base34':
 		  case 'base58':
-		  case 'base62':    return this.b62('null',  '', '', src, '', '',         linewrap); break;
+		  case 'base62':    return this.b62('null',  '', '', src, '', '', linewrap); break;
 			// NOT YET IMPLEMENTED: return empty string
 		  case 'basexx':    return ''; break; // ToDo:
 		  default:                     break;
@@ -485,7 +487,7 @@ EnDe.B64    = new function() {
 
   }; // .EN
 
-  this.DE    = new function() {
+  this.DE   = new function() {
 
 /*
  * from: http://www.ietf.org/rfc/rfc1341.txt
@@ -529,7 +531,7 @@ EnDe.B64    = new function() {
 
  */
 
-	this.b_N      = function(type,src) {
+	this.b_N    = function(type,src) {
 	//#? convert BaseXX encoded text to plain text
 	//#type? base16:   Base16
 	//#type? base26:   Base26
@@ -550,7 +552,7 @@ EnDe.B64    = new function() {
 	// type? base34:   Base34
 	// type? base58:   Base58
 	// type? base62:   Base62
-		__dbx('EnDe.B64.DE.b_N(' + type + ', >>' + EnDe.Text.Entity(src) + '<<' );
+		__dbx('EnDe.B64.DE.b_N(' + type + ', >>' + EnDe.Text.Entity(src) + '<<');
 		var bux = '';
 		var i   = 0;
 		var ccc = 0;
@@ -605,11 +607,11 @@ EnDe.B64    = new function() {
 			*/
 			i++;
 		}
-		__dbx('EnDe.B64.DE.b_N: >>' + EnDe.Text.Entity(bux) + '<<' );
+		__dbx('EnDe.B64.DE.b_N: >>' + EnDe.Text.Entity(bux) + '<<');
 	 	return bux;
 	}; // .b_N
 
-	this.b64      = function(src) {
+	this.b64    = function(src) {
 	//#? convert Base64 encoded text to plain text
 // ToDo: convertion fails for character codes > 255
 		__spr('EnDe.B64.DE.b64(<src>): DEPRECATED Base64 decoder');
@@ -632,21 +634,21 @@ EnDe.B64    = new function() {
 		// finalize padding
 		if ((src.length % 4)===2) { r = r.slice(0, r.length-2); }
 		if ((src.length % 4)===3) { r = r.slice(0, r.length-1); }
- 			// convert back to string
+		// convert back to string
 		for (i=0; i<r.length; i++) {
 			bux += String.fromCharCode(r[i]);
 		}
 		c1 = null; c2 = null; c3 = null; c4 = null;
-		__dbx('EnDe.B64.DE.b64: >>' + EnDe.Text.Entity(bux) + '<<' );
+		__dbx('EnDe.B64.DE.b64: >>' + EnDe.Text.Entity(bux) + '<<');
 	 	return bux;
 	}; // .b64
 
-	this.u64      = function(src) {
+	this.u64    = function(src) {
 	//#? convert Url64 encoded text to plain text
 		return this.b64(src.replace(/\-/g,'+').replace(/_/g,'/'));
 	}; // .u64
 
-	this.dispatch = function(type,mode,_n3_,src,_n5_,_n6_,_n7_) {
+	this.dispatch   = function(type,mode,_n3_,src,_n5_,_n6_,_n7_) {
 	//#? wrapper for base-XX functions; mode may be used to allow "Impedanz Mismatch"
 	//#mode? strict:  allow valid chars only and need proper padding
 	//#mode? lazy:    allow valid chars only but padding is optional
@@ -654,9 +656,9 @@ EnDe.B64    = new function() {
 		__spr('EnDe.B64.DE.dispatch(' + type + ', ' + mode + ', >>' + EnDe.Text.Entity(src) + '<<)');
 		var regexReg = /[\/\[\]\\]/gi;  // escape / too, as some engines are too stupid
 		var validChr = EnDe.B64.pad + EnDe.B64.map[type];
-		validChr = RegExp( '[^' + validChr.replace(regexReg, function(c){return '\\' + c;}) + ']', 'g' );
+		validChr = RegExp('[^' + validChr.replace(regexReg, function(c){return '\\' + c;}) + ']', 'g');
 		switch (mode) {
-		  case 'verbose':   src = src.replace( validChr, '' ); break;
+		  case 'verbose':   src = src.replace(validChr, ''); break;
 		  case 'strict':    if (validChr.test(src)===true) { return src; }; break;
 // ToDo: strict needs to check for proper padding
 		  case 'lazy':
@@ -682,11 +684,11 @@ EnDe.B64    = new function() {
 		  case 'base85':
 		  case 'base91':
 		  case 'base94':
-		  case 'base95':    return this.b_N( type, src); break;
-		  case 'base64':    return this.b64(       src); break;
-		  case 'base64old': return this.b64(       src); break;
+		  case 'base95':    return this.b_N(type, src); break;
+		  case 'base64':    return this.b64(      src); break;
+		  case 'base64old': return this.b64(      src); break;
 		  case 'base64u':
-		  case 'url64':     return this.u64(       src); break;
+		  case 'url64':     return this.u64(      src); break;
 			// number encodings
 		  case 'base34':
 		  case 'base58':
@@ -698,6 +700,7 @@ EnDe.B64    = new function() {
 		}
 		return null; // ToDo: internal error
 	}; // .dispatch
+
   }; // .DE
 
 }; // EnDe.B64

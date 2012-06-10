@@ -675,15 +675,34 @@ GUI
 		NOTE: some functions are not implemented by all browsers.
 	 "Special"
 		These en-, decodings don't use any  API OPTIONS.  
-        	Viewstate - try to parse/fold ASP.NET 1.0 viewstate
-		(ASP.NET 2.0 viewstate supported partialy).
+        	"Viewstate"   try to parse/fold ASP.NET 1.0 or 2.0 viewstate
 		For  Viewstate the  API OPTION  "mode" (decoding only) behaves
 		as follows:
-		* strict  - all values are XML-escaped using:
+		- strict  - all values are XML-escaped using:
 			'EnDe.EN.dispatch("escXML", ...)'
-		* lazy    - all values are printed as is
-	<!-- empty line required to keep format; bug in EnDe.man.html -->	
-	
+		- lazy    - all values are printed as is
+		"xdump style"  decode space seperated hex values.
+		Allowed formats:
+			left side with hex values separated by delimiter right
+			side any character:
+			     'de,ad,beef | string'
+			left side  with hex values separated by spaces,  right
+			and left side are separated by '|':
+			     'de ad beef | string'
+			or right side may be missing, but not the separators:
+			     'de ad beef |'
+			Separator is any character which is not a hex (a-f0-9)
+			character. Example:
+			     'de ad beef string'
+			     'de ad beef  $'
+			all 4 lines decode the hex values 'de' 'ad' and 'beef'
+		"od -x style"  decode space seperated 2- or 4-byte hex values.
+		Allowed formats same as for "xdump style", but:
+			The first field and all following spaces are ignored.
+			Example: prefix=x
+			     '0000 de ad | string'
+			     '00100 beef | string'
+			decodes the hex values 'de' 'ad' and 'beef'.
 	 "Fuzzy decoding"
 		These actions exist in "Decoding" only.
 		For details see  Fuzzy Decoding  below.
@@ -1705,7 +1724,7 @@ API
 	* 'EnDe.DE'     - all decoding functions
 	* 'EnDe.IP'     - all IP related functions
 	* 'EnDe.TS'     - all timestamp conversion functions
-	* 'EnDe.B64'   - all Base64 related functions
+	* 'EnDe.B64'    - all Base64 related functions
 	* 'EnDe.UCS'    - all Unicode related functions
 	* 'EnDe.IDN'    - all IDN and puny code related functions
 	* 'EnDe.CRC'    - all CRC functions
@@ -2572,7 +2591,7 @@ CREDITS
 	
 LEGAL
 	
-	For legal stuff see http://ende.my-stp.net/license.txt here.
+	For legal stuff see license.txt at https://github.com/EnDe/EnDe here.
 <!-- need to change license from GPL2 to CC 2.5 or CC 3.0 ? -->
 	
 	
@@ -2606,12 +2625,12 @@ EPILOG
 	
 VERSION
 	
-	@# EnDe <!-- @(#) EnDe.man.txt 3.30 22:50:00 12/05/29 -->
+	@# EnDe <!-- @(#) EnDe.man.txt 3.32 17:40:57 12/06/09 -->
 	
 	
 AUTHOR
 	
 	07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
 	
-			HOME http://ende.my-stp.net/ EnDe
+			HOME https://github.com/EnDe/EnDe EnDe
 	

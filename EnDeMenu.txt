@@ -88,7 +88,7 @@
 #?      EnDeGUIx.js, EnDeGUI.js
 #?
 #? VERSION
-#?      @(#) EnDeMenu.txt 3.41 12/03/31 16:20:09
+#?      @(#) EnDeMenu.txt 3.42 12/06/16 10:23:39
 #?
 #? AUTHOR
 #?      09-jun-09 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -245,6 +245,9 @@ item3	txtDELht	\t			delete all \t
 item3	txtDELvt	\v			delete all \v
 item3	txtDEL00	\0			delete all \0
 item3	txtDELsp	space			delete all spaces
+item3	txtDELsq	'			delete all '
+item3	txtDELdq	"			delete all "
+item3	txtDELquote	" and '			delete all ' and "
 item3	txtDELnon7b	non-printable ASCII	delete all non-printable chars anywhere
 item3	txtDELnon7bn	non-printable ASCII\n	delete non-printable chars (except \t, \r, \n) anywhere
 item3	txtDELnon128	non-7-Bit ASCII		delete characters > chr(127) anywhere
@@ -328,6 +331,10 @@ item3	txtREPuser	user			replace all characters in input field according replace 
 
 #------+---------------+-----------------------+------------------------------+
 group	TXT.Special	Special			special text manipulations
+item3	txtPADsq	enclose in '		enclose text in '
+item3	txtPADdq	enclose in "		enclose text in "
+item3	txtREPsq	remove enclosing '	remove enclosing '
+item3	txtREPdq	remove enclosing "	remove enclosing "
 item3	txtREPdouble	duplicate \		duplicate all \
 item3	txtREPreduce	reduce \\		reduce all \\ to \
 item3	txtTrim		trim spaces		remove all leading and trailing spaces

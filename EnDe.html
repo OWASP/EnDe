@@ -11,8 +11,8 @@
 	<meta name="DC.language"      content="en" >
 	<meta name="DC.rights"        content="https://github.com/EnDe/EnDe license.txt" >
 	<meta name="DC.license"       content="https://github.com/EnDe/EnDe license.txt" >
-	<meta name="DC.modified"      content="12/06/09" >
-	<meta name="DC.Source"        content="@(#) EnDe.html 3.35 12/06/09 17:39:43"  >
+	<meta name="DC.modified"      content="12/06/16" >
+	<meta name="DC.Source"        content="@(#) EnDe.html 3.36 12/06/16 11:35:41"  >
 	<meta name="DC.Date"          content="07-apr-07" >
 	<meta name="DC.creator"       content="Achim Hoffmann" >
 	<meta name="DC.Author"        content="Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net" >
@@ -404,7 +404,7 @@
 			<h2><label for="EnDeDOM.ED.bq">En- / Decoding</label></h2>
 		</div>
 		<div    id="EnDeDOM.f.EDO">
-			<label class="bold"> add: </label>
+			<label class="bold"> append: </label>
 			<label for="EnDeDOM.ED.00"> <input  id="EnDeDOM.ED.00"  type="checkbox" > 0x00 </label>
 			<label for="EnDeDOM.ED.0a"> <input  id="EnDeDOM.ED.0a"  type="checkbox" > 0x0a </label>
 			<label for="EnDeDOM.ED.0d"> <input  id="EnDeDOM.ED.0d"  type="checkbox" > 0x0d </label>
@@ -542,19 +542,19 @@
 		</div>
 		<div    id="EnDeDOM.TS">
 		<div class="Box">
-		<table cellspacing="0">
+		<table  class="tstable">
 			<tr>
 				<th class="em8"><label class="bold">General Options:</label></th>
-				<td class="em4"><input  id="EnDeDOM.TS.yY"  type="checkbox" class="checkbox" >2/4</td>
-				<td class="em4"><input  id="EnDeDOM.TS.mM"  type="checkbox" class="checkbox" >Name</td>
-				<td class="em4"><input  id="EnDeDOM.TS.strict" type="checkbox" class="checkbox" >strict</td>
-				<td class="em4"><input  id="EnDeDOM.TS.hm"  type="checkbox" class="checkbox" >now</td>
+				<td class="em4"><input  id="EnDeDOM.TS.yY"  type="checkbox" ><br>2/4</td>
+				<td class="em4"><input  id="EnDeDOM.TS.mM"  type="checkbox" ><br>Name</td>
+				<td class="em4"><input  id="EnDeDOM.TS.strict" type="checkbox" ><br>strict</td>
+				<td class="em4"><input  id="EnDeDOM.TS.hm"  type="checkbox" ><br>now</td>
 				<td>&#160;</td>
-				<td class="em4"><input  id="EnDeDOM.TS.ms"  type="checkbox" class="checkbox" >ms</td>
+				<td class="em4"><input  id="EnDeDOM.TS.ms"  type="checkbox" ><br>ms</td>
 
-				<td class="em4"><input  id="EnDeDOM.TS.GMT" type="checkbox" class="checkbox" >GMT</td>
-				<td class="em4"><input  id="EnDeDOM.TS.TZ"  type="checkbox" class="checkbox" disabled>TZ</td>
-				<td colspan="2"><input  id="EnDeDOM.TS.neg" type="checkbox" class="checkbox" disabled >&gt;2001 is negative</td>
+				<td class="em4"><input  id="EnDeDOM.TS.GMT" type="checkbox" ><br>GMT</td>
+				<td class="em4"><input  id="EnDeDOM.TS.TZ"  type="checkbox" disabled><br>TZ</td>
+				<td class="em4"><input  id="EnDeDOM.TS.neg" type="checkbox" disabled >&gt;2001<br>is negative</td>
 				<td class="em4">
 					<span  class="select popup" id="EnDeDOM.TS.format"><!-- SELECT added by init() --></span>
 					<input class="blind" id="EnDeDOM.TS.isFmt"  type="hidden" value="2unix" >
@@ -572,18 +572,17 @@
 			</tr>
 -->
 			<tr>
-				<th class="em4">&#160;</th>
-				<td class="em4">Year</td>
-				<td class="em4">Month</td>
-				<td class="em4">Day</td>
-				<td class="em4">Hour</td>
-				<td class="em4">Min.</td>
-				<td class="em4">Sec.</td>
-				<td            >&#160;</td>
-				<td            >&#160;</td>
-				<td            >&#160;</td>
+				<th>&#160;</th>
+				<th>Year</th>
+				<th>Month</th>
+				<th>Day</th>
+				<th>Hour</th>
+				<th>Min.</th>
+				<th>Sec.</th>
+				<td>&#160;</td>
+				<td>&#160;</td>
 				<td align="right">Ref. Time.:</td>
-				<td align="left"><input class="text"        id="EnDeDOM.TS.reftime" type="text" size="18" ></td>
+				<td align="left"><input class="text"        id="EnDeDOM.TS.reftime" type="text" size="14" ></td>
 			</tr>
 			<tr>
 				<th class="em8" >Date | Time: </th>
@@ -595,23 +594,21 @@
 				<td align="left">:&#160;<input class="text" id="EnDeDOM.TS.sec"     type="text" size="2"  ></td>
 				<td align="center"> <input   class="button" id="EnDeDOM.TS.toTS"  type="button" value=" > "  onClick="return EnDeGUI.TS.dispatch(this,'date2ts')" ></td>
 				<td align="left">   <input   class="button" id="EnDeDOM.TS.toDT"  type="button" value=" < "  onClick="return EnDeGUI.TS.dispatch(this,'ts2date')" ></td>
-				<td>&#160;</td>
 				<td align="right" >Timestamp: </td>
-				<td align="left">   <input     class="text" id="EnDeDOM.TS.timestamp" type="text"   size="18" ></td>
+				<td align="left">   <input     class="text" id="EnDeDOM.TS.timestamp" type="text"   size="14" ></td>
 			</tr>
 			<tr>
 				<th class="em8" >human readable: </th>
-				<td colspan="5">    <input     class="text" id="EnDeDOM.TS.human"   type="text" size="40"   accesskey="T" ></td>
+				<td colspan="5">    <input     class="text" id="EnDeDOM.TS.human"   type="text" size="29"   accesskey="T" ></td>
 				<td align="center"> <input   class="button" id="EnDeDOM.TS.toTSC" type="button"             value=" >> " onClick="return EnDeGUI.TS.dispatch(this,'compute')" ></td>
 				<td align="center"> <input   class="button" id="EnDeDOM.TS.toOf"  type="button" size="2"    value=" > "  onClick="return EnDeGUI.TS.dispatch(this,'date2offset')" ></td>
 				<td align="left">   <input   class="button" id="EnDeDOM.TS.FromOf" type="button" size="2"   value=" < "  onClick="return EnDeGUI.TS.dispatch(this,'offset2date')" ></td>
-				<td>&#160;</td>
 				<td align="right">  <input   class="button" id="EnDeDOM.TS.Add"   type="button" size="3"    value=" + "  onClick="return EnDeGUI.TS.dispatch(this,'addOffset')" > Offset:</td>
-				<td align="left">   <input     class="text" id="EnDeDOM.TS.offset"  type="text" size="18" ></td>
+				<td align="left">   <input     class="text" id="EnDeDOM.TS.offset"  type="text" size="14" ></td>
 			</tr>
 			<tr>
 				<th>&#160;</th>
-				<td colspan="2" align="center"><input       id="EnDeDOM.TS.now"   type="button" class="button" value="now"  onClick="return EnDeGUI.TS.dispatch(this,'now')" ></td>
+				<td><input       id="EnDeDOM.TS.now"   type="button" class="button" value="now"  onClick="return EnDeGUI.TS.dispatch(this,'now')" ></td>
 				<td colspan="2">
 					&#160;
 					<span   id="EnDeDOM.TS.Menu"    class="popup">
@@ -620,13 +617,15 @@
 					<select onClick="return EnDeGUI.TS.reset()"><option>clear</option></select>
 					</span>
 				</td>
-				<td colspan="4">
+				<td colspan="2">
 					&#160;
 					<button id="EnDeDOM.TS.bg"  onClick="return EnDeGUI.TS.dispatch(this,'guess')"  >guess</button>
+				</td>
+				<td colspan="3">
+					&#160;
 					<button id="EnDeDOM.TS.bm"  onClick="return EnDeGUI.TS.dispatch(this,'scratch')">Scratchpad ..</button>
 				</td>
-				<td>&#160;</td>
-				<td>&#160; &#160; &#160;<input  class="button"  type="button"   id="EnDeDOM.TS.isTimestamp" value="Ref + Offset"    onClick="return EnDeGUI.TS.dispatch(this,'isTS')" ></td>
+				<td><input  class="button"  type="button"   id="EnDeDOM.TS.isTimestamp" value="Ref + Offset"    onClick="return EnDeGUI.TS.dispatch(this,'isTS')" ></td>
 				<td>    <input  class="button"  type="button"   id="EnDeDOM.TS.isOffset"    value="Ref - Timestamp" onClick="return EnDeGUI.TS.dispatch(this,'isOffset')" ></td>
 			</tr>
 		</table>

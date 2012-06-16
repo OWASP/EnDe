@@ -82,7 +82,7 @@
 #       -----------------------------------------------------------------------
 #?
 #? VERSION
-#?      @(#) EnDeText.js 3.14 12/04/22 23:47:51
+#?      @(#) EnDeText.js 3.16 12/06/16 10:55:59
 #?
 #? AUTHOR
 #?      08-sep-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -96,8 +96,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.Text   = new function() {
-	this.SID    = '3.14';
-	this.sid    = function() { return('@(#) EnDeText.js 3.14 12/04/22 23:47:51 EnDe.Text'); };
+	this.SID    = '3.16';
+	this.sid    = function() { return('@(#) EnDeText.js 3.16 12/06/16 10:55:59 EnDe.Text'); };
 
 	this.trace  = false;
 
@@ -161,12 +161,12 @@ EnDe.Text   = new function() {
 		 */
 		switch (item) {
 		  case 'txtNULL'    : bux = null;                           break;
-		  case 'txtUC'      : bux = this.uc( src );                 break;
-		  case 'txtLC'      : bux = this.lc( src );                 break;
-		  case 'txtRECurl2' : bux = this.rec( 'url2', src );        break;
-		  case 'txtRECurl4' : bux = this.rec( 'url4', src );        break;
-		  case 'txtRECncrNAME':bux= this.rec( 'ncrNAME', src );     break;
-		  case 'txtRECncrNUMBER': bux = this.rec( 'ncrNUMBER', src );   break;
+		  case 'txtUC'      : bux = this.uc(src);                   break;
+		  case 'txtLC'      : bux = this.lc(src);                   break;
+		  case 'txtRECurl2' : bux = this.rec('url2', src);          break;
+		  case 'txtRECurl4' : bux = this.rec('url4', src);          break;
+		  case 'txtRECncrNAME':bux= this.rec('ncrNAME', src);       break;
+		  case 'txtRECncrNUMBER': bux = this.rec('ncrNUMBER', src); break;
 		  case 'txtClear'   : bux = '';                             break;
 		  case 'txtAPP00'   : bux += '\0';                          break;
 		  case 'txtAPPnl'   : bux += '\n';                          break;
@@ -174,68 +174,73 @@ EnDe.Text   = new function() {
 		  case 'txtAPPht'   : bux += '\t';                          break;
 		  case 'txtAPPvt'   : bux += '\v';                          break;
 		  case 'txtAPPsp'   : bux += ' ';                           break;
-		  case 'txtDEL00'   : bux = bux.replace( /\x00/g, '' );     break;
-		  case 'txtDELnl'   : bux = bux.replace( /\n/g,   '' );     break;
-		  case 'txtDELcr'   : bux = bux.replace( /\r/g,   '' );     break;
-		  case 'txtDELht'   : bux = bux.replace( /\t/g,   '' );     break;
-		  case 'txtDELvt'   : bux = bux.replace( /\v/g,   '' );     break;
-		  case 'txtDELsp'   : bux = bux.replace( / /g,    '' );     break;
-		  case 'txtDELnon7bn':bux = bux.replace( /[^\x09\x0a\x0d\x20-\x7e]/g, '' ); break;
-		  case 'txtDELnon7b': bux = bux.replace( /[^\x20-\x7e]/g,     '' );   break;
-		  case 'txtDELnon128':bux = bux.replace( /[^\x01-\x7f]/g,     '' );   break;
-		  case 'txtDELnon256':bux = bux.replace( /[^\x01-\xff]/g,     '' );   break;
-		  case 'txtDELascii': bux = bux.replace( /[^\S]/g,            '' );   break; // ToDo: ??
-		  case 'txtDELalnum': bux = bux.replace( /[^\w0-9]/g,         '' );   break;
-		  case 'txtDELwhite': bux = bux.replace( /[\t \r\n]/g,        '' );   break;
-		  case 'txtDELsgml' : bux = bux.replace( /(<(\/!)?)|(\/?>)/g, '' );   break;
-		  case 'txtDELmixed': bux = bux.replace( /[\t \r\n\+"\']/g,   '' );   break;
-		  case 'txtDELfffx' : bux = bux.replace( /[\ufff0-\uffff]/g,  '' );   break;
-		  case 'txtINS00'   : bux = bux.slice(0,pos) + '\0' + bux.slice(pos); break;
-		  case 'txtINSnl'   : bux = bux.slice(0,pos) + '\n' + bux.slice(pos); break;
-		  case 'txtINScr'   : bux = bux.slice(0,pos) + '\r' + bux.slice(pos); break;
-		  case 'txtINSht'   : bux = bux.slice(0,pos) + '\t' + bux.slice(pos); break;
-		  case 'txtINSvt'   : bux = bux.slice(0,pos) + '\v' + bux.slice(pos); break;
-		  case 'txtREPplus' : bux = bux.replace( /\+/g,            ' '   );   break;
-		  case 'txtREPspace': bux = bux.replace( / /g,             '+'   );   break;
-		  case 'txtREPdouble':bux = bux.replace( /\\/g,            '\\\\');   break;
-		  case 'txtREPreduce':bux = bux.replace( /\\\\/g,          '\\'  );   break;
-		  case 'txtREPascii': bux = bux.replace( /([^\x20-\x7e])/g, function(c){return EnDe.dez2hex('url4',0,false,c.charCodeAt(),'','');} );break;
-		  case 'txtREP2url' : bux = bux.replace( /([^\x20-\x7e])/g, function(c){return EnDe.dez2hex('url2',0,false,c.charCodeAt(),'','');} );break;
-		  case 'txtREP2hex' : bux = bux.replace( /([^\x20-\x7e])/g, function(c){return EnDe.EN.hex('null',0,false,c,'\\x','','');} );   break;
-		  case 'txtREP2ucs' : bux = bux.replace( /([^\x20-\x7e])/g, function(c){return EnDe.EN.ucs('ucs4',0,false,c,'','','');} );      break;
+		  case 'txtDEL00'   : bux = bux.replace(/\x00/g, '');       break;
+		  case 'txtDELnl'   : bux = bux.replace(/\n/g,   '');       break;
+		  case 'txtDELcr'   : bux = bux.replace(/\r/g,   '');       break;
+		  case 'txtDELht'   : bux = bux.replace(/\t/g,   '');       break;
+		  case 'txtDELvt'   : bux = bux.replace(/\v/g,   '');       break;
+		  case 'txtDELsp'   : bux = bux.replace(/ /g,    '');       break;
+		  case 'txtDELsq'   : bux = bux.replace(/'/g,    '');       break;
+		  case 'txtDELdq'   : bux = bux.replace(/"/g,    '');       break;
+		  case 'txtDELquote': bux = bux.replace(/'/g, '').replace(/"/g, '');    break;
+		  case 'txtDELnon7bn':bux = bux.replace(/[^\x09\x0a\x0d\x20-\x7e]/g, ''); break;
+		  case 'txtDELnon7b': bux = bux.replace(/[^\x20-\x7e]/g,     '');       break;
+		  case 'txtDELnon128':bux = bux.replace(/[^\x01-\x7f]/g,     '');       break;
+		  case 'txtDELnon256':bux = bux.replace(/[^\x01-\xff]/g,     '');       break;
+		  case 'txtDELascii': bux = bux.replace(/[^\S]/g,            '');       break; // ToDo: ??
+		  case 'txtDELalnum': bux = bux.replace(/[^\w0-9]/g,         '');       break;
+		  case 'txtDELwhite': bux = bux.replace(/[\t \r\n]/g,        '');       break;
+		  case 'txtDELsgml' : bux = bux.replace(/(<(\/!)?)|(\/?>)/g, '');       break;
+		  case 'txtDELmixed': bux = bux.replace(/[\t \r\n\+"\']/g,   '');       break;
+		  case 'txtDELfffx' : bux = bux.replace(/[\ufff0-\uffff]/g,  '');       break;
+		  case 'txtINS00'   : bux = bux.slice(0,pos) + '\0' + bux.slice(pos);   break;
+		  case 'txtINSnl'   : bux = bux.slice(0,pos) + '\n' + bux.slice(pos);   break;
+		  case 'txtINScr'   : bux = bux.slice(0,pos) + '\r' + bux.slice(pos);   break;
+		  case 'txtINSht'   : bux = bux.slice(0,pos) + '\t' + bux.slice(pos);   break;
+		  case 'txtINSvt'   : bux = bux.slice(0,pos) + '\v' + bux.slice(pos);   break;
+		  case 'txtREPplus' : bux = bux.replace(/\+/g,            ' '   );      break;
+		  case 'txtREPspace': bux = bux.replace(/ /g,             '+'   );      break;
+		  case 'txtREPdouble':bux = bux.replace(/\\/g,            '\\\\');      break;
+		  case 'txtREPreduce':bux = bux.replace(/\\\\/g,          '\\'  );      break;
+		  case 'txtREPascii': bux = bux.replace(/([^\x20-\x7e])/g, function(c){return EnDe.dez2hex('url4',0,false,c.charCodeAt(),'','');}); break;
+		  case 'txtREP2url' : bux = bux.replace(/([^\x20-\x7e])/g, function(c){return EnDe.dez2hex('url2',0,false,c.charCodeAt(),'','');}); break;
+		  case 'txtREP2hex' : bux = bux.replace(/([^\x20-\x7e])/g, function(c){return EnDe.EN.hex( 'null',0,false,c,'\\x','','');});        break;
+		  case 'txtREP2ucs' : bux = bux.replace(/([^\x20-\x7e])/g, function(c){return EnDe.EN.ucs( 'ucs4',0,false,c,'','','');});           break;
 // ToDo: following not yet working proper
 		// ToDo: fails for \xHHHH
-		  case 'txtREP4hex' : bux = bux.replace( /(\\x[0-9a-f][0-9a-f])/ig, function(c){return EnDe.DE.num('hex', 0,c,'\\x','','');} ); break;
-		  case 'txtREP4ucs' : bux = bux.replace( /(\\u[0-9a-f]{4})/ig, function(c){return EnDe.DE.url('null',0,c,'','','');} );         break;
-		  case 'txtREP4url' : bux = bux.replace( /(%[0-9a-f][0-9a-f])/ig,   function(c){return EnDe.DE.ucs('url2',0,c,'','','');} );    break;
+		  case 'txtREP4hex' : bux = bux.replace(/(\\x[0-9a-f][0-9a-f])/ig, function(c){return EnDe.DE.num('hex', 0,c,'\\x','','');});       break;
+		  case 'txtREP4ucs' : bux = bux.replace(/(\\u[0-9a-f]{4})/ig,      function(c){return EnDe.DE.url('null',0,c,'','','');});          break;
+		  case 'txtREP4url' : bux = bux.replace(/(%[0-9a-f][0-9a-f])/ig,   function(c){return EnDe.DE.ucs('url2',0,c,'','','');});          break;
 // ToDo: above
-		  case 'txtREPsgml' : bux = bux.replace( /(<(\/!)?)|(\/?>)/g, ' ');   break;
-		  case 'txtREPalnum': bux = bux.replace( /([^\w0-9])/g,    ' '   );   break;
-		  case 'txtREP00'   : bux = bux.replace( /\x00/g,          '\\0' );   break;
-		  case 'txtREPnl'   : bux = bux.replace( /\n/g,            '\\n' );   break;
-		  case 'txtREPcr'   : bux = bux.replace( /\r/g,            '\\r' );   break;
-		  case 'txtREPht'   : bux = bux.replace( /\t/g,            '\\t' );   break;
-		  case 'txtREPvt'   : bux = bux.replace( /\v/g,            '\\v' );   break;
-		  case 'txtREPstrdq': bux = bux.replace( /"\s*\+\s*"/g,    ''    );   break;
-		  case 'txtREPstrsq': bux = bux.replace( /'\s*\+\s*'/g,    ''    );   break;
-		  case 'txtREPdqsq' : bux = bux.replace( /"/g,             "'"   );   break;
-		  case 'txtREPsqdq' : bux = bux.replace( /'/g,             '"'   );   break;
-		  case 'txtREPsqbt' : bux = bux.replace( /'/g,             '`'   );   break;
-		  case 'txtPAD10'   : if (bux<10) { bux = '0' + bux; };               break;
-		  case 'txtPAD100'  : bux = EnDe.Text.dispatch(bux, 'txtPAD10'); if (bux<100) { bux = '0' + bux; }; break;
-		  case 'txtEntity'  : bux = bux.replace( /&/g, '&#38;' ).replace( /</g, '&#60;' ).replace( />/g, '&#62;' ).replace( /"/g, '&#34;' ); break;
-		  case 'txtEntity0' : bux = bux.replace( /&/g, '&#38;' ).replace( /</g, '&#60;' ).replace( />/g, '&#62;' ); break;
-		  case 'txtTrimR'   : bux = bux.replace( / *$/g, '' );                break;
-		  case 'txtTrimL'   : bux = bux.replace( /^ */g, '' );                break;
-		  case 'txtTrim'    : bux = EnDe.Text.dispatch(EnDe.Text.dispatch(bux,'txtTrimL'),'txtTrimR'); break;
+		  case 'txtREPsgml' : bux = bux.replace(/(<(\/!)?)|(\/?>)/g, ' ');      break;
+		  case 'txtREPalnum': bux = bux.replace(/([^\w0-9])/g,    ' '   );      break;
+		  case 'txtREP00'   : bux = bux.replace(/\x00/g,          '\\0' );      break;
+		  case 'txtREPnl'   : bux = bux.replace(/\n/g,            '\\n' );      break;
+		  case 'txtREPcr'   : bux = bux.replace(/\r/g,            '\\r' );      break;
+		  case 'txtREPht'   : bux = bux.replace(/\t/g,            '\\t' );      break;
+		  case 'txtREPvt'   : bux = bux.replace(/\v/g,            '\\v' );      break;
+		  case 'txtREPstrdq': bux = bux.replace(/"\s*\+\s*"/g,    ''    );      break;
+		  case 'txtREPstrsq': bux = bux.replace(/'\s*\+\s*'/g,    ''    );      break;
+		  case 'txtREPdqsq' : bux = bux.replace(/"/g,             "'"   );      break;
+		  case 'txtREPsqdq' : bux = bux.replace(/'/g,             '"'   );      break;
+		  case 'txtREPsqbt' : bux = bux.replace(/'/g,             '`'   );      break;
+		  case 'txtREPsq'   : bux = bux.replace(/^'/, '').replace(/'$/, '');    break;
+		  case 'txtREPdq'   : bux = bux.replace(/^"/, '').replace(/"$/, '');    break;
+		  case 'txtPAD10'   : if (bux<10) { bux = '0' + bux; };                 break;
+		  case 'txtPAD100'  : bux = EnDe.Text.dispatch(bux, 'txtPAD10'); if (bux<100) { bux = '0' + bux; };   break;
+		  case 'txtEntity'  : bux = bux.replace(/&/g, '&#38;').replace(/</g, '&#60;').replace(/>/g, '&#62;').replace(/"/g, '&#34;'); break;
+		  case 'txtEntity0' : bux = bux.replace(/&/g, '&#38;').replace(/</g, '&#60;').replace(/>/g, '&#62;'); break;
+		  case 'txtTrimR'   : bux = bux.replace(/ *$/g, '');                    break;
+		  case 'txtTrimL'   : bux = bux.replace(/^ */g,  '');                   break;
+		  case 'txtTrim'    : bux = EnDe.Text.dispatch(EnDe.Text.dispatch(bux,'txtTrimL'),'txtTrimR');  break;
 		  case 'txtXesc'    :
-			bux = bux.replace( /( *\|.*)/g, '' ).replace( /^ */, ' ' ).replace( /  /g, ' ' ).replace( / /g,'\\x' );
-			/*        \________________________/ \___________________/ \___________________/ \___________________/
-			 *         remove trailing |.*        ensure just one        squeeze all          replace remaining
-			 *                                    leading space          duplicate spaces     spaces with \x
+			bux = bux.replace(/( *\|.*)/g, '').replace(/^ */, ' ').replace(/  /g, ' ').replace(/ /g,'\\x');
+			/*        \______________________/ \_________________/ \_________________/ \_________________/
+			 *         remove trailing |.*      ensure just one      squeeze all        replace remaining
+			 *                                  leading space        duplicate spaces   spaces with \x
 			 */
 			break;
-		  case 'txtREPqqqq'  :
+		  case 'txtREPqqqq':
 			bbb = '';
 			i   = 0;
 			while (i<bux.length) { // slow but safe
@@ -248,27 +253,27 @@ EnDe.Text   = new function() {
 					continue;
 				}
 				switch(ccc) {
-				  case '"'  : bbb += "'"; break;
-				  case "'"  : bbb += '"'; break;
-				  default   : bbb += ccc; break;
+				  case '"': bbb += "'"; break;
+				  case "'": bbb += '"'; break;
+				  default:  bbb += ccc; break;
 				 }
 			}
-			bux = bbb; 
+			bux = bbb;
 			break;
-		  case 'txtINS4sp'  :
-			bbb = bux.split( '' ).reverse().join( '' );
-			bbb = bbb.replace( /(....)/g, '$1 ' );
-			bux = bbb.split( '' ).reverse().join( '' ); 
+		  case 'txtINS4sp':
+			bbb = bux.split('').reverse().join('');
+			bbb = bbb.replace(/(....)/g, '$1 ');
+			bux = bbb.split('').reverse().join('');
 			break;
-		  case 'txtINS8sp'  :
-			bbb = bux.split( '' ).reverse().join( '' );
-			bbb = bbb.replace( /(........)/g, '$1 ' );
-			bux = bbb.split( '' ).reverse().join( '' ); 
+		  case 'txtINS8sp':
+			bbb = bux.split('').reverse().join('');
+			bbb = bbb.replace(/(........)/g, '$1 ');
+			bux = bbb.split('').reverse().join('');
 			break;
-		  case 'dezEXP'     :
+		  case 'dezEXP':
 			// ToDo: ersetze  42-48 durch 42,43,44,45,46,47,48
 			break;
-		  case 'dezFOLD'    :
+		  case 'dezFOLD':
 			// ToDo: ersetze  42,43,44,45,46,47,48 durch 42-48
 			break;
 		  default:
@@ -293,62 +298,62 @@ EnDe.Text   = new function() {
 	// procedural interface                                                  //
 	// ===================================================================== //
 
-	//this.NULL       = function(src) { return EnDe.Text.dispatch( src, 'txtNULL'  );     };
-	this.Clear      = function(src) { return EnDe.Text.dispatch( src, 'txtClear' );     };
-	this.UC         = function(src) { return EnDe.Text.dispatch( src, 'txtUC'    );     };
-	this.LC         = function(src) { return EnDe.Text.dispatch( src, 'txtLC'    );     };
-	this.APP00      = function(src) { return EnDe.Text.dispatch( src, 'txtAPP00' );     };
-	this.APPnl      = function(src) { return EnDe.Text.dispatch( src, 'txtAPPnl' );     };
-	this.APPcr      = function(src) { return EnDe.Text.dispatch( src, 'txtAPPcr' );     };
-	this.APPht      = function(src) { return EnDe.Text.dispatch( src, 'txtAPPht' );     };
-	this.APPvt      = function(src) { return EnDe.Text.dispatch( src, 'txtAPPvt' );     };
-	this.APPsp      = function(src) { return EnDe.Text.dispatch( src, 'txtAPPsp' );     };
-	this.DEL00      = function(src) { return EnDe.Text.dispatch( src, 'txtDEL00' );     };
-	this.DELnl      = function(src) { return EnDe.Text.dispatch( src, 'txtDELnl' );     };
-	this.DELcr      = function(src) { return EnDe.Text.dispatch( src, 'txtDELcr' );     };
-	this.DELht      = function(src) { return EnDe.Text.dispatch( src, 'txtDELht' );     };
-	this.DELvt      = function(src) { return EnDe.Text.dispatch( src, 'txtDELvt' );     };
-	this.DELsp      = function(src) { return EnDe.Text.dispatch( src, 'txtDELsp' );     };
-	this.DELnon7b   = function(src) { return EnDe.Text.dispatch( src, 'txtDELnon7b'  ); };
-	this.DELnon7bn  = function(src) { return EnDe.Text.dispatch( src, 'txtDELnon7bn' ); };
-	this.DELnon128  = function(src) { return EnDe.Text.dispatch( src, 'txtDELnon128' ); };
-	this.DELnon256  = function(src) { return EnDe.Text.dispatch( src, 'txtDELnon256' ); };
-	this.DELascii   = function(src) { return EnDe.Text.dispatch( src, 'txtDELascii'  ); };
-	this.DELalnum   = function(src) { return EnDe.Text.dispatch( src, 'txtDELalnum'  ); };
-	this.DELwhite   = function(src) { return EnDe.Text.dispatch( src, 'txtDELwhite'  ); };
-	this.DELsgml    = function(src) { return EnDe.Text.dispatch( src, 'txtDELsgml'   ); };
-	this.DELmixed   = function(src) { return EnDe.Text.dispatch( src, 'txtDELmixed'  ); };
-	this.DELfffx    = function(src) { return EnDe.Text.dispatch( src, 'txtDELfffx'   ); };
-	this.REPplus    = function(src) { return EnDe.Text.dispatch( src, 'txtREPplus'   ); };
-	this.REPspace   = function(src) { return EnDe.Text.dispatch( src, 'txtREPspace'  ); };
-	this.REPdouble  = function(src) { return EnDe.Text.dispatch( src,' txtREPdouble' ); };
-	this.REPreduce  = function(src) { return EnDe.Text.dispatch( src,' txtREPreduce' ); };
-	this.REPascii   = function(src) { return EnDe.Text.dispatch( src, 'txtREPascii'  ); };
-	this.REPsgml    = function(src) { return EnDe.Text.dispatch( src, 'txtREPsgml'   ); };
-	this.REPalnum   = function(src) { return EnDe.Text.dispatch( src, 'txtREPalnum'  ); };
-	this.PAD10      = function(src) { return EnDe.Text.dispatch( src, 'txtPAD10'     ); };
-	this.PAD100     = function(src) { return EnDe.Text.dispatch( src, 'txtPAD100'    ); };
-	this.TrimR      = function(src) { return EnDe.Text.dispatch( src, 'txtTrimR'     ); };
-	this.TrimL      = function(src) { return EnDe.Text.dispatch( src, 'txtTrimL'     ); };
-	this.Trim       = function(src) { return EnDe.Text.dispatch( src, 'txtTrim'      ); };
-	this.TrimRL     = function(src) { return EnDe.Text.dispatch( src, 'txtTrim'      ); };
-	this.TrimLR     = function(src) { return EnDe.Text.dispatch( src, 'txtTrim'      ); };
-	this.Xesc       = function(src) { return EnDe.Text.dispatch( src, 'txtXesc'      ); };
-	this.Entity     = function(src) { return EnDe.Text.dispatch( src, 'txtEntity'    ); };
-	this.Entity0    = function(src) { return EnDe.Text.dispatch( src, 'txtEntity0'   ); };
-	this.REPqqqq    = function(src) { return EnDe.Text.dispatch( src, 'txtREPqqqq'   ); };
-	this.REPsqdq    = function(src) { return EnDe.Text.dispatch( src, 'txtREPsqdq'   ); };
-	this.REPdqsq    = function(src) { return EnDe.Text.dispatch( src, 'txtREPdqsq'   ); };
-	this.REPsqbt    = function(src) { return EnDe.Text.dispatch( src, 'txtREPsqbt'   ); };
-	this.REPstrsq   = function(src) { return EnDe.Text.dispatch( src, 'txtREPstrsq'  ); };
-	this.REPstrdq   = function(src) { return EnDe.Text.dispatch( src, 'txtREPstrdq'  ); };
-	this.INS00      = function(s,p) { return EnDe.Text.dispatch( s,   'txtINS00',  p ); };
-	this.INSnl      = function(s,p) { return EnDe.Text.dispatch( s,   'txtINSnl',  p ); };
-	this.INScr      = function(s,p) { return EnDe.Text.dispatch( s,   'txtINScr',  p ); };
-	this.INSht      = function(s,p) { return EnDe.Text.dispatch( s,   'txtINSht',  p ); };
-	this.INSvt      = function(s,p) { return EnDe.Text.dispatch( s,   'txtINSvt',  p ); };
-	this.INS4sp     = function(s,p) { return EnDe.Text.dispatch( s,   'txtINS4sp', p ); };
-	this.INS8sp     = function(s,p) { return EnDe.Text.dispatch( s,   'txtINS8sp', p ); };
+	//this.NULL       = function(src) { return EnDe.Text.dispatch(src, 'txtNULL'     ); };
+	this.Clear      = function(src) { return EnDe.Text.dispatch(src, 'txtClear'    ); };
+	this.UC         = function(src) { return EnDe.Text.dispatch(src, 'txtUC'       ); };
+	this.LC         = function(src) { return EnDe.Text.dispatch(src, 'txtLC'       ); };
+	this.APP00      = function(src) { return EnDe.Text.dispatch(src, 'txtAPP00'    ); };
+	this.APPnl      = function(src) { return EnDe.Text.dispatch(src, 'txtAPPnl'    ); };
+	this.APPcr      = function(src) { return EnDe.Text.dispatch(src, 'txtAPPcr'    ); };
+	this.APPht      = function(src) { return EnDe.Text.dispatch(src, 'txtAPPht'    ); };
+	this.APPvt      = function(src) { return EnDe.Text.dispatch(src, 'txtAPPvt'    ); };
+	this.APPsp      = function(src) { return EnDe.Text.dispatch(src, 'txtAPPsp'    ); };
+	this.DEL00      = function(src) { return EnDe.Text.dispatch(src, 'txtDEL00'    ); };
+	this.DELnl      = function(src) { return EnDe.Text.dispatch(src, 'txtDELnl'    ); };
+	this.DELcr      = function(src) { return EnDe.Text.dispatch(src, 'txtDELcr'    ); };
+	this.DELht      = function(src) { return EnDe.Text.dispatch(src, 'txtDELht'    ); };
+	this.DELvt      = function(src) { return EnDe.Text.dispatch(src, 'txtDELvt'    ); };
+	this.DELsp      = function(src) { return EnDe.Text.dispatch(src, 'txtDELsp'    ); };
+	this.DELnon7b   = function(src) { return EnDe.Text.dispatch(src, 'txtDELnon7b' ); };
+	this.DELnon7bn  = function(src) { return EnDe.Text.dispatch(src, 'txtDELnon7bn'); };
+	this.DELnon128  = function(src) { return EnDe.Text.dispatch(src, 'txtDELnon128'); };
+	this.DELnon256  = function(src) { return EnDe.Text.dispatch(src, 'txtDELnon256'); };
+	this.DELascii   = function(src) { return EnDe.Text.dispatch(src, 'txtDELascii' ); };
+	this.DELalnum   = function(src) { return EnDe.Text.dispatch(src, 'txtDELalnum' ); };
+	this.DELwhite   = function(src) { return EnDe.Text.dispatch(src, 'txtDELwhite' ); };
+	this.DELsgml    = function(src) { return EnDe.Text.dispatch(src, 'txtDELsgml'  ); };
+	this.DELmixed   = function(src) { return EnDe.Text.dispatch(src, 'txtDELmixed' ); };
+	this.DELfffx    = function(src) { return EnDe.Text.dispatch(src, 'txtDELfffx'  ); };
+	this.REPplus    = function(src) { return EnDe.Text.dispatch(src, 'txtREPplus'  ); };
+	this.REPspace   = function(src) { return EnDe.Text.dispatch(src, 'txtREPspace' ); };
+	this.REPdouble  = function(src) { return EnDe.Text.dispatch(src,' txtREPdouble'); };
+	this.REPreduce  = function(src) { return EnDe.Text.dispatch(src,' txtREPreduce'); };
+	this.REPascii   = function(src) { return EnDe.Text.dispatch(src, 'txtREPascii' ); };
+	this.REPsgml    = function(src) { return EnDe.Text.dispatch(src, 'txtREPsgml'  ); };
+	this.REPalnum   = function(src) { return EnDe.Text.dispatch(src, 'txtREPalnum' ); };
+	this.PAD10      = function(src) { return EnDe.Text.dispatch(src, 'txtPAD10'    ); };
+	this.PAD100     = function(src) { return EnDe.Text.dispatch(src, 'txtPAD100'   ); };
+	this.TrimR      = function(src) { return EnDe.Text.dispatch(src, 'txtTrimR'    ); };
+	this.TrimL      = function(src) { return EnDe.Text.dispatch(src, 'txtTrimL'    ); };
+	this.Trim       = function(src) { return EnDe.Text.dispatch(src, 'txtTrim'     ); };
+	this.TrimRL     = function(src) { return EnDe.Text.dispatch(src, 'txtTrim'     ); };
+	this.TrimLR     = function(src) { return EnDe.Text.dispatch(src, 'txtTrim'     ); };
+	this.Xesc       = function(src) { return EnDe.Text.dispatch(src, 'txtXesc'     ); };
+	this.Entity     = function(src) { return EnDe.Text.dispatch(src, 'txtEntity'   ); };
+	this.Entity0    = function(src) { return EnDe.Text.dispatch(src, 'txtEntity0'  ); };
+	this.REPqqqq    = function(src) { return EnDe.Text.dispatch(src, 'txtREPqqqq'  ); };
+	this.REPsqdq    = function(src) { return EnDe.Text.dispatch(src, 'txtREPsqdq'  ); };
+	this.REPdqsq    = function(src) { return EnDe.Text.dispatch(src, 'txtREPdqsq'  ); };
+	this.REPsqbt    = function(src) { return EnDe.Text.dispatch(src, 'txtREPsqbt'  ); };
+	this.REPstrsq   = function(src) { return EnDe.Text.dispatch(src, 'txtREPstrsq' ); };
+	this.REPstrdq   = function(src) { return EnDe.Text.dispatch(src, 'txtREPstrdq' ); };
+	this.INS00      = function(s,p) { return EnDe.Text.dispatch(s,   'txtINS00',  p); };
+	this.INSnl      = function(s,p) { return EnDe.Text.dispatch(s,   'txtINSnl',  p); };
+	this.INScr      = function(s,p) { return EnDe.Text.dispatch(s,   'txtINScr',  p); };
+	this.INSht      = function(s,p) { return EnDe.Text.dispatch(s,   'txtINSht',  p); };
+	this.INSvt      = function(s,p) { return EnDe.Text.dispatch(s,   'txtINSvt',  p); };
+	this.INS4sp     = function(s,p) { return EnDe.Text.dispatch(s,   'txtINS4sp', p); };
+	this.INS8sp     = function(s,p) { return EnDe.Text.dispatch(s,   'txtINS8sp', p); };
 
 }; // EnDe.Text
 

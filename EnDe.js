@@ -8,6 +8,7 @@
 #? SYNOPSIS
 #?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="EnDe.js"></SCRIPT>
 #?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="aes.js"></SCRIPT>
+#?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="des.js"></SCRIPT>
 #?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="crc.js"></SCRIPT>
 #?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="md4.js"></SCRIPT>
 #?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="md5.js"></SCRIPT>
@@ -32,7 +33,7 @@
 #?
 #? SEE ALSO
 #?      crc.js, aes.js, md4.js, md5.js, sha.js, sha512.js, rmd.js, blowfish.js
-#?      EnDeB64.js, EnDeMaps.js, EnDeUser.js, EnDeTest.js
+#?      des.js, EnDeB64.js, EnDeMaps.js, EnDeUser.js, EnDeTest.js
 #?
 #? HACKER's INFO
 #       // ToDo: character maps:
@@ -82,7 +83,7 @@
 #       _n2_, _n3_, _n4_, _n5_, _n6_, and _n7_ .
 #?
 #? VERSION
-#?      @(#) EnDe.js 3.32 12/06/04 21:52:10
+#?      @(#) EnDe.js 3.33 12/06/16 12:10:45
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -95,8 +96,8 @@
 
 var EnDe    = new function() {
 
-this.SID    = '3.32';
-this.sid    = function() { return('@(#) EnDe.js 3.32 12/06/04 21:52:10 EnDe'); };
+this.SID    = '3.33';
+this.sid    = function() { return('@(#) EnDe.js 3.33 12/06/16 12:10:45 EnDe'); };
 
 	// ===================================================================== //
 	// debug functions                                                       //
@@ -1014,6 +1015,7 @@ this.h2n    = function(type,mode,uppercase,src,prefix,suffix,delimiter) {
 	// ===================================================================== //
 
 //this.AES    = EnDe.AES;     // already done in aes.js
+//this.DES    = EnDe.DES;     // already done in des.js
 //this.CRC    = EnDe.CRC;     // already done in crc.js
 //this.MD4    = EnDe.MD4;     // already done in md4.js
 //this.MD5    = EnDe.MD5;     // already done in 5md.js
@@ -2678,7 +2680,7 @@ this.EN     = new function() {
   }; // blowfish
 
   this.aes      = function(type,mode,uppercase,src,prefix,key,delimiter) {
-  //#? wrapper for AES(); uppercase parameter is escCtl (see aes.js)
+  //#? wrapper for aes(); uppercase parameter is escCtl (see aes.js)
 	EnDe.AES.escCtl    = uppercase;
 	switch (type) {
 	  case 'b128':  return EnDe.AES.EN.aes(key, src, 128);  break;
@@ -2687,6 +2689,31 @@ this.EN     = new function() {
 	}
 	return null; // ToDo: internal error
   }; // aes
+
+  this.des      = function(type,mode,uppercase,src,iv,key,_n7_) {
+  //#? wrapper for des(); (single) DES and tripple DES encryption in normal or CBC mode
+  //#type? desECB0: ECB mode, message (src) padded with 0-bytes
+  //#type? desECBp: ECB mode, message (src) padded with PKCS7
+  //#type? desECBs: ECB mode, message (src) padded with spaces
+  //#type? desECB_: ECB mode, message (src) without padding
+  //#type? desCBC0: CBC mode, message (src) padded with 0-bytes
+  //#type? desCBCp: CBC mode, message (src) padded with PKCS7
+  //#type? desCBCs: CBC mode, message (src) padded with spaces
+  //#type? desCBC_: CBC mode, message (src) without padding
+	var bux = '';
+	switch (type) {
+	  case 'desECB0': bux = EnDe.DES.EN.des(key, src, 0, iv, 0); break;
+	  case 'desECBp': bux = EnDe.DES.EN.des(key, src, 0, iv, 1); break;
+	  case 'desECBs': bux = EnDe.DES.EN.des(key, src, 0, iv, 2); break;
+	  case 'desECB_': bux = EnDe.DES.EN.des(key, src, 0, iv, 3); break;
+	  case 'desCBC0': bux = EnDe.DES.EN.des(key, src, 1, iv, 0); break;
+	  case 'desCBCp': bux = EnDe.DES.EN.des(key, src, 1, iv, 1); break;
+	  case 'desCBCs': bux = EnDe.DES.EN.des(key, src, 1, iv, 2); break;
+	  case 'desCBC_': bux = EnDe.DES.EN.des(key, src, 1, iv, 3); break;
+	}
+	if (uppercase===false) { return bux.toLowerCase(); }
+	return bux;
+  }; // des
 
   this.rmd      = function(type,mode,uppercase,src,_n5_,key,delimiter) {
   //#? wrapper for gen_otp_rmd160(); delimiter is the number of iterations
@@ -2946,6 +2973,14 @@ xxx1Z3A+!Z22ZA7$Z25Z26Z2F()Z3DZ3FZ0DZ0Axxx2Z3A+Z7BZ5BZ5DZ7DZ5CZ60ZB4Z0DZ0Axxx3Z3
 	case 'aes192r'  : return this.aes('b192',  mode, false,     src, prefix, suffix, ''       ); break; // suffix is key here
 	case 'aes256r'  : return this.aes('b256',  mode, false,     src, prefix, suffix, ''       ); break; // suffix is key here
 	case 'blowfish' : return this.blowfish('', mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key here
+	case 'desECB0'  : return this.des( type,   mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key, prefix is iv
+	case 'desCBC0'  : return this.des( type,   mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key, prefix is iv
+	case 'desECBp'  : return this.des( type,   mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key, prefix is iv
+	case 'desCBCp'  : return this.des( type,   mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key, prefix is iv
+	case 'desECBs'  : return this.des( type,   mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key, prefix is iv
+	case 'desCBCs'  : return this.des( type,   mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key, prefix is iv
+	case 'desECB_'  : return this.des( type,   mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key, prefix is iv
+	case 'desCBC_'  : return this.des( type,   mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key, prefix is iv
 	case 'tearaw'   : return this.tea('raw',   mode, uppercase, src, prefix, suffix, ''       ); break;
 	case 'teacor'   : return this.tea('some',  mode, uppercase, src, prefix, suffix, ''       ); break;
 	case 'teaesc'   : return this.tea('esc',   mode, uppercase, src, prefix, suffix, ''       ); break;
@@ -3884,6 +3919,21 @@ this.DE     = new function() {
 	return null; // ToDo: internal error
   }; // aes
 
+  this.des      = function(type,mode,uppercase,src,iv,key,delimiter) {
+  //#? wrapper for des(); (single) DES and tripple DES decryption in normal or CBC mode
+	switch (type) {
+	  case 'desECB0': return EnDe.DES.DE.des(key, src, 0, iv, 0); break;
+	  case 'desECBp': return EnDe.DES.DE.des(key, src, 0, iv, 1); break;
+	  case 'desECBs': return EnDe.DES.DE.des(key, src, 0, iv, 2); break;
+	  case 'desECB_': return EnDe.DES.DE.des(key, src, 0, iv, 3); break;
+	  case 'desCBC0': return EnDe.DES.DE.des(key, src, 1, iv, 0); break;
+	  case 'desCBCp': return EnDe.DES.DE.des(key, src, 1, iv, 1); break;
+	  case 'desCBCs': return EnDe.DES.DE.des(key, src, 1, iv, 2); break;
+	  case 'desCBC_': return EnDe.DES.DE.des(key, src, 1, iv, 3); break;
+	}
+	return null; // ToDo: internal error
+  }; // des
+
   this.tea      = function(type,mode,uppercase,src,prefix,key,delimiter) {
   //#? decrypt a string using the Block Tiny Encryption Algorithm
   /* see http://www.movable-type.co.uk/scripts/tea-block.html */
@@ -4283,6 +4333,14 @@ this.DE     = new function() {
 	case 'aes192r'  : return this.aes('b192',  mode, false,     src, prefix, suffix, ''       ); break; // suffix is key here
 	case 'aes256r'  : return this.aes('b256',  mode, false,     src, prefix, suffix, ''       ); break; // suffix is key here
 	case 'blowfish' : return this.blowfish('', mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key here
+	case 'desECB0'  : return this.des( type,   mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key, prefix is iv
+	case 'desCBC0'  : return this.des( type,   mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key, prefix is iv
+	case 'desECBp'  : return this.des( type,   mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key, prefix is iv
+	case 'desCBCp'  : return this.des( type,   mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key, prefix is iv
+	case 'desECBs'  : return this.des( type,   mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key, prefix is iv
+	case 'desCBCs'  : return this.des( type,   mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key, prefix is iv
+	case 'desECB_'  : return this.des( type,   mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key, prefix is iv
+	case 'desCBC_'  : return this.des( type,   mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key, prefix is iv
 	case 'tearaw'   : return this.tea('raw',   mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key here
 	case 'teacor'   : return this.tea('some',  mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key here
 	case 'teaesc'   : return this.tea('esc',   mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key here
@@ -4370,7 +4428,7 @@ this.DE     = new function() {
 // ========================================================================= //
 
 EnDe.Misc = new function() {
-this.sid        = function()  { return('@(#) EnDe.js 3.32 12/06/04 21:52:10 EnDeMisc'); };
+this.sid        = function()  { return('@(#) EnDe.js 3.33 12/06/16 12:10:45 EnDeMisc'); };
 
 	// ===================================================================== //
 	// global variables                                                      //

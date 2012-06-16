@@ -35,7 +35,7 @@
 #?      EnDeGUI.js
 #?
 #? VERSION
-#?      @(#) EnDeUser.xml 3.3 11/04/09 14:58:13
+#?      @(#) EnDeUser.xml 3.4 12/06/16 10:03:11
 #?
 #? AUTHOR
 #?      10-10-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -248,6 +248,25 @@ EnDe.DE.dispatch(
 	''+EnDe.DE.dispatch('urlCHR','lazy',false,
 		''+EnDe.DE.dispatch('urlCHR','lazy',false,$('EnDeDOM.DE.text').value,'','',''),
 		'','',''),
+	'',
+	'',
+	''
+)
+		]]></code>
+    </attack>
+
+    <attack>
+	<label>Decoding User Functions ..</label>
+	<name>double \xHH/URL decode</name>
+	<desc>first replace \x by %, then URL-decode text, then URL decode again (for mixed double encoding)</desc>
+	<code><![CDATA[
+EnDe.DE.dispatch(
+	'urlCHR',
+	'lazy',
+	false,
+	''+EnDe.DE.dispatch('urlCHR','lazy',false,
+		$('EnDeDOM.DE.text').value.replace(/\\x/g,'%'),'','',''),
+
 	'',
 	'',
 	''

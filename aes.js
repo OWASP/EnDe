@@ -16,7 +16,7 @@
 #?          some cleanup to avoid memory leaks (see // #mem# comments)
 #?
 #? VERSION
-#?      @(#) aes.js 3.4 11/12/30 19:10:02
+#?      @(#) aes.js 3.7 12/06/16 09:58:42
 #?
 #? AUTHOR
 #?      31-jul-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -26,11 +26,11 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.AES = new function() {
-this.SID       = '3.4';
-this.sid       = function() { return('@(#)  aes.js 3.4 11/12/30 19:10:02 EnDe.AES'); };
+this.SID       = '3.7';
+this.sid       = function() { return('@(#)  aes.js 3.7 12/06/16 09:58:42 EnDe.AES'); };
 
 this.uppercase = false;  /* hex output format */ // ToDo: not yet implemented
-this.escCtrl   = false;  /* use of original escCtrlChars() and unescCtrlChars() 
+this.escCtrl   = false;  /* use of original escCtrlChars() and unescCtrlChars()
 		* function depends on EnDe.AES.escCtrl */
 
 /*
@@ -39,17 +39,17 @@ this.escCtrl   = false;  /* use of original escCtrlChars() and unescCtrlChars()
  * The API is adapted to those used in md5.js and sha.js
  */
 this.EN     = new function() {
- this.aes   = function(key,s,n){ return AESEncryptCtr(s, key,  n ); };
- this.aes128= function(key, s) { return AESEncryptCtr(s, key, 128); };
- this.aes192= function(key, s) { return AESEncryptCtr(s, key, 192); };
- this.aes256= function(key, s) { return AESEncryptCtr(s, key, 256); };
-};
+	this.aes    = function(key,s,n){ return AESEncryptCtr(s, key,  n ); };
+	this.aes128 = function(key, s) { return AESEncryptCtr(s, key, 128); };
+	this.aes192 = function(key, s) { return AESEncryptCtr(s, key, 192); };
+	this.aes256 = function(key, s) { return AESEncryptCtr(s, key, 256); };
+}; // .EN
 this.DE     = new function() {
- this.aes   = function(key,s,n){ return AESDecryptCtr(s, key,  n ); };
- this.aes128= function(key, s) { return AESDecryptCtr(s, key, 128); };
- this.aes192= function(key, s) { return AESDecryptCtr(s, key, 192); };
- this.aes265= function(key, s) { return AESDecryptCtr(s, key, 265); };
-};
+	this.aes    = function(key,s,n){ return AESDecryptCtr(s, key,  n ); };
+	this.aes128 = function(key, s) { return AESDecryptCtr(s, key, 128); };
+	this.aes192 = function(key, s) { return AESDecryptCtr(s, key, 192); };
+	this.aes265 = function(key, s) { return AESDecryptCtr(s, key, 265); };
+}; // .DE
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
 function escCtrlChars(str) {  // escape control chars which might cause problems handling ciphertext
@@ -114,7 +114,7 @@ function ShiftRows(s, Nb) {    // shift row r of state S left by r bytes [§5.1.2
     for (var c=0; c<4; c++) t[c] = s[r][(c+r)%Nb];  // shift into temp copy
     for (var c=0; c<4; c++) s[r][c] = t[c];         // and copy back
   }          // note that this will work for Nb=4,5,6, but not 7,8 (always 4 for AES):
-  return s;  // see fp.gladman.plus.com/cryptography_technology/rijndael/aes.spec.311.pdf 
+  return s;  // see fp.gladman.plus.com/cryptography_technology/rijndael/aes.spec.311.pdf
 }
 
 
@@ -214,12 +214,12 @@ var Rcon = [ [0x00, 0x00, 0x00, 0x00],
              [0x40, 0x00, 0x00, 0x00],
              [0x80, 0x00, 0x00, 0x00],
              [0x1b, 0x00, 0x00, 0x00],
-             [0x36, 0x00, 0x00, 0x00] ]; 
+             [0x36, 0x00, 0x00, 0x00] ];
 
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
 
-/* 
+/*
  * Use AES to encrypt 'plaintext' with 'password' using 'nBits' key, in 'Counter' mode of operation
  *                           - see http://csrc.nist.gov/publications/nistpubs/800-38a/sp800-38a.pdf
  *   for each block
@@ -229,7 +229,7 @@ var Rcon = [ [0x00, 0x00, 0x00, 0x00],
 function AESEncryptCtr(plaintext, password, nBits) {
   if (!(nBits==128 || nBits==192 || nBits==256)) return '';  // standard allows 128/192/256 bit keys
 	
-  // for this example script, generate the key by applying Cipher to 1st 16/24/32 chars of password; 
+  // for this example script, generate the key by applying Cipher to 1st 16/24/32 chars of password;
   // for real-world applications, a more secure approach would be to hash the password e.g. with SHA-1
   var nBytes = nBits/8;  // no bytes in key
   var pwBytes = new Array(nBytes);
@@ -245,14 +245,14 @@ function AESEncryptCtr(plaintext, password, nBits) {
 
   // encode nonce in two stages to cater for JavaScript 32-bit limit on bitwise ops
   for (var i=0; i<4; i++) counterBlock[i] = (nonce >>> i*8) & 0xff;
-  for (var i=0; i<4; i++) counterBlock[i+4] = (nonce/0x100000000 >>> i*8) & 0xff; 
+  for (var i=0; i<4; i++) counterBlock[i+4] = (nonce/0x100000000 >>> i*8) & 0xff;
 
   // generate key schedule - an expansion of the key into distinct Key Rounds for each round
   var keySchedule = KeyExpansion(key);
 
   var blockCount = Math.ceil(plaintext.length/blockSize);
   var ciphertext = new Array(blockCount);  // ciphertext as array of strings
-  
+
   for (var b=0; b<blockCount; b++) {
     // set counter (block #) in last 8 bytes of counter block (leaving nonce in 1st 8 bytes)
     // again done in two stages for 32-bit ops
@@ -260,7 +260,7 @@ function AESEncryptCtr(plaintext, password, nBits) {
     for (var c=0; c<4; c++) counterBlock[15-c-4] = (b/0x100000000 >>> c*8);
 
     var cipherCntr = Cipher(counterBlock, keySchedule);  // -- encrypt counter block --
-    
+
     // calculate length of final block:
     var blockLength = b<blockCount-1 ? blockSize : (plaintext.length-1)%blockSize+1;
 
@@ -288,7 +288,7 @@ function AESEncryptCtr(plaintext, password, nBits) {
 }
 
 
-/* 
+/*
  * Use AES to decrypt 'ciphertext' with 'password' using 'nBits' key, in Counter mode of operation
  *
  *   for each block
@@ -307,7 +307,7 @@ function AESDecryptCtr(ciphertext, password, nBits) {
 
   var keySchedule = KeyExpansion(key);
 
-  ciphertext = ciphertext.split('-');  // split ciphertext into array of block-length strings 
+  ciphertext = ciphertext.split('-');  // split ciphertext into array of block-length string
 
   // recover nonce from 1st element of ciphertext
   var blockSize = 16;  // block size fixed at 16 bytes / 128 bits (Nb=4) for AES

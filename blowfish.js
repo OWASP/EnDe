@@ -51,7 +51,7 @@
 #?      abcdefgh  <-->  3acbc7bcd0f698c6
 #?
 #? VERSION
-#?      @(#) blowfish.js 1.1 11/12/30 21:17:34
+#?      @(#) blowfish.js 3.2 12/06/16 09:49:43
 #?
 #? AUTHOR
 #?      10-jun-10 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -61,8 +61,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.Blowfish   = new function() {
-	this.SID    = '1.1';
-	this.sid	= function() { return('@(#)  blowfish.js 1.1 11/12/30 21:17:34 EnDe.Blowfish'); };
+	this.SID    = '3.2';
+	this.sid    = function() { return('@(#)  blowfish.js 3.2 12/06/16 09:49:43 EnDe.Blowfish'); };
 
 	// ===================================================================== //
 	// public Blowfish functions                                             //
@@ -77,10 +77,10 @@ EnDe.Blowfish   = new function() {
 	this.decrypt    = function(key,src){ var bux = new Blowfish(key); return bux.decrypt(src); };
 	this.EN     = new function() {
 		this.blowfish   = function(key,src) { return EnDe.Blowfish.encrypt(key, src); };
-	};
+	}; // EN
 	this.DE     = new function() {
 		this.blowfish   = function(key,src) { return EnDe.Blowfish.decrypt(key, src); };
-	};
+	}; // DE
 
 	// ===================================================================== //
 	// Blowfish functions                                                    //

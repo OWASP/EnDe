@@ -83,7 +83,7 @@
 #       _n2_, _n3_, _n4_, _n5_, _n6_, and _n7_ .
 #?
 #? VERSION
-#?      @(#) EnDe.js 3.33 12/06/16 12:10:45
+#?      @(#) EnDe.js 3.34 12/06/16 12:17:17
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -96,8 +96,8 @@
 
 var EnDe    = new function() {
 
-this.SID    = '3.33';
-this.sid    = function() { return('@(#) EnDe.js 3.33 12/06/16 12:10:45 EnDe'); };
+this.SID    = '3.34';
+this.sid    = function() { return('@(#) EnDe.js 3.34 12/06/16 12:17:17 EnDe'); };
 
 	// ===================================================================== //
 	// debug functions                                                       //
@@ -725,6 +725,25 @@ this.i2h    = function(type,src) {
 	while (bux.length<kkk) { bux = '0' + bux; }
 	return bux;
 }; // EnDe.i2h
+
+this.c2h    = function(src) {
+//#? convert (Unicode) characters to hex value (string)
+	var bux = '';
+	var i   = 0;
+	var ccc = null;
+	var hex = new Array ("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f");
+	for (i=0; i<src.length; i++) {
+		ccc = src.charCodeAt(i);
+		if (ccc > 255){
+			// convert left byte
+			bux += hex[(ccc>>8) >> 4] + hex[(ccc>>8) & 0xf];
+			ccc &= 0xff;
+			// convert right byte
+		}
+		bux += hex[ccc >> 4] + hex[ccc & 0xf];
+	}
+	return bux;
+}; // EnDe.c2h
 
 this.h2c    = function(src) {
 //#? convert hex value (string) to characters
@@ -3014,6 +3033,7 @@ xxx1Z3A+!Z22ZA7$Z25Z26Z2F()Z3DZ3FZ0DZ0Axxx2Z3A+Z7BZ5BZ5DZ7DZ5CZ60ZB4Z0DZ0Axxx3Z3
 	case 'hexCHR'   : return EnDe.h2c(src);             break;
 	case 'binINT'   : return EnDe.b2i(src);             break;
 	case 'binHEX'   : return EnDe.b2h(src);             break;
+	case 'chrHEX'   : return EnDe.c2h(src);             break;
 	case 'reverse'  : return EnDe.reverse(src);         break;
 	case 'atbash'   : return EnDe.atbash(src);          break;
 	case 'toCP1252' : return this.cp(src);              break;
@@ -4374,6 +4394,7 @@ this.DE     = new function() {
 	case 'hexCHR'   : return EnDe.h2c(src);             break;
 	case 'binINT'   : return EnDe.b2i(src);             break;
 	case 'binHEX'   : return EnDe.b2h(src);             break;
+	case 'chrHEX'   : return EnDe.c2h(src);             break;
 	case 'reverse'  : return EnDe.reverse(src);         break;
 	case 'atbash'   : return EnDe.atbash(src);          break;
 	case 'toCP1252' : return EnDe.EN.cp(src);           break;
@@ -4428,7 +4449,7 @@ this.DE     = new function() {
 // ========================================================================= //
 
 EnDe.Misc = new function() {
-this.sid        = function()  { return('@(#) EnDe.js 3.33 12/06/16 12:10:45 EnDeMisc'); };
+this.sid        = function()  { return('@(#) EnDe.js 3.34 12/06/16 12:17:17 EnDeMisc'); };
 
 	// ===================================================================== //
 	// global variables                                                      //

@@ -9,7 +9,7 @@
 #       Makefile
 #?
 #? VERSION
-#?      @(#) EnDe.css 3.17 11/08/28 10:35:19
+#?      @(#) EnDe.css 3.18 12/06/16 11:40:13
 #?
 #? AUTHOR
 #?      30-may-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -306,19 +306,19 @@ input.button {
 	text-align:     center;
 	border-left:    1px solid #000000;
 }
-.tsttable   { border-spacing: 0px; border-collapse:collapse; }
-.tsttable th { border-bottom: 1px solid #000000;  text-align: right; }
-.tsttable td { border-bottom: 1px solid #000000; }
-.tsttable caption { text-align: left; background: #ffffcf; }
-.tsttable caption { text-align: left; background: #ffffcf; }
+	#	#	#	#	#
+.tsttable   { border-spacing:0px; border-collapse:collapse; }
+.tsttable th { border-bottom:1px solid #000000;  text-align: right; }
+.tsttable td { border-bottom:1px solid #000000; }
+.tsttable caption   { background:#ffffcf; text-align: left; }
+.tsttable caption   { background:#ffffcf; text-align: left; }
 
 /* tables in IP area */
 .iptable th {
 	font-variant:   normal;
 	text-align:     right;
 }
-.iptable td {
-}
+.iptable td { }
 .iptable td input {
 	padding:        0px;
 	width:          12em;
@@ -328,6 +328,13 @@ input.button {
 	width:          3em;
 	background:	#00bfff;
 }
+
+/* tables in TS area */
+table.tstable { border-spacing: 0px; border-collapse:collapse; } 
+table.tstable td { border-right:0px solid black; width:2em; }
+table.tstable th { margin:0px; padding:0px; min-width:4.2em; font-size:10pt; }
+table.tstable td { margin:0px; padding:0px; }
+
 
 /* menu using UL LI DIV BUTTON */
 fieldset>div ul.guess   { background:#f0f0f0; display:inline; margin-top:0px; border-style:outset; border-width:2px; padding-left:0.5em; padding-right:0.5em; }

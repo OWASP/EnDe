@@ -88,7 +88,7 @@
 #?      EnDeGUIx.js, EnDeGUI.js
 #?
 #? VERSION
-#?      @(#) EnDeMenu.txt 3.42 12/06/16 10:23:39
+#?      @(#) EnDeMenu.txt 3.43 12/06/16 10:26:20
 #?
 #? AUTHOR
 #?      09-jun-09 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -396,6 +396,7 @@ item3	intHEX		integer to hex		convert integer (string) value to hex value
 item3	intBIN		integer to binary	convert integer (string) value to binary value
 item3	binINT		binary to integer	convert binary (string) value to integer value
 item3	binHEX		binary to hex		convert binary (string) value to hex value
+item3	chrHEX		character to hex	convert characters to hex (string) value
 
 #------+---------------+-----------------------+------------------------------+
 group	Characters	Characters		various character conversions
@@ -409,6 +410,7 @@ item3	fromCP1252	from CP-1252		convert from Windows CP-1252 to unicode base char
 item3	toDIN66003	to DIN6603		convert ASCII to DIN6603 characters
 item3	fromDIN66003	from DIN6603		convert DIN6603 to ASCII characters
 item3	hexCHR		hex to character	convert hex (string) value to characters
+item3	chrHEX		character to hex	convert characters to hex (string) value
 
 #------+---------------+-----------------------+------------------------------+
 group	Fuzzy		Fuzzy decoding		various fuzzy decosings

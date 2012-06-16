@@ -17,6 +17,8 @@
 #?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="blowfish.js"></SCRIPT>
 #?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="EnDeB64.js"></SCRIPT>
 #?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="EnDeMaps.js"></SCRIPT>
+#?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="EnDeIP.js"></SCRIPT>
+#?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="EnDeTS.js"></SCRIPT>
 #?
 #?      Additional for testing:
 #?      <SCRIPT language="JavaScript1.5" type="text/javascript" src="EnDeTest.js"></SCRIPT>
@@ -80,7 +82,7 @@
 #       _n2_, _n3_, _n4_, _n5_, _n6_, and _n7_ .
 #?
 #? VERSION
-#?      @(#) EnDe.js 3.27 12/04/22 23:42:15
+#?      @(#) EnDe.js 3.32 12/06/04 21:52:10
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -92,16 +94,17 @@
 // ========================================================================= //
 
 var EnDe    = new function() {
-  this.SID      = '3.27';
-  this.sid      = function() { return('@(#) EnDe.js 3.27 12/04/22 23:42:15 EnDe'); };
+
+this.SID    = '3.32';
+this.sid    = function() { return('@(#) EnDe.js 3.32 12/06/04 21:52:10 EnDe'); };
 
 	// ===================================================================== //
 	// debug functions                                                       //
 	// ===================================================================== //
 
-  this.trace    = 0;
-  this.dbx      = function(src,nl) {
-  //#? wrapper for EnDeGUI.dpr()
+this.trace  = 0;
+this.dbx    = function(src,nl) {
+//#? wrapper for EnDeGUI.dpr()
 	if(this.trace<=0) { return false; }
 	if(EnDeGUI.dpr===undefined) {
 /*
@@ -110,24 +113,24 @@ var EnDe    = new function() {
 		return false;
 	}
 	return EnDeGUI.dpr(src,nl);
-  }; // dbx
+}; // EnDe.dbx
 
 	// ===================================================================== //
 	// wrapper functions                                                     //
 	// ===================================================================== //
 
-  this.encode   = function(type,mode,uppercase,src,prefix,suffix,delimiter) { this.EN.dispatch(type,mode,uppercase,src,prefix,suffix,delimiter); };
-  //#? wrapper for EnDe.EN.dispatch()
-  this.decode   = function(type,mode,uppercase,src,prefix,suffix,delimiter) { this.DE.dispatch(type,mode,uppercase,src,prefix,suffix,delimiter); };
-  //#? wrapper for EnDe.DE.dispatch()
-  this.convert  = function(type,mode,uppercase,src,prefix,suffix,delimiter) { this.IP.dispatch(type,mode,uppercase,src,prefix,suffix,delimiter); };
-  //#? wrapper for EnDe.IP.dispatch()
-  this.alert    = function(func,txt) {
+this.encode = function(type,mode,uppercase,src,prefix,suffix,delimiter) { this.EN.dispatch(type,mode,uppercase,src,prefix,suffix,delimiter); };
+//#? wrapper for EnDe.EN.dispatch()
+this.decode = function(type,mode,uppercase,src,prefix,suffix,delimiter) { this.DE.dispatch(type,mode,uppercase,src,prefix,suffix,delimiter); };
+//#? wrapper for EnDe.DE.dispatch()
+this.convert= function(type,mode,uppercase,src,prefix,suffix,delimiter) { this.IP.dispatch(type,mode,uppercase,src,prefix,suffix,delimiter); };
+//#? wrapper for EnDe.IP.dispatch()
+this.alert  = function(func,txt) {
   //#? internal wrapper for alert()
 	// this is the internal function used for delivering messages to the user
 	// ** needs to be adapted to the environment where EnDe object is used **
 	alert('##' + func + ': ' + txt);
-  };
+}; // alert
 
 	// ===================================================================== //
 	// global constants                                                      //
@@ -160,7 +163,7 @@ this.CONST  = new function() {      // ====== wrapper object for constants
 	this.urlReg = /[a-zA-Z0-9\$\_\.\+\!\*\~\(\)\,\&\/\:\;\=\?\@\#\'\-]/;
 	this.meta   = '!"$%&/()=?`{}[]+#*,.;:<>|-_~@\'\\';
 	this.lang   = '\xc4\xe4\xd6\xf6\xdc\xfc\xdf\xe1\xe2\xe3\xe5\xe6\xe7\xe0\xe9\xea\xe8\xe3\xed\xef\xec\xf4\xf2\xfa\xfb\xfc\xf9\xfd\xf1\xf0\xf3\xf5\xf6\xf7\xf8\xfe\xd0\xd1\xd2\xd3\xd4\xd5\xd6\xd7\xd8\xd9\xda\xdb\xdd\xde'; // ToDo: not yet complete ..
-  }; // EnDe.CONST.CHR
+  }; // .CONST.CHR
 
   this.INT      = new function() { // ====== object for integer constants
 	this.sid    = function() { return(EnDe.CONST.sid() + '.INT'); };
@@ -174,7 +177,7 @@ this.CONST  = new function() {      // ====== wrapper object for constants
 	this.MAX63  = this.exp63 - 1;       // 2^63-1   // becomes string in JavaScript!
 	this.exp53  =     9007199254740992; // 2^53     // becomes string in JavaScript!
 	this.MAX53  = this.exp53 - 1;       // 2^53-1
-  }; // EnDe.CONST.INT
+  }; // .CONST.INT
 
   this.CST      = new function() { // ====== object for miscelaneous constants
 	this.sid    = function() { return(EnDe.CONST.sid() + '.CST'); };
@@ -192,7 +195,7 @@ this.CONST  = new function() {      // ====== wrapper object for constants
 	 *   - 30 seconds with blocksize=500
 	 *   - 45 seconds with blocksize=1020
 	 */
-  }; // EnDe.CONST.CST
+  }; // .CONST.CST
 
   this.ESC      = new function() { // ====== object for escape character lists
 	this.JS     = '\'"';
@@ -205,7 +208,7 @@ this.CONST  = new function() {      // ====== wrapper object for constants
 	this.URL    = '';
 	this.XML    = '';
 	*/
-  }; // EnDe.CONST.ESC
+  }; // .CONST.ESC
 
 }; // EnDe.CONST
 
@@ -214,13 +217,13 @@ this.CONST  = new function() {      // ====== wrapper object for constants
 	// ===================================================================== //
 
 this.maxloop= 99999;                // used to avoid time consuming loops
-	/* Some loops force the browser to show an  alert window  or  even crashes 
+	/* Some loops force the browser to show an  alert window  or  even crashes
 	 * the browser. To avoid this, some computations are limited to this size.
 	 */
 
 // index to array of each intMap[n], dupMap[n], a2eMap[n], e2aMap[n], ucsMap[n], etc.
 this.mapInt = 0;                    // integer value (unicode base) of character
-this.mapStd = 1;                    // standard 
+this.mapStd = 1;                    // standard
 this.mapChr = 1;                    // charcter itself (a2eMap, e2aMap)
 this.mapDsc = 2;                    // description of charcter (a2eMap, e2aMap)
 this.mapEty = 2;                    // entity name
@@ -254,7 +257,7 @@ this.pairs['!'] = '!';
 this.pairs['='] = '=';
 
 // HTML Entity Name
-this.intMap     = new Array(256*256);// array of [standard, Entity, Group, Description] 
+this.intMap     = new Array(256*256);// array of [standard, Entity, Group, Description]
 this.ncrMap     = new Array();      // array of char codes
 this.ucsMap     = new Array();
 this.dupMap     = new Array();
@@ -279,7 +282,7 @@ this.ebcdicMap  = new Array(256);   // EBCDIC characters
 this.ebcdicUTF  = new Array(256);   // UTF-EBCDIC characters
 this.romanMap   = new Array(256);   // Mac OS Roman characters
 this.a2rMap     = new Array(256);   // [ASCII] = Mac OS Roman
-this.r2aMap     = new Array(256);   // [Mac OS Roman] = ASCII 
+this.r2aMap     = new Array(256);   // [Mac OS Roman] = ASCII
 this.a2eMap     = new Array(256);   // [ASCII] = EBCDIC
 this.e2aMap     = new Array(256);   // [EBCDIC] = ASCII
 this.spaceMap   = new Array(50);    // all Unicode space characters
@@ -301,7 +304,7 @@ this.b64AdditionalChars = new Array();
 this.rex    = function(src) {
 //#? escape meta characters for RegExp
 	return src.replace(/[\$\&\#\%\.\^\?\*\+\[\]\{\}\(\)\\]/gi,function(c){return '\\'+c;});
-};
+}; // ENDe.rex
 
 this.isBin  = function(src) { return src.match('[^01]') ===null ? true : false; };
 //#? return true if string consist of 0 and 1 characters only
@@ -349,7 +352,11 @@ this.isTyp  = function(type,src) {
 	}
 	return false;
 // ToDo: using if instead of switch would improve performance
-};
+}; // EnDe.isTyp
+
+	// ===================================================================== //
+	// global text utility functions                                         //
+	// ===================================================================== //
 
 this.join   = function(type,mode,_n3_,src,prefix,suffix,delimiter) {
 //#? global replace newlinw or tab character
@@ -366,7 +373,7 @@ this.join   = function(type,mode,_n3_,src,prefix,suffix,delimiter) {
 	var bux = src.replace(rex,ccc);
 	rex = null;
 	return bux;
-};
+}; // EnDe.join
 
 this.split  = function(type,mode,_n3_,src,prefix,suffix,delimiter) {
 //#? global split
@@ -384,7 +391,7 @@ this.split  = function(type,mode,_n3_,src,prefix,suffix,delimiter) {
 	var bux = src.replace(rex,ccc);
 	rex = null;
 	return bux;
-};
+}; // EnDe.split
 
 this.trim   = function(src) {
 //#? trim leading and trailing white spaces
@@ -396,49 +403,247 @@ this.trim   = function(src) {
 		src = src.substring(0, src.length-1);
 	}
 	return src;
-};
+}; // EnDe.trim
 
-this.reverse= function(src) {
-//#? reverse characters in string (mirror sring)
-	var bux = '';
-	var i   = src.length;
-	while (i>0) { i--; bux += src[i]; }
+this.chr2bytes  = function(src) {
+//#? convert (unicode) character to array of 1 or 2 bytes; src is a single character
+	var bux = [];
+	var ccc = src.charCodeAt(0);
+	var c1  = 0, c2 = 0;
+	if (ccc<256) { // 1 byte
+		bux.push(ccc);
+	} else if(ccc<65536) { // 2 bytes
+		c1 = ccc >> 8;
+		c2 = ccc - (c1*256);
+		bux.push(c1);
+		bux.push(c2);
+	} else {     // 3 bytes
+		// ToDo: not supported
+	}
+	ccc = null; c1 = null; c2 = null;
 	return bux;
-};
+}; // EnDe.chr2bytes
 
-this.atbash = function(src) {
-//#? convert plain text to Atbash encoding
+this.str2bytes  = function(src) {
+//#? convert (unicode) character string to array of bytes
+	var bux = [], kkk = [];
+	var i   = 0;
+	if (src.length < EnDe.CONST.CST.blocksize) {
+		/* this case just for documentation how it should be
+		 * but this results in crappy perfromance with JavaScript
+		 * see comment about  EnDe.CONST.CST.blocksize  also */
+		for (i=0; i<src.length; i++) {
+			bux = bux.concat(this.chr2bytes(src[i]));
+		}
+	} else {
+		for (i=0; i<src.length; i++) {
+			kkk = kkk.concat(this.chr2bytes(src[i]));
+			if (kkk.length >= EnDe.CONST.CST.blocksize) { bux = bux.concat(kkk); kkk.length = 0; }
+		}
+		bux = bux.concat(kkk);
+		kkk.length = 0;
+	}
+	return bux;
+}; // EnDe.str2bytes
+
+this.chr2code = function(src) {
+//#? convert plain text to JavaScript char codes (integer of unicode); src is a single character
+// ToDo: this.dez(), this.ncr() and this.ucs() are very similar
 	var bux = '';
-	var ccc = 0;
+	var i   = 0;
+	for (i=0; i<src.length; i++) {
+		bux += src.charCodeAt(i);
+		if (i<(src.length-1)) {
+			bux += ',';
+		}
+	}
+	return bux;
+}; // EnDe.chr2code
+
+this.chr2bin_DoesNotWork = function(type,src) {
+//#? convert character to n-bit binary string; src is a single character; type is number of bits
+	var bux = '';
+	var i   = 0;
+	for (i=(type-1); i>-1; i--) {
+		if (src >= Math.pow(2,i)) {
+			src -= Math.pow(2,i);
+			bin += '1';
+		} else {
+			bin += '0';
+		}
+	}
+	return bux;
+}; // chr2bin_DoesNotWork
+
+this.chr2bin = function(type,src) {
+//#? convert character to n-bit binary string; src is a single character; type is number of bits
+	var bux = '';
+	var i   = 0;
+	for (i=0; i<type; i++) {
+		if (src >= Math.pow(2,(type-1)-i)) {
+			src -= Math.pow(2,(type-1)-i);
+			bux += '1';
+		} else {
+			bux += '0';
+		}
+	}
+	return bux;
+}; // EnDe.chr2bin
+
+this.java2chr = function(src) {
+//#? convert char code to character using java.lang.Character()
+	var bux = '';
+	var i   = 0;
+	while (i<src.length) {
+		bux += java.lang.Character(src.charCodeAt(i));
+		i++;
+	}
+	return bux;
+}; // EnDe.java2chr
+
+this.code2chr = function(src) {
+//#? convert JavaScript char codes (integer of unicode) to plain text
+// ToDo: EnDe.DE.dez() is very similar
+	var bux = '';
+	var ccc = '';
+	var kkk = src.split(',');
+	while ((ccc=kkk.shift())!==undefined) {
+// TODo: loop obsolete wenn die Integer durch , getrennt
+		bux += String.fromCharCode(ccc);
+	}
+	return bux;
+}; // EnDe.code2chr
+
+this.code2prn = function(src) {
+//#? convert JavaScript char code (integer of unicode) to printable (ASCII) character
+/*
+ * src is a single character
+ * NOTE: this is not a real conversion/coding just pretty printing!
+ */
+	var bux = '';
+	var ccc = String.fromCharCode(src);
+	if ((src > 31) && (src <= 127)) {
+		bux += ' ' + ccc;
+	} else if ((src > 127) && (src <= 255)) {
+		bux += ' ' + ccc;
+	} else if ((src > 255) && (src <= 65635)) {
+		bux += ' ' + ccc;
+	} else if ((src > 65635)) {
+		bux += ' ' + ccc;
+	} else {
+		switch(src) {
+		  case 0:   bux += '\\0'; break;
+		  case 7:   bux += '\\b'; break;
+		  case 8:   bux += '\\v'; break;
+		  case 9:   bux += '\\t'; break;
+		  case 10:  bux += '\\n'; break;
+		  case 13:  bux += '\\r'; break;
+		  default:  bux += ' .';  break;
+		}
+	}
+	return bux;
+}; // EnDe.code2prn
+
+this.prn2code = function(src) {
+//#? convert printable (ASCII) character to JavaScript char code (integer of unicode)
+/*
+ * NOTE: this is not a real conversion/coding just pretty printing!
+ */
+	var bux = '';
+	var i   = 0;
+	while (i < src.length) {
+		if (src[i]==='\\') {
+			switch(src[i+1]) {
+			  case '0': bux += '\0'; break;
+			  case 'b': bux += '\b'; break;
+			  case 'h': bux += '\h'; break;
+			  case 'v': bux += '\v'; break;
+			  case 't': bux += '\t'; break;
+			  case 'n': bux += '\n'; break;
+			  case 'r': bux += '\r'; break;
+			  default:  bux += src[i] + src[i+1];  break;
+			}
+			i++;
+		} else {        bux += src[i]; }
+		i++;
+	}
+	return bux;
+}; // EnDe.prn2code
+
+this.chr2prn = function(type,src) {
+//#? convert JavaScript character to printable (ASCII) character, non-printable are \xXX
+//#type? null: convert non-printable to hex (no padding, see EnDe.i2h())
+//#type? 3:    convert non-printable to 3-digit hex (see EnDe.i2h())
+//#type? n:    convert non-printable to n-digit hex (see EnDe.i2h())
+// ToDo: to be integrated into EnDeMenu.js (but concept mssing how to
+//       pass new mode "Straight -> Hex (ASCII only)"
+	var bux = '';
+	var ccc = '';
 	var i   = 0;
 	for (i=0; i<src.length; i++) {
 		ccc = src.charCodeAt(i);
-		if ((64<ccc) && (ccc<91)) {
-			bux += String.fromCharCode((((78-ccc)*2)-1+ccc));
-			continue;
+		if ((ccc > 31) && (ccc <= 127) && (ccc != 92)) { // all except \ (backslash)
+			bux += String.fromCharCode(ccc);
+		} else {
+			bux += '\\x' + EnDe.i2h(type,src.charCodeAt(i));
 		}
-		if ((96<ccc) && (ccc<123)) {
-			bux += String.fromCharCode((((110-ccc)*2)-1+ccc));
-			continue;
-		}
-		bux += src[i];
 	}
+	ccc = '';
 	return bux;
-};
+}; // EnDe.chr2prn
 
-this.xor    = function(src,key) {
-//#? XOR each character with first character from key
-	var bux = '';
-	var xor = key.charCodeAt();
+this.str2bin = function(type,src,prefix,suffix,delimiter) {
+//#? convert string to n-bit binary string; type is number of bits
+	var bux  = '';
 	var i   = 0;
-	for (i=0; i<src.length; i++) {
-		bux += String.fromCharCode(xor^src.charCodeAt(i));
+	for (i=0; i < src.length; i++) {
+		bux += delimiter + prefix + EnDe.chr2bin(type,src.charCodeAt(i).toString()) + suffix;
 	}
+	bux = bux.substring(delimiter.length, bux.length);  // remove leading delimiter
 	return bux;
-};
+}; // EnDe.str2bin
+
+this.str2chr = function(src,prefix,suffix,delimiter) {
+//#? convert string to list of characters with prefix, delimiter and suffix
+	return prefix + src.split('').join(suffix + delimiter + prefix) + suffix
+}; // EnDe.str2chr
+
+this.str2lng = function(src) {
+//#? convert a string to an array of long integers
+	if (typeof(src) == 'number') {
+		// ToDo: not really correct, should depend on strict mode
+		return src;
+	}
+	var len = Math.ceil(src.length/4);
+	var arr = new Array(len);
+	var i   = 0;
+	for (i=0; i<len; i++) {
+// ToDo: * oder >>
+		arr[i] = src.charCodeAt( i*4) +
+				(src.charCodeAt((i*4) + 1)<<8 ) +
+				(src.charCodeAt((i*4) + 2)<<16) +
+				(src.charCodeAt((i*4) + 3)<<24);
+	}
+	return arr;
+}; // EnDe.str2lng
+
+this.lng2str = function(src) {
+//#? convert an array of long integers to a string
+	var arr = new Array(src.length);
+	var i   = 0;
+	for (i=0; i<arr.length; i++) {
+		arr[i] = String.fromCharCode(
+				src[i]      & 0xff,
+				src[i]>>>8  & 0xff,
+				src[i]>>>16 & 0xff,
+				src[i]>>>24 & 0xff
+			);
+	}
+	return arr.join('');
+}; // EnDe.lng2str
 
 	// ===================================================================== //
-	// global en-, decoding functions                                        //
+	// global number convertion functions                                    //
 	// ===================================================================== //
 
 this.z2n    = function(src) {
@@ -451,7 +656,7 @@ this.z2n    = function(src) {
 		}
 	}
 	return bux;
-};
+}; // EnDe.z2n
 
 this.n2z    = function(src) {
 //#? convert numbers (2^32) to negative numbers
@@ -460,7 +665,7 @@ this.n2z    = function(src) {
 		bux = bux - EnDe.CONST.INT.exp32;
 	}
 	return bux;
-};
+}; // EnDe.n2z
 
 this.z2n64  = function(src) {
 //#? convert negative numbers to numbers (2^64)
@@ -473,7 +678,7 @@ this.z2n64  = function(src) {
 		}
 	}
 	return bux;
-};
+}; // EnDe.z2n64
 
 this.n2z64  = function(src) {
 //#? convert numbers (2^64) to negative numbers
@@ -483,14 +688,14 @@ this.n2z64  = function(src) {
 		bux = bux - EnDe.CONST.INT.exp64;
 	}
 	return bux;
-}; // n2z64
+}; // EnDe.n2z64
 
 this.h2i    = function(src) {
 //#? convert hex value (string) to integer
 	var bux = parseInt(src, 16).toString(10);
 	if (isNaN(bux)) { return ''; } // ToDo: depends on mode what to do here
 	return bux;
-}; // h2i
+}; // EnDe.h2i
 
 this.i2h    = function(type,src) {
 //#? convert integer (string) value to hex
@@ -518,7 +723,7 @@ this.i2h    = function(type,src) {
 	}
 	while (bux.length<kkk) { bux = '0' + bux; }
 	return bux;
-}; // i2h
+}; // EnDe.i2h
 
 this.h2c    = function(src) {
 //#? convert hex value (string) to characters
@@ -535,14 +740,14 @@ this.h2c    = function(src) {
 		}
 	}
 	return bux;
-}; // h2c
+}; // EnDe.h2c
 
 this.h2b    = function(src) {
 //#? convert hex value (string) to binary
 	var bux = parseInt(src, 16).toString(2);
 	if (isNaN(bux)) { return ''; } // ToDo: depends on mode what to do here
 	return bux;
-}; // h2b
+}; // EnDe.h2b
 
 this.b2h    = function(src) {
 //#? convert binary value (string) to hex (binary limeted to 2^53)
@@ -554,14 +759,14 @@ this.b2h    = function(src) {
 	 */
 	if ((bux==='1') && (src!=='1')) { return ''; } // ToDo: 2^53 overflow
 	return bux;
-}; // b2h
+}; // EnDe.b2h
 
 this.i2b    = function(src) {
 //#? convert integer (string) value to binary
 	var bux = parseInt(src, 10).toString(2);
 	if (isNaN(bux)) { return ''; } // ToDo: depends on mode what to do here
 	return bux;
-}; // i2b
+}; // EnDe.i2b
 
 this.b2i    = function(src) {
 //#? convert binary value (string) to hex (binary limeted to 2^53)
@@ -570,16 +775,16 @@ this.b2i    = function(src) {
 	if ((bux==='1') && (src!=='1')) { return ''; } // ToDo: 2^53 overflow
 	if (isNaN(bux)) { return ''; } // ToDo: depends on mode what to do here
 	return bux;
-}; // b2i
+}; // EnDe.b2i
 
 this.i2bcd  = function(src) {
 //#? convert digit to BCD code (4 dual digits)
 	var bux = parseInt(src, 10).toString(2);
 	while (bux.length < 4) { bux = '0' + bux; }
 	return bux;
-}; // i2bcd
+}; // EnDe.i2bcd
 
-this.bcd2i    = function(src) {
+this.bcd2i  = function(src) {
 //#? convert BCD code (4 dual digits) to digit
 	if (src.match(/^0+$/)!== null) { return '0'; }
 	var bux = src.replace(/^0/g, '');
@@ -587,7 +792,108 @@ this.bcd2i    = function(src) {
 	if (isNaN(bux)) { return src; }
 	if (bux > 9)    { return src; }
 	return bux;
-}; // bcd2i
+}; // EnDe.bcd2i
+
+	// ===================================================================== //
+	// global symetric en-, decoding functions                               //
+	// ===================================================================== //
+
+this.reverse = function(src) {
+//#? reverse characters in string (mirror sring)
+	var bux = '';
+	var i   = src.length;
+	while (i>0) { i--; bux += src[i]; }
+	return bux;
+}; // EnDe.reverse
+
+this.atbash = function(src) {
+//#? convert plain text to Atbash encoding
+	var bux = '';
+	var ccc = 0;
+	var i   = 0;
+	for (i=0; i<src.length; i++) {
+		ccc = src.charCodeAt(i);
+		if ((64<ccc) && (ccc<91)) {
+			bux += String.fromCharCode((((78-ccc)*2)-1+ccc));
+			continue;
+		}
+		if ((96<ccc) && (ccc<123)) {
+			bux += String.fromCharCode((((110-ccc)*2)-1+ccc));
+			continue;
+		}
+		bux += src[i];
+	}
+	return bux;
+}; // EnDe.atbash
+
+this.a2e    = function(src) {
+//#? convert ASCII to EBCDIC characters
+	var bux = '';
+	var ccc = 0;
+	var i   = 0;
+	for(i=0; i<src.length; i++) {
+		ccc = src.charCodeAt(i);
+		if (ccc > 255) {
+			bux += '[EnDe.a2e: value ('+src[i]+'='+ccc+') out of range]'; // ToDo: depends on mode what to do here
+			continue;
+		}
+		bux += String.fromCharCode(EnDe.a2eMap[ccc]);
+	}
+	return bux;
+}; // EnDe.a2e
+
+this.e2a    = function(src) {
+//#? convert EBCDIC to ASCII characters
+	var bux = '';
+	var ccc = 0;
+	var i   = 0;
+	for(i=0; i<src.length; i++) {
+		ccc = src.charCodeAt(i);
+		if (ccc > 255) {
+			bux += '[EnDe.e2a: value ('+src[i]+'='+ccc+') out of range]'; // ToDo: depends on mode what to do here
+			continue;
+		}
+		bux += String.fromCharCode(EnDe.e2aMap[ccc]);
+	}
+	return bux;
+}; // EnDe.e2a
+
+this.xor    = function(src,key) {
+//#? XOR each character with first character from key
+	var bux = '';
+	var xor = key.charCodeAt();
+	var i   = 0;
+	for (i=0; i<src.length; i++) {
+		bux += String.fromCharCode(xor^src.charCodeAt(i));
+	}
+	return bux;
+}; // EnDe.xor
+
+this.rot    = function(src,key) {
+//#? convert string to rot-N-encoded text (aka Caesar encoding); key is number/position of character: 1..26
+	var bux = '';
+	var kkk = '';
+	var i   = 0;
+	var b;
+	if ((key<1) || (key>26)) { return src; }
+	for(i=0; i<src.length; i++) {
+		kkk = 0;
+		b = src.charCodeAt(i);
+		if (b>96) { kkk = 32; }
+		b -= kkk;
+		if ((b>64) && (b<91)) {
+			b += key;
+			if (b>90) { b -= 26; }
+		}
+		b += kkk;
+		bux += String.fromCharCode(b);
+	}
+	return bux;
+}; // EnDe.rot
+
+	// ===================================================================== //
+	// global convertion functions                                           //
+	// ===================================================================== //
 
 this.dez2hex = function(type,mode,uppercase,src,prefix,suffix,_n7_) {
 //#? convert decimal encoded text to hex encoded text
@@ -602,14 +908,14 @@ this.dez2hex = function(type,mode,uppercase,src,prefix,suffix,_n7_) {
 	var pre = '';
 	var modulo = 2;
 	switch (type) {
-	  case 'null'   : pre = '' ;        modulo = 9999; break; //quick&dirty
+	  case 'null'   : pre = '';         modulo = 9999; break; //quick&dirty
 	  case 'qp2'    : pre = '=';        modulo = 2;    break;
 	  case 'url2'   : pre = '%';        modulo = 2;    break;
 	  case 'url3'   : pre = '%';        modulo = 2;    break;
 	  case 'url4'   : pre = '%';        modulo = 4;    break;
 	  case 'ncr2'   : pre = '&#x';                     break;
 	  case 'ncr4'   : pre = '&#x00';                   break; // ToDo: buggy for chr>255
-	  default       : pre = '' ;        modulo = 9999; break;
+	  default       : pre = '';         modulo = 9999; break;
 	}
 	if(src===0) { return pre + '00'; }
 	var mask = 0xf;
@@ -648,11 +954,11 @@ this.dez2hex = function(type,mode,uppercase,src,prefix,suffix,_n7_) {
 		}
 	}
 	return bux;
-}; // dez2hex
+}; // EnDe.dez2hex
 
-this.h2n        = function(type,mode,uppercase,src,prefix,suffix,delimiter) {
+this.h2n    = function(type,mode,uppercase,src,prefix,suffix,delimiter) {
 //#? convert hex value to its nibble hex values (1-byte values supported only)
-//#type? nibbles: convert hex value to its nibble hex values 
+//#type? nibbles: convert hex value to its nibble hex values
 //#type? nibble1: convert hex value to its first nibble hex value
 //#type? nibble2: convert hex value to its second nibble hex value
 	var bux = '';
@@ -700,322 +1006,39 @@ this.h2n        = function(type,mode,uppercase,src,prefix,suffix,delimiter) {
 	ccc = null;
 	kkk = null;
 	return bux;
-}; // h2n
+}; // EnDe.h2n
 
-this.chr2bytes  = function(src) {
-//#? convert (unicode) character to array of 1 or 2 bytes; src is a single character
-	var bux = [];
-	var ccc = src.charCodeAt(0);
-	var c1  = 0, c2 = 0;
-	if (ccc<256) { // 1 byte
-		bux.push(ccc);
-	} else if(ccc<65536) { // 2 bytes
-		c1 = ccc >> 8;
-		c2 = ccc - (c1*256);
-		bux.push(c1);
-		bux.push(c2);
-	} else {     // 3 bytes
-		// ToDo: not supported
-	}
-	ccc = null; c1 = null; c2 = null;
-	return bux;
-};
-
-this.str2bytes  = function(src) {
-//#? convert (unicode) character string to array of bytes
-	var bux = [], kkk = [];
-	var i   = 0;
-	if (src.length < EnDe.CONST.CST.blocksize) {
-		/* this case just for documentation how it should be
-		 * but this results in crappy perfromance with JavaScript
-		 * see comment about  EnDe.CONST.CST.blocksize  also */
-		for (i=0; i<src.length; i++) {
-			bux = bux.concat(this.chr2bytes(src[i]));
-		}
-	} else {
-		for (i=0; i<src.length; i++) {
-			kkk = kkk.concat(this.chr2bytes(src[i]));
-			if (kkk.length >= EnDe.CONST.CST.blocksize) { bux = bux.concat(kkk); kkk.length = 0; }
-		}
-		bux = bux.concat(kkk);
-		kkk.length = 0;
-	}
-	return bux;
-};
-
-this.chr2code = function(src) {
-//#? convert plain text to JavaScript char codes (integer of unicode); src is a single character
-// ToDo: this.dez(), this.ncr() and this.ucs() are very similar
-	var bux = '';
-	var i   = 0;
-	for (i=0; i<src.length; i++) {
-		bux += src.charCodeAt(i);
-		if (i<(src.length-1)) {
-			bux += ',';
-		}
-	}
-	return bux;
-};
-
-this.chr2bin_DoesNotWork = function(type,src) {
-//#? convert character to n-bit binary string; src is a single character; type is number of bits
-	var bux = '';
-	var i   = 0;
-	for (i=(type-1); i>-1; i--) {
-		if (src >= Math.pow(2,i)) {
-			src -= Math.pow(2,i);
-			bin += '1';
-		} else {
-			bin += '0';
-		}
-	}
-	return bux;
-};
-
-this.chr2bin = function(type,src) {
-//#? convert character to n-bit binary string; src is a single character; type is number of bits
-	var bux = '';
-	var i   = 0;
-	for (i=0; i<type; i++) {
-		if (src >= Math.pow(2,(type-1)-i)) {
-			src -= Math.pow(2,(type-1)-i);
-			bux += '1';
-		} else {
-			bux += '0';
-		}
-	}
-	return bux;
-};
-
-this.java2chr = function(src) {
-//#? convert char code to character using java.lang.Character()
-	var bux = '';
-	var i   = 0;
-	while (i<src.length) {
-		bux += java.lang.Character(src.charCodeAt(i));
-		i++;
-	}
-	return bux;
-};
-
-this.code2chr = function(src) {
-//#? convert JavaScript char codes (integer of unicode) to plain text
-// ToDo: EnDe.DE.dez() is very similar
-	var bux = '';
-	var ccc = '';
-	var kkk = src.split(',');
-	while ((ccc=kkk.shift())!==undefined) {
-// TODo: loop obsolete wenn die Integer durch , getrennt
-		bux += String.fromCharCode(ccc);
-	}
-	return bux;
-};
-
-this.code2prn = function(src) {
-//#? convert JavaScript char code (integer of unicode) to printable (ASCII) character
-/*
- * src is a single character
- * NOTE: this is not a real conversion/coding just pretty printing!
- */
-	var bux = '';
-	var ccc = String.fromCharCode(src);
-	if ((src > 31) && (src <= 127)) {
-		bux += ' ' + ccc;
-	} else if ((src > 127) && (src <= 255)) {
-		bux += ' ' + ccc;
-	} else if ((src > 255) && (src <= 65635)) {
-		bux += ' ' + ccc;
-	} else if ((src > 65635)) {
-		bux += ' ' + ccc;
-	} else {
-		switch(src) {
-		  case 0:   bux += '\\0'; break;
-		  case 7:   bux += '\\b'; break;
-		  case 8:   bux += '\\v'; break;
-		  case 9:   bux += '\\t'; break;
-		  case 10:  bux += '\\n'; break;
-		  case 13:  bux += '\\r'; break;
-		  default:  bux += ' .';  break;
-		}
-	}
-	return bux;
-};
-
-this.prn2code = function(src) {
-//#? convert printable (ASCII) character to JavaScript char code (integer of unicode)
-/*
- * NOTE: this is not a real conversion/coding just pretty printing!
- */
-	var bux = '';
-	var i   = 0;
-	while (i < src.length) {
-		if (src[i]==='\\') {
-			switch(src[i+1]) {
-			  case '0': bux += '\0'; break;
-			  case 'b': bux += '\b'; break;
-			  case 'h': bux += '\h'; break;
-			  case 'v': bux += '\v'; break;
-			  case 't': bux += '\t'; break;
-			  case 'n': bux += '\n'; break;
-			  case 'r': bux += '\r'; break;
-			  default:  bux += src[i] + src[i+1];  break;
-			}
-			i++;
-		} else {        bux += src[i]; }
-		i++;
-	}
-	return bux;
-};
-
-this.chr2prn  = function(type,src) {
-//#? convert JavaScript character to printable (ASCII) character, non-printable are \xXX
-//#type? null: convert non-printable to hex (no padding, see EnDe.i2h())
-//#type? 3:    convert non-printable to 3-digit hex (see EnDe.i2h())
-//#type? n:    convert non-printable to n-digit hex (see EnDe.i2h())
-// ToDo: to be integrated into EnDeMenu.js (but concept mssing how to
-//       pass new mode "Straight -> Hex (ASCII only)"
-	var bux = '';
-	var ccc = '';
-	var i   = 0;
-    for (i=0; i<src.length; i++) {
-        ccc = src.charCodeAt(i);
-		if ((ccc > 31) && (ccc <= 127) && (ccc != 92)) { // all except \ (backslash)
-        	bux += String.fromCharCode(ccc);
-		} else {
-        	bux += '\\x' + EnDe.i2h(type,src.charCodeAt(i));
-		}
-    }
-	ccc = '';
-    return bux;
-};
-
-
-this.str2bin = function(type,_n2_,_n3_,src,prefix,suffix,delimiter) {
-//#? convert string to n-bit binary string; type is number of bits
-	var bux  = '';
-	var i   = 0;
-	for (i=0; i < src.length; i++) {
-		bux += delimiter + prefix + EnDe.chr2bin(type,src.charCodeAt(i).toString()) + suffix;
-	}
-	bux = bux.substring(delimiter.length, bux.length);  // remove leading delimiter
-	return bux;
-};
-
-this.str2chr = function(src,prefix,suffix,delimiter) {
-//#? convert string to list of characters with prefix, delimiter and suffix
-	return prefix + src.split('').join(suffix + delimiter + prefix) + suffix
-};
-
-this.str2lng = function(src) {
-//#? convert a string to an array of long integers
-	if (typeof(src) == 'number') {
-		// ToDo: not really correct, should depend on strict mode
-		return src;
-	}
-	var len = Math.ceil(src.length/4);
-	var arr = new Array(len);
-	var i   = 0;
-	for (i=0; i<len; i++) {
-// ToDo: * oder >>
-		arr[i] = src.charCodeAt( i*4) +
-				(src.charCodeAt((i*4) + 1)<<8 ) +
-				(src.charCodeAt((i*4) + 2)<<16) +
-				(src.charCodeAt((i*4) + 3)<<24) ;
-	}
-	return arr;
-};
-
-this.lng2str = function(src) {
-//#? convert an array of long integers to a string
-	var arr = new Array(src.length);
-	var i   = 0;
-	for (i=0; i<arr.length; i++) {
-		arr[i] = String.fromCharCode(
-				src[i]      & 0xff,
-				src[i]>>>8  & 0xff,
-				src[i]>>>16 & 0xff,
-				src[i]>>>24 & 0xff
-			);
-	}
-	return arr.join('');
-};
-
-this.a2e    = function(src) {
-//#? convert ASCII to EBCDIC characters
-	var bux = '';
-	var ccc = 0;
-	var i   = 0;
-	for(i=0; i<src.length; i++) {
-		ccc = src.charCodeAt(i);
-		if (ccc > 255) {
-			bux += '[EnDe.a2e: value ('+src[i]+'='+ccc+') out of range]'; // ToDo: depends on mode what to do here
-			continue;
-		}
-		bux += String.fromCharCode(EnDe.a2eMap[ccc]);
-	}
-	return bux;
-};
-
-this.e2a    = function(src) {
-//#? convert EBCDIC to ASCII characters
-	var bux = '';
-	var ccc = 0;
-	var i   = 0;
-	for(i=0; i<src.length; i++) {
-		ccc = src.charCodeAt(i);
-		if (ccc > 255) {
-			bux += '[EnDe.e2a: value ('+src[i]+'='+ccc+') out of range]'; // ToDo: depends on mode what to do here
-			continue;
-		}
-		bux += String.fromCharCode(EnDe.e2aMap[ccc]);
-	}
-	return bux;
-};
-
-this.rot   = function(src,key) {
-//#? convert string to rot-N-encoded text (aka Caesar encoding); key is number/position of character: 1..26
-	var bux = '';
-	var kkk = '';
-	var i   = 0;
-	var b;
-	if ((key<1) || (key>26)) { return src; }
-	for(i=0; i<src.length; i++) {
-		kkk = 0;
-		b = src.charCodeAt(i);
-		if (b>96) { kkk = 32; }
-		b -= kkk;
-		if ((b>64) && (b<91)) {
-			b += key;
-			if (b>90) { b -= 26; }
-		}
-		b += kkk;
-		bux += String.fromCharCode(b);
-	}
-	return bux;
-};
 
 	// ===================================================================== //
 	// global encryption, hashing, checksum (CRC) functions                  //
 	// ===================================================================== //
 
-// already done in {aes,md4,md5,sha,crc}.js
-/*
-this.AES    = EnDe.AES;
-this.MD4    = EnDe.MD4;
-this.MD5    = EnDe.MD5;
-this.SHA    = EnDe.SHA;
-this.SHA5   = EnDe.SHA5;
-this.CRC    = EnDe.CRC;
-this.RMD    = EnDe.RMD;
-*/
+//this.AES    = EnDe.AES;     // already done in aes.js
+//this.CRC    = EnDe.CRC;     // already done in crc.js
+//this.MD4    = EnDe.MD4;     // already done in md4.js
+//this.MD5    = EnDe.MD5;     // already done in 5md.js
+//this.SHA    = EnDe.SHA;     // already done in sha.js
+//this.SHA5   = EnDe.SHA5;    // already done in sha512.js
+//this.RMD    = EnDe.RMD;     // already done in rmd.js
+//this.Blowfish= EnDe.CRC;    // already done in blowfish.js
 
 	// ===================================================================== //
 	// global Base64 functions                                               //
 	// ===================================================================== //
 
-/* already done in EnDeB64.js
-this.B64    = EnDe.B64;
-*/
+//this.B64    = EnDe.B64;     // already done in EnDeB64.js 
+
+	// ===================================================================== //
+	// IP functions                                                          //
+	// ===================================================================== //
+
+//this.IP     = EnDe.IP;      // already done in EnDeIP.js
+
+	// ===================================================================== //
+	// Timestamp functions                                                   //
+	// ===================================================================== //
+
+//this.TS     = EnDe.TS;      // already done in EnDeTS.js
 
 	// ===================================================================== //
 	// global Unicode / UTF functions                                        //
@@ -1026,15 +1049,15 @@ this.UCS    = new function() {
   this.dbx      = function(src,nl) { return EnDe.dbx(src,nl); };
 
 /*
-   UCS-2  [0 .. 0xffff]
-   UCS-4  [0 .. 0x7fffffff]
-   UTF-8
-   UTF-16 (aka UCS-2)
-   UTF-32 (aka UCS-4)
-   BOM  - Byte Order Mark
-   BMP  - Basic Multilingual Plane
-   BOCU - Binary Ordered Compression for Unicode
-   SCSU - Standard Compression Scheme for Unicode
+  UCS-2  [0 .. 0xffff]
+  UCS-4  [0 .. 0x7fffffff]
+  UTF-8
+  UTF-16 (aka UCS-2)
+  UTF-32 (aka UCS-4)
+  BOM  - Byte Order Mark
+  BMP  - Basic Multilingual Plane
+  BOCU - Binary Ordered Compression for Unicode
+  SCSU - Standard Compression Scheme for Unicode
  */
 
   // constants/values for BOM (byte order mark)
@@ -1045,66 +1068,66 @@ this.UCS    = new function() {
   this.UTF8     = 'EFBBBF';     // UTF-8
 
 /* invalid code points:
- * D800 to DBFF16 not followed by a value in the range DC00 to DFFF
- * DC00 to DFFF not preceded by a value in the range D800 to DBFF
- * DC00 to DFFF
- * FDD0 to FDEF
- * FFEF to FEFF
- * ---------------
- * Tcl only supports  [0 .. 0xffff] ??
+  D800 to DBFF16 not followed by a value in the range DC00 to DFFF
+  DC00 to DFFF not preceded by a value in the range D800 to DBFF
+  DC00 to DFFF
+  FDD0 to FDEF
+  FFEF to FEFF
+  ---------------
+  Tcl only supports  [0 .. 0xffff] ??
  */
 
 /* invalid code points, surrogate pairs:
- *   UTF-16       UTF-8         UCS-4
- *-----------+--------------+-----------
- * D83F DFFx    F0 9F BF Bx    0001FFFx
- * D87F DFFx    F0 AF BF Bx    0002FFFx
- * D8BF DFFx    F0 BF BF Bx    0003FFFx
- * D8FF DFFx    F1 8F BF Bx    0004FFFx
- * D93F DFFx    F1 9F BF Bx    0005FFFx
- * D97F DFFx    F1 AF BF Bx    0006FFFx
- * ...
- * DBBF DFFx    F3 BF BF Bx    000FFFFx
- * DBFF DFFx    F4 8F BF Bx    0010FFFx
- *-----------+--------------+-----------
- * where   x = E or F
+  UTF-16       UTF-8          UCS-4
+ -----------+--------------+-----------
+  D83F DFFx    F0 9F BF Bx    0001FFFx
+  D87F DFFx    F0 AF BF Bx    0002FFFx
+  D8BF DFFx    F0 BF BF Bx    0003FFFx
+  D8FF DFFx    F1 8F BF Bx    0004FFFx
+  D93F DFFx    F1 9F BF Bx    0005FFFx
+  D97F DFFx    F1 AF BF Bx    0006FFFx
+  ...
+  DBBF DFFx    F3 BF BF Bx    000FFFFx
+  DBFF DFFx    F4 8F BF Bx    0010FFFx
+ -----------+--------------+-----------
+  where   x = E or F
  */
 
 /* invalid code points:
- * 0x0750 0x077F
- * 0x07C0 0x08FF
- * 0x1380 0x139F
- * 0x18B0 0x18FF
- * 0x1980 0x19DF
- * 0x1A00 0x1CFF
- * 0x1D80 0x1DFF
- * 0x2C00 0x2E7F
- * 0x2FE0 0x2FEF
- * 0x31C0 0x31EF
- * 0x9FB0 0x9FFF
- * 0xA4D0 0xABFF
- * 0xD7B0 0xD7FF
- * 0xD800 0xDBFF
- * 0xDC00 0xDFFF
- * 0xFE10 0xFE1F
- * 0x10140 0x102FF
- * 0x104B0 0x107FF
- * 0x10840 0x1CFFF
- * 0x1D200 0x1D2FF
- * 0x1D360 0x1D3FF
- * 0x1D800 0x1FFFF
- * 0x2A6E0 0x2F7FF
- * 0x2FAB0 0x2FFFF
- * 0xE0080 0xE00FF
- * 0xE01F0 0xEFFFF
- * 0xFFFFE 0xFFFFF
+  0x0750 0x077F
+  0x07C0 0x08FF
+  0x1380 0x139F
+  0x18B0 0x18FF
+  0x1980 0x19DF
+  0x1A00 0x1CFF
+  0x1D80 0x1DFF
+  0x2C00 0x2E7F
+  0x2FE0 0x2FEF
+  0x31C0 0x31EF
+  0x9FB0 0x9FFF
+  0xA4D0 0xABFF
+  0xD7B0 0xD7FF
+  0xD800 0xDBFF
+  0xDC00 0xDFFF
+  0xFE10 0xFE1F
+  0x10140 0x102FF
+  0x104B0 0x107FF
+  0x10840 0x1CFFF
+  0x1D200 0x1D2FF
+  0x1D360 0x1D3FF
+  0x1D800 0x1FFFF
+  0x2A6E0 0x2F7FF
+  0x2FAB0 0x2FFFF
+  0xE0080 0xE00FF
+  0xE01F0 0xEFFFF
+  0xFFFFE 0xFFFFF
  */
 
   this.isUCS    = function(src) {
   //#? return true if charcter is valid code point; src is a single character
 // ToDo: EnDe.UCS.isUCS() to be implemented (according above definitions)
 	return false;
-  };
+  }; //isUCS
 
   this.isUTF7   = function(src) {
   //#? return true if charcter is UTF-7 character; src is a single character
@@ -1118,9 +1141,9 @@ this.UCS    = new function() {
 	    || ((bux >= 44) && (bux <= 57))
 	    || ((bux >= 65) && (bux <= 90))
 	    || ((bux >= 97) && (bux <= 122))
-	    ) { return true; }
+	   ) { return true; }
 	return false;
-  };
+  }; // isUTF7
 
   this.isBOM    = function(type,src) {
   //#? dispatcher to check for BOM
@@ -1150,7 +1173,7 @@ this.UCS    = new function() {
 	}
 	if (bbb.length) { bbb.length = 0; }; bbb = null; kkk = null;
 	return (bux == bom);
-  };
+  }; // isBOM
 
   this.getBOM   = function(type) {
   //#? get (character) value for BOM
@@ -1175,7 +1198,7 @@ this.UCS    = new function() {
 		// must be \u to pass 2 bytes, \x will passes 1 byte only !!
 	}
 	return bux;
-  };
+  }; // getBOM
 
   this.str32BE  = function(src) {
   //#? return true if string starts with UTF-32 big-endian BOM
@@ -1219,7 +1242,7 @@ this.UCS    = new function() {
 		}
 	}
 	return bux;
-  };
+  }; // f2h
 
   this.h2f      = function(src) {
   //#? convert halfwidth Unicode to fullwidth Unicode characters
@@ -1236,7 +1259,7 @@ this.UCS    = new function() {
 		}
 	}
 	return bux;
-  };
+  }; // h2f
 
   this.utf16le  = function(src) {
   //#? convert Unicode to UTF-16-LE characters
@@ -1246,7 +1269,7 @@ this.UCS    = new function() {
 		bux += String.fromCharCode(src.charCodeAt(i)&0xff, (src.charCodeAt(i)>>>8)&0xff);
 	}
 	return bux;
-  };
+  }; // utf16le
 
   this.utf16be  = function(src) {
   //#? convert Unicode to UTF-16-BE characters
@@ -1256,7 +1279,7 @@ this.UCS    = new function() {
 		bux += String.fromCharCode((src.charCodeAt(i)>>>8)&0xff, src.charCodeAt(i)&0xff);
 	}
 	return bux;
-  };
+  }; // utf16be
 
   this.utf32le  = function(src) {
   //#? convert Unicode to UTF-32-LE characters
@@ -1287,7 +1310,7 @@ this.UCS    = new function() {
 		bux += '\u0000';
 	}
 	return bux;
-  };
+  }; // utf32le
 
 }; // EnDe.UCS
 
@@ -1378,11 +1401,11 @@ this.IDN    = new function() {
 	var kkk = EnDe.maxloop; // ToDo: pedantic check if someone passes too long strings
 	while ((h<src.length) && (kkk>0)) {
 		kkk--;
-        m = this.MAXINT;
+		m = this.MAXINT;
 		for (x=0; x<src.length; x++){
-                	var c = src.charCodeAt(x);
-                	if ((c>=n) && (c<m)) { m = c; }
-        	}
+			var c = src.charCodeAt(x);
+			if ((c>=n) && (c<m)) { m = c; }
+		}
 		delta += ((m-n) * (h+1));
 		n = m;
 		if (delta>this.MAXINT) { break; } // ToDo: should never happen
@@ -1477,7 +1500,7 @@ this.IDN    = new function() {
 			t  = get_t(k,bias);
 			if (ccc<t) { break; }
 			w *= (this.BASE - t);
-		} 
+		}
 		bias = adapt((i-old), (bux.length+1), (old===0));
 		n   += parseInt(i / (bux.length+1), 10);
 		i    = parseInt(i % (bux.length+1), 10);
@@ -1524,7 +1547,7 @@ this.EN     = new function() {
   //#type? urlc: set high bit in hex encoding (results in %c0 prefix)
   //#type? ncr2: converted hex value prefixed with &#x
   //#type? ncr4: converted hex value prefixed with &#x00
-  //#type? nibbles: convert hex value to its nibble hex values 
+  //#type? nibbles: convert hex value to its nibble hex values
   //#type? nibble1: convert hex value to its first nibble hex value
   //#type? nibble2: convert hex value to its second nibble hex value
 	var bux = '';
@@ -1532,7 +1555,7 @@ this.EN     = new function() {
 	var kkk = '';
 	var i   = 0;
 	switch (type) {
-	  case 'urlc'   : prefix = prefix + '%c0' ; bbb = 128; break; // ToDo: prefix is dirty hack
+	  case 'urlc'   : prefix = prefix + '%c0'; bbb = 128; break; // ToDo: prefix is dirty hack
 	  case 'ncr2'   : suffix = ';' + suffix; break;
 	  case 'ncr4'   : suffix = ';' + suffix; break;
 	  default       : break;   // anything else don't change
@@ -1583,7 +1606,7 @@ this.EN     = new function() {
   //#type? ucs:  converted URL (hex) value prefixed with % (hex values for Unicode character)
   //#type? utf8: converted URL (hex) value prefixed with % (hex values for UTF-8 character)
   //#type? utf8c: set high bit in URL (hex) encoding (results in %c0 prefix)
-  //#type? nibbles: convert URL (hex) value to its nibble hex values 
+  //#type? nibbles: convert URL (hex) value to its nibble hex values
   //#type? nibble1: convert URL (hex) value to its first nibble hex value
   //#type? nibble2: convert URL (hex) value to its second nibble hex value
 // ToDo: check  for RFC conformance
@@ -1644,7 +1667,7 @@ this.EN     = new function() {
 	var i   = 0;
 	switch (type) {
 	  case 'ncr2'   : pre  = '&#'; suffix = ';' + suffix; break;
-	  default       : pre += ''  ;
+	  default       : pre += '';
 			kkk = parseInt(type, 10);
 			if (isNaN(kkk)) { kkk = 2; }
 		break;   // anything else don't change
@@ -1673,7 +1696,7 @@ this.EN     = new function() {
 	var kkk = 0;
 	switch (type) {
 	  case 'null': kkk = 0; break;
-      default    :
+	  default    :
 		kkk = parseInt(type, 10);
 		if (isNaN(kkk)) { kkk = 0; }
 		break;
@@ -1699,8 +1722,8 @@ this.EN     = new function() {
   //#type? 8:    converted 8-digit binary
   /* wrapper for EnDe.str2bin() */
 // ToDo: buggy for chr>255
-	return EnDe.str2bin(type,mode,_n3_,src,prefix,suffix,delimiter);
-  };
+	return EnDe.str2bin(type,src,prefix,suffix,delimiter);
+  }; // bin
 
   this.bcd      = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,delimiter) {
   //#? convert numbers in text to BCD coded numbers
@@ -1714,7 +1737,7 @@ this.EN     = new function() {
 		}
 	}
 	return bux;
-  };
+  }; // bcd
 
   this.aiken    = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,delimiter) {
   //#? convert numbers in text to Aiken coded numbers
@@ -1736,7 +1759,7 @@ this.EN     = new function() {
 		}
 	}
 	return bux;
-  };
+  }; // aiken
 
   this.stibitz  = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,delimiter) {
   //#? convert numbers in text to Stibitz coded numbers
@@ -1758,7 +1781,7 @@ this.EN     = new function() {
 		}
 	}
 	return bux;
-  };
+  }; // stibitz
 
   this.cp   = function(src) {
   //#? convert all characters from unicode base to Windows CP-1252 characters
@@ -1774,7 +1797,7 @@ this.EN     = new function() {
 		}
 	}
 	return bux;
-  };
+  }; // cp
 
   this.dta  = function(src) {
   //#? convert all characters from ASCII to DIN66003 characters
@@ -1795,8 +1818,7 @@ this.EN     = new function() {
 		}
 	}
 	return bux;
-  };
-
+  }; // dta
 
   this.ucs      = function(type,mode,uppercase,src,prefix,suffix,delimiter) {
   //#? convert plain text to Unicode UCS-2 encoded text
@@ -1810,11 +1832,11 @@ this.EN     = new function() {
 	var bux = '';
 	var i   = 0, k = 0;
 	switch (type) {
-	  case 'null':  pre = ''    ; break;
-	  case 'url4':  pre = '%u'  ; break;
+	  case 'null':  pre = '';     break;
+	  case 'url4':  pre = '%u';   break;
 	  case 'ucs4':
-	  case 'IE4':   pre = '\\u' ; break;
-	  default:      pre = '%u'  ; break;
+	  case 'IE4':   pre = '\\u';  break;
+	  default:      pre = '%u';   break;
 	}
 	for (i=0; i<src.length; i++) {
 		len = src.charCodeAt(i).toString(16).length;
@@ -1836,7 +1858,7 @@ this.EN     = new function() {
 		bux = bux.substring(0,bux.length-delimiter.length);
 	}
 	return bux;
-  };
+  }; // ucs
 
   this.utf7     = function(type,_n2_,_n3_,src,_n5_,_n6_,_n7_) {
   //#? convert plain text to UTF-7 encoded text
@@ -1852,7 +1874,7 @@ this.EN     = new function() {
 	function _code2chr(charid) {
 	// return Base64 character from character code //ToDo: replace by proper function from EnDeB64.js
 		var ccc = charid;
-		if      (ccc <= 25) { ccc += 65; } // 
+		if      (ccc <= 25) { ccc += 65; } //
 		else if (ccc <= 51) { ccc += 71; } // 3
 		else if (ccc <= 61) { ccc -= 4;  } // =
 		else if (ccc == 62) { ccc  = 43; } // >
@@ -1872,7 +1894,7 @@ this.EN     = new function() {
 			kkk = src.substring(c1,c2);
 			c1 = c2 - 1;
 			c2 = 0;
-			bux += "+";
+			bux += '+';
 			for (c3=0; kkk.charAt(c3); c3++) {
 				c4 = kkk.charCodeAt(c3);
 				if (c2 != 0) {
@@ -1892,42 +1914,28 @@ this.EN     = new function() {
 		}
 	}
 	return bux;
-  };
+  }; // utf7
 
-  this.utf      = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,_n7_) {
+  this.utf      = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,_n7_) { return bux; };
   //#? dispatcher/wrapper for EnDe.UCS.* calls
- 	return bux;
-  }; // utf
 
-  this.utf16le  = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,_n7_) {
+  this.utf16le  = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,_n7_) { return EnDe.UCS.getBOM('UTF16LE') + EnDe.UCS.utf16le(src); };
   //#? wrapper for EnDe.UCS.utf16le
-  	return EnDe.UCS.getBOM('UTF16LE') + EnDe.UCS.utf16le(src);
-  };
 
-  this.utf16be  = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,_n7_) {
+  this.utf16be  = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,_n7_) { return EnDe.UCS.getBOM('UTF16BE') + EnDe.UCS.utf16be(src); };
   //#? wrapper for EnDe.UCS.utf16be
-  	return EnDe.UCS.getBOM('UTF16BE') + EnDe.UCS.utf16be(src);
-  };
 
-  this.utf16    = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,_n7_) {
+  this.utf16    = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,_n7_) { return EnDe.UCS.utf16be(src); };
   //#? wrapper for EnDe.UCS.utf16be
-  	return EnDe.UCS.utf16be(src);
-  };
 
-  this.utf32le  = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,_n7_) {
+  this.utf32le  = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,_n7_) { return EnDe.UCS.getBOM('UTF32LE') + EnDe.UCS.utf32le(src); };
   //#? wrapper for EnDe.UCS.utf32le
-  	return EnDe.UCS.getBOM('UTF32LE') + EnDe.UCS.utf32le(src);
-  };
 
-  this.utf32be  = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,_n7_) {
+  this.utf32be  = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,_n7_) { return EnDe.UCS.getBOM('UTF32BE') + EnDe.UCS.utf32be(src); };
   //#? wrapper for EnDe.UCS.utf32be
-  	return EnDe.UCS.getBOM('UTF32BE') + EnDe.UCS.utf32be(src);
-  };
 
-  this.utf8bom  = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,_n7_) {
+  this.utf8bom  = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,_n7_) { return EnDe.UCS.getBOM('UTF8') + this.utf8(_n1_,_n2_,_n3_,src,_n5_,_n6_,_n7_); };
   //#? convert plain text to UTF-8 encoded text with BOM
-  	return EnDe.UCS.getBOM('UTF8') + this.utf8(_n1_,_n2_,_n3_,src,_n5_,_n6_,_n7_);
-  };
 
   this.utf8     = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,_n7_) {
   //#? convert plain text to UTF-8 encoded text
@@ -1946,7 +1954,7 @@ this.EN     = new function() {
 	var bux = '';
 	var c   = 0;
 	var i   = 0;
-	src = src.replace(/\r\n/g,"\n");
+	src = src.replace(/\r\n/g, '\n');
 	for(i=0; i<src.length; i++) {
 		c=src.charCodeAt(i);
 		if (c<128) { // 1 byte: 0x00 - 0x7F
@@ -1961,13 +1969,10 @@ this.EN     = new function() {
 		}
 	}
 	return bux;
-  };
+  }; // utf8
 
-  this.f2h      = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,_n7_) {
-  //#? convert fullwidth Unicode to halfwidth Unicode characters
-  /* wrapper for EnDe.UCS.f2h() */
-	return EnDe.UCS.f2h(src);
-  };
+  this.f2h      = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,_n7_) { return EnDe.UCS.f2h(src); };
+  //#? convert fullwidth Unicode to halfwidth Unicode characters; wrapper for EnDe.UCS.f2h()
 
   this.h2f      = function(type,mode,uppercase,src,_n5_,_n6_,_n7_) {
   //#? convert halfwidth Unicode to fullwidth Unicode characters (UTF-16, 2 bytes)
@@ -1979,7 +1984,7 @@ this.EN     = new function() {
 	  default       : return EnDe.UCS.h2f(src);
 	}
 	return ''; // fallback, never reached but keeps lint quiet
-  };
+  }; // h2f
 
   this.ncr      = function(type,mode,uppercase,src,prefix,suffix,delimiter) {
   //#? convert plain text to named/numbered HTML-Entity
@@ -2046,7 +2051,7 @@ this.EN     = new function() {
 			case 'css'  : bux += pre + EnDe.dez2hex('null','lazy',uppercase,ccc,'','','') + suffix + delimiter;break;
 			case 'dez'  : bux += pre + ccc + suffix + delimiter;                    break;
 			default     : bux += src.charAt(i); break;
-			//default     : bux += "[invalid type '" + type + "']";                   break; // ToDo: depends on mode
+		    //default     : bux += '[EnDe.DE.ncr: invalid type "' + type + '"]';      break; // ToDo: depends on mode
 			}
 		}
 	}
@@ -2054,20 +2059,14 @@ this.EN     = new function() {
 	return bux;
   }; // ncr
 
-  this.toCode   = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,_n7_) {
+  this.toCode   = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,_n7_) { return EnDe.chr2code(src); };
   //#? wrapper for EnDe.chr2code()
-	return EnDe.chr2code(src);
-  };
 
-  this.fromCode = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,_n7_) {
+  this.fromCode = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,_n7_) { return EnDe.code2chr(src); };
   //#? wrapper for EnDe.code2chr()
-	return EnDe.code2chr(src);
-  };
 
-  this.fromJava = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,_n7_) {
+  this.fromJava = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,_n7_) { return EnDe.java2chr(src); };
   //#? wrapper for EnDe.java2chr()
-	return EnDe.java2chr(src);
-  };
 
   this.xml      = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,_n7_) {
   //#? convert plain text to XML-escaped text
@@ -2086,7 +2085,7 @@ this.EN     = new function() {
 	}
 	ccc = null;
 	return bux;
-  };
+  }; // xml
 
   this.esc      = function(type,_n2_,uppercase,src,_n5_,_n6_,_n7_) {
   //#? convert plain text to escaped text
@@ -2126,11 +2125,11 @@ this.EN     = new function() {
 		break;
 	}
 	return bux;
-  };
+  }; // esc
 
 /* irgendwas falsch hier
 	darum ist der "ByteCount" am Zeilenanfang auch nicht implementiert
-  this.uuChars  = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/";
+  this.uuChars  = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/';
   this.uu_DoesNotWork       = function(src) {
   //#? **trash**
 	var bux = '';
@@ -2144,7 +2143,7 @@ this.EN     = new function() {
 			this.uuChars[ n      & 0x3f];
 	}
 	return bux;
-  };
+  }; // uu_DoesNotWork
 */
 
   this.uu       = function(type,mode,_n3_,src,prefix,suffix,delimiter) {
@@ -2152,7 +2151,7 @@ this.EN     = new function() {
   //#type? null:
   //#type? raw:  convert UUencode without prefix and suffix
   //#type? all:  convert all characters
-  //# type? user: 
+  //# type? user:
 	var bux = '';
 	var pad = 0;
 	var i   = 0;
@@ -2179,7 +2178,7 @@ this.EN     = new function() {
 	if (type!=='raw') {
 // ToDo: padd count wrong
 		while (pad<52) { bux += delimiter; pad++; } // add padding
-		if (pad ===52) { bux += '\n' }
+		if  (pad===52) { bux += '\n' }
 		bux  = bux.replace(/ /g, delimiter);
 		bux  = prefix    + bux;   // begin line
 		bux += delimiter + '\n';  // final empty line
@@ -2187,7 +2186,7 @@ this.EN     = new function() {
 	}
 	c1 = null; c2 = null; c3 = null;
 	return bux;
-  };
+  }; // uu
 
   this.qp       = function(type,mode,_n3_,src,_n5_,_n6_,_n7_) {
   //#? convert plain text to quoted printable text
@@ -2209,15 +2208,15 @@ this.EN     = new function() {
 					len = 2;
 					continue;
 				}
-				if ( ccc==='\n') { bux += '\n'; len = 1; continue; }
-				if ( ccc==='\t') { ccc  = '\t'; }
+				if (ccc==='\n') { bux += '\n'; len = 1; continue; }
+				if (ccc==='\t') { ccc  = '\t'; }
 			} else {
 				ccc = EnDe.dez2hex('qp2',mode,true,src.charCodeAt(i),'','','');
 			}
 		}
 		// 9 and 32 as is but not at last char in line
 		if (((ccc===' ') || (ccc==='\t')) && (len===76)) { len++; }
-                len += ccc.length;
+		len += ccc.length;
 		if (len > 76) {
 			bux += '=\r\n';
 			len = ccc.length;
@@ -2306,7 +2305,7 @@ this.EN     = new function() {
 	}
 	bux = bux.substring(0,bux.length-1); // strip off trailung space
 	return bux;
-  };
+  }; // sos
 
   this.baudot   = function(_n1_,mode,_n3_,src,_n5_,_n6_,delimiter) {
   //#? convert to Baudot characters
@@ -2350,7 +2349,7 @@ this.EN     = new function() {
 	}
 	bux = bux.substring(0,bux.length-1); // strip off trailung space
 	return bux;
-  };
+  }; // baudot
 
   this.braille  = function(type,mode,_n3_,src,prefix,_n6_,delimiter) {
   //#? convert to Braille characters
@@ -2394,7 +2393,7 @@ this.EN     = new function() {
 				bbb[3] += prefix + '    ';
 			}
 		}
-		// force line break 
+		// force line break
 		if ((bbb[1].length % 75)<(3+prefix.length)) { // ToDo: replace hardcoded value
 			bux += bbb[0] + '\n' + bbb[1] + '\n' + bbb[2] + '\n' + bbb[3] + '\n';
 			bbb[0] = ''; bbb[1] = ''; bbb[2] = ''; bbb[3] = '';
@@ -2413,7 +2412,7 @@ this.EN     = new function() {
 	for (i=0; i<src.length; i++) {
 		ccc = src.charAt(i);
 		if (/^[0-9]$/.test(ccc)===true) {
-			bux+= EnDe.BladeMap[ccc];
+			bux += EnDe.BladeMap[ccc];
 		} else {
 			bux += ccc;
 		}
@@ -2495,7 +2494,7 @@ this.EN     = new function() {
   //#type? ODx: od -x style big endian
   //#type? xOD: od -x style little endian
 	function _hex (src) {
-	    var _x = parseInt(src, 10).toString(16);
+		var _x = parseInt(src, 10).toString(16);
 		var _z = 0;
 		for (_z=_x.length; _z<8; _z++) { _x = '0' + _x; }
 		return _x;
@@ -2564,7 +2563,7 @@ this.EN     = new function() {
   this.crc      = function(type,mode,uppercase,src,iv,mask,polynom) {
   //#? wrapper for CRC functions
 	var bux = '';
-	//#dbx this.dbx('.EN.crc( ' + type + ', ' + iv + ', ' + mask + ', ' + polynom + ')');
+	//#dbx this.dbx('.EN.crc(' + type + ', ' + iv + ', ' + mask + ', ' + polynom + ')');
 	// iv, mask and polynom may be passed as integer or string
 	// convert to integer values if it is a string, ignore leading \x or 0x
 	if ((typeof   iv).match(/number/i)===null) { iv   = parseInt(iv.replace(/(^[\\0]x)/g,  ''), 16); }
@@ -2591,11 +2590,11 @@ this.EN     = new function() {
 	  case 'h32':   bux  = EnDe.CRC.dispatch('C32tab',src,iv,mask,polynom); break;
 	}
 // ToDo: support raw, hex and base64
-	bux = EnDe.i2h( 2, EnDe.z2n(bux) );
+	bux = EnDe.i2h(2, EnDe.z2n(bux));
 	if (uppercase===true) {
-		bux = EnDe.Text.UC(bux);  // ToDo: ersetzen durch .toUpperCase() um Abhaengigkeiten zu vermeiden
+		bux = bux.toUpperCase();
 	} else {
-		bux = EnDe.Text.LC(bux);  // ToDo: ersetzen durch .toLowerCase() um Abhaengigkeiten zu vermeiden
+		bux = bux.toLowerCase();
 	}
 	return bux;
   }; // crc
@@ -2612,7 +2611,7 @@ this.EN     = new function() {
 	  case 'hraw':  return EnDe.MD4.str_hmac_md4(key, src); break;
 	}
 	return null; // ToDo: internal error
-  };
+  }; // md4
 
   this.md5      = function(type,mode,uppercase,src,prefix,key,delimiter) {
   //#? wrapper for str_md5()
@@ -2626,7 +2625,7 @@ this.EN     = new function() {
 	  case 'hraw':  return EnDe.MD5.str_hmac_md5(key, src); break;
 	}
 	return null; // ToDo: internal error
-  };
+  }; // md5
 
   this.sha      = function(type,mode,uppercase,src,prefix,key,delimiter) {
   //#? wrapper for sha1()
@@ -2640,7 +2639,7 @@ this.EN     = new function() {
 	  case 'hraw':  return EnDe.SHA.sha1.hmac.str(key, src);break;
 	}
 	return null; // ToDo: internal error
-  };
+  }; // sha
 
   this.sha256   = function(type,mode,uppercase,src,prefix,key,delimiter) {
   //#? wrapper for sha2()
@@ -2651,7 +2650,7 @@ this.EN     = new function() {
 	  case 'raw':   return EnDe.SHA.sha2.str(src);          break;
 	}
 	return null; // ToDo: internal error
-  };
+  }; // sha256
 
   this.sha384   = function(type,mode,uppercase,src,prefix,key,delimiter) {
   //#? wrapper for sha384()
@@ -2660,7 +2659,7 @@ this.EN     = new function() {
 	  case 'hex'  : return EnDe.SHA5.hex_sha(src,'SHA-384'); break;
 	}
 	return null; // ToDo: internal error
-  };
+  }; // sha384
 
   this.sha512   = function(type,mode,uppercase,src,prefix,key,delimiter) {
   //#? wrapper for sha512()
@@ -2669,14 +2668,14 @@ this.EN     = new function() {
 	  case 'hex'  : return EnDe.SHA5.hex_sha(src,'SHA-512'); break;
 	}
 	return null; // ToDo: internal error
-  };
+  }; // sha512
 
   this.blowfish = function(type,mode,uppercase,src,prefix,key,delimiter) {
   //#? wrapper for blowfish()
 	var bux = EnDe.Blowfish.EN.blowfish(key, src); // returns uppercase
 	if (uppercase===false) { return bux.toLowerCase(); }
 	return bux;
-  };
+  }; // blowfish
 
   this.aes      = function(type,mode,uppercase,src,prefix,key,delimiter) {
   //#? wrapper for AES(); uppercase parameter is escCtl (see aes.js)
@@ -2687,7 +2686,7 @@ this.EN     = new function() {
 	  case 'b256':  return EnDe.AES.EN.aes(key, src, 256);  break;
 	}
 	return null; // ToDo: internal error
-  };
+  }; // aes
 
   this.rmd      = function(type,mode,uppercase,src,_n5_,key,delimiter) {
   //#? wrapper for gen_otp_rmd160(); delimiter is the number of iterations
@@ -2708,7 +2707,7 @@ this.EN     = new function() {
 		}
 	}
 	return null; // ToDo: internal error
-  };
+  }; // rmd
 
   this.tea      = function(type,mode,uppercase,src,prefix,key,delimiter) {
   //#? encrypt a string using the Block Tiny Encryption Algorithm
@@ -2750,7 +2749,7 @@ this.EN     = new function() {
 		}
 	}
 	return escNoASCII(type,EnDe.lng2str(bux));
-  };
+  }; // tea
 
   this.yenc     = function(type,mode,uppercase,src,prefix,key,delimiter) {
   //#? yEncode
@@ -2773,16 +2772,16 @@ this.EN     = new function() {
 		// >(1.2) Careful writers of encoders will encode TAB (09h) SPACES (20h)
 		// >if they would appear in the first or last column of a line.
 		// >Implementors who write directly to a TCP stream will care about the
-		// doubling of dots in the first column - or also encode a DOT in the 
+		// doubling of dots in the first column - or also encode a DOT in the
 		// first column.
 		//
-// ToDo: 
+// ToDo:
 		// A typical header line should look similar to this:
 		// =ybegin line=128 size=123456 name=mybinary.dat
 		// =yend size=123456
 	}
 	return bux;
-  };
+  }; // yenc
 
   this.rsaz     = function(type,mode,uppercase,src,prefix,key,delimiter) {
   //#? **not yet implemented**
@@ -2997,22 +2996,26 @@ xxx1Z3A+!Z22ZA7$Z25Z26Z2F()Z3DZ3FZ0DZ0Axxx2Z3A+Z7BZ5BZ5DZ7DZ5CZ60ZB4Z0DZ0Axxx3Z3
 	case 'chr'      : return this.chr(   type, mode, uppercase, src, prefix, suffix, delimiter); break;
 	case 'copy'     : return src;                       break;
 	default         :
+//	case 'base*'    :
 		if (/^base/.test(type)===true) { // Base-XX has its own disptcher
+			this.dbx('.EN.dispatch: .B64.EN.dispatch('+type+', ...)');
 			return EnDe.B64.EN.dispatch( type, mode, uppercase, src, prefix, '', delimiter );
 			break;
 		}
 		// try some other functions, they return null if not available
+		this.dbx('.EN.dispatch: .User.EN.dispatch('+type+', ...)');
 		var bux = null;
 		bux = EnDe.User.EN.dispatch( type, mode, uppercase, src, prefix, suffix, delimiter );
 		if (bux!==null) { return bux; }
 // ToDo: no alert() here 'cause EnDeTest.test()
 /*
-		EnDe.alert('EnDe.EN.dispatch',"unknown '"+type+"'"); return '';
+		EnDe.alert('EnDe.EN.dispatch','unknown "'+type+'"'); return '';
 */
 		break;
 	}
 	return ''; // ToDo: internal error
-  };
+  }; // dispatch
+
  }; // EnDe.EN
 
 	// ===================================================================== //
@@ -3040,7 +3043,7 @@ this.DE     = new function() {
 		// no special check if suffix (trailing characters) is given
 		if (src.charAt(i) == '%') {
 			// bux += unescape(src.charAt(i) + src.charAt(i+1) + src.charAt(i+2));
-			//         here---/^^^^^ mozilla fails 
+			//         here---/^^^^^ mozilla fails
 			ccc = parseInt(src.charAt(i+1) + src.charAt(i+2), 16);
 // ToDo: utf8c
 			/*
@@ -3057,7 +3060,7 @@ this.DE     = new function() {
 		}
 	}
 	if (type==='utf8') {
-  		return this.utf8('','',bux,'','','');
+		return this.utf8('','',bux,'','','');
 		/* this is just a shortcut for  this.utf8(... this.url(... src, ...), ...)
 		 * it was added to have a symetric decoding for urlUTF8
 		 */
@@ -3114,10 +3117,10 @@ this.DE     = new function() {
 	  case 'oct': kkk =  8; break;
 	  case 'dez': kkk = 10; break;
 	  case 'hex': kkk = 16; break;
-	  default   : return '[DE.num: unknown type "'+type+'"]'; break; // ToDo: depends on mode what to return here
+	  default   : return '[EnDe.DE.num: unknown type "'+type+'"]'; break; // ToDo: depends on mode what to return here
 	}
 	if ((p<=0) && (s<=0) && (d<=0)) { // no prefix, suffix and delimiter
-		if (len<=0) { return '[DE.num: illegal length "'+len+'"]'; } // ToDo: depends on mode what to return here
+		if (len<=0) { return '[EnDe.DE.num: illegal length "'+len+'"]'; } // ToDo: depends on mode what to return here
 	} else { // some kind of separation allows variable length numeric strings
 		len = 0; // don't need it anymore
 		// "numeric string" looks like:  prefixHHHHsuffixdelimiter
@@ -3148,7 +3151,7 @@ this.DE     = new function() {
 	while (j<src.length) {
 		x++;
 		if(x>EnDe.maxloop){
-			bux += '[DE.num: input too large (>' + EnDe.maxloop + '); aborted]';
+			bux += '[EnDe.DE.num: input too large (>' + EnDe.maxloop + '); aborted]';
 			break;
 		}
 		ccc = '';
@@ -3169,7 +3172,7 @@ this.DE     = new function() {
 			// EnDe.intMap[num][EnDe.mapInt] // ToDo: implement other mappings
 			bux += String.fromCharCode(num);
 		} else {
-			bux += '[DE.num: value ('+ccc+'='+num+')out of range]'; // ToDo: depends on mode what to do here
+			bux += '[EnDe.DE.num: value ('+ccc+'='+num+')out of range]'; // ToDo: depends on mode what to do here
 		}
 		j += s;  // skip trailing characters
 		j += d;  // skip delimiters
@@ -3199,7 +3202,7 @@ this.DE     = new function() {
 	var ccc = '';
 	var kkk = null;
 	if (delimiter.length>0) {
-		if (src.match(new RegExp( EnDe.rex(delimiter) + '$',''))===null) {
+		if (src.match(new RegExp(EnDe.rex(delimiter) + '$',''))===null) {
 			src += delimiter; // add delimiter so that following split works
 		}
 		kkk = src.split(suffix+delimiter);
@@ -3213,7 +3216,7 @@ this.DE     = new function() {
 	  case 'hex': // no break
 	  case 'hex2':len =  2; typ = 'hex'; break;
 	  case 'hex4':len =  4; typ = 'hex'; break;
-	  default   : return '[DE.numstr: unknown type "'+type+'"]'; break; // ToDo: internal error: depends on mode what to return here
+	  default   : return '[EnDe.DE.numstr: unknown type "'+type+'"]'; break; // ToDo: internal error: depends on mode what to return here
 	}
 	var x   = 0;
 	while ((ccc=kkk.shift())!==undefined) {
@@ -3251,7 +3254,7 @@ this.DE     = new function() {
 	  case 'ucs4': prefix = '\\u'; len = 4; break;
 	  case 'ncr2': prefix = '&#x'; len = 2; suffix = ';' + suffix; break;
 	  case 'ncr4': prefix = '&#x'; len = 4; suffix = ';' + suffix; break; // &#x00
-      default    :
+	  default    :
 		len = parseInt(type, 10);    // got 2, 3, ... 7
 		if (isNaN(len)) { len = 2; } // fall back
 		break;
@@ -3265,16 +3268,16 @@ this.DE     = new function() {
 	var len = 0;
 	switch(type) {
 	  case 'null'   : prefix = '';    break;
-	  case 'ncr0'   : prefix = '&#'; suffix = ''          ; break; // &#DD
+	  case 'ncr0'   : prefix = '&#'; suffix = '';           break; // &#DD
 	  case 'ncr2'   : prefix = '&#'; suffix = ';' + suffix; break; // &#DD;
 	  case 'ncr4'   : prefix = '&#'; suffix = ';' + suffix; break; // &#00DD;
-      default    :
+	  default    :
 		len = parseInt(type, 10);    // got 2, 3, ... 7
 		if (isNaN(len)) { len = 2; } // fall back
 		break;
 	}
 	return this.num('dez',mode,src,prefix,suffix,delimiter,len);
-  };
+  }; // dez
 
   this.oct      = function(type,mode,src,prefix,suffix,delimiter) {
   //#? convert octal-based encoded text to plain text
@@ -3282,13 +3285,13 @@ this.DE     = new function() {
 	var len = 0;
 	switch(type) {
 	  case 'null': len = 3; break;
-      default    :
+	  default    :
 		len = parseInt(type, 10);    // got 2, 3, ... 7
 		if (isNaN(len)) { len = 3; } // fall back
 		break;
 	}
 	return this.num('oct',mode,src,prefix,suffix,delimiter,len);
-  };
+  }; // oct
 
   this.bin      = function(type,mode,src,prefix,suffix,delimiter) {
   //#? convert binary-based encoded text to plain text
@@ -3300,13 +3303,13 @@ this.DE     = new function() {
 		bux += String.fromCharCode(parseInt(ccc, 2));
 	}
 	return bux;
-  };
+  }; // bin
 
   this.bcd      = function(_n1_,_n2_,src,_n5_,_n6_,delimiter) {
   //#? convert BCD coded numbers to digits
 	var rex = new RegExp('([01]{4}' + delimiter + '?)', 'g');
 	return src.replace(rex, function(c) { return EnDe.bcd2i(c); });
-  };
+  }; // bcd
 
   this.aiken    = function(_n1_,_n2_,src,_n5_,_n6_,delimiter) {
   //#? convert Aiken coded numbers in text to digits
@@ -3330,7 +3333,7 @@ this.DE     = new function() {
 	};
 	var rex = new RegExp('([01]{4})' + delimiter + '?', 'g');
 	return src.replace(rex, function(c,d) { return _todigit(d); });
-  };
+  }; // aiken
 
   this.stibitz  = function(_n1_,_n2_,src,_n5_,_n6_,delimiter) {
   //#? convert Stibitz coded numbers in text to digits
@@ -3353,7 +3356,7 @@ this.DE     = new function() {
 	};
 	var rex = new RegExp('([01]{4})' + delimiter + '?', 'g');
 	return src.replace(rex, function(c,d) { return _todigit(d); });
-  };
+  }; // stibitz
 
   this.cp   = function(src) {
   //#? convert all characters from Windows CP-1252 to unicode base characters
@@ -3369,7 +3372,7 @@ this.DE     = new function() {
 		}
 	}
 	return bux;
-  };
+  }; // cp
 
   this.dta  = function(src) {
   //#? convert all characters from DIN66003 to ASCII characters
@@ -3386,7 +3389,7 @@ this.DE     = new function() {
 		}
 	}
 	return bux;
-  };
+  }; // dta
 
   this.utf7     = function(_n1_,_n2_,src,_n5_,_n6_,_n7_) {
   //#? convert UTF-7 encoded text to plain text
@@ -3409,7 +3412,7 @@ this.DE     = new function() {
 		if (src.charAt(u1)!=='+') {
 			bux += src.charAt(u1);
 		} else if (src.charAt(u1+1) && (src.charAt(u1+1)==='-')) {
-			bux += "+";
+			bux += '+';
 			u1++;
 		} else {
 			for (u2=u1; src.charAt(u2) && EnDe.B64.isB64(src.charAt(u2)); u2++);
@@ -3433,11 +3436,11 @@ this.DE     = new function() {
 		}
 	}
 	return bux;
-  };
+  }; // utf7
 
   this.utf8     = function(_n1_,_n2_,src,_n5_,_n6_,_n7_) {
   //#? convert UTF-8 encoded text to plain text
-	var bux = "";
+	var bux = '';
 	var i  = 0;
 	var c  = 0, c1 = 0, c2 = 0;
 	while(i<src.length) {
@@ -3457,19 +3460,13 @@ this.DE     = new function() {
 		}
 	}
 	return bux;
-  };
+  }; // utf8
 
-  this.f2h      = function(_n1_,_n2_,src,_n5_,_n6_,_n7_) {
-  //#? convert fullwidth Unicode to halfwidth Unicode characters
-  /* wrapper for EnDe.UCS.f2h() */
-	return EnDe.UCS.f2h(src);
-  };
+  this.f2h      = function(_n1_,_n2_,src,_n5_,_n6_,_n7_) { return EnDe.UCS.f2h(src); };
+  //#? convert fullwidth Unicode to halfwidth Unicode characters; wrapper for EnDe.UCS.f2h()
 
-  this.h2f      = function(_n1_,_n2_,src,_n5_,_n6_,_n7_) {
-  //#? convert halfwidth Unicode to fullwidth Unicode characters
-  /* wrapper for EnDe.UCS.h2f() */
-	return EnDe.UCS.h2f(src);
-  };
+  this.h2f      = function(_n1_,_n2_,src,_n5_,_n6_,_n7_) { return EnDe.UCS.h2f(src); };
+  //#? convert halfwidth Unicode to fullwidth Unicode characters; wrapper for EnDe.UCS.h2f()
 
   this.ncr      = function(type,mode,src,prefix,suffix,delimiter) {
   //#? convert named HTML-Entity to plain text
@@ -3528,26 +3525,20 @@ this.DE     = new function() {
 			rex = null;
 		}
 		break;
-	  default      : bux += "[invalid type '" + type + "']"; ; break; // ToDo: depends on mode
+	  default      : bux += '[EnDe.DE.ncr: invalid type "' + type + '"]'; break; // ToDo: depends on mode
 	}
 	rex = null; str = null;
 	return bux;
-  };
+  }; // ncr
 
-  this.toCode   = function(type,mode,src,prefix,suffix,delimiter) {
+  this.toCode   = function(type,mode,src,prefix,suffix,delimiter) { return EnDe.chr2code(src); };
   //#? wrapper for EnDe.chr2code()
-	return EnDe.chr2code(src);
-  };
 
-  this.fromCode = function(type,mode,src,prefix,suffix,delimiter) {
+  this.fromCode = function(type,mode,src,prefix,suffix,delimiter) { return EnDe.code2chr(src); };
   //#? wrapper for EnDe.code2chr()
-	return EnDe.code2chr(src);
-  };
 
-  this.fromJava = function(type,mode,src,prefix,suffix,delimiter) {
+  this.fromJava = function(type,mode,src,prefix,suffix,delimiter) { return EnDe.java2chr(src); };
   //#? wrapper for EnDe.java2chr()
-	return EnDe.java2chr(src);
-  };
 
   this.xml      = function(_n1_,_n2_,src,_n5_,_n6_,_n7_) {
   //#? convert XML encoded text to plain text
@@ -3565,7 +3556,7 @@ this.DE     = new function() {
 	}
 	rex = null;
 	return bux;
-  };
+  }; // xml
 
   this.esc      = function(type,_n2_,src,_n5_,_n6_,_n7_) {
   //#? convert enscaped text to plain text
@@ -3593,7 +3584,7 @@ this.DE     = new function() {
 	  case 'escJava':   bux = this.esc('escCSS','',src,'','','').replace(/\\"/g, '"').replace(/\\\\/g, '\\'); break;
 	}
 	return bux;
-  };
+  }; // esc
 
   this.uu       = function(type,mode,src,prefix,suffix,delimiter) {
   //#? convert UUencode text to plain text; delimiter is the padding character
@@ -3657,7 +3648,7 @@ this.DE     = new function() {
 	for (i=0; i<src.length; ++i) {
 		ccc = src.charCodeAt(i) - 0x20;
 		bnv = ((ccc < 0x00) || (ccc > 0x3F));
-		 if (bnv) {     // decode
+		if (bnv) {     // decode
 			for (; idx<4; ++idx) { kkk[idx] = 0; }
 		} else {        // store as is
 			kkk[idx++] = ccc;
@@ -3675,7 +3666,7 @@ this.DE     = new function() {
 	if (kkk!==null) { if (kkk.length) { kkk.length = 0; }; kkk = null; }
 	rex = null;
 	return bux;
-  };
+  }; // uu
 
   this.qp       = function(_n1_,mode,src,_n5_,_n6_,_n7_) {
   //#? convert quoted printable text to plain text
@@ -3772,7 +3763,7 @@ this.DE     = new function() {
 		bux += EnDe.osoMap[ccc];
 	}
 	return bux;
-  };
+  }; // sos
 
   this.baudot   = function(type,mode,src,prefix,suffix,delimiter) {
   //#? convert Baudot characters to plain text
@@ -3801,7 +3792,7 @@ this.DE     = new function() {
 		bux += bbb;
 	}
 	return bux;
-  };
+  }; // baudot
 
   this.dmp      = function(type,mode,uppercase,src,prefix,suffix,delimiter) {
   //#? convert from traditional xdump or od style: (hex values left only)
@@ -3811,16 +3802,15 @@ this.DE     = new function() {
  	/* allowed formats:
 	 * left side with hex values separated by delimiter, right side any character
 	 *     de,ad,beef | string
-	 * left and right side are separated by | or more than one space
+	 * left and right side are separated by |
 	 *     de ad beef | string
-	 *     de ad beef   string
 	 * or right side may be missing, but not the separators
 	 *     de ad beef |
 	 * Separator is any character which is not a hex [a-f0-9] character.
 	 *     de ad beef string
 	 *     de ad beef  $
 	 * all 4 lines decode the hex values 'de' 'ad' and 'beef'
-	 * For type ODx or xDO the frst field and all following spaces are ignored.
+	 * For type ODx or xDO the first field and all following spaces are ignored.
 	 * Example: prefix=x
 	 *     0000 de ad | string
 	 *     0010 beef  | string
@@ -3838,7 +3828,7 @@ this.DE     = new function() {
 		if (kkk.length<=0) { continue; }
 		if (kkk.match(/^\s+\|\s*$/)!==null) { continue; } // ignore empty lines
 		if (type!=='hex') { kkk += ' | '; } //add delimiter required for match below
-		bbb = kkk.match(new RegExp('((?:[a-fA-F0-9][a-fA-F0-9]+( |'+delimiter+'))+)(?:(?: +)|( *\|)|(?:[^a-fA-F0-9]))',''));
+		bbb = kkk.match(new RegExp('((?:[a-fA-F0-9][a-fA-F0-9]+( +|'+delimiter+'))+)(?:(?: +)|( *\|)|(?:[^a-fA-F0-9]))','')); // allows any number of spaces between fields
 		if (bbb===null) { bux += '\n[EnDe.DE.dmp: invalid format, line '+(EnDe.maxloop-xxx)+': '+kkk+']\n'; continue; } // ToDo: internal error
 		if (bbb.length<=0) { continue; }
 		kkk = EnDe.trim(bbb[1]);
@@ -3858,7 +3848,7 @@ this.DE     = new function() {
 			if (type=='hex') {
 				bux += this.hex('null', mode, kkk, prefix, suffix, delimiter);
 			} else {
-				bbb = kkk.split(' ');
+				bbb = kkk.split(/\s+/);
 				bbb.shift(); // first field ignored
 				while ((ccc=bbb.shift())!==undefined) {
 					ccc = EnDe.trim(ccc);
@@ -3875,15 +3865,13 @@ this.DE     = new function() {
 		}
 	}
 	if(xxx===0){
-		bux += '[DE.dmp: input too large (>' + EnDe.maxloop + '); aborted]';
+		bux += '[EnDe.DE.dmp: input too large (>' + EnDe.maxloop + '); aborted]';
 	}
 	return bux;
-  };
+  }; // dmp
 
-  this.blowfish = function(type,mode,uppercase,src,prefix,key,delimiter) {
+  this.blowfish = function(type,mode,uppercase,src,prefix,key,delimiter) { return EnDe.Blowfish.DE.blowfish(key, src); };
   //#? wrapper for blowfish()
-	  return EnDe.Blowfish.DE.blowfish(key, src);
-  };
 
   this.aes      = function(type,mode,uppercase,src,prefix,key,delimiter) {
   //#? wrapper for AES(); uppercase parameter is escCtl (see aes.js)
@@ -3894,7 +3882,7 @@ this.DE     = new function() {
 	  case 'b256':  return EnDe.AES.DE.aes(key, src, 256);  break;
 	}
 	return null; // ToDo: internal error
-  };
+  }; // aes
 
   this.tea      = function(type,mode,uppercase,src,prefix,key,delimiter) {
   //#? decrypt a string using the Block Tiny Encryption Algorithm
@@ -3928,17 +3916,17 @@ this.DE     = new function() {
 		z = bux[n-1];
 		y = bux[0] -= (z>>>5^y<<2) + (y>>>3^z<<4)^(sum^y) + (k[p&3^e]^z);
 */
-        for (p=(n-1); p>=0; p--) {
-            z = bux[p>0 ? p-1 : n-1];
-            y = bux[p] -= (z>>>5 ^ y<<2) + (y>>>3 ^ z<<4) ^ (sum^y) + (k[p&3^e]^z);
-        }
+		for (p=(n-1); p>=0; p--) {
+			z = bux[p>0 ? p-1 : n-1];
+			y = bux[p] -= (z>>>5 ^ y<<2) + (y>>>3 ^ z<<4) ^ (sum^y) + (k[p&3^e]^z);
+		}
 		sum -= EnDe.CONST.CST.teaDelta;
 	}
 	e = k = q = y = z = null;
 	return EnDe.lng2str(bux).replace(/\x00+$/,'');
 	// we use \x00 instead of \0 to avoid error in some browsers
 	// Warnung: non-octal digit in an escape sequence that doesn't match a back-reference
-  };
+  }; // tea
 
   this.yenc     = function(type,mode,uppercase,src,prefix,key,delimiter) {
   //#? yDecode
@@ -4004,10 +3992,10 @@ this.DE     = new function() {
 		for (__b in _map) {
 			//#dbx this.dbx('.DE.fuzzy: __b=' + __b);
 			var dbx = _map[__b][0];
-			__k = _src.match(new RegExp( '^' + EnDe.rex(_pre) + _map[__b], ''));
+			__k = _src.match(new RegExp('^' + EnDe.rex(_pre) + _map[__b], ''));
 			if ((__k===undefined) || (__k===null)) { continue; }  // no match, try next
 			//#dbx this.dbx('.DE.fuzzy: __k=' + __k);
-  			__c = EnDe.DE.dispatch(__b,mode,false,__k[0],_pre,_suf,_del);
+			__c = EnDe.DE.dispatch(__b,mode,false,__k[0],_pre,_suf,_del);
 			if  (__c.match(/out of range/i)!==null) { continue; }  // conversion failed, try next
 			//#dbx this.dbx('.DE.fuzzy: __c=' + __c);
 			return([__k[0].length, __c]);
@@ -4096,11 +4084,11 @@ this.DE     = new function() {
 		} // pre-check
 		if (dec!==0) {
 			// pass string starting at current character and max. 10 characters
-			/* Note that first element in hash below is a RegEx. If we need a 
+			/* Note that first element in hash below is a RegEx. If we need a
 			 * backslash (\) as literal there it needs to be \\\\ to become an
 			 * escaped \ in the Regex.
 			 */
-			switch (typ) { 
+			switch (typ) {
 // ToDo: OPT not yet ready
 			  case 'OPT':
 				kkk = _try( {},src.substr(i,10),prefix,suffix,delimiter );
@@ -4345,827 +4333,34 @@ this.DE     = new function() {
   //case 'chr'      : return EnDe.str2chr(                      src, prefix, suffix, delimiter); break; // same as below
 	case 'chr'      : return this.chr(   type, mode, uppercase, src, prefix, suffix, delimiter); break;
 	case 'copy'     : return src;                       break;
-  //case 'fuz*'     :
 	default         :
+//	case 'base*'    :
 		if (/^base/.test(type)===true) { // Base-XX has its own disptcher
+			this.dbx('.DE.dispatch: .B64.DE.dispatch('+type+', ...)');
 			return EnDe.B64.DE.dispatch( type, mode, uppercase, src, prefix, '', delimiter );
 			break;
 		}
 		// try some other functions, they return null if not available
+//	case 'fuz*'     :
+		if (type.match(/^fuz/)!==null) {
+			this.dbx('.DE.dispatch: .fuzzy('+type+', ...)');
+			return this.fuzzy( type,  mode, src, prefix, suffix, delimiter );
+			break;
+		}
+		this.dbx('.DE.dispatch: .user.DE.dispatch('+type+', ...)');
 		var bux = null;
 		bux = EnDe.User.DE.dispatch( type, mode, uppercase, src, prefix, suffix, delimiter );
 		if (bux!==null) { return bux; }
-		if (type.match(/^fuz/)!==null) {
-			return this.fuzzy( type,  mode, src, prefix, suffix, delimiter );
-		} else {
 // ToDo: no alert() here 'cause EnDeTest.test()
 /*
-			EnDe.alert('EnDe.DE.dispatch',"unknown '"+type+"'"); return;  break;
+			EnDe.alert('EnDe.DE.dispatch','unknown "'+type+'"'); return;  break;
 */
-		}
 		break;
 	}
 	return ''; // ToDo: internal error
   }; // dispatch
 
  }; // EnDe.DE
-
-	// ===================================================================== //
-	// IP conversion functions                                               //
-	// ===================================================================== //
-
-this.IP     = new function() {
-  this.sid      = function() { return(EnDe.sid() + '.IP'); };
-  this.dbx      = function(src,nl) { return EnDe.dbx(src,nl); };
-
-  this.ip2num   = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,delimiter) {
-  //#? convert dotted quad IP address to integer
-	//#dbx this.dbx('.ip2num: '+src);
-	var bux = 0;
-	var n   = src.split(delimiter);
-	var i   = 0;
-	if (n[0]==='') { return bux; }  // defensive programming ..
-	for (i=3; i>=0; i--) {
-// ToDo: following check should depend on mode
-/*
-		if (n[(3-i)]>255) {
-			bux += ((n[(3-i)]-255)*(Math.pow(256,(i+1))));
-			//*(Math.pow(256,i)));
-		}
-*/
-		bux += (n[(3-i)]*(Math.pow(256,i)));
-	}
-	return bux;
-  };
-
-  this.ip2big   = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,delimiter) {
-  //#? convert dotted quad IP address to long integer
-	//#dbx this.dbx('.ip2big: '+src);
-	var bux = this.ip2num(0,0,0,src,0,0,delimiter);
-	if (bux!=='') { bux += EnDe.CONST.INT.lng; }  // defensive programming ..
-	return bux;
-  };
-
-  this.ip2xeh   = function(_n1_,_n2_,uppercase,src,prefix,_n6_,delimiter) {
-  //#? convert dotted quad IP address to hex value
-	//#dbx this.dbx('.ip2xeh: '+src);
-	var bux = this.ip2num(_n1_,_n2_,uppercase,src,prefix,_n6_,delimiter);
-	if (bux==='')    {      return bux; }  // defensive programming ..
-	    bux = parseInt(bux, 10).toString(16); 
-	if (uppercase===true) { bux = bux.toUpperCase(); }
-	if (prefix!=='') {      bux = prefix + bux; }
-	return bux;
-  };
-
-  this.ip2hex   = function(type,mode,uppercase,src,prefix,_n6_,delimiter) {
-  //#? convert dotted quad IP address to dotted hex
-  //#type? url: convert dotted quad IP address to dotted url-encoded hex
-  //#type? hex: convert dotted quad IP address to dotted hex
-  //#type? xeh: convert dotted quad IP address to hex value (wrapper for .IP.ip2xeh())
-	//#dbx this.dbx('.ip2hex: '+src);
-	var bux = '';
-	var n   = src.split('.');
-	if (n[0] == '') { return bux; }  // defensive programming ..
-	var sig = '';
-	var i   = 0;
-	switch (type) {
-	  case 'xeh': return this.ip2xeh(type,mode,uppercase,src,prefix,'',delimiter);  break; // dummy wrapper
-	  case 'hex': sig = '';  break;
-	  case 'url': sig = '%'; break;
-	}
-	for (i=0; i<=3; i++) {
-		if ((n[i]===null) || (n[i]===undefined)) {    // defensive programming ..
-			/* loop fails if less than 4 elements in Safari, iCab, WebKit */
-			break;
-			//n.push('0'); // ToDo: causes some NaN in GUI for Safari, iCab, Webkit
-		}
-		n[i] = n[i].match('^0*(.*)')[1]; // strip leading 0 'cause some browsers treat them as octal
-		if (n[i]==='') { n[i] = '0'; }   // but keep 0 itself
-		n[i] = parseInt(n[i], 10).toString(16);
-		if (uppercase===true) {
-			n[i] = n[i].toUpperCase();
-		}
-			bux += sig;
-		if (n[i].length===1) {
-			bux += '0';
-		}
-			bux += n[i];
-		if (i<3) {
-			bux += delimiter;
-		}
-	}
-	if (prefix!=='') { bux = prefix + bux; }
-	n = null;
-	return bux;
-  };
-
-  this.ip2oct   = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,delimiter) {
-  //#? convert dotted quad IP address to dotted octal
-	//#dbx this.dbx('.ip2oct: '+src);
-	var bux = '';
-	var n   = src.split('.');
-	var i   = 0, k = 0;
-	if (n[0]==='') { return bux; }  // defensive programming ..
-	for (i=0; i<=3; i++) {
-		n[i] = parseInt(n[i], 10).toString(8);
-		for (k=n[i].length; k<=3; k++ ) {
-			bux += '0';
-		}
-		bux += n[i];
-		if (i<3) { bux += delimiter; }
-	}
-	return bux;
-  };
-
-  this.ip2bin   = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,delimiter) {
-  //#? convert dotted quad IP address to dotted binary
-	//#dbx this.dbx('.ip2bin: '+src);
-	var bux = '';
-	var n   = src.split('.');
-	var i   = 0, k = 0;
-	if (n[0]==='') { return bux; }  // defensive programming ..
-	for (i=0; i<=3; i++) {
-		n[i] = parseInt(n[i], 10).toString(2);
-		for (k=n[i].length; k<8; k++ ) {
-			bux += '0';
-		}
-		bux += n[i];
-		if (i<3) { bux += delimiter; }
-	}
-	return bux;
-  };
-
-  this.ip2bit   = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,delimiter) {
-  //#? convert dotted quad IP address to plain binary
-	return parseInt(this.ip2num(_n1_,_n2_,_n3_,src,_n5_,_n6_,'.'), 10).toString(2);
-  };
-
-  this.ip2ip6   = function(type,mode,uppercase,src,prefix,_n6_,delimiter) {
-  //#? convert dotted quad IP address to dotted IPv6
-	//#dbx this.dbx('.ip2ip6: '+src);
-	var bux = '';
-	var kkk = this.ip2hex('hex',mode,uppercase,src,'','',''); // ToDo: input delimiter
-	if (kkk.length <= 0) { return bux; }  // defensive programming ..
-	var ccc = 1;
-	var dot = 0;
-	var i = kkk.length;
-	while (i>0) {
-		i--;
-		bux = kkk[i] + bux;
-		kkk[i] = null;
-		if ((ccc%4)===0) { bux = delimiter + bux; dot++; }
-		ccc++;
-	}
-	while (dot<2) { bux = delimiter + bux; dot++; }
-	if (prefix!=='') { bux = prefix + bux; }
-	kkk = null;
-	return bux;
-  };
-
-  this.ip62ip   = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,delimiter) {
-  //#? convert dotted IPv6 to dotted quad IP address
-	return this.xeh2ip(_n1_,_n2_,_n3_,src.replace(/:/g,''),_n5_,_n6_,delimiter);
-  };
-
-  this.bit2ip   = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,delimiter) {
-  //#? convert binary address to dotted quad IP address
-	//#dbx this.dbx('.bit2ip: '+src);
-	return this.num2ip(_n1_,_n2_,_n3_,parseInt(src, 2),_n5_,_n6_,delimiter);
-  };
-
-  this.num2ip   = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,delimiter) {
-  //#? convert integer address to dotted quad IP address
-	//#dbx this.dbx('.num2ip: '+src);
-	var bux = '';
-	var i   = 0;
-	src = EnDe.z2n(src);
-	for (i=3; i>=0; i--) {
-		bux += parseInt(Math.floor(src/(Math.pow(256,i))), 10);
-		// Math.floor() necessary cause of exponental numbers, i.e. 16/16777216
-		src %= (Math.pow(256,i));
-		if (i>0) { bux += delimiter; }
-	}
-	return bux;
-  };
-
-  this.big2ip   = function(type,_n2_,_n3_,src,_n5_,_n6_,delimiter) {
-  //#? convert long integer address to dotted quad IP address
-  //#type? big2ip: convert long (64-bit) integer address to dotted quad IP address
-  //#type? low2ip: convert long (32-bit) integer address to dotted quad IP address
-	//#dbx this.dbx('.big2ip: '+src);
-// ToDo: handle negative values ...
-	if ((type!=='big2ip') || (src < EnDe.CONST.INT.lng)) {
-		return(this.num2ip(0,0,0,(src),0,0,delimiter));
-	} else {
-		return(this.num2ip(0,0,0,(src - EnDe.CONST.INT.lng),0,0,delimiter));
-	}
-	return '';
-  };
-
-  this.arr2ip   = function(base,arr,arrsize,delimiter) {
-  //#? build dotted quad IP from given array; internal function, should not be used in API
-	// should check for 4 items, but without check works vor IPv6 too ;-)
-	//#dbx this.dbx('.arr2ip: '+src);
-	var bux = '';
-	var i   = 0, k = 0;
-	while (i<arr.length) {
-		if (i>0) { bux += delimiter; }
-		bux += parseInt(arr[i], base);
-		i++;
-	}
-	// add leading 0 if array too small
-	for (k=arr.length; k<arrsize; k++ ) {
-		bux = '0' + delimiter + bux;
-	}
-	return bux;
-  };
-
-  this.xeh2ip   = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,delimiter) {
-  //#? convert hex value to dotted quad IP address
-	//#dbx this.dbx('.xeh2ip: '+src);
-	var bux = parseInt(src, 16).toString(10); 
-	    bux = this.num2ip(_n1_,_n2_,_n3_,bux,_n5_,_n6_,delimiter);
-	return bux;
-  };
-
-  this.hex2ip   = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,delimiter) {
-  //#? convert Hex address to dotted quad IP address
-	//#dbx this.dbx('.hex2ip: '+src);
-	var arr = [];
-	var kkk = '';
-	var i   = 0;
-	arr = src.split(delimiter);
-	if (arr.length > 1) {    // try: DxxDxxDxxDxx  (where D is delimiter)
-		for (i=0; i<arr.length; i++) {
-			// ToDo: following allows even mixed codings, should depend on mode strict
-			if (arr[i].match(/^%/)!==null) {
-				arr[i] = arr[i].replace(/^%/,'');
-			} else 
-			if (arr[i].match(/^x/)!==null) {
-				arr[i] = arr[i].replace(/^x/,'');
-			} else 
-			if (arr[i].match(/^0x/)!==null) {
-				arr[i] = arr[i].replace(/^0x/,'');
-			}
-		}
-	}
-// ToDo: need to take care if there is a initial prefix  (or part of delimiter)
-	kkk = kkk.substring(1,src.length); // strip left most character
-	if (arr.length <= 1) {  // try: %XX%XX%XX%XX
-		arr = kkk.split('%');
-	}
-	if (arr.length <= 1) {  // try: xXXxXXxXXxXX
-		arr = kkk.split('x');
-	}
-	kkk = kkk.substring(1,src.length); // strip 2'nd left most character
-	if (arr.length <= 1) {  // try: %XX.%XX.%XX.%XX
-		arr = kkk.split('.%');
-	}
-	if (arr.length <= 1) {  // try: xXX.xXX.xXX.xXX
-		arr = kkk.split('.x');
-	}
-	if (arr.length <= 1) {  // try: 0xXX.0xXX.0xXX.0xXX
-		kkk = kkk.substring(1,kkk.length);
-		arr = kkk.split('.0x');
-	}
-	if (arr.length <= 1) {
-		// try: src as hex value as is
-		arr = src;
-		// ToDo: is this the same as xeh2ip?
-	}
-	// following could not simply be distinguished from previous
-	//if (arr.length <= 1) {
-	//	// try: XXxxXXxx (simple hex)
-	//	kkk = src;
-	//	while (kkk.length > 0) {
-	//		arr[i] = kkk.substring(0,1);
-	//		i++;
-	//		kkk = kkk.substring(2,kkk.length);
-	//	}
-	//}
-	kkk = null;
-	return(this.arr2ip(16,arr,4,'.'));
-// ToDo: make output delimiter configurable
-  };
-
-  this.oct2ip   = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,delimiter) {
-  //#? convert octal address to dotted quad IP address
-	//#dbx this.dbx('.oct2ip: '+src);
-	var arr = [];
-	    arr = src.split(delimiter);
-	return(this.arr2ip(8,arr,4,'.'));
-// ToDo: make output delimiter configurable
-  };
-
-  this.bin2ip   = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,delimiter) {
-  //#? convert binary address to dotted quad IP address
-	//#dbx this.dbx('.bin2ip: '+src);
-	var arr = [];
-	    arr = src.split(delimiter);
-	return(this.arr2ip(2,arr,4,'.'));
-// ToDo: make output delimiter configurable
-  };
-
-  this.reverse  = function(_n1_,_n2_,_n3_,src,_n5_,_n6_,delimiter) {
-  //#? reverse dotted IP address
-	//#dbx this.dbx('.reverse: '+src);
-	var bux = src.split(delimiter);
-	return(bux.reverse().join(delimiter));
-// ToDo: make output delimiter configurable
-  };
-
-  this.ipv6     = new function() {
-	this.sid    = function() { return(EnDe.IP.sid() + '.v6'); };
-	this.ip2num = function(type,mode,uppercase,src,prefix,suffix,delimiter) {
-	//#? **not yet implemented**
-	//#dbx this.dbx('.ipv6.ip2num: '+src);
-// 129.416.258.9, 217.746.272.94 217.115.281.34.    ist IPv6 dezimal dargestellt
-	};
-  }; // EnDe.IP.ipv6
-
-  this.dispatch = function(type,mode,uppercase,src,prefix,suffix,delimiter) {
-  //#? dispatcher for IP functions
-// ToDo: make input and output delimiter configurable
-	this.dbx('.IP.dispatch: '+type+'\t:uppercase='+uppercase+'\tprefix='+prefix+'\tsuffix='+suffix+'\tdelimiter='+delimiter);
-	switch (type) {
-	case 'ip2xeh'   : return this.ip2xeh('null', mode, uppercase, src,'0x','', '.'   ); break;
-	case 'ip2hex'   : return this.ip2hex('hex',  mode, uppercase, src, '', '', '.'   ); break;
-	case 'ip2oct'   : return this.ip2oct('null', mode, uppercase, src, '', '', '.'   ); break;
-	case 'ip2bin'   : return this.ip2bin('null', mode, uppercase, src, '', '', '.'   ); break;
-	case 'ip2bit'   : return this.ip2bit('null', mode, uppercase, src, '', '', '.'   ); break;
-	case 'ip2url'   : return this.ip2hex('url',  mode, uppercase, src, '', '', '.'   ); break;
-	case 'ip2num'   : return this.ip2num('null', mode, uppercase, src, '', '', '.'   ); break;
-	case 'ip2big'   : return this.ip2big('null', mode, uppercase, src, '', '', '.'   ); break;
-	case 'ip2ip6'   : return this.ip2ip6('null', mode, uppercase, src, '', '', ':'   ); break;
-	case 'ip62ip'   : return this.ip62ip('null', mode, uppercase, src, '', '', '.'   ); break;
-	case 'big2ip'   : return this.big2ip( type , mode, '',        src, '', '', '.'   ); break;
-	case 'low2ip'   : return this.big2ip( type , mode, '',        src, '', '', '.'   ); break;
-	case 'num2ip'   : return this.num2ip('null', mode, uppercase, src, '', '', '.'   ); break;
-	case 'xeh2ip'   : return this.xeh2ip('null', mode, '',        src, '', '', '.'   ); break;
-	case 'hex2ip'   : return this.hex2ip('null', mode, '',        src, '', '', '.'   ); break;
-	case 'oct2ip'   : return this.oct2ip('null', mode, '',        src, '', '', '.'   ); break;
-	case 'bin2ip'   : return this.bin2ip('null', mode, '',        src, '', '', '.'   ); break;
-	case 'bit2ip'   : return this.bit2ip('null', mode, '',        src, '', '', '.'   ); break;
-	case 'url2ip'   : return this.hex2ip('null', mode, '',        src, '', '', ''    ); break;
-	case 'reverse'  : return this.reverse('null',mode, uppercase, src, '', '', '.'   ); break;
-	case 'normal'   : return this.reverse('null',mode, uppercase, src, '', '', '.'   ); break; // dummy
-	}
-	return ''; // ToDo: internal error
-  };
-
- }; // EnDe.IP
-
-	// ===================================================================== //
-	// Timestamp functions                                                   //
-	// ===================================================================== //
-
-// ToDo: TS need to rename function parameters as describen in "Function Parameters"
-this.TS     = new function() {
-  this.sid      = function() { return(EnDe.sid() + '.TS'); };
-  this.dbx      = function(src,nl) { return EnDe.dbx(src,nl); };
-
-  this.win32offset = 116444736000000000;
-  this.win64offset = 621354801000000000;    // ToDo: is this correct?
-  this.nanoseconds = 10000000;
-  this.milliseconds= 1000;
-  this.offset      = this.nanoseconds / this.milliseconds;
-  this.year1980    = 315529200; // 1. Jan. 1980 (start at IBM PC)
-  this.year2000    = 946681200; // 1. Jan. 2000
-  this.year1999    = this.year2000 - 1;     // last 4-byte signed integer
-// ToDo: EnDe.CONST.INT.* does not work ??
-  this.year2038    = 2147483647; // EnDe.CONST.INT.MAX31;  // signed 4-byte integer
-											// starting at 1. Jan. 1970
-  this.year2116    = 4294967296 + this.year1980; // EnDe.CONST.INT.exp32 + this.year1980;
-
-  this.u2a  = function(ts) {
-  //#? convert Unix to windows ASP.NET (64bit) timestamp
-	/* ts have to be in millisecond format */
-	return Math.floor((ts * this.offset) + this.win64offset);
-  };
-
-  this.w2a  = function(ts) {
-  //#? convert windows TDateTime (32bit) to ASP.NET (64bit) timestamp
-	return Math.floor( ts - this.win32offset  + this.win64offset);
-  };
-
-  this.d2a  = function(ts) {
-  //#? convert DOS (32bit) to ASP.NET (64bit) timestamp
-	return Math.floor( '* DOS not implemented *');
-// ToDo: EnDe.TS.d2a() NOT YET IMPLEMENTED
-  };
-
-  this.o2a  = function(ts) {
-  //#? convert OLE to ASP.NET (64bit) timestamp
-	return ( '* OLE not implemented *');
-// ToDo:EnDe.TS.o2a() NOT YET IMPLEMENTED
-  };
-
-  this.a2u  = function(ts) {
-  //#? convert windows ASP.NET (64bit) to Unix timestamp
-	/* ts returned in millisecond format */
-	return Math.floor((ts-this.win64offset) / this.offset);
-  };
-
-  this.a2d  = function(ts) {
-  //#? convert windows ASP.NET (64bit) to DOS (32bit) timestamp
-// ToDo: not yet implemented
-	return '';
-  };
-
-  this.a2o  = function(ts) {
-  //#? convert windows ASP.NET (64bit) to OLE timestamp
-// ToDo: not yet implemented
-	return '';
-  };
-
-  this.a2w  = function(ts) {
-  //#? convert windows ASP.NET (64bit) to TDateTime (32bit) timestamp
-	return Math.floor( ts - this.win64offset  + this.win32offset);
-  };
-
-  this.w2u  = function(ts) {
-  //#? convert windows TDateTime (32bit) to Unix timestamp
-	/* ts returned in millisecond format */
-	return Math.floor((ts-this.win32offset) / this.offset);
-  };
-
-  this.u2w  = function(ts) {
-  //#? convert Unix to windows TDateTime (32bit) timestamp
-	/* ts have to be in millisecond format */
-	return Math.floor((ts * this.offset) + this.win32offset);
-  };
-
-	var _ws     = '\s+';                            // white spaces
-	var _sep    = '[/:\ \|\.\,\-]';                 // common separators
-	var _1o2    = '([0-9]{1,2})';                   // 1 or 2 digits
-	var _mm     = '(0?[1-9]|[1-5][0-9])';           // minute 1 .. 59
-	var _hh     = '(0?[1-9]|1[0-9]|2[0-3])';        // hour 1 .. 23
-	var _day    = '(0?[1-9]|[12][0-9]|3[01])';      // day 1 .. 31
-	var _mon    = '(0?[1-9]|1[012])';               // month 1 .. 12
-	var _y2     = '([0-9]{2})';                     // 2 digits
-	var _y4     = '([0-9]{4})';                     // 4 digits
-
-  this.matchTime = function(_n1_,_n2_,year2digits,strict,now,src) {
-  //#? try to match a time value
-	if (src == undefined) { return undefined; }
-	var yy = _y4;
-	var mm = _1o2;
-	var dd = _1o2;
-	var hh = _1o2;
-	var mi = _1o2;
-	var ss = _1o2;
-	if (year2digits) {// allow 2-digit years
-		yy = _y2;
-	}
-	if (strict) {     // use strict matches
-		mm = _mon;
-		dd = _day;
-		hh = _hh;
-		mi = _mm;
-		ss = _mm;
-	}
-	// define regex to match
-	var sec   = '(?:' +_sep + mi + ')?';    // optional :ss
-	var hm    = hh + _sep + ss +  sec;      // hh:mm with optional :ss
-	// leading time needs to have : as separator
-	var hms   = '^' + hh + ':'  + mi + '(?:\\:' + ss + ')?';
-	var ymd   = '^' + yy + _sep + mm + _sep + dd + '$';
-	var ymdhm = '^' + yy + _sep + mm + _sep + dd + _sep + '+'  +  hm + '$';
-	var dmy   = '^' + dd + _sep + mm + _sep + yy + '$';
-	var dmyhm = '^' + dd + _sep + mm + _sep + yy + _sep + '+'  +  hm + '$';
-	var hmymd = hms + _sep + yy + _sep + mm + _sep + dd+ '$';
-	var hmdmy = hms + _sep + dd + _sep + mm + _sep + yy + '$';
-	    hms   = hms + '$';
-
-	var kkk;
-	//                  0  1  2  3  4  5  6  7  8
-	//                  y  m  d  H  M  S ms format error
-	var hor = new Array(-1,-1,-1,-1,-1,-1,-1,'','');
-// ToDo:	if (src) { src   = EnDe.trim(src); }
-	src   = EnDe.trim(src);
-
-	// don't change the sequence of following tests!
-	kkk = src.match(hms);       // hh:mm:ss, hh:mm
-	if (kkk!==null) {
-		hor[7] = 'hms';
-		hor[3] = kkk[1];
-		hor[4] = kkk[2];
-		if (kkk[3] != '') { hor[5] = kkk[3]; }
-		if (kkk.length) { kkk.length = 0; }; kkk = null;
-		return hor;
-	}
-	kkk = src.match(hmymd);     // hh:mm:ss yyyy/mm/dd, hh:mm yyyy/mm/dd
-	if (kkk!==null) {
-		hor[7] = 'hmymd';
-		hor[0] = kkk[4];
-		hor[1] = kkk[5];
-		hor[2] = kkk[6];
-		hor[3] = kkk[1];
-		hor[4] = kkk[2];
-		if (kkk[3] != '') { hor[5] = kkk[3]; }
-		if (kkk.length) { kkk.length = 0; }; kkk = null;
-		return hor;
-	}
-	kkk = src.match(hmdmy);     // hh:mm:ss dd/mm/yyyy, hh:mm dd/mm/yyyy
-	if (kkk!==null) {
-		hor[7] = 'hmdmy';
-		hor[0] = kkk[6];
-		hor[1] = kkk[5];
-		hor[2] = kkk[4];
-		hor[3] = kkk[1];
-		hor[4] = kkk[2];
-		if (kkk[3] != '') { hor[5] = kkk[3]; }
-		if (kkk.length) { kkk.length = 0; }; kkk = null;
-		return hor;
-	}
-	kkk = src.match(ymd);       // yyyy/mm/dd
-	if (kkk!==null) {
-		hor[7] = 'ymd';
-		hor[0] = kkk[1];
-		hor[1] = kkk[2];
-		hor[2] = kkk[3];
-		if (kkk.length) { kkk.length = 0; }; kkk = null;
-		return hor;
-	}
-	kkk = src.match(dmy);       // dd/mm/yyyy
-	if (kkk!==null) {
-		hor[7] = 'dmy';
-		hor[0] = kkk[3];
-		hor[1] = kkk[2];
-		hor[2] = kkk[1];
-		if (kkk.length) { kkk.length = 0; }; kkk = null;
-		return hor;
-	}
-	kkk = src.match(ymdhm);     // yyyy/mm/dd hh:mm:ss, yyyy/mm/dd hh:mm
-	if (kkk!==null) {
-		hor[7] = 'ymdhm';
-		hor[0] = kkk[1];
-		hor[1] = kkk[2];
-		hor[2] = kkk[3];
-		hor[3] = kkk[4];
-		hor[4] = kkk[5];
-		if (kkk[6] != '') { hor[5] = kkk[6]; } // seconds also
-		if (kkk.length) { kkk.length = 0; }; kkk = null;
-		return hor;
-	}
-	kkk = src.match(dmyhm);     // dd/mm/yyyy hh:mm:ss, dd/mm/yyyy hh:mm
-	if (kkk!==null) {
-		hor[7] = 'dmyhm';
-		hor[0] = kkk[3];
-		hor[1] = kkk[2];
-		hor[2] = kkk[1];
-		hor[3] = kkk[4];
-		hor[4] = kkk[5];
-		if (kkk[6] != '') { hor[5] = kkk[6]; } // seconds also
-		if (kkk.length) { kkk.length = 0; }; kkk = null;
-		return hor;
-	}
-	if (kkk!==null) { if (kkk.length) { kkk.length = 0; }; kkk = null; }
-	hor[8] = 'unknown format';
-	return(undefined);
-  }; // matchTime
-
-  this.matchOffset = function(_n1_,_n2_,year2digits,strict,now,src) {
-  //#? check if value is a timestamp offset
-// ToDo: evtl. direkt in EnDeGUI.TS.dispatch('date2offset') implementieren ...
-	var x   = 0;
-	var ts = this.matchTime(_n1_,_n2_,year2digits,strict,now,src);
-	if (ts == undefined) { return(undefined); }
-	// Safari is happy with <0 check, mozilla needs ==undefined check too
-	for (x in ts) { if ((ts[x] < 0) || (ts[x] == undefined) || (ts[x] == '')) { ts[x] = 0; } } // set 0 if unset
-	ts[0] *= 31536000;      // 365 * 86400;
-	ts[1] *= 2592000;       //  30 * 86400;
-	ts[2] *= 86400;
-	ts[3] *= 3600;
-	ts[4] *= 60;
-	ts[5] *= 1;
-	//ts[6] /= 1000;
-	return(ts[0] + ts[1] + ts[2] + ts[3] + ts[4] + ts[5] + ts[6]);
-  }; // matchOffset
-
-  this.matchDateTime = function(_n1_,_n2_,year2digits,strict,now,src) {
-  //#? try to match a date/time value
-	var x   = 0;
-	var hor = new Date();
-	var ts = this.matchTime(_n1_,_n2_,year2digits,strict,now,src);
-	if (ts == undefined) { return(undefined); }
-	if (ts[8]!=='') { return(ts[8]); }
-	if (now == true) {
-		if (ts[0] < 0) { ts[0] = hor.getYear() + 1900; }
-		if (ts[1] < 0) { ts[1] = hor.getMonth() + 1; }
-		if (ts[2] < 0) { ts[2] = hor.getDate(); }
-		if (ts[3] < 0) { ts[3] = hor.getHours(); }
-		if (ts[4] < 0) { ts[4] = hor.getMinutes(); }
-		if (ts[5] < 0) { ts[5] = hor.getSeconds(); }
-	} else {
-		for (x in ts) { if ((ts[x] < 0) || (ts[x] == undefined) || (ts[x] == '')) { ts[x] = 0; } } // set 0
-	}
-	if (ts[1] > 0) { ts[1] -= 1; }
-	hor.setYear(   ts[0]);
-	hor.setMonth(  ts[1]);
-	hor.setDate(   ts[2]);
-	hor.setHours(  ts[3]);
-	hor.setMinutes(ts[4]);
-	hor.setSeconds(ts[5]);
-	if (now == false) {
-	}
-	if (ts.length) { ts.length = 0; }; ts = null;
-	return hor;
-  }; // matchDateTime
-
-  this.joinTime = function(hor) { return( hor.getHours()      + ':' +  hor.getMinutes()  + ':' +  hor.getSeconds()   ); };
-  //#? return human readable time h:m:s
-  this.joinEmit = function(hor) { return( hor.getSeconds()    + ':' +  hor.getMinutes()  + ':' +  hor.getHours()     ); };
-  //#? return human readable time s:m:h
-  this.joinDate = function(hor) { return((hor.getYear()+1900) + '/' + (hor.getMonth()+1) + '/' +  hor.getDate()      ); };
-  //#? return human readable date Y/M/D
-  this.joinEtad = function(hor) { return( hor.getDate()       + '/' + (hor.getMonth()+1) + '/' + (hor.getYear()+1900)); };
-  //#? return human readable date D/M/Y
-
-  this.guessInt = function(src) {
-  //#? guess time ..
-	var bux = '';
-	var typ = '';
-	var kkk = '';
-	var hor = new Date();
-	switch (src.length) {
-	  case 6:       // full time
-		    kkk = src.match('^' + _hh + _mm + _mm + '$');
-		if (kkk != undefined) {
-			hor.setHours(  kkk[1]);
-			hor.setMinutes(kkk[2]);
-			hor.setSeconds(kkk[3]);
-			typ = 'full time (hh:mm:ss): ' + this.joinTime(hor);
-			bux += '\n' + typ + '\n\t=>' + hor;
-		}
-		typ += '\n';
-		    kkk = src.match('^' + _mm + _mm + _hh + '$');
-		if (kkk != undefined) {
-			hor.setHours(  kkk[3]);
-			hor.setMinutes(kkk[2]);
-			hor.setSeconds(kkk[1]);
-			typ = 'full time (ss:mm:hh): ' + this.joinEmit(hor);
-			bux += '\n' + typ + '\n\t=>' + hor;
-		}
-		typ += '\n';
-		    kkk = src.match('^' + _y2 + _mon + _day + '$');
-		if (kkk != undefined) {
-			hor.setYear( kkk[1]);
-			hor.setMonth(kkk[2]-1);
-			hor.setDate( kkk[3]);
-			typ = 'short date (yy/mm/dd): ' + this.joinDate(hor);
-			bux += '\n' + typ + '\n\t=>' + hor;
-		}
-		typ += '\n';
-		    kkk = src.match('^' + _y2 + _day + _mon + '$');
-		if (kkk != undefined) {
-			hor.setYear( kkk[1]);
-			hor.setMonth(kkk[3]-1);
-			hor.setDate( kkk[2]);
-			typ = (hor.getYear()+1900) + '/' + hor.getDate() + '/' + (hor.getMonth()+1);
-			typ = 'short date (yy/dd/mm): ' + typ;
-			bux += '\n' + typ + '\n\t=>' + hor;
-		}
-		typ += '\n';
-		    kkk = src.match('^' + _day + _mon + _y2 + '$');
-		if (kkk != undefined) {
-			hor.setYear( kkk[3]);
-			hor.setMonth(kkk[2]-1);
-			hor.setDate( kkk[1]);
-			typ = 'short date (dd/mm/yy): ' + this.joinEtad(hor);
-			bux += '\n' + typ + '\n\t=>' + hor;
-		}
-		break;
-	  case 8:       // full date
-		    kkk = src.match('^' + _y4 + _mon + _day + '$');
-		if (kkk != undefined) {
-			hor.setYear( kkk[1]);
-			hor.setMonth(kkk[2]-1);
-			hor.setDate( kkk[3]);
-			typ = 'full date (yyyy/mm/dd): ' + this.joinDate(hor);
-			bux += '\n' + typ + '\n\t=>' + hor;
-		}
-		typ += '\n';
-		    kkk = src.match('^' + _y4 + _day + _mon + '$');
-		if (kkk != undefined) {
-			hor.setYear( kkk[1]);
-			hor.setMonth(kkk[3]-1);
-			hor.setDate( kkk[2]);
-			typ = (hor.getYear()+1900) + '/' + hor.getDate() + '/' + (hor.getMonth()+1);
-			typ = 'full date (yyyy/dd/mm): ' + typ;
-			bux += '\n' + typ + '\n\t=>' + hor;
-		}
-		typ += '\n';
-		    kkk = src.match('^' + _day + _mon + _y4 + '$');
-		if (kkk != undefined) {
-			hor.setYear( kkk[3]);
-			hor.setMonth(kkk[2]-1);
-			hor.setDate( kkk[1]);
-			typ = 'full date (dd/mm/yyyy): ' + this.joinEtad(hor);
-			bux += '\n' + typ + '\n\t=>' + hor;
-		}
-		break;
-	  case 9:       // timestamp in seconds < 9-sep-2001
-	  case 10:      // timestamp in seconds
-		hor.setTime(src*1000);
-		typ = 'common 9- or 10-digit timestamp in seconds';
-		break;
-	  case 12:      // timestamp in miliseconds < 9-sep-2001
-	  case 13:      // timestamp in miliseconds
-		hor.setTime(src);
-		typ = 'common 12- or 13-digit timestamp in miliseconds';
-		bux += '\n' + typ + '\n\t=>' + hor;
-		break;
-	  case 14:      // full date/time in seconds
-		    kkk = src.match('^' + _y4 + _mon + _day + _hh + _mm + _mm + '$');
-		if (kkk != undefined) {
-			hor.setYear( kkk[1]);
-			hor.setMonth(kkk[2]-1);
-			hor.setDate( kkk[3]);
-			hor.setHours(kkk[4]);
-			hor.setMinutes(kkk[5]);
-			hor.setSeconds(kkk[6]);
-			typ = 'full date/time (yyyy/mm/dd hh:mm:ss): ' + this.joinDate(hor) + ' ' + this.joinTime(hor);
-			bux += '\n' + typ + '\n\t=>' + hor;
-		}
-		typ += '\n';
-		    kkk = src.match('^' + _mm + _mm + _hh + _day + _mon + _y4 + '$');
-		if (kkk != undefined) {
-			hor.setYear( kkk[6]);
-			hor.setMonth(kkk[5]-1);
-			hor.setDate( kkk[4]);
-			hor.setHours(kkk[3]);
-			hor.setMinutes(kkk[2]);
-			hor.setSeconds(kkk[1]);
-			typ = 'full date/time (ss:mm:hh dd/mm/yyyy): ' + this.joinEmit(hor) + ' ' + this.joinEtad(hor);
-			bux += '\n' + typ + '\n\t=>' + hor;
-		}
-		break;
-	  default:
-		//		             yY  strict now
-		bux += '\n' + 'common automatched timestamp in seconds' + '\n\t=>' + this.matchDateTime( 'all','',false,true,false,src.toString());
-		break;
-	}
-	if (hor != undefined) { if (hor.length) { hor.length = 0; }; hor = null; }
-	if (kkk != undefined) { if (kkk.length) { kkk.length = 0; }; kkk = null; }
-	return bux;
-  }; // guessInt
-
-  this.guessOffset= function(src) {
-  //#? guess time offset
-	/*
-	year = Math.floor(src  / 31536000);      // 365 * 86400;
-	src  = src     - (year * 31536000);
-	mons = Math.floor(src  / 2592000);       //  30 * 86400;
-	src  = src     - (mons * 2592000);
-	*/
-	days = Math.floor(src  / 86400);
-	src  = src     - (days * 86400);
-	hour = Math.floor(src  / 3600);
-	src  = src     - (hour * 3600);
-	mins = Math.floor(src  / 60);
-	secs = src     - (mins * 60);
-	return(days + ' days, ' + hour + ' hours, ' + mins + ' minutes, ' + secs + ' seconds');
-  }; // guessOffset
-
-  this.guess    = function(src) {
-  //#? guess date/time ..
-	var bux = '';
-	var asint  = 0;
-	if (src.match('^[0-9]+$')!==undefined) {        // integer ===========
-		var ts  = new Date();
-		bux += '\n*Timestamp* '+src+'\n';
-		bux += EnDe.CONST.___;
-		ts.setTime(Math.floor(src * 1000));
-		bux += '\nseconds\n\t=>' + ts;
-		ts.setTime(src);
-		bux += '\nmiliseconds\n\t=>' + ts;
-		bux += '\n';
-		bux += '\n*Integer* '+src+'\n';
-		bux += EnDe.CONST.___;
-		bux += this.guessInt(src);
-		bux += '\nas offset in seconds\n\t=>' + this.guessOffset(src);
-		asint= Math.floor(src / 1000);
-		bux += '\nas offset in miliseconds\n\t=>' + this.guessOffset(asint);
-		bux += '\n';
-	}
-	if (src.match('^[0-9a-fA-F]+$')!==undefined) {  // hex ===============
-		bux += '\n*Hex* '+src+'\n';
-		bux += EnDe.CONST.___;
-		asint   = parseInt(('0x'+src), 16);
-		bux += '\n\t' + src + ' => ' + asint;
-		bux += this.guessInt(asint.toString());
-		bux += '\nas offset in seconds\n\t=>' + this.guessOffset(asint.toString());
-		asint= Math.floor(asint / 1000);
-		bux += '\nas offset in miliseconds\n\t=>' + this.guessOffset(asint.toString());
-	} else {                                        // anything else =====
-		//                                   yY  strict now
-		bux += '\n' + 'common automatched timestamp' + '\n\t=>' + this.matchDateTime( 'all','',false,true,false,src);
-	}
-	return bux;
-  }; // guess
-
- }; // EnDe.TS
 
 }; // EnDe
 
@@ -5175,7 +4370,7 @@ this.TS     = new function() {
 // ========================================================================= //
 
 EnDe.Misc = new function() {
-this.sid        = function()  { return('@(#) EnDe.js 3.27 12/04/22 23:42:15 EnDeMisc'); };
+this.sid        = function()  { return('@(#) EnDe.js 3.32 12/06/04 21:52:10 EnDeMisc'); };
 
 	// ===================================================================== //
 	// global variables                                                      //
@@ -5195,8 +4390,8 @@ this.rfc2396    = function() {
 		 * but then defines = as reserved character for a path component.
 		 * It also define @, + nd $ as reserved but alows it as path.
 		 */
-	// Within a path segment, the characters "/", ";", "=", and "?" are reserved.  
-	var pathreserved= "/;=?";
+	// Within a path segment, the characters "/", ";", "=", and "?" are reserved.
+	var pathreserved= '/;=?';
 	// Within a query component, the characters ";", "/", "?", ":", "@", "&", "=", "+", ",", and "$" are reserved.
 	var queryreserved= reserved;
 

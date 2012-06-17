@@ -43,7 +43,7 @@
 #?
 #?
 #? VERSION
-#?      @(#) EnDeTest.js 3.7 12/06/09 18:28:35
+#?      @(#) EnDeTest.js 3.8 12/06/17 23:19:55
 #?
 #? AUTHOR
 #?      22-jun-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -57,8 +57,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.Test   = new function() {
-	this.SID    = '3.7';
-	this.sid    = function() { return '@(#) EnDeTest.js 3.7 12/06/09 18:28:35 EnDe.Test'; },
+	this.SID    = '3.8';
+	this.sid    = function() { return '@(#) EnDeTest.js 3.8 12/06/17 23:19:55 EnDe.Test'; },
 
 	// ===================================================================== //
 	// global variables                                                      //
@@ -223,7 +223,14 @@ EnDe.Test   = new function() {
 				oldtxt  = txt;
 				oldtitle= title;
 				oldmode = mode;
-				bux.push(new Array('_data',title,mode,txt,null));
+				bux.push(new Array('_data', title, mode,       txt,       null));
+			//	bux.push(new Array('_parm', null, 'mode',      mode,      null)); // same as _func below
+				bux.push(new Array('_parm', null, 'uppercase', uppercase, null));
+				bux.push(new Array('_parm', null, 'prefix',    prefix,    null));
+				bux.push(new Array('_parm', null, 'suffix',    suffix,    null));
+				bux.push(new Array('_parm', null, 'cipher',    cipher,    null));
+				bux.push(new Array('_parm', null, 'delimiter', delimiter, null));
+				bux.push(new Array('_func', title, mode,       null,      null));
 			}
 			// reset results
 			enc = '';

@@ -102,7 +102,7 @@
 #       Mozilla 1.x which has this property.
 #?
 #? VERSION
-#?      @(#) EnDeGUI.js 3.85 12/06/17 19:22:34
+#?      @(#) EnDeGUI.js 3.86 12/06/17 23:19:41
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -114,8 +114,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '3.85';
-this.sid        = function() {  return('@(#) EnDeGUI.js 3.85 12/06/17 19:22:34 EnDeGUI'); };
+this.SID        = '3.86';
+this.sid        = function() {  return('@(#) EnDeGUI.js 3.86 12/06/17 23:19:41 EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 
@@ -3498,6 +3498,11 @@ this.test       = function(mode) {
 			_td.innerHTML = EnDe.Text.Entity(src);;
 			_td.setAttribute( 'class', 'error');
 			break;
+		  case '_parm':
+			_td.colSpan   = 3;
+			_td.innerHTML = EnDe.Text.Entity(src);;
+			_td.setAttribute( 'class', 'parm');
+			break;
 		  case 'check':
 			_in = '<input type="checkbox" style="background-color:';
 			if (enc===null) {  // succeded
@@ -3621,15 +3626,22 @@ this.test       = function(mode) {
 			// _error',error text,null,null,null
 			tr.appendChild( __td('error',expt,null,null,null,err));
 			break;
-		  case '_data': // new test pattern
-			// _data',title,mode,txt,null
-			txt = strD;
-			tr.appendChild( __td('data',txt,null,null,null,err));
-			div.appendChild(tr);
-			tr  = document.createElement('TR');
+		  case '_func': // new test pattern
+			// _func',title,mode,null,null
 			tr.appendChild( __td('TH',strE,null,null,null,err));
 			tr.appendChild( __td('T2',expt,null,null,null,err));
-			str.value = txt; // store test pattern in GUI
+			break;
+		  case '_data': // new test pattern
+			// _data',title,mode,txt,null
+			txt = 'src: ' + strD;
+			tr.appendChild( __td('data',txt,null,null,null,err));
+			div.appendChild(tr);
+			str.value = strD; // store test pattern in GUI
+			break;
+		  case '_parm': // parameter from test file
+			// _parm',null,parname,parvalue,null
+			txt = strE + ': ' + strD;
+			tr.appendChild( __td('_parm',txt,null,null,null,err));
 			break;
 		  default: // result data for test
 			tr.appendChild( __td('TD',func,null,null,null,err));
@@ -3638,6 +3650,7 @@ this.test       = function(mode) {
 			break;
 		}
 		div.appendChild(tr);
+		txt = ''; // reset
 	}
 	bux.appendChild(div);
 	return false;

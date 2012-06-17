@@ -2268,7 +2268,7 @@ GLOSSAR
 	CESU-8  - Compatibility Encoding Scheme for UTF-16
 	CBC     - Cyclic Block Chaining
 	CBC     - Cipher Block Chaining (sometimes)
-	CBC     - Ciplier Block Chaining (see http://www.itl.nist.gov/fipspubs/fip81.htm)
+	CBC     - Ciplier Block Chaining (see http://www.itl.nist.gov/fipspubs/fip81.htm )
 	CFB     - Cipher Feedback
 	CEF     - character encoding form
 	CES     - character encoding scheme
@@ -2635,7 +2635,7 @@ EPILOG
 	
 VERSION
 	
-	@# EnDe <!-- @(#) EnDe.man.txt 3.35 19:55:37 12/06/17 -->
+	@# EnDe <!-- @(#) EnDe.man.txt 3.36 23:28:59 12/06/17 -->
 	
 	
 AUTHOR

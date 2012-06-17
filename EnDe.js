@@ -83,7 +83,7 @@
 #       _n2_, _n3_, _n4_, _n5_, _n6_, and _n7_ .
 #?
 #? VERSION
-#?      @(#) EnDe.js 3.34 12/06/16 12:17:17
+#?      @(#) EnDe.js 3.35 12/06/17 18:57:29
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -96,8 +96,8 @@
 
 var EnDe    = new function() {
 
-this.SID    = '3.34';
-this.sid    = function() { return('@(#) EnDe.js 3.34 12/06/16 12:17:17 EnDe'); };
+this.SID    = '3.35';
+this.sid    = function() { return('@(#) EnDe.js 3.35 12/06/17 18:57:29 EnDe'); };
 
 	// ===================================================================== //
 	// debug functions                                                       //
@@ -2710,7 +2710,7 @@ this.EN     = new function() {
   }; // aes
 
   this.des      = function(type,mode,uppercase,src,iv,key,_n7_) {
-  //#? wrapper for des(); (single) DES and tripple DES encryption in normal or CBC mode
+  //#? wrapper for des(); (single) DES and tripple DES encryption in ECB or CBC mode
   //#type? desECB0: ECB mode, message (src) padded with 0-bytes
   //#type? desECBp: ECB mode, message (src) padded with PKCS7
   //#type? desECBs: ECB mode, message (src) padded with spaces
@@ -3940,7 +3940,7 @@ this.DE     = new function() {
   }; // aes
 
   this.des      = function(type,mode,uppercase,src,iv,key,delimiter) {
-  //#? wrapper for des(); (single) DES and tripple DES decryption in normal or CBC mode
+  //#? wrapper for des(); (single) DES and tripple DES decryption in ECB or CBC mode
 	switch (type) {
 	  case 'desECB0': return EnDe.DES.DE.des(key, src, 0, iv, 0); break;
 	  case 'desECBp': return EnDe.DES.DE.des(key, src, 0, iv, 1); break;
@@ -4449,7 +4449,7 @@ this.DE     = new function() {
 // ========================================================================= //
 
 EnDe.Misc = new function() {
-this.sid        = function()  { return('@(#) EnDe.js 3.34 12/06/16 12:17:17 EnDeMisc'); };
+this.sid        = function()  { return('@(#) EnDe.js 3.35 12/06/17 18:57:29 EnDeMisc'); };
 
 	// ===================================================================== //
 	// global variables                                                      //

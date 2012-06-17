@@ -16,7 +16,7 @@
 #?          2. EnDe.DES.EN. and EnDe.DES.DE. wrapper object
 #?
 #? VERSION
-#?      @(#) des.js 3.1 12/06/16 10:33:29
+#?      @(#) des.js 3.2 12/06/17 19:17:52
 #?
 #? AUTHOR
 #?      Some parts of the code are derivied from (adaptions see above)
@@ -53,8 +53,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.DES = new function() {
-	this.SID    = '3.1';
-	this.sid    = function() { return('@(#)  des.js 3.1 12/06/16 10:33:29 EnDe.DES'); };
+	this.SID    = '3.2';
+	this.sid    = function() { return('@(#)  des.js 3.2 12/06/17 19:17:52 EnDe.DES'); };
 
 	this.trace  = false; // not yet implemented, uses EnDe.trace
 
@@ -94,7 +94,7 @@ EnDe.DES = new function() {
 				+ ', IV= ' + iv);
 			return des(key, src, 1, cbc, iv, pad);
 		};
-	};
+	}; // .EN
 
 	this.DE     = new function() {
 		this.des    = function(key, src, cbc, iv, pad) {
@@ -105,7 +105,7 @@ EnDe.DES = new function() {
 				+ ', IV= ' + iv);
 			return des(key, src, 0, cbc, iv, pad);
 		};
-	};
+	}; // .DE
 
 	// des:function (key, message, encrypt, mode, iv, padding) {
 	//      mode: 0  = ECB mode

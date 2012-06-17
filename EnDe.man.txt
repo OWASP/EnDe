@@ -660,6 +660,10 @@ GUI
 		Does not use any of the options.
 	 "En-/Decryption"
 		All these function use the value from "Key" as cipher.
+		The "DES" functions switch automatically between  `normal' DES
+		and  tripple DES depending on the length of the given cipher.
+		If the length is more than 8 characters, tripple DES is used.
+		The "DES" functions also use the value of "Prefix" as IV.
 	 "Hash/Checksum"
 		These actions exist in "Encoding" only, obviously.
 		"RIPEMD-160" can also be found here (even it's not a real hash
@@ -2625,7 +2629,7 @@ EPILOG
 	
 VERSION
 	
-	@# EnDe <!-- @(#) EnDe.man.txt 3.32 17:40:57 12/06/09 -->
+	@# EnDe <!-- @(#) EnDe.man.txt 3.33 14:22:09 12/06/17 -->
 	
 	
 AUTHOR

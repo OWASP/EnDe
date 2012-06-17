@@ -1,6 +1,25 @@
 
 CHANGE HISTORY
 	
+1.0rc12 17-jun-12
+    * LIB, API
+	"EnDe.js" DES implemented, EnDe.c2h() implemented
+	"aes.js" formal changes
+	"blowfish.js" formal changes
+	"des.js" implemented
+	"Makefile" improved
+
+    * GUI
+	"EnDeTest.txt" some test for *.des() added
+	"EnDeTest-Sample.txt" description improved
+	"EnDeUser.xml" new user function for  double \xHH/URL decode
+	"EnDe.man.txt" improved
+	"EnDeMenu.txt" "character to hex" added, more functionality for ' and "
+	"EnDeText.js" more Text functions added
+	"EnDeGUI.js" adaptions for DES functions
+	'EnDe.html" formal changes (Timestamp layout improved)
+	'EnDe.css" class .tstable (for Timestamp), td.parm (tests) added
+	
 1.0rc11 09-jun-12
     * LIB, API
 	"EnDeIP.js" new file: code seperated out of "EnDe.js" 
@@ -25,7 +44,7 @@ CHANGE HISTORY
 	"bin/EnDe2js.pl" generate EnDe.Func instead of EnDeFunc; some improvements
 	"*" some formal changes according coding style
 
-    * GUI
+    * GU.
 	"EnDeGUI.js" "show payloads only" button to "guess" window added (quick&dirty solution)
 	"EnDeMenu.js" bugfix: workaround for strange behaviour with \u202d and \0202e
 	"EnDeMaps.js" bugfix: trace output supported
@@ -95,9 +114,7 @@ CHANGE HISTORY
 	"bin/EnDe2js.pl" bugfix: EnDeFunc.SID added to EnDeFunc.js
 
     * GUI
-	"EnDeUser.xml" new user function for CONCAT(), new encoding functions added
-	"EnDeCheck.js", EnDeCheck -> EnDe.Check
-	"EnDeGUIx.js", "EnDeMenu.txt" bugfix: onMouse* event added for (IP) option
+	"EnDeUser.xml" new user function for CONCAT(), new encoding functions added "EnDeCheck.js", EnDeCheck -> EnDe.Check "EnDeGUIx.js", "EnDeMenu.txt" bugfix: onMouse* event added for (IP) option
 	"EnDeGUI.js" bugfix: misses leading zeros for binary UTF-8 in Characters
 	"EnDeGUI.js" bugfix: "Functions" functionality corrected (bug introduced in 1.0rc4)
 	
@@ -1038,7 +1055,7 @@ CHANGE HISTORY
 
 VERSION
 
-	@# EnDe <!-- @(#) EnDe.changes.txt 3.13 12/06/09 18:43:39 -->
+	@# EnDe <!-- @(#) EnDe.changes.txt 3.14 12/06/17 23:30:41 -->
 
 
 AUTHOR

@@ -24,6 +24,10 @@
 #?               _delimiter - string (passed to en-/decoding functions)
 #?               _uppercase - boolean (passed to en-/decoding functions)
 #?               all other keys are used as alias name for a test function
+#?         Values for key  _mode:
+#?               encode     - only call encoding
+#?               decode     - only call decoding
+#?               en-/decode - call encoding and decoding
 #?         Values:
 #?               interger   - any integer value
 #?               boolean    - either true or false
@@ -36,9 +40,6 @@
 #?                            to corresponding Unicode (UCS-2) character:
 #?                              \xHH    - hexadecimal value of a caracter
 #?                              \uHHHH  - hexadecimal value of a caracter
-#?               encode     - only call encoding
-#?               decode     - only call decoding
-#?               en-/decode - call encoding and decoding
 #?
 #?         A key-value pair looks like:
 #?               keyTABvalue
@@ -73,7 +74,7 @@
 #?      EnDeTest.txt
 #?
 #? VERSION
-#?      @(#) EnDeTest-Sample.txt 3.1 10/04/12 18:24:23
+#?      @(#) EnDeTest-Sample.txt 3.2 12/06/17 23:16:02
 #?
 #? AUTHOR
 #?      01-feb-10 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net

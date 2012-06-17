@@ -9,7 +9,7 @@
 #       Makefile
 #?
 #? VERSION
-#?      @(#) EnDe.css 3.18 12/06/16 11:40:13
+#?      @(#) EnDe.css 3.19 12/06/17 22:40:19
 #?
 #? AUTHOR
 #?      30-may-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -553,8 +553,9 @@ span.popup                 { float:     none; }
 .test table    { border:1px solid black; }
 .test table td { width:3em; min-width:3em; overflow: auto; }
 .test table td:first-child { text-align: right; }
-.test table td.data { text-align: left; border-top: 1px solid  black; background: #ffffcf; }
-.test table td.error{ text-align: left; border-top: 1px dotted black; background: #ffcfcf; }
+.test table td.data { text-align:left; padding-left:1em; border-top:1px solid  black; background:#ffffcf; font-size:10pt; }
+.test table td.parm { text-align:left; padding-left:1em; border-top:0px none   black; background:#ffffaf; font-size:8pt; }
+.test table td.error{ text-align:left; padding-left:1em; border-top:1px dotted black; background:#ffcfcf; font-size:8pt; }
 .test table td pre  { display: inline; overflow: auto; }
 .test table td span {             background:#ffcfcf; max-width:99%; overflow: auto; }
 .test table td span:first-child { background:#cfffcf; }

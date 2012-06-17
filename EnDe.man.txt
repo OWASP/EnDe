@@ -1697,6 +1697,7 @@ API
 	* "EnDeMaps.js"
 	* "crc.js"
 	* "aes.js"
+	* "des.js"
 	* "md4.js"
 	* "md5.js"
 	* "rmd.js"
@@ -1733,6 +1734,7 @@ API
 	* 'EnDe.IDN'    - all IDN and puny code related functions
 	* 'EnDe.CRC'    - all CRC functions
 	* 'EnDe.AES'    - all AES functions
+	* 'EnDe.DES'    - all DES functions
 	* 'EnDe.SHA'    - all SHA functions
 	* 'EnDe.MD4'    - all MD4 functions
 	* 'EnDe.MD5'    - all MD5 functions
@@ -1826,14 +1828,13 @@ HACKER's INFO
 		which is called by 'EnDeGUI.*.dipatcher()'.  These dispatchers
 		are very simple.
 	* "aes.js", "md4.js", "md5.js", "rmd.js", "sha.js", "sha512.js", "crc.js",
-	  "blowfish.js"
+	  "des.js", "blowfish.js"
 		 These files implement the corresponding JavaScript objects.
 	* "EnDeB64.js"
 		 Implements all Base-N functionality.
 	* "EnDeFunc.html"
 		Generated brief documentation for all functions.
 	* "EnDeFunc.js", "EnDeFunc.txt", "EnDeFunc.xml"
-		** experimental **
 		Generated 'EnDeFunc' object which contains all functions.
 	* "EnDeUser.js"
 		This file contains user-defined functions.
@@ -2267,6 +2268,8 @@ GLOSSAR
 	CESU-8  - Compatibility Encoding Scheme for UTF-16
 	CBC     - Cyclic Block Chaining
 	CBC     - Cipher Block Chaining (sometimes)
+	CBC     - Ciplier Block Chaining (see http://www.itl.nist.gov/fipspubs/fip81.htm)
+	CFB     - Cipher Feedback
 	CEF     - character encoding form
 	CES     - character encoding scheme
 	CFB     - Cipher Feedback
@@ -2294,6 +2297,7 @@ GLOSSAR
 	DEA     - Data Encryption Algorithm (sometimes a synonym for DES)
 	DES     - Data Encryption Standard
 	3DES    - Triple DES
+	DECIPHER    - synonym for decryption
 	DPA     - Dynamic Passcode Authentication (see CAP)
 	DPI     - Derivative Part Identifier (for SICI)
 	DOI     - Digital Object Identifier
@@ -2311,6 +2315,7 @@ GLOSSAR
 	EFT     - Electronic Funds Transfer Routing Number Check (10-digit)
 	EGC     - extended grapheme cluster
 	EMV     - Europay, MasterCard, and Visa (see CAP)
+	ENCIPHER    - synonym for encryption
 	EUDC    - end-user defined character
 	FAC     - Final Assembly Code (Endmontagekennung bei Mobiles)
 	FIPS    - Federal Information Processing Standard
@@ -2362,6 +2367,7 @@ GLOSSAR
 	ISSN    - International Standard Serial Number
 	ISTC    - see ISMN
 	ISWC    - see ISMN
+	IV      - Initialization Vector (i.e. for CBC, CFB, OFB)
 	JTC1    - Joint Technical Committee 1
 	KEA     - Key Exchange Algorithm (see http://tools.ietf.org/html/rfc2773 )
 	KPN     - Kartenprüfnummer
@@ -2629,7 +2635,7 @@ EPILOG
 	
 VERSION
 	
-	@# EnDe <!-- @(#) EnDe.man.txt 3.33 14:22:09 12/06/17 -->
+	@# EnDe <!-- @(#) EnDe.man.txt 3.35 19:55:37 12/06/17 -->
 	
 	
 AUTHOR

@@ -11,7 +11,7 @@
 #?      EnDeTest.js
 #?
 #? VERSION
-#?      @(#) EnDeTest.txt 3.2 10/05/30 20:05:30
+#?      @(#) EnDeTest.txt 3.3 12/06/17 23:23:51
 #?
 #? AUTHOR
 #?      01-feb-10 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -24,6 +24,8 @@ __DATA
 #------+----------------------------------------------------------------
 _data	heureca!
 _salt	halos
+_uppercase	false
+_delimiter	,
 #_salt	h\xe1l\u014ds
 #_salt	á¼Î»Ï 
 #_salt	\u1f05\u03bb\u03c9\u03c2
@@ -31,9 +33,6 @@ _salt	halos
 #_mode	decode
 #_mode	en-/decode	# default if missing
 _mode	en-/decode
-
-_uppercase	false
-_delimiter	,
 
 #--------------+--------------------------------------------------------
 #alias		encoded(data)
@@ -115,7 +114,53 @@ teaesc		!1!!227!!7!!130!!159!!218!!26!!240!
 teacor		\x01\xe3\x07\x82\x9f\xda\x1a\xf0
 tearaw		\x01\xe3\x07\x82\x9f\xda\x1a\xf0
 
-_mode	en-/decode
+# // ToDo: unknown why we need upppercase=true
+_uppercase	true
+_salt	
+_title		DES
+#--------------+--------------------------------------------------------
+desECBn		\x92\x7c\x45\xa6\x35\xb8\x09\x61
+desECBs		\x92\x7c\x45\xa6\x35\xb8\x09\x61
+desECB_		\x92\x7c\x45\xa6\x35\xb8\x09\x61
+desECBp		\x92\x7c\x45\xa6\x35\xb8\x09\x61\x7e\x42\x28\x22\x77\x36\x66\xc0
+desCBCn		\x92\x7c\x45\xa6\x35\xb8\x09\x61
+desCBCs		\x92\x7c\x45\xa6\x35\xb8\x09\x61
+desCBC_		\x92\x7c\x45\xa6\x35\xb8\x09\x61
+desCBCp		\x92\x7c\x45\xa6\x35\xb8\x09\x61\xc6\xd4\x6a\x57\x6a\xef\xe1\x53
+
+# _uppercase	true
+# _salt	haloshalos
+# _mode	en-/decode
+# _title		trippple DES
+# #--------------+--------------------------------------------------------
+# desECBn		\xff\xec\x54\xa5\x62\x1d\xa2\x56
+# desECBs		\xff\xec\x54\xa5\x62\x1d\xa2\x56
+# desECB_		\xff\xec\x54\xa5\x62\x1d\xa2\x56
+# desECBp		\xff\xec\x54\xa5\x62\x1d\xa2\x56\xfb\x6d\x5d\x4f\x29\x37\xc6\x97
+# desCBCn		\xff\xec\x54\xa5\x62\x1d\xa2\x56
+# desCBCs		\xff\xec\x54\xa5\x62\x1d\xa2\x56
+# desCBC_		\xff\xec\x54\xa5\x62\x1d\xa2\x56
+# desCBCp		\xff\xec\x54\xa5\x62\x1d\xa2\x56\x33\xee\x24\x0f\x5f\x06\x34\x00
+
+# // ToDo: unknow why we need upppercase=true
+_uppercase	true
+_prefix		initinit
+_salt	
+_title		DES (with IV)
+#--------------+--------------------------------------------------------
+desCBCn		\x6b\xdc\x94\xfb\x80\x3d\x19\x89
+desCBCs		\x6b\xdc\x94\xfb\x80\x3d\x19\x89
+desCBC_		\x6b\xdc\x94\xfb\x80\x3d\x19\x89
+desCBCp		\x6b\xdc\x94\xfb\x80\x3d\x19\x89
+desCBCn		\x92\x7c\x45\xa6\x35\xb8\x09\x61\x5a\xeb\xe2\xe3\xe0\x6a\x13\x12
+
+# reset to defaults
+_salt		halos
+_uppercase	false
+_delimiter	,
+_prefix	
+_mode		en-/decode
+
 _title		URI/URL encoding
 #--------------+--------------------------------------------------------
 urlUni		heureca!

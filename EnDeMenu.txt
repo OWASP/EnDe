@@ -88,7 +88,7 @@
 #?      EnDeGUIx.js, EnDeGUI.js
 #?
 #? VERSION
-#?      @(#) EnDeMenu.txt 3.44 12/06/16 10:30:49
+#?      @(#) EnDeMenu.txt 3.46 12/06/17 19:26:07
 #?
 #? AUTHOR
 #?      09-jun-09 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -607,13 +607,15 @@ item3	aes128r		AES 128 (raw)		encrypt with AES 128 bit (raw data)
 item3	aes192r		AES 192 (raw)		encrypt with AES 192 bit (raw data)
 item3	aes256r		AES 256 (raw)		encrypt with AES 256 bit (raw data)
 item3	blowfish	Blowfish		encrypt with Blowfish
-item3	desECB0		DES ECB mode, 0		encrypt with (tripple) DES with ECB mode, message padded with 0-bytes (raw data)
+item3	desECBn		DES ECB mode, 0		encrypt with (tripple) DES with ECB mode, message padded with 0-bytes (raw data)
 item3	desECBp		DES ECB mode, PKCS7	encrypt with (tripple) DES with ECB mode, message padded with PKCS7 (raw data)
 item3	desECBs		DES ECB mode, space	encrypt with (tripple) DES with ECB mode, message padded with spaces (raw data)
+#item3	desECB0		DES ECB mode, 0/1	encrypt with (tripple) DES with ECB mode, message padded with complement of last bit (raw data)
 item3	desECB_		DES ECB mode, none	encrypt with (tripple) DES with ECB mode, message without padding (raw data)
-item3	desCBC0		DES CBC mode, 0		encrypt with (tripple) DES with CBC mode, message padded with 0-bytes (raw data)
+item3	desCBCn		DES CBC mode, 0		encrypt with (tripple) DES with CBC mode, message padded with 0-bytes (raw data)
 item3	desCBCp		DES CBC mode, PKCS7	encrypt with (tripple) DES with CBC mode, message padded with PKCS7 (raw data)
 item3	desCBCs		DES CBC mode, space	encrypt with (tripple) DES with CBC mode, message padded with spaces (raw data)
+#item3	desCBC0		DES CBC mode, 0/1	encrypt with (tripple) DES with CBC mode, message padded with complement of last bit (raw data)
 item3	desCBC_		DES CBC mode, none	encrypt with (tripple) DES with CBC mode, message without padding (raw data)
 item3	teaesc		Block TEA (escaped)	encrypt with Block Tiny Encryption Algorithm (aka XXTEA), XXTEA with escaping all non-printable chars
 item3	teacor		Block TEA (corrected)	encrypt with Block Tiny Encryption Algorithm (aka XXTEA), corrected XXTEA with some escaping
@@ -884,13 +886,15 @@ item3	aes128r		AES 128 (raw)		decrypt with AES 128 bit (raw data)
 item3	aes192r		AES 192 (raw)		decrypt with AES 192 bit (raw data)
 item3	aes256r		AES 256 (raw)		decrypt with AES 256 bit (raw data)
 item3	blowfish	Blowfish		decrypt with Blowfish
-item3	desECB0		DES ECB mode, 0		decrypt with (tripple) DES with ECB mode, message padded with 0-bytes (raw data)
+item3	desECBn		DES ECB mode, 0		decrypt with (tripple) DES with ECB mode, message padded with 0-bytes (raw data)
 item3	desECBp		DES ECB mode, PKCS7	decrypt with (tripple) DES with ECB mode, message padded with PKCS7 (raw data)
 item3	desECBs		DES ECB mode, space	decrypt with (tripple) DES with ECB mode, message padded with spaces (raw data)
+#item3	desECB0		DES ECB mode, 0/1	decrypt with (tripple) DES with ECB mode, message padded with complement of last bit (raw data)
 item3	desECB_		DES ECB mode, none	decrypt with (tripple) DES with ECB mode, message without padding (raw data)
-item3	desCBC0		DES CBC mode, 0		decrypt with (tripple) DES with CBC mode, message padded with 0-bytes (raw data)
+item3	desCBCn		DES CBC mode, 0		decrypt with (tripple) DES with CBC mode, message padded with 0-bytes (raw data)
 item3	desCBCp		DES CBC mode, PKCS7	decrypt with (tripple) DES with CBC mode, message padded with PKCS7 (raw data)
 item3	desCBCs		DES CBC mode, space	decrypt with (tripple) DES with CBC mode, message padded with spaces (raw data)
+#item3	desCBC0		DES CBC mode, 0/1	decrypt with (tripple) DES with CBC mode, message padded with complement of last bit (raw data)
 item3	desCBC_		DES CBC mode, none	decrypt with (tripple) DES with CBC mode, message without padding (raw data)
 # // ToDo: DES descryption probably does not need padding
 item3	teaesc		Block TEA (escaped)	decrypt with Block Tiny Encryption Algorithm (aka XXTEA), XXTEA with escaping all non-printable chars

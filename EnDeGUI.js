@@ -102,7 +102,7 @@
 #       Mozilla 1.x which has this property.
 #?
 #? VERSION
-#?      @(#) EnDeGUI.js 3.83 12/06/16 11:02:20
+#?      @(#) EnDeGUI.js 3.85 12/06/17 19:22:34
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -114,8 +114,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '3.83';
-this.sid        = function() {  return('@(#) EnDeGUI.js 3.83 12/06/16 11:02:20 EnDeGUI'); };
+this.SID        = '3.85';
+this.sid        = function() {  return('@(#) EnDeGUI.js 3.85 12/06/17 19:22:34 EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 
@@ -2298,11 +2298,11 @@ this.EN         = new function() {
 	  case 'aes256'     : suffix = cipher; break;
 	  case 'aes256r'    : suffix = cipher; break;
 	  case 'blowfish'   : suffix = cipher; break;
-	  case 'desECB0'    : suffix = cipher; break; // prefix used as IV
+	  case 'desECBn'    : suffix = cipher; break; // prefix used as IV
 	  case 'desECBp'    : suffix = cipher; break; // prefix used as IV
 	  case 'desECBs'    : suffix = cipher; break; // prefix used as IV
 	  case 'desECB_'    : suffix = cipher; break; // prefix used as IV
-	  case 'desCBC0'    : suffix = cipher; break; // prefix used as IV
+	  case 'desCBCn'    : suffix = cipher; break; // prefix used as IV
 	  case 'desCBCp'    : suffix = cipher; break; // prefix used as IV
 	  case 'desCBCs'    : suffix = cipher; break; // prefix used as IV
 	  case 'desCBC_'    : suffix = cipher; break; // prefix used as IV
@@ -2473,11 +2473,11 @@ this.DE         = new function() {
 	  case 'aes256'     : suffix = cipher; break;
 	  case 'aes256r'    : suffix = cipher; break;
 	  case 'blowfish'   : suffix = cipher; break;
-	  case 'desECB0'    : suffix = cipher; break; // prefix used as IV
+	  case 'desECBn'    : suffix = cipher; break; // prefix used as IV
 	  case 'desECBp'    : suffix = cipher; break; // prefix used as IV
 	  case 'desECBs'    : suffix = cipher; break; // prefix used as IV
 	  case 'desECB_'    : suffix = cipher; break; // prefix used as IV
-	  case 'desCBC0'    : suffix = cipher; break; // prefix used as IV
+	  case 'desCBCn'    : suffix = cipher; break; // prefix used as IV
 	  case 'desCBCp'    : suffix = cipher; break; // prefix used as IV
 	  case 'desCBCs'    : suffix = cipher; break; // prefix used as IV
 	  case 'desCBC_'    : suffix = cipher; break; // prefix used as IV

@@ -83,7 +83,7 @@
 #       _n2_, _n3_, _n4_, _n5_, _n6_, and _n7_ .
 #?
 #? VERSION
-#?      @(#) EnDe.js 3.35 12/06/17 18:57:29
+#?      @(#) EnDe.js 3.36 12/06/17 19:21:55
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -96,8 +96,8 @@
 
 var EnDe    = new function() {
 
-this.SID    = '3.35';
-this.sid    = function() { return('@(#) EnDe.js 3.35 12/06/17 18:57:29 EnDe'); };
+this.SID    = '3.36';
+this.sid    = function() { return('@(#) EnDe.js 3.36 12/06/17 19:21:55 EnDe'); };
 
 	// ===================================================================== //
 	// debug functions                                                       //
@@ -2711,21 +2711,21 @@ this.EN     = new function() {
 
   this.des      = function(type,mode,uppercase,src,iv,key,_n7_) {
   //#? wrapper for des(); (single) DES and tripple DES encryption in ECB or CBC mode
-  //#type? desECB0: ECB mode, message (src) padded with 0-bytes
+  //#type? desECBn: ECB mode, message (src) padded with 0-bytes
   //#type? desECBp: ECB mode, message (src) padded with PKCS7
   //#type? desECBs: ECB mode, message (src) padded with spaces
   //#type? desECB_: ECB mode, message (src) without padding
-  //#type? desCBC0: CBC mode, message (src) padded with 0-bytes
+  //#type? desCBCn: CBC mode, message (src) padded with 0-bytes
   //#type? desCBCp: CBC mode, message (src) padded with PKCS7
   //#type? desCBCs: CBC mode, message (src) padded with spaces
   //#type? desCBC_: CBC mode, message (src) without padding
 	var bux = '';
 	switch (type) {
-	  case 'desECB0': bux = EnDe.DES.EN.des(key, src, 0, iv, 0); break;
+	  case 'desECBn': bux = EnDe.DES.EN.des(key, src, 0, iv, 0); break;
 	  case 'desECBp': bux = EnDe.DES.EN.des(key, src, 0, iv, 1); break;
 	  case 'desECBs': bux = EnDe.DES.EN.des(key, src, 0, iv, 2); break;
 	  case 'desECB_': bux = EnDe.DES.EN.des(key, src, 0, iv, 3); break;
-	  case 'desCBC0': bux = EnDe.DES.EN.des(key, src, 1, iv, 0); break;
+	  case 'desCBCn': bux = EnDe.DES.EN.des(key, src, 1, iv, 0); break;
 	  case 'desCBCp': bux = EnDe.DES.EN.des(key, src, 1, iv, 1); break;
 	  case 'desCBCs': bux = EnDe.DES.EN.des(key, src, 1, iv, 2); break;
 	  case 'desCBC_': bux = EnDe.DES.EN.des(key, src, 1, iv, 3); break;
@@ -2992,8 +2992,8 @@ xxx1Z3A+!Z22ZA7$Z25Z26Z2F()Z3DZ3FZ0DZ0Axxx2Z3A+Z7BZ5BZ5DZ7DZ5CZ60ZB4Z0DZ0Axxx3Z3
 	case 'aes192r'  : return this.aes('b192',  mode, false,     src, prefix, suffix, ''       ); break; // suffix is key here
 	case 'aes256r'  : return this.aes('b256',  mode, false,     src, prefix, suffix, ''       ); break; // suffix is key here
 	case 'blowfish' : return this.blowfish('', mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key here
-	case 'desECB0'  : return this.des( type,   mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key, prefix is iv
-	case 'desCBC0'  : return this.des( type,   mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key, prefix is iv
+	case 'desECBn'  : return this.des( type,   mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key, prefix is iv
+	case 'desCBCn'  : return this.des( type,   mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key, prefix is iv
 	case 'desECBp'  : return this.des( type,   mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key, prefix is iv
 	case 'desCBCp'  : return this.des( type,   mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key, prefix is iv
 	case 'desECBs'  : return this.des( type,   mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key, prefix is iv
@@ -3942,11 +3942,11 @@ this.DE     = new function() {
   this.des      = function(type,mode,uppercase,src,iv,key,delimiter) {
   //#? wrapper for des(); (single) DES and tripple DES decryption in ECB or CBC mode
 	switch (type) {
-	  case 'desECB0': return EnDe.DES.DE.des(key, src, 0, iv, 0); break;
+	  case 'desECBn': return EnDe.DES.DE.des(key, src, 0, iv, 0); break;
 	  case 'desECBp': return EnDe.DES.DE.des(key, src, 0, iv, 1); break;
 	  case 'desECBs': return EnDe.DES.DE.des(key, src, 0, iv, 2); break;
 	  case 'desECB_': return EnDe.DES.DE.des(key, src, 0, iv, 3); break;
-	  case 'desCBC0': return EnDe.DES.DE.des(key, src, 1, iv, 0); break;
+	  case 'desCBCn': return EnDe.DES.DE.des(key, src, 1, iv, 0); break;
 	  case 'desCBCp': return EnDe.DES.DE.des(key, src, 1, iv, 1); break;
 	  case 'desCBCs': return EnDe.DES.DE.des(key, src, 1, iv, 2); break;
 	  case 'desCBC_': return EnDe.DES.DE.des(key, src, 1, iv, 3); break;
@@ -4353,8 +4353,8 @@ this.DE     = new function() {
 	case 'aes192r'  : return this.aes('b192',  mode, false,     src, prefix, suffix, ''       ); break; // suffix is key here
 	case 'aes256r'  : return this.aes('b256',  mode, false,     src, prefix, suffix, ''       ); break; // suffix is key here
 	case 'blowfish' : return this.blowfish('', mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key here
-	case 'desECB0'  : return this.des( type,   mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key, prefix is iv
-	case 'desCBC0'  : return this.des( type,   mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key, prefix is iv
+	case 'desECBn'  : return this.des( type,   mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key, prefix is iv
+	case 'desCBCn'  : return this.des( type,   mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key, prefix is iv
 	case 'desECBp'  : return this.des( type,   mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key, prefix is iv
 	case 'desCBCp'  : return this.des( type,   mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key, prefix is iv
 	case 'desECBs'  : return this.des( type,   mode, uppercase, src, prefix, suffix, ''       ); break; // suffix is key, prefix is iv
@@ -4449,7 +4449,7 @@ this.DE     = new function() {
 // ========================================================================= //
 
 EnDe.Misc = new function() {
-this.sid        = function()  { return('@(#) EnDe.js 3.35 12/06/17 18:57:29 EnDeMisc'); };
+this.sid        = function()  { return('@(#) EnDe.js 3.36 12/06/17 19:21:55 EnDeMisc'); };
 
 	// ===================================================================== //
 	// global variables                                                      //

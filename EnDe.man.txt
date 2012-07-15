@@ -106,6 +106,7 @@ INTRODUCTION
 |	  [66]      P3Vybw==    %E2%82%ACuro   59DA12B00E4E700E1C5E4B1157FB595B
 |	  [67]      P3Vybw==    %E2%82%ACuro   36F9D3BB76279BE66536E2D4E250C7AD
 |	  [68]      4oKsdXJv    %E2%82%ACuro   36F9D3BB76279BE66536E2D4E250C7AD
+|	  [69]      gHVybw==    %80uro         203b6da413075e767581e4be9354295b
 |	  [71]      gHVyb3==    %80uro         203b6da413075e767581e4be9354295b
 |	  [72]      gHVybw==    €uro           203b6da413075e767581e4be9354295b
 |	  [73]      P3Vybw==    %E2%82%ACuro   59DA12B00E4E700E1C5E4B1157FB595B
@@ -166,6 +167,7 @@ INTRODUCTION
 	[66]  (2010) http://www.owasp.org/index.php/Category:OWASP_JBroFuzz 1.8 (Windows)
 	[67]  (2011) https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project ZAP 1.3.4 (Linux)
 	[68]  (2012) https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project ZAP 1.4.0 (Linux)
+	[69]  (2010) https://www.owasp.org/index.php/Category:OWASP_WebScarab_Project WebScarab 20100414-0036 (Windows)
 	Windows Binaries
 	[71]  (2011) https://www.bindshell.net/tools/coder/ Coder
 	[72]  (2011) http://www.nosec.org/web/files/Encoder.exe NOSEC Encoder
@@ -206,6 +208,7 @@ INTRODUCTION
 |	  [65]      gHVybw      €ur
 |	  [66]      P3Vybw      --nothing--
 |	  [67]      P3Vybw      --nothing--
+|	  [69]      gHVybw      Exception! java.lang.ArrayIndexOutOfBoundsException: 6
 |	  [71]      gHVyb3      €uro
 |	  [72]      gHVyb3      --nothing--
 |	  [73]      P3Vybw      --nothing--
@@ -219,7 +222,7 @@ INTRODUCTION
 	removing the trailing '='. This is not mentioned in above table.
 	Please make your own opinion if it's a bug or feature.
 	
-	This makes 11 different results for 21 tools.
+	This makes 12 different results for 22 tools.
 	
 	Finally, this introduction  was compiled in 2010 and 2011  where these
 	problems still exist (however, EnDe development began in 2006).
@@ -2635,7 +2638,7 @@ EPILOG
 	
 VERSION
 	
-	@# EnDe <!-- @(#) EnDe.man.txt 3.36 23:28:59 12/06/17 -->
+	@# EnDe <!-- @(#) EnDe.man.txt 3.37 22:35:24 12/07/15 -->
 	
 	
 AUTHOR

@@ -102,7 +102,7 @@
 #       Mozilla 1.x which has this property.
 #?
 #? VERSION
-#?      @(#) EnDeGUI.js 3.86 12/06/17 23:19:41
+#?      @(#) EnDeGUI.js 3.87 12/07/15 18:19:25
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -114,8 +114,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '3.86';
-this.sid        = function() {  return('@(#) EnDeGUI.js 3.86 12/06/17 23:19:41 EnDeGUI'); };
+this.SID        = '3.87';
+this.sid        = function() {  return('@(#) EnDeGUI.js 3.87 12/07/15 18:19:25 EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 
@@ -1098,7 +1098,9 @@ this.data       = function(btn,obj) {
 			return false;
 			break;
 		case 'isTxt':
-			$(obj + '.text').value = EnDe.EN.dmp('hex','strict',false,$(obj + '.text').value,'','',' ');
+			if ($(obj + '.text').value != '') {
+				$(obj + '.text').value = EnDe.EN.dmp('hex','strict',false,$(obj + '.text').value,'','',' ');
+			}
 			h_c = t_c;
 			t_c = u_c;
 			hbg = tbg;

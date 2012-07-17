@@ -93,7 +93,7 @@ INTRODUCTION
 |	  [41]      HVybw==     %u20ACuro      08c1d37a0b3394da278b77116cc4e615
 |	  [42]                                 08c1d37a0b3394da278b77116cc4e615
 |	  [43]                                 3e823fac7473e42888932c7761c224fc
-|	  [44]      4oKsdXJv    %E2%82%AC%75%72%6F   36f9d3bb76279be66536e2d4e250c7ad
+|	  [44]      4oKsdXJv %E2%82%AC%75%72%6F 36f9d3bb76279be66536e2d4e250c7ad
 |	  [45]      4oKsdXJv                   24bd7d579377f38cafec01ee4c8ab976
 |	  [46]      gHVybw==                    
 |	  [49]      HVybw==     %u20ACuro      08c1d37a0b3394da278b77116cc4e615
@@ -101,11 +101,14 @@ INTRODUCTION
 |	  [52]      rHVybw==
 |	  [62]      gHVybw==    %80uro         203B6DA413075E767581E4BE9354295B
 |	  [63]      rHVybw==    %ac%75%72%6f   08c1d37a0b3394da278b77116cc4e615
-|	  [64]      23Vybw==    %E2%82%ACuro   226D11B3E7FFC35CCE5C815378A78323
-|	  [65]      gHVybw==    %E2%82%ACuro   203B6DA413075E767581E4BE9354295B
-|	  [66]      P3Vybw==    %E2%82%ACuro   59DA12B00E4E700E1C5E4B1157FB595B
-|	  [67]      P3Vybw==    %E2%82%ACuro   36F9D3BB76279BE66536E2D4E250C7AD
-|	  [68]      4oKsdXJv    %E2%82%ACuro   36F9D3BB76279BE66536E2D4E250C7AD
+|	  [64a]     23Vybw==    %E2%82%ACuro   226D11B3E7FFC35CCE5C815378A78323
+|	  [64b]     gHVybw==    %E2%82%ACuro   203B6DA413075E767581E4BE9354295B
+|	  [64c]     P3Vybw==    %E2%82%ACuro   59DA12B00E4E700E1C5E4B1157FB595B
+|	  [65a]     P3Vyb       %E2%82%ACuro   4AB85A2FF8E48AB3978DD495F17C0885
+|	  [65b]     P3Vyb       %E2%82%ACuro   E169C0830A05B16A7FB7ED8BEA3548C1
+|	  [66a]     P3Vybw==    %E2%82%ACuro   36F9D3BB76279BE66536E2D4E250C7AD
+|	  [66b]     4oKsdXJv    %E2%82%ACuro   36F9D3BB76279BE66536E2D4E250C7AD
+|	  [66c]     4oKsdXJv    %E2%82%ACuro   203B6DA413075E767581E4BE9354295B
 |	  [69]      gHVybw==    %80uro         203b6da413075e767581e4be9354295b
 |	  [71]      gHVyb3==    %80uro         203b6da413075e767581e4be9354295b
 |	  [72]      gHVybw==    €uro           203b6da413075e767581e4be9354295b
@@ -116,7 +119,7 @@ INTRODUCTION
 |	  [88]      4oKsdXJvCg==               42dfe0927d2ea6daced8c118bbb8002b
 +-
 	
-	This are 11 different base64 and 10 different MD5 results for 31 tools.
+	This are 12 different base64 and 12 different MD5 results for 31 tools.
 	Differences in URL-UTF-8 encodings not counted.
 	
 <!--
@@ -162,11 +165,14 @@ INTRODUCTION
 	Java Tools
 	[62]  (2010) http:// @stake WebProxy (Linux, Mac OSX, Windows)
 	[63]  (2011) http://portswigger.net burp 1.3
-	[64]  (2011) http://www.owasp.org/index.php/Category:OWASP_JBroFuzz 2.x (Mac OSX)
-	[65]  (2011) http://www.owasp.org/index.php/Category:OWASP_JBroFuzz 2.x (Windows)
-	[66]  (2010) http://www.owasp.org/index.php/Category:OWASP_JBroFuzz 1.8 (Windows)
-	[67]  (2011) https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project ZAP 1.3.4 (Linux)
-	[68]  (2012) https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project ZAP 1.4.0 (Linux)
+	[64a] (2011) http://www.owasp.org/index.php/Category:OWASP_JBroFuzz 2.x (Mac OSX)
+	[64b] (2011) http://www.owasp.org/index.php/Category:OWASP_JBroFuzz 2.x (Windows)
+	[64c] (2010) http://www.owasp.org/index.php/Category:OWASP_JBroFuzz 1.8 (Windows)
+	[65a] (2012) http://code.google.com/p/andiparos/ 1.0.6 (Linux)
+	[65b] (2012) http://code.google.com/p/andiparos/ 1.0.6 (Windows)
+	[66a] (2011) https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project ZAP 1.3.4 (Linux, Windows)
+	[66b] (2012) https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project ZAP 1.4.0.1 (Linux)
+	[66c] (2012) https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project ZAP 1.4.0.1 (Windows)
 	[69]  (2010) https://www.owasp.org/index.php/Category:OWASP_WebScarab_Project WebScarab 20100414-0036 (Windows)
 	Windows Binaries
 	[71]  (2011) https://www.bindshell.net/tools/coder/ Coder
@@ -204,10 +210,12 @@ INTRODUCTION
 |	  [52]      rHVybw       ¬urbw
 |	  [62]      gHVybw      €uror
 |	  [63]      rHVybw       ¬urbw
-|	  [64]      23Vybw      €ur
-|	  [65]      gHVybw      €ur
-|	  [66]      P3Vybw      --nothing--
-|	  [67]      P3Vybw      --nothing--
+|	  [64a]     23Vybw      €ur
+|	  [64b]     gHVybw      €ur
+|	  [64c]     P3Vybw      --nothing--
+|	  [65a]     P3Vybw      ?ur
+|	  [65b]     P3Vybw      ?ur
+|	  [66a]     P3Vybw      --nothing--
 |	  [69]      gHVybw      Exception! java.lang.ArrayIndexOutOfBoundsException: 6
 |	  [71]      gHVyb3      €uro
 |	  [72]      gHVyb3      --nothing--
@@ -222,7 +230,7 @@ INTRODUCTION
 	removing the trailing '='. This is not mentioned in above table.
 	Please make your own opinion if it's a bug or feature.
 	
-	This makes 12 different results for 22 tools.
+	This makes 13 different results for 23 tools.
 	
 	Finally, this introduction  was compiled in 2010 and 2011  where these
 	problems still exist (however, EnDe development began in 2006).
@@ -2638,7 +2646,7 @@ EPILOG
 	
 VERSION
 	
-	@# EnDe <!-- @(#) EnDe.man.txt 3.37 22:35:24 12/07/15 -->
+	@# EnDe <!-- @(#) EnDe.man.txt 3.38 21:27:53 12/07/17 -->
 	
 	
 AUTHOR

@@ -5,7 +5,7 @@
 	<title>EnDe Help</title>
 	<meta name="DC.rights"        content="https://github.com/EnDe/EnDe license.txt" >
 	<meta name="DC.license"       content="https://github.com/EnDe/EnDe license.txt" >
-	<meta name="DC.Source"        content="@(#) EnDe.man.html 3.8 12/06/09 17:50:03" >
+	<meta name="DC.Source"        content="@(#) EnDe.man.html 3.9 12/07/17 20:30:32" >
 	<meta name="DC.Date"          content="28-jun-08" >
 	<meta name="DC.creator"       content="Achim Hoffmann" >
 	<meta name="DC.Author"        content="Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net" >
@@ -15,7 +15,7 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 EnDe.Man    = new function() {
   function $(id) { return document.getElementById(id); };
-  this.SID  = '3.8';
+  this.SID  = '3.9';
   this.mode = true;	// true if page should be in HTML format, otherwise plain text
   this.html = 'EnDe.man.html';// myself
   if (this.html == '%' + 'M%') { this.html = 'EnDe.man.html'; } // fix SCCS inconvenience
@@ -116,9 +116,9 @@ EnDe.Man    = new function() {
 		bbb = arr[i].replace(/(\s)(\[[a-zA-Z>\?-][^\]]*\])/g, function(c,d,e){return d+'<dfn>'+e+'</dfn>';});
 		arr[i] = bbb; if (bbb!=null) { bbb.length = 0; }
 
-		/* references like [1] */
+		/* references like [1] or [42a] */
 		arr[i] = bbb; if (bbb!=null) { bbb.length = 0; }
-		bbb = arr[i].replace(/(?: )(\[[1-9]\d*\]*)/g, function(c,d){return '<sup><a class="ref" href="#_'+d+'">'+d+'</a></sup>';});
+		bbb = arr[i].replace(/(?: )(\[[\d]+[a-z]?\]*)/g, function(c,d){return '<sup><a class="ref" href="#_'+d+'">'+d+'</a></sup>';});
 		arr[i] = bbb; if (bbb!=null) { bbb.length = 0; }
 
 		/* local links http:xxx */
@@ -145,9 +145,9 @@ EnDe.Man    = new function() {
 			continue;
 		}
 
-		/* references */
+		/* references like [1] or [42a] */
 		if (arr[i].match(/^\s+\[/) != null) {
-			bux += arr[i].replace(/(^\s+)(\[[\d]+\])/,function(c,d,e){return c+'<a name="_'+e+'"></a>';}) + '\n';
+			bux += arr[i].replace(/(^\s+)(\[[\d]+[a-z]?\])/,function(c,d,e){return c+'<a name="_'+e+'"></a>';}) + '\n';
 			continue;
 		}
 

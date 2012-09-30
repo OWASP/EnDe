@@ -9,7 +9,7 @@
 #       Makefile
 #?
 #? VERSION
-#?      @(#) EnDe.css 3.19 12/06/17 22:40:19
+#?      @(#) EnDe.css 3.20 12/09/30 14:02:54
 #?
 #? AUTHOR
 #?      30-may-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -277,6 +277,7 @@ legend {
 	height:         1.7em;
 }
 
+/* standard action button */
 input.button {
 	padding:        2px;
 	min-width:      2em;
@@ -306,40 +307,36 @@ input.button {
 	text-align:     center;
 	border-left:    1px solid #000000;
 }
-	#	#	#	#	#
-.tsttable   { border-spacing:0px; border-collapse:collapse; }
-.tsttable th { border-bottom:1px solid #000000;  text-align: right; }
-.tsttable td { border-bottom:1px solid #000000; }
+
+/* tables in test area */
+.tsttable           { border-spacing:0px; border-collapse:collapse; }
+.tsttable td        { border-bottom:1px solid #000000; }
+.tsttable th        { border-bottom:1px solid #000000;  text-align: right; }
 .tsttable caption   { background:#ffffcf; text-align: left; }
 .tsttable caption   { background:#ffffcf; text-align: left; }
 
 /* tables in IP area */
-.iptable th {
-	font-variant:   normal;
-	text-align:     right;
-}
+.iptable th { font-variant:normal; text-align:right; }
 .iptable td { }
-.iptable td input {
-	padding:        0px;
-	width:          12em;
-	background:     #ffffcf;
-}
-.iptable .button {
-	width:          3em;
-	background:	#00bfff;
+.iptable td input   { padding:0px; background:#ffffcf; width:12em; }
+.iptable .button    {              background:#00bfff; width:3em;
 }
 
-/* tables in TS area */
-table.tstable { border-spacing: 0px; border-collapse:collapse; } 
-table.tstable td { border-right:0px solid black; width:2em; }
-table.tstable th { margin:0px; padding:0px; min-width:4.2em; font-size:10pt; }
-table.tstable td { margin:0px; padding:0px; }
+/* tables in Timestamp area */
+/* font-size is contribution to Firefox 3.x */
+table.tstable       { border-spacing: 0px; border-collapse:collapse; font-size:10pt; } 
+table.tstable td    { border-right:0px solid black; min-width:2em;  width:auto; }
+table.tstable td    { margin:0px; padding:0px; }
+table.tstable th    { margin:0px; padding:0px; }
+table.tstable td:last-child  { padding-left:0.2em;border-left:1px solid black; }
+table.tstable th:first-child { text-align:right; max-width:7em; }
+table.tstable input[id="EnDeDOM.TS.human"]  {    min-width:22em; width:99%; }
 
 
 /* menu using UL LI DIV BUTTON */
 fieldset>div ul.guess   { background:#f0f0f0; display:inline; margin-top:0px; border-style:outset; border-width:2px; padding-left:0.5em; padding-right:0.5em; }
 fieldset>div ul.guess li{ background:#f0f0f0; display:inline; margin-top:0px; }
-li:hover div.menu  { display:inline; }
+li:hover div.menu       { display:inline; }
 div.menu        {
 	display:        none;
 	z-index:        42;
@@ -560,24 +557,6 @@ span.popup                 { float:     none; }
 .test table td span {             background:#ffcfcf; max-width:99%; overflow: auto; }
 .test table td span:first-child { background:#cfffcf; }
 
-.em2  { width:          2em; } /* does not work inside <td>, hence some inline style= required too */
-.em8  { width:          10em;  text-align:right; }
-.em9  { width:          10em;  text-align:right; float:left; }
-.em4  {
-	padding-top:    0px;
-	padding-bottom: 0px;
-	padding-left:   4px;
-	border-spacing: 0px;
-	margin:         0px;
-	border-width:   0px;
-	font-size:      8pt;
-	font-variant:   normal;
-	text-align:     center;
-	background:     #555fff;
-	color:          #000000;
-	min-width:      4.3em;
-	width:          4.3em;
-}
 /* definitions for tab-style buttons */
 .tab {
 	margin-left:    -6px;

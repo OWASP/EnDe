@@ -1,12 +1,11 @@
 /* ========================================================================= //
-# vi:  ts=4:
-# vim: ts=4:
 #?
 #? NAME
 #?      EnDeUser.js
 #?
 #? SYNOPSIS
 #?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="EnDeGUI.js"></SCRIPT>
+#?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="EnDeSer.js"></SCRIPT>
 #?      <SCRIPT language="JavaScript1.5" type="text/javascript" src="EnDeUser.js"></SCRIPT>
 #?
 #? DESCRIPTION
@@ -48,7 +47,7 @@
 #       Simple debugging available if  userdebug  given in QUERY_STRING.
 #
 #? VERSION
-#?      @(#) EnDeUser.js 3.14 12/04/09 19:12:00
+#?      @(#) EnDeUser.js 3.19 12/07/15 18:09:27
 #?
 #? AUTHOR
 #?      27-nov-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -62,8 +61,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.User   = new function() {
-	this.SID    = '3.14';
-	this.sid    = function() { return('@(#) EnDeUser.js 3.14 12/04/09 19:12:00 EnDe.User'); };
+	this.SID    = '3.19';
+	this.sid    = function() { return('@(#) EnDeUser.js 3.19 12/07/15 18:09:27 EnDe.User'); };
 
 	// ===================================================================== //
 	// global variables                                                      //
@@ -76,9 +75,10 @@ EnDe.User   = new function() {
 	this.ident  = '|  ';
 	this.str    = '';   // current string to be prased
 	this.pos    = 0;    // current position of parser in string
-		this.typ    = null; // current object type being parsed
+	this.typ    = null; // current object type being parsed
 	this.level  = [];   // stack of objects
 	this.idxed  = false;// set to true if a index [n] was written with identation
+	this.maxloop= EnDe.maxloop || 99999;
 
 	// ===================================================================== //
 	// internal/private functions                                            //
@@ -107,7 +107,7 @@ EnDe.User   = new function() {
 			}
 			return null;
 		}; // dispatch
-	}; // EN
+	}; // .EN
 
 this.DE     = new function() {
   this.sid  = function() { return(EnDe.User.sid() + '.DE'); };
@@ -127,6 +127,7 @@ this.DE     = new function() {
 	}
 	EnDe.User.level = [];
 
+
 	function _bytes(src,i,len) { return src.substr(i,len); }
 	function _vs1(src,i) {
 		// parse Viewstate 1.x format
@@ -142,7 +143,7 @@ this.DE     = new function() {
 	                	// used to beautify idents
 	    	key = 1;    // we assume that the viewstate's first character is a key
 		while (i<src.length) {
-			if (i>99999) { EnDeGUI.alert('viewstate too large'); return _v1; break; }
+			if (i>EnDe.User.maxloop) { EnDeGUI.alert('viewstate too large'); return _v1; break; }
 			ccc = src.charAt(i);
 			i++;
 			if (esc==1) {
@@ -419,9 +420,10 @@ this.DE     = new function() {
 		  default    : return( src )          ; break;
 		}
 		if (mode === 'XML') {
-			__m	+= ' pos="' + EnDe.User.pos + '"';
+			__m  = __m.replace(/\./g, '_'); // XML tags must not contain .
+			__m += ' pos="' + EnDe.User.pos + '"';
 			__m += ' typ="' + EnDe.EN.hex(2,'lazy',false,src,'\\x','','') + '"';
-			__m	+= ' >';
+			__m += ' >';
 		}
 		if (mode === '/XML') { __m += '>'; }
 		return __m; // fallback
@@ -434,7 +436,7 @@ this.DE     = new function() {
 		// start parsing at EnDe.User.pos
 		// this ugly code is build on reverse engeneering sample data
 		// ToDo: _v2_parse() still incomplete and buggy
-		__dbx('EnDe.User.DE._v2(){ [' + EnDe.User.pos + '], level=' + EnDe.User.level.length,'');
+		__dbx('EnDe.User.DE._v2_parse(){ [' + EnDe.User.pos + '], level=' + EnDe.User.level.length,''); // dumm }
 		var _v2 = '';
 		var bbb = '';
 		var ccc = 0; // count items in list, hashlist, arraylist, ...
@@ -617,7 +619,7 @@ this.DE     = new function() {
 		} // switch
 		_v2 += _stopp(mode);
 		if ((EnDe.User.level.length ===1) && (_is_hash() !== 0)) { _v2 += _hash(); }
-		__dbx('EnDe.User.DE._v2} (pos='+EnDe.User.pos+')');
+		/* dumm { */ __dbx('EnDe.User.DE._v2_parse} (pos='+EnDe.User.pos+')');
 		return _v2;
 	}; // _v2_parse
 
@@ -630,14 +632,14 @@ this.DE     = new function() {
 		while (EnDe.User.pos<EnDe.User.str.length) {
 			__v += _v2_parse(mode);
 			if (__p === EnDe.User.pos) {
-				__v += '\n' + '**ERROR: EnDe.User.DE.vs: infinite loop at position: ' + EnDe.User.pos + '; exit\n';
+				__v += '\n' + '**ERROR: EnDe.User.DE._vs2: infinite loop at position: ' + EnDe.User.pos + '; exit\n';
 				break;
 			}
 			__p = EnDe.User.pos;
 		}
 		__v += _stopp(mode);
 		if (EnDe.User.level.length !== 0) {
-			_v2 += '<ERROR level=' + EnDe.User.level.length + ' "something wrong" />';
+			__v += '<ERROR level=' + EnDe.User.level.length + ' "something wrong" />';
 		}
 		return __v;
 	}; // _vs2
@@ -667,10 +669,13 @@ this.DE     = new function() {
 
   this.dispatch = function(type,mode,uppercase,src,prefix,suffix,delimiter) {
   //#? dispatcher for user decoding functions
-	__dbx(this.sid()+'.disPatch: '+type+'\t:uppercase='+uppercase+'\tprefix='+prefix+'\tsuffix='+suffix+'\tdelimiter='+delimiter);
+	__dbx(this.sid()+'.dispatch: '+type+'\t:uppercase='+uppercase+'\tprefix='+prefix+'\tsuffix='+suffix+'\tdelimiter='+delimiter);
 	EnDe.User.mode = mode;   // ToDo: only supported in *.vs()
 	// first URL-decode which is idempotent and hence doesn't harm
 	switch (type) {
+	  case 'SRb64':     return EnDe.Ser.DE.ser('txt', EnDe.DE.dispatch('base64',mode,true,EnDe.DE.dispatch('urlCHR',mode,true,src,'', '', ''),prefix, '', '') ); break;
+	  case 'SRb64XML':  return EnDe.Ser.DE.ser('XML', EnDe.DE.dispatch('base64',mode,true,EnDe.DE.dispatch('urlCHR',mode,true,src,'', '', ''),prefix, '', '') ); break;
+	  case 'SRb64txt':  return EnDe.Ser.DE.ser('txt', EnDe.DE.dispatch('base64',mode,true,EnDe.DE.dispatch('urlCHR',mode,true,src,'', '', ''),prefix, '', '') ); break;
 	  case 'VSb64':     return this.vs( 'txt', EnDe.DE.dispatch('base64',mode,true,EnDe.DE.dispatch('urlCHR',mode,true,src,'', '', ''),prefix, '', '') ); break;
 	  case 'VSb64XML':  return this.vs( 'XML', EnDe.DE.dispatch('base64',mode,true,EnDe.DE.dispatch('urlCHR',mode,true,src,'', '', ''),prefix, '', '') ); break;
 	  case 'VSb64txt':  return this.vs( 'txt', EnDe.DE.dispatch('base64',mode,true,EnDe.DE.dispatch('urlCHR',mode,true,src,'', '', ''),prefix, '', '') ); break;
@@ -679,7 +684,8 @@ this.DE     = new function() {
 	}
 	return null;
   }; // dispatch
-}; // DE
+
+}; // .DE
 
 	// ===================================================================== //
 	// checksum functions                                                    //
@@ -761,7 +767,7 @@ this.Check  = new function() {
 	return(bux);
   }; // guess
 
-}; // Check
+}; // .Check
 
 this.DAT    = new function() {
   this.sid  = function() { return(EnDe.User.sid() + '.DAT'); };
@@ -799,7 +805,7 @@ this.DAT    = new function() {
 	return '';
   }; // guess
 
-}; // DAT
+}; // .DAT
 
 this.IMG    = new function() {
   this.sid  = function() { return(EnDe.User.sid() + '.IMG'); };
@@ -875,7 +881,7 @@ this.IMG    = new function() {
 	return this.getMIME(src).replace(/,$/, ';base64,');
   }; // isMIME64
 
-}; // IMG
+}; // .IMG
   
 this.init      = function() {
 //#? initialize user data

@@ -88,7 +88,7 @@
 #?      EnDeGUIx.js, EnDeGUI.js
 #?
 #? VERSION
-#?      @(#) EnDeMenu.txt 3.46 12/06/17 19:26:07
+#?      @(#) EnDeMenu.txt 3.48 12/09/30 16:14:59
 #?
 #? AUTHOR
 #?      09-jun-09 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -339,6 +339,7 @@ item3	txtREPdouble	duplicate \		duplicate all \
 item3	txtREPreduce	reduce \\		reduce all \\ to \
 item3	txtTrim		trim spaces		remove all leading and trailing spaces
 item3	txtXesc		convert to \x-escaped	convert all hex values to \x-escaped hex values (in Hex tab only)
+item3	txtReverse	reverse text		reverse text
 #------+---------------+-----------------------+------------------------------+
 
 #------+---------------+-----------------------+------------------------------+
@@ -933,6 +934,8 @@ item3	u64tob64	Url64 to Base64		convert Url64 to Base64 encoding
 item3	VSb64XML	Viewstate as XML (B64)	try to parse base64 data as VIEWSTATE, return XML with attributes
 item3	VSb64txt	Viewstate as text (B64)	try to parse base64 data as VIEWSTATE, return simple text
 item3	VSraw		Viewstate (raw)		try to parse raw data as VIEWSTATE, return simple text
+item3	SRb64XML	unserialize as XML (B64)	parse base64 data as "serialized data", return XML with attributes
+item3	SRb64txt	unserialize as text (B64)	parse base64 data as "serialized data", return simple text
 item3	dumphex		xdump style		decode from traditional xdump style: hex values left, characters right
 item3	dumpODx		od-x style (BE)		decode from traditional od -x style: hex values left, characters right (assume big endian)
 item3	dumpxDO		od-x style (LE)		decode from traditional od -x style: hex values left, characters right (assume little endian)

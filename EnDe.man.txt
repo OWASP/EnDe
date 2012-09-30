@@ -2246,6 +2246,7 @@ GLOSSAR
 	AAV     - Accountholder Authentication Value
 	Adler32 - hash function
 	ACS     - Access Control Server (mainly used in payment industry)
+	ADH     - Anonymous Diffie-Hellman
 	AES     - Advanced Encryption Standard
 	ANSI    - American National Standards Institute
 	ANSI    - sometimes acronym for code page 1252 (aka CP-1252)
@@ -2261,6 +2262,7 @@ GLOSSAR
 	Base32u     - alias for Base-32hex
 	Base32Url   - alias for Base-32hex
 	Base-N  - (EnDe's internal term for all Base* codings)
+	BEAST   - Browser Exploit Against SSL/TLS
 	BIN     - Bank Identification Number
 	BOM     - Byte Order Mark
 	BMP     - Basic Multilingual Plane (Unicode plane 0000-ffff)
@@ -2280,10 +2282,11 @@ GLOSSAR
 	CBC     - Cyclic Block Chaining
 	CBC     - Cipher Block Chaining (sometimes)
 	CBC     - Ciplier Block Chaining (see http://www.itl.nist.gov/fipspubs/fip81.htm )
-	CFB     - Cipher Feedback
 	CEF     - character encoding form
 	CES     - character encoding scheme
 	CFB     - Cipher Feedback
+	CFB3    - Cipher Feedback
+	CHAP    - Challenge Handshake Authentication Protocol
 	CJK     - Acronym for Chinese, Japanese, and Korean
 	CJKV    - Acronym for Chinese, Japanese, Korean, and Vietnamese
 	CMAC    - block cipher algorithm
@@ -2306,29 +2309,40 @@ GLOSSAR
 	DataBar-14  - see GS1
 	DBSC    - double-byte character set
 	DEA     - Data Encryption Algorithm (sometimes a synonym for DES)
+	DER     - Distinguished Encoding Rules
 	DES     - Data Encryption Standard
 	3DES    - Triple DES
 	DECIPHER    - synonym for decryption
+	DH      - Diffie-Hellman
+	DHE     - Diffie-Hellman ephemeral
 	DPA     - Dynamic Passcode Authentication (see CAP)
 	DPI     - Derivative Part Identifier (for SICI)
 	DOI     - Digital Object Identifier
 	DSA     - Digital Signature Algorithm
+	DSS     - Digital Signature Standard
 	DUCET   - Default Unicode Collation Element Table
 	D-U-N-S - Data Universal Numbering System
 	EAN     - European Article Numbers
 	EAN-13  - 13-digit EAN
 	EAN-8   - 8-digit EAN
+	EC      - Elliptic Curve
 	EBCDIC  - Extended Binary-Coded Decimal Interchange Code
 	ECB     - Electronic Codebook
 	ECC     - Elliptic Curve Cryptography
 	ECCS	- extended combining character sequence
-	ECDH    - Elliptic Curve Diffie Hellman
+	ECDH    - Elliptic Curve Diffie-Hellman
+	ECDHE   - Ephemeral ECDH
+	ECDSA   - Elliptic Curve Digital Signature Algorithm
+	EDE     - Encryption-Decryption-Encryption
+	EDH     - Ephemeral Diffie-Hellman
 	EFT     - Electronic Funds Transfer Routing Number Check (10-digit)
 	EGC     - extended grapheme cluster
 	EMV     - Europay, MasterCard, and Visa (see CAP)
 	ENCIPHER    - synonym for encryption
+	ESP     - Encapsulating Security Payload
 	EUDC    - end-user defined character
 	FAC     - Final Assembly Code (Endmontagekennung bei Mobiles)
+	FEAL    - Fast Data Encryption Algorithm
 	FIPS    - Federal Information Processing Standard
 	FIPS46-2    - FIPS Data Encryption Standard (DES)
 	FIPS73      - FIPS Guidelines for Security of Computer Applications
@@ -2340,10 +2354,12 @@ GLOSSAR
 	FIPS198-1   - FIPS The Keyed-Hash Message Authentication Code (HMAC)
 	FIRMR   - Federal Informations Resources Management Regulations
 	FSS-UTF - File System Safe UCS Transformation Format (aka UTF-8)
+	FZA     - FORTEZZA
 	GC      - grapheme cluster (aka General_Category property)
 	GCGID   - Graphic Character Global Identifier
 	GLN     - International Location Number, see EAN
 	GTIN    - Global Trade Item Number, see EAN
+	GCM     - Galois/Counter Mode
 	GOST    - gosudarstvennyy standart (???? - ??????????????? ????????)
 	GS1     - Global Standards One, see EAN
 	GZIP    - Lossless compression file format (see http://tools.ietf.org/html/rfc1952 )
@@ -2357,7 +2373,7 @@ GLOSSAR
 	IBAN    - International Bank Number
 	iCVV    - Dynamic CVV
 	ICU     - International Components for Unicode
-	IDEA    - International Data Encryption Algorythm (see http://tools.ietf.org/html/rfc3058 )
+	IDEA    - International Data Encryption Algorithm (see http://tools.ietf.org/html/rfc3058 )
 	IDN     - Internationalized Domain Name (aka Punycode)
 	IIN     - Issuer Identification Number (6-digits)
 	ILN     - International Location Number, see EAN
@@ -2424,24 +2440,39 @@ GLOSSAR
 	Rijndael- symmetric block cipher algorithm
 	RIPEMD  - RACE Integrity Primitives Evaluation Message Digest
 	ROT-13  - see XOR
+	RSA     - public key cryptographic algorithm
 	RSS-14  - Reduced Space Symbology, see GS1
 	RTN     - Routing transit number
 	SAFER   - Secure And Fast Encryption Routine, block cipher
 	SAM     - syriac abbreviation mark
 	SBCS    - single-byte character set
+	SCEP    - Simple Certificate Enrollment Protocol
 	SCSU    - Standard Compression Scheme for Unicode (compressed UTF-16)
-	SKIPJACK- block cipher algorithm
+	Serpent -
+	SCEP    - Simple Certificate Enrollment Protocol
 	SEED    - block cipher algorithm
+	SGC     - Server-Gated Cryptography
 	SGML    - Standard Generalized Markup Language (aka ISO 8879)
 	SIP     - Supplementary Ideographic Plane (Unicode plane 20000-2ffff)
 	SICI    - Serial Item and Contribution Identifier (enhancement to ISSN)
 	SJIS    - acronym for Shift-JIS
-	Square  - block cipher
 	SHA     - Secure Hash Algorithm
+	SHA-0   - Secure Hash Algorithm (insecure version before 1995)
+	SHA-1   - Secure Hash Algorithm (since 1995)
+	SHA-2   - Secure Hash Algorithm (since 2002)
+	SHA-224 - Secure Hash Algorithm (224 bit)
+	SHA-256 - Secure Hash Algorithm (256 bit)
+	SHA-384 - Secure Hash Algorithm (384 bit)
+	SHA-512 - Secure Hash Algorithm (512 bit)
+	SHA1    - alias for SHA-1 (160 bit)
+	SHA2    - alias for SHA-2 (224, 256, 384 or 512 bit)
+	SHS     - Secure Hash Standard
 	SIN     - Social Insurance Number (Canada)
 	Skein   - hash function
+	SKIPJACK- block cipher algorithm (part of FORTEZZA)
 	SMP     - Supplementary Multilingual Plane (Unicode plane 10000-1ffff)
 	Snefu   - hash function
+	Square  - block cipher
 	SSCC    - Serial Shipping Container Code (aka NVE)
 	SSP     - Supplementary Special-purpose Plane (Unicode plane 30000-3ffff)
 	SSN     - (U.S.) Social Security Number
@@ -2451,6 +2482,8 @@ GLOSSAR
 	TEX     - computer language designed for use in typesetting
 	Tiger   - hash function
 	TIN     - Global Trade Item Number, see EAN
+	TLS     - Transport Layer Security
+	TLSv1   - Transport Layer Security version 1
 	TMSI    - Temporary Mobile Subscriber Identity
 	Threefish   - hash function
 	Twofish - symmetric key block cipher
@@ -2646,7 +2679,7 @@ EPILOG
 	
 VERSION
 	
-	@# EnDe <!-- @(#) EnDe.man.txt 3.38 21:27:53 12/07/17 -->
+	@# EnDe <!-- @(#) EnDe.man.txt 3.39 18:21:29 12/09/08 -->
 	
 	
 AUTHOR

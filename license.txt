@@ -15,7 +15,7 @@
 | Also note that some parts come with their own license (see below).
 |
 | GPL - The GNU General Public License, version 2
-|                       as specified in:  http://www.gnu.org/licenses/gpl.txt
+|                       as specified in:  http://www.gnu.org/licenses/gpl-2.0
 |                   or a copy of it https://github.com/EnDe/EnDe  license.txt
 | Permits anyone the right to use and modify the software without limitations
 | as long as proper  credits are given  and the original  and modified source

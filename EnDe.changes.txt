@@ -1,6 +1,23 @@
 
 CHANGE HISTORY
 	
+1.0rc13 30-sep-12
+    * LIB, API
+	"EnDeSer.js" unserialize "java data" from B64 (experimental)
+	"EnDeUser.js" EnDe.Ser.DE.* implemented
+	"EnDeUser.js" bugfix: some debug output corrected
+
+    * GUI
+	"EnDeMenu.txt" unserialize "java data" from B64 (experimental)
+	"EnDe.man.txt" info about WebScarabm Andiparos added
+	"EnDe.man.html" references with letters
+	"EnDeGUI.js" pre/post URI en/decoding added
+	"EnDeGUI.js" bugfix: special character replacement improved
+	"EnDeGUI.js" bugfix: do not convert empty text to hex
+	"EnDe.html" pre/post URI en/decoding checkbox added
+	"EnDe.html" Timestamp layout with more fields
+	"EnDe.css" formats for Timestamp
+	
 1.0rc12 17-jun-12
     * LIB, API
 	"EnDe.js" DES implemented, EnDe.c2h() implemented
@@ -17,8 +34,8 @@ CHANGE HISTORY
 	"EnDeMenu.txt" "character to hex" added, more functionality for ' and "
 	"EnDeText.js" more Text functions added
 	"EnDeGUI.js" adaptions for DES functions
-	'EnDe.html" formal changes (Timestamp layout improved)
-	'EnDe.css" class .tstable (for Timestamp), td.parm (tests) added
+	"EnDe.html" formal changes (Timestamp layout improved)
+	"EnDe.css" class .tstable (for Timestamp), td.parm (tests) added
 	
 1.0rc11 09-jun-12
     * LIB, API
@@ -1055,7 +1072,7 @@ CHANGE HISTORY
 
 VERSION
 
-	@# EnDe <!-- @(#) EnDe.changes.txt 3.14 12/06/17 23:30:41 -->
+	@# EnDe <!-- @(#) %M% %I% %E% %U% -->
 
 
 AUTHOR

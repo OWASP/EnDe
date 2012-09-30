@@ -67,6 +67,6 @@ I'd like to help improving EnDe?
         ( ) yes                 ( ) no
 
 VERSION
-	@(#) EnDe.survey.txt 1.4 <!-- 12/02/18 08:57:09 -->
+	@(#) EnDe.survey.txt 3.1 <!-- 12/06/05 00:02:42 -->
 
 <!-- //ToDo: https://www.surveymonkey.com -->

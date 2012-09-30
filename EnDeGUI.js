@@ -102,7 +102,7 @@
 #       Mozilla 1.x which has this property.
 #?
 #? VERSION
-#?      @(#) EnDeGUI.js 3.87 12/07/15 18:19:25
+#?      @(#) EnDeGUI.js 3.89 12/09/30 16:04:33
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -114,8 +114,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '3.87';
-this.sid        = function() {  return('@(#) EnDeGUI.js 3.87 12/07/15 18:19:25 EnDeGUI'); };
+this.SID        = '3.89';
+this.sid        = function() {  return('@(#) EnDeGUI.js 3.89 12/09/30 16:04:33 EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 
@@ -2248,11 +2248,11 @@ this.EN         = new function() {
 		if ((kkk!=null) && (kkk!='')) { src = kkk; }
 		kkk = null;
 	}
-	if ($('EnDeDOM.ED.00').checked===true) { src += String.fromCharCode(0);  }
-	if ($('EnDeDOM.ED.0a').checked===true) { src += String.fromCharCode(10); }
-	if ($('EnDeDOM.ED.0d').checked===true) { src += String.fromCharCode(13); }
-	if ($('EnDeDOM.ED.da').checked===true) { src += String.fromCharCode(13) + String.fromCharCode(10); }
-	if ($('EnDeDOM.ED.aa').checked===true) { src += String.fromCharCode(26); }
+	if ($('EnDeDOM.ED.00').checked===true)  { src += String.fromCharCode(0);  }
+	if ($('EnDeDOM.ED.0a').checked===true)  { src += String.fromCharCode(10); }
+	if ($('EnDeDOM.ED.0d').checked===true)  { src += String.fromCharCode(13); }
+	if ($('EnDeDOM.ED.da').checked===true)  { src += String.fromCharCode(13) + String.fromCharCode(10); }
+	if ($('EnDeDOM.ED.aa').checked===true)  { src += String.fromCharCode(26); }
 	if (item==='statistic') {   // no need for further data or checks, do it right away
 		return EnDeGUI.stat(src);
 	}
@@ -2400,6 +2400,7 @@ this.EN         = new function() {
 		try {   // this try-catch is just to handle some missing browser functionality
 			_spr('EnDeGUI.EN.dispatch: EnDe.EN.dispatch(item="' + item + '", mode=' + mode + ', case="' + uppercase + '", prefix="' + prefix + '", suffix="' + suffix + '", delimiter=' + delimiter + '")');
 			bux = EnDe.EN.dispatch(item,mode,uppercase,src,prefix,suffix,delimiter);
+			if ($('EnDeDOM.ED.uri').checked===true) { bux = encodeURIComponent(bux.replace(/\n/g,'')); }
 		} catch (e) {
 			bux = '**ERROR: ' + this.sid() + '.dispatch(*) failed with:\n' + e;
 			//EnDeGUI.alert('EnDeGUI.EN.dispatch','* '+e);
@@ -2433,11 +2434,12 @@ this.DE         = new function() {
 		if ((kkk!=null) && (kkk!='')) { src = kkk; }
 		kkk = null;
 	}
-	if ($('EnDeDOM.ED.00').checked===true) { src += String.fromCharCode(0);  }
-	if ($('EnDeDOM.ED.0a').checked===true) { src += String.fromCharCode(10); }
-	if ($('EnDeDOM.ED.0d').checked===true) { src += String.fromCharCode(13); }
-	if ($('EnDeDOM.ED.da').checked===true) { src += String.fromCharCode(13) + String.fromCharCode(10); }
-	if ($('EnDeDOM.ED.aa').checked===true) { src += String.fromCharCode(26); }
+	if ($('EnDeDOM.ED.00').checked===true)  { src += String.fromCharCode(0);  }
+	if ($('EnDeDOM.ED.0a').checked===true)  { src += String.fromCharCode(10); }
+	if ($('EnDeDOM.ED.0d').checked===true)  { src += String.fromCharCode(13); }
+	if ($('EnDeDOM.ED.da').checked===true)  { src += String.fromCharCode(13) + String.fromCharCode(10); }
+	if ($('EnDeDOM.ED.aa').checked===true)  { src += String.fromCharCode(26); }
+	if ($('EnDeDOM.ED.uri').checked===true) { src = EnDe.DE.url('null', 'lazy', src, '', '', '').replace(/\n/g, ''); }
 	if (item==='statistic') {   // no need for further data or checks, do it right away
 		return EnDeGUI.stat(src);
 	}
@@ -3443,11 +3445,11 @@ this.NN         = new function() {
 	  case 'txtREPuser' : bux.value = EnDeGUI.MP.replace('user', bux.value); break;
 	  default:
 		if (item.match(/^txt/)!==null) { bux.value = EnDe.Text.dispatch( bux.value, item, ccc ); }
-		if (item.match(/[0-9a-f ]+/)!==null) {  // Unicode/UTF-8 mismatch; dead beef
+		if (item.match(/^[0-9a-f ]+$/)!==null) {  // Unicode/UTF-8 mismatch; dead beef
 			/*
 			 * data to be inserted is item, but EnDe.Text.dispatch() has
 			 * no parameter for data to be inserted, hence we pass it as
-			 * part of the item
+			 * part of the item; example item=e9b5 9d5d
 			 */
 			bux.value = EnDe.Text.dispatch(bux.value,'txtINSUCS' + item,ccc);
 		}

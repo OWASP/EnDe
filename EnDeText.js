@@ -65,6 +65,7 @@
 #?              txtREP4hex  : replace all \xhh by corresponding character
 #?              txtREP4url  : replace all %hh or %hh%hh by corresponding character
 #?              txtREPstrsq : concatenate strings (remove ' + ')
+#?              txtReverse  : reverse text
 #?              txtPAD10    : pad leading 0 if number < 10
 #?              txtPAD100   : pad leading 0 if number < 100
 #?              txtTrimL    : remove leading spaces
@@ -82,7 +83,7 @@
 #       -----------------------------------------------------------------------
 #?
 #? VERSION
-#?      @(#) EnDeText.js 3.16 12/06/16 10:55:59
+#?      @(#) EnDeText.js 3.18 12/09/30 16:14:46
 #?
 #? AUTHOR
 #?      08-sep-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -96,8 +97,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.Text   = new function() {
-	this.SID    = '3.16';
-	this.sid    = function() { return('@(#) EnDeText.js 3.16 12/06/16 10:55:59 EnDe.Text'); };
+	this.SID    = '3.18';
+	this.sid    = function() { return('@(#) EnDeText.js 3.18 12/09/30 16:14:46 EnDe.Text'); };
 
 	this.trace  = false;
 
@@ -226,6 +227,7 @@ EnDe.Text   = new function() {
 		  case 'txtREPsqbt' : bux = bux.replace(/'/g,             '`'   );      break;
 		  case 'txtREPsq'   : bux = bux.replace(/^'/, '').replace(/'$/, '');    break;
 		  case 'txtREPdq'   : bux = bux.replace(/^"/, '').replace(/"$/, '');    break;
+		  case 'txtReverse' : bux = EnDe.reverse(src);                          break;
 		  case 'txtPAD10'   : if (bux<10) { bux = '0' + bux; };                 break;
 		  case 'txtPAD100'  : bux = EnDe.Text.dispatch(bux, 'txtPAD10'); if (bux<100) { bux = '0' + bux; };   break;
 		  case 'txtEntity'  : bux = bux.replace(/&/g, '&#38;').replace(/</g, '&#60;').replace(/>/g, '&#62;').replace(/"/g, '&#34;'); break;
@@ -331,6 +333,7 @@ EnDe.Text   = new function() {
 	this.REPascii   = function(src) { return EnDe.Text.dispatch(src, 'txtREPascii' ); };
 	this.REPsgml    = function(src) { return EnDe.Text.dispatch(src, 'txtREPsgml'  ); };
 	this.REPalnum   = function(src) { return EnDe.Text.dispatch(src, 'txtREPalnum' ); };
+	this.Reverse    = function(src) { return EnDe.Text.dispatch(src, 'txtReverse'  ); };
 	this.PAD10      = function(src) { return EnDe.Text.dispatch(src, 'txtPAD10'    ); };
 	this.PAD100     = function(src) { return EnDe.Text.dispatch(src, 'txtPAD100'   ); };
 	this.TrimR      = function(src) { return EnDe.Text.dispatch(src, 'txtTrimR'    ); };

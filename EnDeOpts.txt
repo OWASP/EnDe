@@ -35,7 +35,7 @@
 #?      EnDeMenu.txt
 #?
 #? VERSION
-#?      @(#) EnDeOpts.txt 3.4 15:20:21 11/10/30
+#?      @(#) EnDeOpts.txt 3.5 22:49:24 12/10/03
 #?
 #? AUTHOR
 #?      17-jun-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -65,6 +65,7 @@ options	NCR_ul	4	false	false	&#u			null	&#uUUUU  lazy HTML-Entity (Unicode)	Unic
 options	UNI_ul	4	false	false	%u			null	%uUUUU   lazy URI/URL	URI/URL (URL-encoding, fixed length and missing ;)
 options	CSS_h	1	false	false	\			null	\HH      CSS escaped	hex \-escaped as used in CSS
 options	LDAP_h	1	false	false	\			null	\HH      LDAP escaped	hex \-escaped as used in LDAP
+options	bang_h	1	false	false	!			null	!HH      !-escaped	hex !-escaped
 options	pythonC	4	false	false	u"\u	"		null	python character	character in python source code
 options	java__C	4	false	false	"\u	"		null	C/C++/java character	character in C/C++ or java source code
 options	x_Lisp	4	true	false	#x			null	#x00HH   #x-prefixed	#x-prefixed as used for Common Lisp

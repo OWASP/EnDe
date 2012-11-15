@@ -4,7 +4,6 @@
 #?      EnDeSer.js
 #?
 #? SYNOPSIS
-#?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="EnDeGUI.js"></SCRIPT>
 #?      <SCRIPT language="JavaScript1.5" type="text/javascript" src="EnDeSer.js"></SCRIPT>
 #?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="EnDeUser.js"></SCRIPT>
 #?
@@ -21,12 +20,11 @@
 #?
 #? SEE ALSO
 #?      EnDe.js
-#?      EnDeGUI.js
 #?
 # HACKER's INFO
 #
 #? VERSION
-#?      @(#) EnDeSer.js 1.1 12/09/30 14:31:01
+#?      @(#) EnDeSer.js 1.2 12/11/14 00:01:55
 #?
 #? AUTHOR
 #?      21-jul-12 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -40,8 +38,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.Ser    = new function() {
-	this.SID    = '1.1';
-	this.sid    = function() { return('@(#) EnDeSer.js 1.1 12/09/30 14:31:01 EnDe.Ser'); };
+	this.SID    = '1.2';
+	this.sid    = function() { return('@(#) EnDeSer.js 1.2 12/11/14 00:01:55 EnDe.Ser'); };
 
 	// ===================================================================== //
 	// global variables                                                      //
@@ -110,7 +108,7 @@ EnDe.Ser    = new function() {
 	// internal/private functions                                            //
 	// ===================================================================== //
 
-	function __dbx(t,n) { if(EnDe.Ser.trace===true) { EnDeGUI.dpr(t,n); } };
+	function __dbx(t,n) { if(EnDe.Ser.trace===true) { EnDe.dbx(t,n); } };
 
 	// ===================================================================== //
 	// un-/serialize functions                                               //
@@ -285,7 +283,7 @@ alert(EnDe.Ser.pos);
 			};
 //		 			__dbx(', typ=' + EnDe.EN.hex(2,'lazy',false,EnDe.Ser.typ,'\\x','',''),'');
 		 	while (EnDe.Ser.pos<EnDe.Ser.str.length) {
-		 		if (EnDe.Ser.pos>199999) { EnDeGUI.alert('data too large'); return src; }
+		 		if (EnDe.Ser.pos>199999) { EnDe.dbx('data too large'); return src; }
 		 		EnDe.Ser.typ = EnDe.Ser.str[EnDe.Ser.pos];
 				if (mod === 1) { bux[EnDe.Ser.typ] = this.parse.typen(EnDe.Ser.typ); }
 				if (mod === 2) { bux[EnDe.Ser.typ] = this.parse.daten(EnDe.Ser.typ); }

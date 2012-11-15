@@ -66,7 +66,7 @@
 #?      EnDe.Text is not yet part or the librray.
 #?
 #? VERSION
-#?      @(#) EnDeB64.js 3.1 12/06/05 00:02:10
+#?      @(#) EnDeB64.js 3.2 12/11/13 23:57:52
 #?
 #? AUTHOR
 #?      29-mai-10 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -80,7 +80,7 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.B64    = new function() {
-	this.SID    = '3.1';
+	this.SID    = '3.2';
 	this.sid    = function() {       return(EnDe.sid() + '.B64'); };
 
 	this.trace  = false;
@@ -89,12 +89,8 @@ EnDe.B64    = new function() {
 	// internal/private functions                                            //
 	// ===================================================================== //
 
-	function __dbx(t,n) { if (EnDe.B64.trace===true) { EnDeGUI.dpr(t,n); } };
-	function __spr(src) { EnDeGUI.spr(src); };
-	/* __spr() wrapper needs to be defined this way as this file may be included
-	 * before or without EnDeGUI.js which results in an undefined EnDeGUI object
-	 * // ToDo: still not perfect ..
-	 */
+	function __dbx(t,n) { if (EnDe.B64.trace===true) { EnDe.dbx(t,n); } };
+	function __spr(src) { EnDe.spr(src); };
 
 	// ===================================================================== //
 	// global constants                                                      //

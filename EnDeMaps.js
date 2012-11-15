@@ -3,10 +3,10 @@
 // vim: ts=4:
 #?
 #? NAME
-#?      EnDeMaps.js
+#?      %M%
 #?
 #? SYNOPSIS
-#?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="EnDeMaps.js"></SCRIPT>
+#?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="%M%"></SCRIPT>
 #?
 #? DESCRIPTION
 #?      Functions to initialize character maps loaded using XMLHttpRequest();
@@ -41,12 +41,14 @@
 #?      EnDeMaps.txt
 #?
 #? VERSION
-#?      @(#) EnDeMaps.js 3.14 12/01/22 15:11:38
+#?      @(#) %M% %I% %E% %U%
 #?
 #? AUTHOR
 #?      05-jun-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
 #?
  * ========================================================================= */
+
+if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 // EnDe.Maps object see behind Ende object extension below
 
@@ -89,103 +91,8 @@ EnDe.e2aMap     = new Array(256);
 EnDe.BladeMap   = Array(16);
 ------------- */
 
-// ToDo following settings need to be moved to EnDeMaps.txt
-/*
- * Morse characters
- */
-EnDe.sosMap['0']='_____';
-EnDe.sosMap['1']='.____'; EnDe.sosMap['a']='._';   EnDe.sosMap['j']='.___'; EnDe.sosMap['s']='...';
-EnDe.sosMap['2']='..___'; EnDe.sosMap['b']='_...'; EnDe.sosMap['k']='_._';  EnDe.sosMap['t']='_';
-EnDe.sosMap['3']='...__'; EnDe.sosMap['c']='_._.'; EnDe.sosMap['l']='._..'; EnDe.sosMap['u']='.._';
-EnDe.sosMap['4']='...._'; EnDe.sosMap['d']='_..';  EnDe.sosMap['m']='__';   EnDe.sosMap['v']='..._';
-EnDe.sosMap['5']='.....'; EnDe.sosMap['e']='.';    EnDe.sosMap['n']='_.';   EnDe.sosMap['w']='.__';
-EnDe.sosMap['6']='_....'; EnDe.sosMap['f']='.._.'; EnDe.sosMap['o']='___';  EnDe.sosMap['x']='_.._';
-EnDe.sosMap['7']='__...'; EnDe.sosMap['g']='__.';  EnDe.sosMap['p']='.__.'; EnDe.sosMap['y']='_.__';
-EnDe.sosMap['8']='___..'; EnDe.sosMap['h']='....'; EnDe.sosMap['q']='__._'; EnDe.sosMap['z']='__..';
-EnDe.sosMap['9']='____.'; EnDe.sosMap['i']='..';   EnDe.sosMap['r']='._.';  // EnDe.sosMap[' ']=' ';
-
-/*
- * extended Morse characters
- */
-EnDe.sosMap['.']='._._._'; EnDe.sosMap[':']='___...'; EnDe.sosMap['=']='_..._';
-EnDe.sosMap['-']='_...._'; EnDe.sosMap['@']='.__._.'; EnDe.sosMap['/']='_.._.';
-EnDe.sosMap[',']='__..__'; EnDe.sosMap['?']='..__..';
-EnDe.sosMap['"']='._.._.'; EnDe.sosMap["'"]='.____.';
-EnDe.sosMap[')']='_.__._'; EnDe.sosMap['+']='._._.';
-/* not reversable, see above */
-EnDe.sosMap['(']='_.__._'; // same as ')'
-	/* note that '(' is defined, but not ')', we use it the other way arround
-	 * so that decoding returns '(' always 
-	 * seems to be a hash problem in JavaScript
-	 */
-
-/*
- * Baudot characters
- */
-EnDe.figsMap['00000'] = '';
-EnDe.figsMap['00001'] = '3';
-EnDe.figsMap['00010'] = '\n';
-EnDe.figsMap['00011'] = '-';
-EnDe.figsMap['00100'] = ' ';
-EnDe.figsMap['00101'] = "'";
-EnDe.figsMap['00110'] = '8';
-EnDe.figsMap['00111'] = '7';
-EnDe.figsMap['01000'] = '\r';
-EnDe.figsMap['01001'] = '$';
-EnDe.figsMap['01010'] = '4';
-EnDe.figsMap['01011'] = ' ';
-EnDe.figsMap['01100'] = ',';
-EnDe.figsMap['01101'] = '!';
-EnDe.figsMap['01110'] = ':';
-EnDe.figsMap['01111'] = '(';
-EnDe.figsMap['10000'] = '5';
-EnDe.figsMap['10001'] = '"';
-EnDe.figsMap['10010'] = ')';
-EnDe.figsMap['10011'] = '2';
-EnDe.figsMap['10100'] = '#';
-EnDe.figsMap['10101'] = '6';
-EnDe.figsMap['10110'] = '0';
-EnDe.figsMap['10111'] = '1';
-EnDe.figsMap['11000'] = '9';
-EnDe.figsMap['11001'] = '?';
-EnDe.figsMap['11010'] = '&';
-EnDe.figsMap['11011'] = 'FIGS';
-EnDe.figsMap['11100'] = '.';
-EnDe.figsMap['11101'] = '/';
-EnDe.figsMap['11110'] = ';';
-EnDe.figsMap['11111'] = 'LTRS';
-EnDe.ltrsMap['00000'] = '';
-EnDe.ltrsMap['00001'] = 'E';
-EnDe.ltrsMap['00010'] = '\n';
-EnDe.ltrsMap['00011'] = 'A';
-EnDe.ltrsMap['00100'] = ' ';
-EnDe.ltrsMap['00101'] = 'S';
-EnDe.ltrsMap['00110'] = 'I';
-EnDe.ltrsMap['00111'] = 'U';
-EnDe.ltrsMap['01000'] = '\r';
-EnDe.ltrsMap['01001'] = 'D';
-EnDe.ltrsMap['01010'] = 'R';
-EnDe.ltrsMap['01011'] = 'J';
-EnDe.ltrsMap['01100'] = 'N';
-EnDe.ltrsMap['01101'] = 'F';
-EnDe.ltrsMap['01110'] = 'C';
-EnDe.ltrsMap['01111'] = 'K';
-EnDe.ltrsMap['10000'] = 'T';
-EnDe.ltrsMap['10001'] = 'Z';
-EnDe.ltrsMap['10010'] = 'L';
-EnDe.ltrsMap['10011'] = 'W';
-EnDe.ltrsMap['10100'] = 'H';
-EnDe.ltrsMap['10101'] = 'Y';
-EnDe.ltrsMap['10110'] = 'P';
-EnDe.ltrsMap['10111'] = 'Q';
-EnDe.ltrsMap['11000'] = 'O';
-EnDe.ltrsMap['11001'] = 'B';
-EnDe.ltrsMap['11010'] = 'G';
-EnDe.ltrsMap['11011'] = 'FIGS';
-EnDe.ltrsMap['11100'] = 'M';
-EnDe.ltrsMap['11101'] = 'X';
-EnDe.ltrsMap['11110'] = 'V';
-EnDe.ltrsMap['11111'] = 'LTRS';
+// ToDo following settings need to be moved to EnDeMaps.txt (missing 'cause we
+//      to unescape \n here (see _u() below)
 
 /*
  * Braille characters
@@ -360,51 +267,29 @@ EnDe.DadMap['X']='+--+\n|* |\n+--+';
 EnDe.DadMap['Y']='+--+\n|**|\n+--+';
 EnDe.DadMap['Z']='+---\n|   \n+---';
 
-/*
- * Blade font (simulated with ASCII charaters)
- */
-EnDe.BladeMap['0']=')(';
-EnDe.BladeMap['1']=')';
-EnDe.BladeMap['2']='))';
-EnDe.BladeMap['3']=')))';
-EnDe.BladeMap['4']='(0';
-EnDe.BladeMap['5']='0';
-EnDe.BladeMap['6']='0)';
-EnDe.BladeMap['7']='0))';
-EnDe.BladeMap['8']='0)))';
-EnDe.BladeMap['9']='))(';
-
-/*
- * DNA/DNS ** NOT YET USED **
- */
-EnDe.dnaMap['0'] = 'a';
-EnDe.dnaMap['1'] = 't';
-EnDe.dnaMap['2'] = 'c';
-EnDe.dnaMap['4'] = 'g';
-
 // ========================================================================= //
 // EnDe.Maps object methods                                                  //
 // ========================================================================= //
 
-if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
-
-	//	+	+	#	+	#
 EnDe.Maps   = new function() {
-	this.SID    = '3.14';
-	this.sid    = function() { return('@(#) EnDeMaps.js 3.14 12/01/22 15:11:38 EnDe.Maps'); };
+	this.SID    = '%I%';
+	this.sid    = function() { return('@(#) %M% %I% %E% %U% EnDe.Maps'); };
 	this.trace  = false;
 
 	this.traces = [];   /* used for trace, as GUI function are not avaialable
 						 * here; array must be printed in calling function
 						 */
 
-	/* Very ugly hack: this file and its methods are call while loading the GUI
+	/* Very ugly hack: all EnDe.Maps.* methods are called while loading the GUI
 	 * into the browser, hence the GUI have not yet been called to check search
 	 * parameters in the URL or checkboxes in the HTML.
-	 * Hence the hardcoded check for search parameter, details see EnDeGUI.js
+	 * Also when EnDe.js is used as library, there is no GUI.
+	 * Hence the hardcoded check for search parameters, details see EnDeGUI.js.
 	 */
-	if (location.search) {
-		if (/traceMaps?/i.test(location.search)===true) { this.trace = true; }
+	if (typeof(location)!=='undefined') {
+		if (location.search) {
+			if (/traceMaps?/i.test(location.search)===true) { this.trace = true; }
+		}
 	}
 
 	// ===================================================================== //
@@ -434,17 +319,29 @@ EnDe.Maps   = new function() {
 	var req = null;
 	var skip= true;
 
-	__dbx( 'EnDe.Maps.init: reverse Morse mapping' );
-	for (ccc in EnDe.sosMap) {             // ------------------- reverse Morse
-		EnDe.osoMap[EnDe.sosMap[ccc]] = ccc;
-	}
+// ToDo: unescape only used for some maps
+	function _u(src) {
+		//# very simple unescape for some \-escaped characters
+		if (src.match(/^\\/)===null) { return src; }
+		switch(src[1]) {
+		  case '0': return '\0'; break;
+		  case 'b': return '\b'; break;
+		  case 'h': return '\h'; break;
+		  case 'v': return '\v'; break;
+		  case 't': return '\t'; break;
+		  case 'n': return '\n'; break;
+		  case 'r': return '\r'; break;
+		  default:  return src;  break;
+		}
+	}; 
+
 
 	// maps from external file
 	req = bbb.open('GET', file, false);             // load synchronous, to avoid specifying a handler
 	bbb.setRequestHeader('Accept', 'text/plain');   // workaround for some picky browsers reading from file:///
 	req = bbb.send(null);
 	if ((bbb.status!==200) && (bbb.status!==0)) {   // contribution to GUI which may use lib/ directory
-	    file= 'lib/' + file;
+		file= 'lib/' + file;
 		req = bbb.open('GET', file, false);
 		bbb.setRequestHeader('Accept', 'text/plain');
 		req = bbb.send(null);
@@ -459,7 +356,7 @@ EnDe.Maps   = new function() {
 		return;
 	}
 	kkk = txt.split('\n');
-	__dbx( 'EnDe.Maps.init: initialize mapping: ' + kkk.length + ' lines ...' );
+	__dbx('EnDe.Maps.init: initialize mapping: ' + kkk.length + ' lines ...');
 	while ((bbb = kkk.shift())!==undefined) {
 		cnt++; if (cnt==32000)         { break;}    // avoid loops
 		if (bbb.match(/^\s*#/)!==null) { continue; }// skip comments
@@ -473,38 +370,37 @@ EnDe.Maps   = new function() {
 		  case 'group': map = arr[1]; break;
 		  case 'map':   typ = arr[1]; break;
 		  default:          // data
-			switch(typ) {
+			switch(typ) {       // define index or hash for each line
 			  case 'index':     idx = parseInt(arr[0],10);      break;
 			  case 'hash':      idx = arr[0].toString() + '';   break;
 			  default:          /* simply ignore */             break;
 			}
 			switch(map) {
-// ToDo: following not yet working
-/*
-			  case 'figsMap':   EnDe.figsMap[idx]  = arr[1];    break;
-			  case 'ltrsMap':   EnDe.ltrsMap[idx]  = arr[1];    break;
+			  case 'ltrsMap':   EnDe.ltrsMap[idx]  = _u(arr[1]);break;
+			  case 'figsMap':   EnDe.figsMap[idx]  = _u(arr[1]);break;
 			  case 'sosMap':    EnDe.sosMap[idx]   = arr[1];    break;
-*/
 			  case 'xmlMap':    EnDe.xmlMap[idx]   = arr[1];    break;
 			  case 'rangeMap':  EnDe.rangeMap[idx] = arr[1];    break;
 			  case 'ebcdicMap': EnDe.ebcdicMap[idx]= arr;
-								EnDe.ebcdicUTF[idx]= arr;       break;
+			                    EnDe.ebcdicUTF[idx]= arr;       break;
 			  case 'ebcdicUTF': EnDe.ebcdicUTF[idx]= arr;       break;
 			  case 'asciiMap':  EnDe.asciiMap[idx] = arr;       break;
 			  case 'romanMap':  EnDe.romanMap[idx] = arr;       break;
 			  case 'spaceMap':  EnDe.spaceMap[idx] = arr[1];    break;
+			  case 'BladeMap':  EnDe.BladeMap[idx] = arr[1];    break;
+			  case 'dnaMap':    EnDe.dnaMap[idx]   = arr[1];    break;
 			  case 'DIN66003Map':
-				ccc = new Number(arr[1]); // force cast to number!
+				ccc = new Number(arr[1]);           // force cast to number!
 				EnDe.DIN66003Map[idx]  = arr;
 				EnDe.DIN66003fMap[ccc] = idx;
-				// __dbx('idx='+ idx + ', arr1='+ccc + ': '+ EnDe.DIN66003fMap[ccc] + '# '+ typeof EnDe.DIN66003fMap[ccc] );
+				// __dbx('idx='+ idx + ', arr1='+ccc + ': '+ EnDe.DIN66003fMap[ccc] + '# '+ typeof EnDe.DIN66003fMap[ccc]);
 				break;
 			  case 'intMap':
 				if ((arr[EnDe.mapEty]==='-') && (arr[EnDe.mapSet]==='-')) {
 					continue;                       // skip empty definitions
 				}
 				if (EnDe.intMap[idx]!==undefined) { // duplicate index
-					EnDe.dupMap.push( new Array(EnDe.intMap[idx]) );
+					EnDe.dupMap.push(new Array(EnDe.intMap[idx]));
 				}
 				EnDe.intMap[idx]   = arr;
 				if (arr[EnDe.mapEty]!=='-') {       // entity index
@@ -522,9 +418,14 @@ EnDe.Maps   = new function() {
 		}
 	}
 
+	__dbx('EnDe.Maps.init: reverse Morse mapping');
+	for (ccc in EnDe.sosMap) {              // ------------------- reverse Morse
+		EnDe.osoMap[EnDe.sosMap[ccc]] = ccc;
+	}
+
 	// some specials maps
-	__dbx( 'EnDe.Maps.init: ASCII-EBCDIC mapping (' + EnDe.asciiMap.length + ')' );
-	for (a=0; a<256; a++) {           // ----------- lazy ASCII-EBCDIC mapping
+	__dbx('EnDe.Maps.init: ASCII-EBCDIC mapping (' + EnDe.asciiMap.length + ')');
+	for (a=0; a<256; a++) {             // ----------- lazy ASCII-EBCDIC mapping
 		if (EnDe.asciiMap[a]===undefined) { continue; }
 		ccc =  EnDe.asciiMap[a][EnDe.mapChr];
 		if (ccc==='')  { continue; }
@@ -540,7 +441,7 @@ EnDe.Maps   = new function() {
 		}
 		kkk = null;
 	}
-	__dbx( 'EnDe.Maps.init: ASCII-Mac OS Roman mapping (' + EnDe.asciiMap.length + ')' );
+	__dbx('EnDe.Maps.init: ASCII-Mac OS Roman mapping (' + EnDe.asciiMap.length + ')');
 	for (a=0; a<256; a++) {           // ----------- lazy ASCII-EBCDIC mapping
 		if (EnDe.asciiMap[a]===undefined) { continue; }
 		ccc =  EnDe.asciiMap[a][EnDe.mapChr];
@@ -559,5 +460,7 @@ EnDe.Maps   = new function() {
 	}
 
 	}; // .init
+
 }; // EnDe.Maps
+
 EnDe.Maps.init();

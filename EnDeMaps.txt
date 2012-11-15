@@ -17,6 +17,9 @@
 #?          map   - type of map
 #?                  index:  first column is numeric (integer) index of map
 #?                  hash:   first column is string (hash) index of map
+#?      The value in second column is verbatim text, except for characters
+#?      which are prefixed with \ (backslash).  Only simple \-escapes like
+#?      \r, \n, \t etc. are supported.
 #?      All columns are separated by TAB (\t).
 #?
 #? HACKER's INFO
@@ -39,19 +42,19 @@
 #                         UCS-4 thereby permits a binary representation of
 #                         every code point in the UCS
 #           ==> articles about Unicode will mistakenly refer to  UCS-2  as
-#               "UCS-16". UCS-16 does not exist.
+#               'UCS-16'. UCS-16 does not exist.
 #
-#           "Character 65533 (FFFD hexadecimal) is the last valid character in
+#           'Character 65533 (FFFD hexadecimal) is the last valid character in
 #            UCS-2. 65534 (FFFE hexadecimal) is unassigned and reserved as the
 #            byte-swapped version of  ZERO WIDTH NON-BREAKING SPACE  for byte-
-#            order detection purposes. 65535 (FFFF hexadecimal) is unassigned."
+#            order detection purposes. 65535 (FFFF hexadecimal) is unassigned.'
 #
 #       CP-1252 (Windows-1252 Western European)
-#           "Entities have also been added for the  remaining characters
+#           'Entities have also been added for the  remaining characters
 #            occurring in CP-1252 which do not occur in the  HTMLlat1 or
 #            HTMLsymbol entity sets. These all occur in the  128 to  159
 #            range within the CP-1252 charset. These entities permit the
-#            characters to be denoted in a platform-independent manner."
+#            characters to be denoted in a platform-independent manner.'
 #            CP-1252 is same or similar to ANSI see also http://www.goascii.de/
 #       See also: http://unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WindowsBestFit/bestfit1252.txt
 #
@@ -78,7 +81,7 @@
 #?      EnDeMaps.js
 #?
 #? VERSION
-#?      @(#) EnDeMaps.txt 3.7 12/01/22 15:11:02
+#?      @(#) EnDeMaps.txt 3.8 12/11/15 23:48:08
 #?
 #? AUTHOR
 #?      05-jun-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -3139,11 +3142,11 @@ map	index
 157	ù	LATIN SMALL LETTER U WITH GRAVE
 158	û	LATIN SMALL LETTER U WITH CIRCUMFLEX
 159	ü	LATIN SMALL LETTER U WITH DIAERESIS
-160	\x2020	DAGGER
-161	\x00B0	DEGREE SIGN
-162	\x00A2	CENT SIGN
-163	\x00A3	POUND SIGN
-164	\x00A7	SECTION SIGN
+160	0x2020	DAGGER
+161	0x00B0	DEGREE SIGN
+162	0x00A2	CENT SIGN
+163	0x00A3	POUND SIGN
+164	0x00A7	SECTION SIGN
 165	0x2022	BULLET
 166	0x00B6	PILCROW SIGN
 167	0x00DF	LATIN SMALL LETTER SHARP S
@@ -3259,7 +3262,7 @@ map	index
 # =========================================================================== #
 
 group	sosMap
-index	hash
+map	hash
 #------+----------------------------------
 # Int   SOS
 #------+----------------------------------
@@ -3323,14 +3326,30 @@ z	__..
 #	 so that decoding returns '(' always 
 #	 seems to be a hash problem in JavaScript
 ## ?????????
+ 
+# more extended Morse characters
+#------+----------------------------------
+# À	·−−·−
+# Å	·−−·−
+# # above are identical
+# Ä	·−·−
+# È	·−··−
+# É	··−··
+# Ö	−−−·
+# Ü	··−−
+# ß	···−−··
+# Ñ	−−·−−
+# # CH	−−−−
+# # CH disabled because not unique
+#------+----------------------------------
+## above do not work yet due to UTF-8 problems
 
 # =========================================================================== #
 # Baudot characters                                                           #
 # =========================================================================== #
 
-
 group	figsMap
-index	hash
+map	hash
 #------+----------------------------------
 #Baudod	ASCII
 #------+----------------------------------
@@ -3368,7 +3387,7 @@ index	hash
 11111	LTRS
 
 group	ltrsMap
-index	hash
+map	hash
 00000	
 00001	E
 00010	\n
@@ -3403,6 +3422,40 @@ index	hash
 11111	LTRS
 
 # =========================================================================== #
+# Blade font (simulated with ASCII charaters)                                 #
+# =========================================================================== #
+
+group	BladeMap
+map	hash
+#------+----------------------------------
+# Blade	ASCII
+#------+----------------------------------
+0	)(
+1	)
+2	))
+3	)))
+4	(0
+5	0
+6	0)
+7	0))
+8	0)))
+9	))(
+
+# =========================================================================== #
+# DNA/DNS characters                                                          #
+# =========================================================================== #
+
+group	dnaMap
+map	hash
+#------+----------------------------------
+# DNA	ASCII
+#------+----------------------------------
+0	a
+1	t
+2	c
+3	g
+
+# =========================================================================== #
 # Unicode planes                                                              #
 # =========================================================================== #
 
@@ -3420,7 +3473,7 @@ index	hash
 #  Unicode code point ranges, see http://www.unicode.org/Public/UNIDATA/Blocks.txt
 
 group	rangeMap
-index	hash
+map	hash
 #----------------------+----------------------------------
 # Range                 Description
 #----------------------+----------------------------------

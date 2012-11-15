@@ -31,7 +31,7 @@
 #       call may become a perfromance bottleneck.
 #?
 #? VERSION
-#?      @(#) EnDeForm.js 3.13 12/01/22 16:14:18
+#?      @(#) EnDeForm.js 3.14 12/11/14 00:09:40
 #?
 #? AUTHOR
 #?      15-nov-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -50,8 +50,8 @@ if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 // ========================================================================= //
 
 EnDe.Form   = new function() {
-	this.SID    = '3.13';
-	this.sid    = function()    { return('@(#) EnDeForm.js 3.13 12/01/22 16:14:18 EnDe.Form'); };
+	this.SID    = '3.14';
+	this.sid    = function()    { return('@(#) EnDeForm.js 3.14 12/11/14 00:09:40 EnDe.Form'); };
 
 	// ===================================================================== //
 	// global EnDe.Form variables                                            //
@@ -66,7 +66,7 @@ EnDe.Form   = new function() {
 	// internal/private functions                                            //
 	// ===================================================================== //
 
-	function __dbx(t,n) { if(EnDe.Form.trace===true) { EnDeGUI.dpr(t,n); } };
+	function __dbx(t,n) { if(EnDe.Form.trace===true) { EnDe.dbx(t,n); } };
 	function __err(src) { return '// **ERROR** ' + EnDe.Text.Entity(src); };
 	function __wrn(src) { return '// *WARNING* ' + EnDe.Text.Entity(src); };
 	function __src(src,idx) {

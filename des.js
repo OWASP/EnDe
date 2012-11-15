@@ -16,7 +16,7 @@
 #?          2. EnDe.DES.EN. and EnDe.DES.DE. wrapper object
 #?
 #? VERSION
-#?      @(#) des.js 3.2 12/06/17 19:17:52
+#?      @(#) des.js 3.3 12/11/13 23:49:58
 #?
 #? AUTHOR
 #?      Some parts of the code are derivied from (adaptions see above)
@@ -53,12 +53,12 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.DES = new function() {
-	this.SID    = '3.2';
-	this.sid    = function() { return('@(#)  des.js 3.2 12/06/17 19:17:52 EnDe.DES'); };
+	this.SID    = '3.3';
+	this.sid    = function() { return('@(#)  des.js 3.3 12/11/13 23:49:58 EnDe.DES'); };
 
 	this.trace  = false; // not yet implemented, uses EnDe.trace
 
-	function __dbx(t,n) { if (EnDe.trace===true) { EnDeGUI.dpr('EnDe.DES.'+t,n); } };
+	function __dbx(t,n) { if (EnDe.trace===true) { EnDe.dbx('EnDe.DES.'+t,n); } };
 
 	// ===================================================================== //
 	// global variables                                                      //

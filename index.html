@@ -17,7 +17,7 @@
 | Also note that some parts come with their own license (see below).
 |
 | GPL - The GNU General Public License, version 2
-|                       as specified in:  http://www.gnu.org/licenses/gpl.txt
+|                       as specified in:  http://www.gnu.org/licenses/gpl-2.0
 |                   or a copy of it https://github.com/EnDe/EnDe  license.txt
 | Permits anyone the right to use and modify the software without limitations
 | as long as proper  credits are given  and the original  and modified source
@@ -91,8 +91,8 @@
 	<meta name="DC.language"      content="en" >
 	<meta name="DC.rights"        content="https://github.com/EnDe/EnDe license.txt" >
 	<meta name="DC.license"       content="https://github.com/EnDe/EnDe license.txt" >
-	<meta name="DC.modified"      content="12/06/16" >
-	<meta name="DC.Source"        content="@(#) EnDe.html 3.37 12/06/16 11:37:26"  >
+	<meta name="DC.modified"      content="12/09/30" >
+	<meta name="DC.Source"        content="@(#) EnDe.html 3.40 12/09/30 15:18:39"  >
 	<meta name="DC.Date"          content="07-apr-07" >
 	<meta name="DC.creator"       content="Achim Hoffmann" >
 	<meta name="DC.Author"        content="Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net" >
@@ -129,6 +129,7 @@
 	<script language="JavaScript1.5" type="text/javascript" charset="utf-8" src="JsDecoder.js"></script>
 	<script language="JavaScript1.5" type="text/javascript" charset="utf-8" src="JsColorizer.js"></script>
 	<script language="JavaScript1.5" type="text/javascript" charset="utf-8" src="EnDeForm.js"></script>
+	<script language="JavaScript1.5" type="text/javascript" charset="utf-8" src="EnDeSer.js"></script>
 
 </head>
 <body>
@@ -302,31 +303,31 @@
 					<td rowspan="2"><div    id="EnDeDOM.API.Menu"   class="select" ><!-- class="middle"     SELECT added by init() --></div><br><br></td>
 					<td>size <select id="EnDeDOM.API.size">
 						<option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select></td>
-					<td><input  id="EnDeDOM.API.prefix" type="text" value=""   size="4"></td>
-					<td><input  id="EnDeDOM.API.suffix" type="text" value=""   size="4"></td>
+					<td><input  id="EnDeDOM.API.prefix"    type="text" value=""   size="4"></td>
+					<td><input  id="EnDeDOM.API.suffix"    type="text" value=""   size="4"></td>
 					<td><input  id="EnDeDOM.API.delimiter" type="text" value=","  size="4"></td>
-					<td><input  id="EnDeDOM.API.cipher" type="text" value=""   size="13"></td>
+					<td><input  id="EnDeDOM.API.cipher"    type="text" value=""   size="13"></td>
 					<td><label for="EnDeDOM.API.wrapbreak">wrap 
-						<input  id="EnDeDOM.API.wrapbreak" type="text" value="76" size="4"></label></td>
+					    <input  id="EnDeDOM.API.wrapbreak" type="text" value="76" size="4"></label></td>
 					<td hide="1" rowspan="2">
-						<label for="EnDeDOM.API.mode0">strict
-						<input  id="EnDeDOM.API.mode0"  type="radio" value="strict"  name="mode"              ></label><br>
-						<label for="EnDeDOM.API.mode1">lazy
-						<input  id="EnDeDOM.API.mode1"  type="radio" value="lazy"    name="mode"  checked="1" ></label><br>
-						<label for="EnDeDOM.API.mode2">verbose
-						<input  id="EnDeDOM.API.mode2"  type="radio" value="verbose" name="mode"              ></label>
+					    <label for="EnDeDOM.API.mode0">strict
+					    <input  id="EnDeDOM.API.mode0"     type="radio" value="strict"  name="mode"              ></label><br>
+					    <label for="EnDeDOM.API.mode1">lazy
+					    <input  id="EnDeDOM.API.mode1"     type="radio" value="lazy"    name="mode"  checked="1" ></label><br>
+					    <label for="EnDeDOM.API.mode2">verbose
+					    <input  id="EnDeDOM.API.mode2"     type="radio" value="verbose" name="mode"              ></label>
 					</td>
 				</tr>
 				<tr>
 					<td><label for="EnDeDOM.API.uppercase">uppercase
-						<input  id="EnDeDOM.API.uppercase" type="checkbox" checked="1" ></label></td>
+					    <input  id="EnDeDOM.API.uppercase" type="checkbox" checked="1" ></label></td>
 					<td colspan="3">
-						<label for="EnDeDOM.API.ishex">values are hex
-						<input  id="EnDeDOM.API.ishex"  type="checkbox"                ></label></td>
+					    <label for="EnDeDOM.API.ishex">values are hex
+					    <input  id="EnDeDOM.API.ishex"     type="checkbox"             ></label></td>
 					<td>Iterations
-						<input  id="EnDeDOM.API.iteration" type="text" value="1"  size="2"></td>
+					    <input  id="EnDeDOM.API.iteration" type="text" value="1"  size="2"></td>
 					<td hide="1">typ <select id="EnDeDOM.API.typ">
-						<option>raw</option><option selected>hex</option><option>base64</option></select></td>
+					    <option>raw</option><option selected>hex</option><option>base64</option></select></td>
 				</tr>
 				<tr>
 					<td colspan="8"><fieldset><legend>JSReg</legend>
@@ -457,14 +458,14 @@
 				</tr>
 				<tr>
 				<td colspan="4">
-					<input id="EnDeDOM.CH.toEN" type="button"   value=">Encoding"   class="button"  onClick="$('EnDeDOM.EN.text').value+=$('EnDeDOM.CH.chr').value;return false;" >
-					<input id="EnDeDOM.CH.toDE" type="button"   value=">Decoding"   class="button"  onClick="$('EnDeDOM.DE.text').value+=$('EnDeDOM.CH.chr').value;return false;" >
-					<input id="EnDeDOM.CH.toRE" type="button"   value=">RegEx"      class="button"  onClick="$('EnDeDOM.RE.text').value+=$('EnDeDOM.CH.chr').value;return false;" >
+				    <input id="EnDeDOM.CH.toEN" type="button"   value=">Encoding"   class="button"  onClick="$('EnDeDOM.EN.text').value+=$('EnDeDOM.CH.chr').value;return false;" >
+				    <input id="EnDeDOM.CH.toDE" type="button"   value=">Decoding"   class="button"  onClick="$('EnDeDOM.DE.text').value+=$('EnDeDOM.CH.chr').value;return false;" >
+				    <input id="EnDeDOM.CH.toRE" type="button"   value=">RegEx"      class="button"  onClick="$('EnDeDOM.RE.text').value+=$('EnDeDOM.CH.chr').value;return false;" >
 				</td>
 				<th>UTF-8</th>
 				<td><input  id="EnDeDOM.CH.utf" type="text"     value=""    class="chr"         onKeypress="return EnDeGUI.CH.dispatch(this,'utf');" ></td>
 				<td colspan="3">
-					<input id="EnDeDOM.CH.lng"  type="text"     value="" class="text" size="44" onKeypress="return EnDeGUI.CH.dispatch(this,'lng');" >
+				    <input id="EnDeDOM.CH.lng"  type="text"     value="" class="text" size="44" onKeypress="return EnDeGUI.CH.dispatch(this,'lng');" >
 				</td>
 				</tr>
 <!--
@@ -491,6 +492,9 @@
 			<label for="EnDeDOM.ED.0d"> <input  id="EnDeDOM.ED.0d"  type="checkbox" > 0x0d </label>
 			<label for="EnDeDOM.ED.da"> <input  id="EnDeDOM.ED.da"  type="checkbox" > 0x0d0a</label>
 			<label for="EnDeDOM.ED.aa"> <input  id="EnDeDOM.ED.aa"  type="checkbox" > 0x1a </label>
+&#160; &#160; &#160; &#160; &#160;
+			<label class="bold"> en-/decode: </label>
+			<label for="EnDeDOM.ED.uri"><input  id="EnDeDOM.ED.uri" type="checkbox" > URI/URL </label>
 			<hr>
 		</div>
 		<fieldset id="EnDeDOM.f.EN"><legend> Encoding</legend>
@@ -625,23 +629,24 @@
 		<div class="Box">
 		<table  class="tstable">
 			<tr>
-				<th class="em8"><label class="bold">General Options:</label></th>
-				<td class="em4"><input  id="EnDeDOM.TS.yY"  type="checkbox" ><br>2/4</td>
-				<td class="em4"><input  id="EnDeDOM.TS.mM"  type="checkbox" ><br>Name</td>
-				<td class="em4"><input  id="EnDeDOM.TS.strict" type="checkbox" ><br>strict</td>
-				<td class="em4"><input  id="EnDeDOM.TS.hm"  type="checkbox" ><br>now</td>
-				<td>&#160;</td>
-				<td class="em4"><input  id="EnDeDOM.TS.ms"  type="checkbox" ><br>ms</td>
-
-				<td class="em4"><input  id="EnDeDOM.TS.GMT" type="checkbox" ><br>GMT</td>
-				<td class="em4"><input  id="EnDeDOM.TS.TZ"  type="checkbox" disabled><br>TZ</td>
-				<td class="em4"><input  id="EnDeDOM.TS.neg" type="checkbox" disabled >&gt;2001<br>is negative</td>
-				<td class="em4">
-					<span  class="select popup" id="EnDeDOM.TS.format"><!-- SELECT added by init() --></span>
-					<input class="blind" id="EnDeDOM.TS.isFmt"  type="hidden" value="2unix" >
+				<th><label class="bold">General Options:</label></th>
+				<th><input  id="EnDeDOM.TS.yY"      type="checkbox" ><br>2/4</th>
+				<th><input  id="EnDeDOM.TS.mM"      type="checkbox" ><br>Name</th>
+				<th><input  id="EnDeDOM.TS.strict"  type="checkbox" ><br>strict</th>
+				<th><input  id="EnDeDOM.TS.hm"      type="checkbox" ><br>now</th>
+				<th><input  id="EnDeDOM.TS.ms"      type="checkbox" ><br>ms</th>
+				<th><input  id="EnDeDOM.TS.ns"      type="checkbox" disabled><br>ns</th>
+				<th><input  id="EnDeDOM.TS.GMT"     type="checkbox" ><br>GMT</th>
+				<th><input  id="EnDeDOM.TS.TZ"      type="checkbox" disabled><br>TZ</th>
+				<th><input  id="EnDeDOM.TS.neg"     type="checkbox" disabled >&gt;2001<br>is negative</th>
+				<td><input  id="EnDeDOM.TS.isFmt"   type="hidden"   class="blind" value="2unix" >
+					<span   id="EnDeDOM.TS.format"  class="select popup"><!-- SELECT added by init() --></span>
 				</td>
+				<td><input  id="EnDeDOM.TS.ff2"     type="text"     class="text"    size="14" ><br>
+				    <input  id="EnDeDOM.TS.ff3"     type="text"     class="text"    size="14" ></td>
 			</tr>
-			<tr><td colspan="12"><hr></td> </tr>
+			<tr><td colspan="11"><hr></td>
+			</tr>
 <!-- not yet implemented
 			<tr>
 				<td rowspan="4">&#160;</td>
@@ -662,34 +667,38 @@
 				<th>Sec.</th>
 				<td>&#160;</td>
 				<td>&#160;</td>
-				<td align="right">Ref. Time.:</td>
-				<td align="left"><input class="text"        id="EnDeDOM.TS.reftime" type="text" size="14" ></td>
+				<th align="right">Ref. Time.:</th>
+				<td><input  id="EnDeDOM.TS.reftime" type="text" class="text"    size="14" ></td>
+				<td><input  id="EnDeDOM.TS.ff4"     type="text" class="text"    size="14" ></td>
 			</tr>
 			<tr>
-				<th class="em8" >Date | Time: </th>
-				<td align="left">       <input class="text" id="EnDeDOM.TS.year"    type="text" size="4"  ></td>
-				<td align="left">.&#160;<input class="text" id="EnDeDOM.TS.mon"     type="text" size="2"  ></td>
-				<td align="left">.&#160;<input class="text" id="EnDeDOM.TS.day"     type="text" size="2"  ></td>
-				<td align="left">|&#160;<input class="text" id="EnDeDOM.TS.hour"    type="text" size="2"  ></td>
-				<td align="left">:&#160;<input class="text" id="EnDeDOM.TS.min"     type="text" size="2"  ></td>
-				<td align="left">:&#160;<input class="text" id="EnDeDOM.TS.sec"     type="text" size="2"  ></td>
-				<td align="center"> <input   class="button" id="EnDeDOM.TS.toTS"  type="button" value=" > "  onClick="return EnDeGUI.TS.dispatch(this,'date2ts')" ></td>
-				<td align="left">   <input   class="button" id="EnDeDOM.TS.toDT"  type="button" value=" < "  onClick="return EnDeGUI.TS.dispatch(this,'ts2date')" ></td>
-				<td align="right" >Timestamp: </td>
-				<td align="left">   <input     class="text" id="EnDeDOM.TS.timestamp" type="text"   size="14" ></td>
+				<th>Date | Time: </th>
+				<td>       <input id="EnDeDOM.TS.year"  type="text" class="text"    size="4"  ></td>
+				<td>.&#160;<input id="EnDeDOM.TS.mon"   type="text" class="text"    size="2"  ></td>
+				<td>.&#160;<input id="EnDeDOM.TS.day"   type="text" class="text"    size="2"  ></td>
+				<td>|&#160;<input id="EnDeDOM.TS.hour"  type="text" class="text"    size="2"  ></td>
+				<td>:&#160;<input id="EnDeDOM.TS.min"   type="text" class="text"    size="2"  ></td>
+				<td>:&#160;<input id="EnDeDOM.TS.sec"   type="text" class="text"    size="2"  ></td>
+				<th>       <input id="EnDeDOM.TS.toTS"  type="button"   class="button" value=" > "  onClick="return EnDeGUI.TS.dispatch(this,'date2ts')" ></th>
+				<th>       <input id="EnDeDOM.TS.toDT"  type="button"   class="button" value=" < "  onClick="return EnDeGUI.TS.dispatch(this,'ts2date')" ></th>
+				<th align="right" >Timestamp: </th>
+				<td>       <input id="EnDeDOM.TS.timestamp" type="text" class="text" size="14" ></td>
+				<td>       <input id="EnDeDOM.TS.ff5"   type="text" class="text" size="14" ></td>
 			</tr>
 			<tr>
-				<th class="em8" >human readable: </th>
-				<td colspan="5">    <input     class="text" id="EnDeDOM.TS.human"   type="text" size="29"   accesskey="T" ></td>
-				<td align="center"> <input   class="button" id="EnDeDOM.TS.toTSC" type="button"             value=" >> " onClick="return EnDeGUI.TS.dispatch(this,'compute')" ></td>
-				<td align="center"> <input   class="button" id="EnDeDOM.TS.toOf"  type="button" size="2"    value=" > "  onClick="return EnDeGUI.TS.dispatch(this,'date2offset')" ></td>
-				<td align="left">   <input   class="button" id="EnDeDOM.TS.FromOf" type="button" size="2"   value=" < "  onClick="return EnDeGUI.TS.dispatch(this,'offset2date')" ></td>
-				<td align="right">  <input   class="button" id="EnDeDOM.TS.Add"   type="button" size="3"    value=" + "  onClick="return EnDeGUI.TS.dispatch(this,'addOffset')" > Offset:</td>
-				<td align="left">   <input     class="text" id="EnDeDOM.TS.offset"  type="text" size="14" ></td>
+				<th>readable: </th>
+				<td colspan="5">
+				    <input  id="EnDeDOM.TS.human"   type="text"     class="text"    size="29" accesskey="T" ></td>
+				<th><input  id="EnDeDOM.TS.toTSC"   type="button"   class="button"              value=" >> " onClick="return EnDeGUI.TS.dispatch(this,'compute')" ></th>
+				<th><input  id="EnDeDOM.TS.toOf"    type="button"   class="button"  size="2"    value=" > "  onClick="return EnDeGUI.TS.dispatch(this,'date2offset')" ></th>
+				<th><input id="EnDeDOM.TS.FromOf"   type="button"   class="button"  size="2"    value=" < "  onClick="return EnDeGUI.TS.dispatch(this,'offset2date')" ></th>
+				<th><input  id="EnDeDOM.TS.Add"     type="button"   class="button"  size="3"    value=" + "  onClick="return EnDeGUI.TS.dispatch(this,'addOffset')" > Offset:</th>
+				<td><input  id="EnDeDOM.TS.offset"  type="text"     class="text"    size="14" ></td>
+				<td><input  id="EnDeDOM.TS.ff6"     type="text"     class="text"    size="14" ></td>
 			</tr>
 			<tr>
 				<th>&#160;</th>
-				<td><input       id="EnDeDOM.TS.now"   type="button" class="button" value="now"  onClick="return EnDeGUI.TS.dispatch(this,'now')" ></td>
+				<th><input  id="EnDeDOM.TS.now"     type="button"   class="button"  value="now"  onClick="return EnDeGUI.TS.dispatch(this,'now')" ></th>
 				<td colspan="2">
 					&#160;
 					<span   id="EnDeDOM.TS.Menu"    class="popup">
@@ -706,8 +715,9 @@
 					&#160;
 					<button id="EnDeDOM.TS.bm"  onClick="return EnDeGUI.TS.dispatch(this,'scratch')">Scratchpad ..</button>
 				</td>
-				<td><input  class="button"  type="button"   id="EnDeDOM.TS.isTimestamp" value="Ref + Offset"    onClick="return EnDeGUI.TS.dispatch(this,'isTS')" ></td>
-				<td>    <input  class="button"  type="button"   id="EnDeDOM.TS.isOffset"    value="Ref - Timestamp" onClick="return EnDeGUI.TS.dispatch(this,'isOffset')" ></td>
+				<td><input id="EnDeDOM.TS.isTimestamp" type="button" class="button" value="Ref + Offset"    onClick="return EnDeGUI.TS.dispatch(this,'isTS')" ></td>
+				<td><input  id="EnDeDOM.TS.isOffset"type="button"   class="button"  value="Ref - Timestamp" onClick="return EnDeGUI.TS.dispatch(this,'isOffset')" ></td>
+				<td><input  id="EnDeDOM.TS.ff7"     type="text"     class="text"    size="14" ></td>
 			</tr>
 		</table>
 		</div>
@@ -1175,6 +1185,7 @@ EnDeGUI.titles  = {
 	'EnDeDOM.ED.0d':    "add carriage return (CR) character at end of input text",
 	'EnDeDOM.ED.da':    "add carriage return (CR) and newline (NL) character at end of input text",
 	'EnDeDOM.ED.aa':    "add End-of-Text character at end of input text",
+	'EnDeDOM.ED.uri':   "URL-encode after encoding, URL-decode before decoding",
 	'EnDeDOM.EN.text':  "decoded text",
 	'EnDeDOM.EN.isTxt': "show text literaly",
 	'EnDeDOM.EN.isHex': "show text as hex values",
@@ -1237,6 +1248,16 @@ EnDeGUI.titles  = {
 	'EnDeDOM.TS.bm':    "add values to scratchpad",
 	'EnDeDOM.TS.isTimestamp':   "Timestamp = Ref.Time + Offset",
 	'EnDeDOM.TS.isOffset':  "Offset = Ref.Time - Timestamp",
+	'EnDeDOM.TS.isTimestamp':   "Timestamp = Ref.Time + Offset",
+	'EnDeDOM.TS.timestamp':     "Timestamp as integer",
+	'EnDeDOM.TS.reftime':       "reference timestamp",
+	'EnDeDOM.TS.offset':        "offset to timestamp",
+	'EnDeDOM.TS.ff2':   "** NOT YET IMPLEMENTED **",		/* timestamp DOS */
+	'EnDeDOM.TS.ff3':   "** NOT YET IMPLEMENTED **",		/* timestamp Windows */
+	'EnDeDOM.TS.ff4':   "** NOT YET IMPLEMENTED **",		/* timestamp ASP */
+	'EnDeDOM.TS.ff5':   "** NOT YET IMPLEMENTED **",		/* timestamp UNIX */
+	'EnDeDOM.TS.ff6':   "** NOT YET IMPLEMENTED **",		/* timestamp UNIX long */
+	'EnDeDOM.TS.ff7':   "** NOT YET IMPLEMENTED **",		/* timestamp ? */
 	'EnDeDOM.RE.bf':    "RegEx section header",
 	'EnDeDOM.RE.prefix':"pattern for string prefix befor the regular expression string",
 	'EnDeDOM.RE.raw':   "if checked RegEx will be raw data, otherwise it must be enclosed in proper delimiters and may conatin leading and trailing text",

@@ -3,12 +3,12 @@
 # vim: ts=4:
 #?
 #? NAME
-#?      EnDeGUI.js
+#?      %M%
 #?
 #? SYNOPSIS
 #?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="EnDeFile.js"></SCRIPT>
 #?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="EnDeText.js"></SCRIPT>
-#?      <SCRIPT language="JavaScript1.5" type="text/javascript" src="EnDeGUI.js"></SCRIPT>
+#?      <SCRIPT language="JavaScript1.5" type="text/javascript" src="%M%"></SCRIPT>
 #?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="EnDeGUIx.js"></SCRIPT>
 #?
 #?      Note  that it should be used with    language="JavaScript1.5"   because
@@ -102,7 +102,7 @@
 #       Mozilla 1.x which has this property.
 #?
 #? VERSION
-#?      @(#) EnDeGUI.js 3.89 12/09/30 16:04:33
+#?      @(#) %M% %I% %E% %U%
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -114,8 +114,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '3.89';
-this.sid        = function() {  return('@(#) EnDeGUI.js 3.89 12/09/30 16:04:33 EnDeGUI'); };
+this.SID        = '%I%';
+this.sid        = function() {  return('@(#) %M% %I% %E% %U% EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 
@@ -1738,11 +1738,20 @@ this.showArr    = function() {
 	for (bbb in EnDe) {
 		if (((typeof EnDe[bbb]).match(/object/i))===null) { continue; }
 		//if (EnDe[bbb].toString().match(/map/i)===null) { continue; }
-		_dpr('# ' + typeof EnDe[bbb] + '\tEnDe.' + bbb + ': ' + EnDe[bbb].length + ' #');
+		ccc = EnDe[bbb].length;
+		_dpr('# ' + typeof EnDe[bbb] + '\tEnDe.' + bbb + ': ' + ccc + ' #');
 try {
-		for (ccc=0; ccc<EnDe[bbb].length; ccc++) {
+		for (ccc in EnDe[bbb]) {
+			if (EnDe[bbb].length===undefined) { continue; } // function object, usually
 			if (EnDe[bbb][ccc]!==undefined) {
-			bux += '[' + ccc + ']\t' + EnDe[bbb][ccc].join(',\t') +'\n';
+				if (((typeof EnDe[bbb][ccc]).match(/object/i))!==null) {
+					bux += '[' + ccc + ']\t' + EnDe[bbb][ccc].join(',\t') +'\n';
+				} else {
+					bux += '[' + ccc + ']\t' + EnDe[bbb][ccc] +'\n';
+					// xmlMap figsMap ltrsMap AbrMap DbrMap BladeMap sosMap
+					// osoMap DIN66003fMap a2eMap e2aMap spaceMap dnaMap
+					// rangeMap b64Char b64Code b64AdditionalChars 
+				}
 			}
 		}
 		_dpr(bux);
@@ -3851,6 +3860,7 @@ this.tool       = function(src) {
 		break;
 	  case 'EnDeDOM.f.DBX':
 		EnDeGUI.trace = !EnDeGUI.trace; // if called via [trace] button
+		$('EnDeDOM.DBX.Trace').checked = EnDeGUI.trace;
 		// no break;
 	  case 'EnDeDOM.f.TST':
 		target = $(src);

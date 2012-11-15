@@ -83,7 +83,7 @@
 #       _n2_, _n3_, _n4_, _n5_, _n6_, and _n7_ .
 #?
 #? VERSION
-#?      @(#) EnDe.js 3.37 12/09/30 15:50:08
+#?      @(#) EnDe.js 3.39 12/11/14 00:07:21
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -96,8 +96,8 @@
 
 var EnDe    = new function() {
 
-this.SID    = '3.37';
-this.sid    = function() { return('@(#) EnDe.js 3.37 12/09/30 15:50:08 EnDe'); };
+this.SID    = '3.39';
+this.sid    = function() { return('@(#) EnDe.js 3.39 12/11/14 00:07:21 EnDe'); };
 
 	// ===================================================================== //
 	// debug functions                                                       //
@@ -115,6 +115,12 @@ this.dbx    = function(src,nl) {
 	}
 	return EnDeGUI.dpr(src,nl);
 }; // EnDe.dbx
+this.spr    = function(src,nl) {
+//#? wrapper for EnDeGUI.spr()
+	if(this.trace<=0) { return false; }
+	if(EnDeGUI.spr===undefined) { return false; }
+	return EnDeGUI.spr(src,nl);
+}; // EnDe.spr
 
 	// ===================================================================== //
 	// wrapper functions                                                     //
@@ -4446,7 +4452,7 @@ this.DE     = new function() {
 // ========================================================================= //
 
 EnDe.Misc = new function() {
-this.sid        = function()  { return('@(#) EnDe.js 3.37 12/09/30 15:50:08 EnDeMisc'); };
+this.sid        = function()  { return('@(#) EnDe.js 3.39 12/11/14 00:07:21 EnDeMisc'); };
 
 	// ===================================================================== //
 	// global variables                                                      //

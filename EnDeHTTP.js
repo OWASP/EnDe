@@ -56,7 +56,7 @@ parse_gwt()
 #       -----------------------------------------------------------------------
 #?
 #? VERSION
-#?      @(#) EnDeHTTP.js 1.7 12/05/29 22:13:54
+#?      @(#) EnDeHTTP.js 3.1 12/11/13 23:35:49
 #?
 #? AUTHOR
 #?      10-may-10 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -101,8 +101,16 @@ Content-Type: text/html; charset=iso-8859-1
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.HTTP   = new function() {
-  this.SID      = '1.7';
-  this.sid      = function() { return('@(#) EnDeHTTP.js 1.7 12/05/29 22:13:54 EnDe.HTTP'); };
+  this.SID      = '3.1';
+  this.sid      = function() { return('@(#) EnDeHTTP.js 3.1 12/11/13 23:35:49 EnDe.HTTP'); };
+
+  if (typeof(navigator)==='undefined') {
+	this.navUA  = 'wenn nur als Bibliothek benutzt gibt es kein navigator Objekt';
+	this.navLang= '--';
+  } else {
+	this.navUA  = navigator.userAgent;
+	this.navLang= navigator.language;
+  }
 
 	// ===================================================================== //
 	// EnDe.HTTP object variables                                            //
@@ -147,7 +155,7 @@ EnDe.HTTP   = new function() {
         'video/*','video/mpeg','video/quicktime','video/vnd.vivo'
 	];
 	var _langs  = [
-		navigator.language,'aa','ab','af','am','ar','as','ay','az','ba','be','bg','bh',
+		this.navLang,'aa','ab','af','am','ar','as','ay','az','ba','be','bg','bh',
 		'bi','bn','bo','br','ca','co','cs','cy','da','de','dz','el','en','en-US','eo','es','et','eu','fa',
 		'fi','fj','fo','fr','fy','ga','gd','gl','gn','gu','ha','he','hi','hr','hu','hy','ia',
 		'id','ie','ik','is','it','iu','iw','ja','jw','ka','kk','kl','km','kn','ko','ks','ku',
@@ -324,7 +332,7 @@ entity-header  = Allow
 */
 
 	this.UAs    = [
-	navigator.userAgent,
+		this.navUA,
 		'Mozilla/5.0 (Macintosh; U; PPC Mac OS X Mach-O; en-US; rv:1.8.1) Gecko/20061010 Firefox/2.0',
 		'Mozilla/5.0 (Macintosh; U; Intel Mac OS X; en-US; rv:1.8.0.4) Gecko/20060508 Firefox/1.5.0.5',
 		'Mozilla/5.0 (Macintosh; U; PPC Mac OS X Mach-O; en-US; rv:1.8.0.5) Gecko/20060723 Firefox/1.5.0.5',

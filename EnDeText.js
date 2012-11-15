@@ -83,7 +83,7 @@
 #       -----------------------------------------------------------------------
 #?
 #? VERSION
-#?      @(#) EnDeText.js 3.18 12/09/30 16:14:46
+#?      @(#) EnDeText.js 3.19 12/11/14 00:05:37
 #?
 #? AUTHOR
 #?      08-sep-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -97,8 +97,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.Text   = new function() {
-	this.SID    = '3.18';
-	this.sid    = function() { return('@(#) EnDeText.js 3.18 12/09/30 16:14:46 EnDe.Text'); };
+	this.SID    = '3.19';
+	this.sid    = function() { return('@(#) EnDeText.js 3.19 12/11/14 00:05:37 EnDe.Text'); };
 
 	this.trace  = false;
 
@@ -106,7 +106,7 @@ EnDe.Text   = new function() {
 	// internal/private functions                                            //
 	// ===================================================================== //
 
-	function __dbx(t,n) { if (EnDe.Text.trace===true) { EnDeGUI.dpr(t,n); } };
+	function __dbx(t,n) { if (EnDe.Text.trace===true) { EnDe.dbx(t,n); } };
 
 	// ===================================================================== //
 	// public functions                                                      //

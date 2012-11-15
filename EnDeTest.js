@@ -24,7 +24,6 @@
 #?
 #? SEE ALSO
 #?      EnDe.js
-#?      EnDeGUI.js
 #?      EnDeTest-Sample.txt
 #?
 # HACKER's INFO
@@ -43,7 +42,7 @@
 #?
 #?
 #? VERSION
-#?      @(#) EnDeTest.js 3.8 12/06/17 23:19:55
+#?      @(#) EnDeTest.js 3.9 12/11/14 00:04:40
 #?
 #? AUTHOR
 #?      22-jun-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -57,8 +56,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.Test   = new function() {
-	this.SID    = '3.8';
-	this.sid    = function() { return '@(#) EnDeTest.js 3.8 12/06/17 23:19:55 EnDe.Test'; },
+	this.SID    = '3.9';
+	this.sid    = function() { return '@(#) EnDeTest.js 3.9 12/11/14 00:04:40 EnDe.Test'; },
 
 	// ===================================================================== //
 	// global variables                                                      //
@@ -103,15 +102,9 @@ EnDe.Test   = new function() {
 
 	this.trace    = 1;  // enabled by default
 	this.dbx      = function(src,nl) {
-	//#? wrapper for EnDeGUI.dpr()
+	//#? wrapper for EnDe.dbx()
 		if(this.trace<=0) { return false; }
-		if(EnDeGUI.dpr===undefined) {
-/*
- *** implement your code for debugging used in lib without GUI here ***
- */
-			return false;
-		}
-		return EnDeGUI.dpr(src,nl);
+		return EnDe.dbx(src,nl);
 	}; // dbx
 
 

@@ -24,7 +24,7 @@
 #?              hexcase, b64pad, chrsz
 #?
 #? VERSION
-#?      @(#) md5.js 3.3 11/12/30 19:13:53
+#?      @(#) md5.js 3.4 12/11/17 01:04:49
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -34,8 +34,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.MD5 = new function() {
-this.SID    = '3.3';
-this.sid    = function() { return('@(#)  md5.js 3.3 11/12/30 19:13:53 EnDe.MD5'); };
+this.SID    = '3.4';
+this.sid    = function() { return('@(#)  md5.js 3.4 12/11/17 01:04:49 EnDe.MD5'); };
 
 /*
  * Configurable variables. You may need to tweak these to be compatible with
@@ -283,4 +283,4 @@ function binl2b64(binarray)
   }
   return str;
 }
-} // EnDe.MD5
+}; // EnDe.MD5

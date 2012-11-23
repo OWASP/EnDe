@@ -14,9 +14,10 @@
 #?          1. enclosed in
 #?              EnDe.DES = new function() { ... }
 #?          2. EnDe.DES.EN. and EnDe.DES.DE. wrapper object
+#?          3. some missing ; added
 #?
 #? VERSION
-#?      @(#) des.js 3.3 12/11/13 23:49:58
+#?      @(#) des.js 3.4 12/11/17 00:59:55
 #?
 #? AUTHOR
 #?      Some parts of the code are derivied from (adaptions see above)
@@ -53,8 +54,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.DES = new function() {
-	this.SID    = '3.3';
-	this.sid    = function() { return('@(#)  des.js 3.3 12/11/13 23:49:58 EnDe.DES'); };
+	this.SID    = '3.4';
+	this.sid    = function() { return('@(#)  des.js 3.4 12/11/17 00:59:55 EnDe.DES'); };
 
 	this.trace  = false; // not yet implemented, uses EnDe.trace
 
@@ -154,7 +155,7 @@ function des (key, message, encrypt, mode, iv, padding) {
   //create the 16 or 48 subkeys we will need
   var keys = des_createKeys (key);
   var m=0, i, j, temp, temp2, right1, right2, left, right, looping;
-  var cbcleft, cbcleft2, cbcright, cbcright2
+  var cbcleft, cbcleft2, cbcright, cbcright2;
   var endloop, loopinc;
   var len = message.length;
   var chunk = 0;

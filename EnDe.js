@@ -83,7 +83,7 @@
 #       _n2_, _n3_, _n4_, _n5_, _n6_, and _n7_ .
 #?
 #? VERSION
-#?      @(#) EnDe.js 3.39 12/11/14 00:07:21
+#?      @(#) EnDe.js 3.40 12/11/23 21:19:44
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -96,8 +96,8 @@
 
 var EnDe    = new function() {
 
-this.SID    = '3.39';
-this.sid    = function() { return('@(#) EnDe.js 3.39 12/11/14 00:07:21 EnDe'); };
+this.SID    = '3.40';
+this.sid    = function() { return('@(#) EnDe.js 3.40 12/11/23 21:19:44 EnDe'); };
 
 	// ===================================================================== //
 	// debug functions                                                       //
@@ -4444,22 +4444,19 @@ this.DE     = new function() {
 
  }; // EnDe.DE
 
-}; // EnDe
+	// ===================================================================== //
+	// unsorted functions                                                    //
+	// ===================================================================== //
 
-
-// ========================================================================= //
-// unsorted functions                                                        //
-// ========================================================================= //
-
-EnDe.Misc = new function() {
-this.sid        = function()  { return('@(#) EnDe.js 3.39 12/11/14 00:07:21 EnDeMisc'); };
+this.Misc   = new function() {
+this.sid        = function()  { return('@(#) EnDe.js 3.40 12/11/23 21:19:44 EnDeMisc'); };
 
 	// ===================================================================== //
 	// global variables                                                      //
 	// ===================================================================== //
 
-this.rfc2396    = function() {
-//#? container for RFC2396 definitions ** NOT YET USED **
+ this.rfc2396    = function() {
+ //#? container for RFC2396 definitions ** NOT YET USED **
 	/* see: http://www.ietf.org/rfc/rfc2396.txt */
 	var control     = '\x00-\x1f,\x7f';
 	var reserved    = ';/?:@&=+$,';
@@ -4492,14 +4489,14 @@ this.rfc2396    = function() {
 	kkk.length = 0;
 	return bux;
   };
-};
+ };
 
 	// ===================================================================== //
 	// misc functions                                                        //
 	// ===================================================================== //
 
-this.additionalBase64Encoding = function(src) {
-//#? additional Base64 character encoding ** NOT YET USED **
+ this.additionalBase64Encoding = function(src) {
+ //#? additional Base64 character encoding ** NOT YET USED **
 	// ToDo:
 	var bux = '';
 	if (src != '') {
@@ -4508,10 +4505,10 @@ this.additionalBase64Encoding = function(src) {
 		bux = bux.replace(/\=/g, EnDe.b64AdditionalChars[2]);
 	}
 	return bux;
-};
+ };
 
-this.additionalBase64Decoding = function(src) {
-//#? additional Base64 character decoding ** NOT YET USED **
+  this.additionalBase64Decoding = function(src) {
+  //#? additional Base64 character decoding ** NOT YET USED **
 	// ToDo: should be changed to EnDe.b64AdditionalChars using regex
 	var bux = '';
 	var i   = 0;
@@ -4529,6 +4526,8 @@ this.additionalBase64Decoding = function(src) {
 		}
 	}
 	return bux;
-};
-}; // EnDe.Misc
+  };
+ }; // EnDe.Misc
+
+}; // EnDe
 

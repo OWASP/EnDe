@@ -3,11 +3,11 @@
 # vim: set ts=4:
 #?
 #? NAME
-#?      crc.js
+#?      %M%
 #?
 #? SYNOPSIS
 #?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="EnDe.js"></SCRIPT>
-#?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="crc.js"></SCRIPT>
+#?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="%M%"></SCRIPT>
 #?
 #? DESCRIPTION
 #?      Functions for CRC checksums.
@@ -22,7 +22,7 @@
 #?      // ToDo: // some INFOs found in EnDe.man.txt
 #?
 #? VERSION
-#?      @(#) crc.js 3.4 11/04/09 21:33:51
+#?      @(#) %M% %I% %E% %U%
 #?
 #? AUTHOR
 #?      12-oct-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -34,10 +34,10 @@
 // ========================================================================= //
 
 
-if ((typeof EnDe)==='undefined' ) { EnDe = new function() {}; } // contribution to runtime raise condition and some stupid browsers
+if ((typeof EnDe)==='undefined') { EnDe = new function() {}; } // contribution to runtime raise condition and some stupid browsers
 
 EnDe.CRC     = new function() {
-  this.SID      = '3.4';
+  this.SID      = '%I%';
   this.sid      = function() { return(EnDe.sid() + '.CRC'); };
   this.dbx      = function(src,nl) { return EnDe.dbx(src,nl); };
 
@@ -62,7 +62,7 @@ EnDe.CRC     = new function() {
   };
 
   this.reflect  = function(src,bitnum,startLSB) {
-  //#? reflect 'bitnum' bits starting at lowest bit = startLSB
+  //#? reflect bitnum bits starting at lowest bit = startLSB
 // ToDO. NOT YET TESTED
 	var i, j, k, iw, jw, bit;
 	for (k=0; k+startLSB<bitnum-1-k; k++) {
@@ -195,7 +195,7 @@ EnDe.CRC     = new function() {
 		0x4e00, 0x8ec1, 0x8f81, 0x4f40, 0x8d01, 0x4dc0, 0x4c80, 0x8c41,
 		0x4400, 0x84c1, 0x8581, 0x4540, 0x8701, 0x47c0, 0x4680, 0x8641,
 		0x8201, 0x42c0, 0x4380, 0x8341, 0x4100, 0x81c1, 0x8081, 0x4040
-        );
+		);
 	for (var i=0; i<src.length; i++) {
 		ccc = src.charCodeAt(i);
 		bux = crc16Map[(bux^ccc)&0xff] ^ (bux>>8);
@@ -374,57 +374,57 @@ EnDe.CRC     = new function() {
 			'------+------+-------'   +
 			//                                                        iv     mask      | expected result
 			'\n== c16arc:' +
-			'\n0x0000 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.c16arc(src,0x0000,0x0000)) ) + // BB3D
-			'\n0xffff 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.c16arc(src,0xffff,0x0000)) ) + // 4B37
-			'\n0x0000 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.c16arc(src,0x0000,0xffff)) ) + // 44c2
-			'\n0xffff 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.c16arc(src,0xffff,0xffff)) ) + // b4c8
-			'\n0x1d0f 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.c16arc(src,0x1d0f,0x0000)) ) + // debc
-			'\n0x1d0f 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.c16arc(src,0x1d0f,0xffff)) ) + // 2143
-			'\n0x0000 0x1d0f: '+EnDe.i2h(2, EnDe.z2n(this.c16arc(src,0x0000,0x1d0f)) ) + // a632
+			'\n0x0000 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.c16arc(src,0x0000,0x0000))) + // BB3D
+			'\n0xffff 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.c16arc(src,0xffff,0x0000))) + // 4B37
+			'\n0x0000 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.c16arc(src,0x0000,0xffff))) + // 44c2
+			'\n0xffff 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.c16arc(src,0xffff,0xffff))) + // b4c8
+			'\n0x1d0f 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.c16arc(src,0x1d0f,0x0000))) + // debc
+			'\n0x1d0f 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.c16arc(src,0x1d0f,0xffff))) + // 2143
+			'\n0x0000 0x1d0f: '+EnDe.i2h(2, EnDe.z2n(this.c16arc(src,0x0000,0x1d0f))) + // a632
 			'\n== c16ppp:' +
-			'\n0x0000 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.c16ppp(src,0x0000,0x0000)) ) + // 2189
-			'\n0xffff 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.c16ppp(src,0xffff,0x0000)) ) + // 6f91
-			'\n0x0000 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.c16ppp(src,0x0000,0xffff)) ) + // de76
-			'\n0xffff 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.c16ppp(src,0xffff,0xffff)) ) + // 906e
-			'\n0x1d0f 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.c16ppp(src,0x1d0f,0x0000)) ) + // 5604
-			'\n0x1d0f 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.c16ppp(src,0x1d0f,0xffff)) ) + // a9fb
-			'\n0x0000 0x1d0f: '+EnDe.i2h(2, EnDe.z2n(this.c16ppp(src,0x0000,0x1d0f)) ) + // a45a
+			'\n0x0000 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.c16ppp(src,0x0000,0x0000))) + // 2189
+			'\n0xffff 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.c16ppp(src,0xffff,0x0000))) + // 6f91
+			'\n0x0000 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.c16ppp(src,0x0000,0xffff))) + // de76
+			'\n0xffff 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.c16ppp(src,0xffff,0xffff))) + // 906e
+			'\n0x1d0f 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.c16ppp(src,0x1d0f,0x0000))) + // 5604
+			'\n0x1d0f 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.c16ppp(src,0x1d0f,0xffff))) + // a9fb
+			'\n0x0000 0x1d0f: '+EnDe.i2h(2, EnDe.z2n(this.c16ppp(src,0x0000,0x1d0f))) + // a45a
 			'\n== c16zmo:' +
-			'\n0x0000 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.c16zmo(src,0x0000,0x0000)) ) + // b955
-			'\n0xffff 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.c16zmo(src,0xffff,0x0000)) ) + // 6eb4
-			'\n0x0000 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.c16zmo(src,0x0000,0xffff)) ) + // 46aa
-			'\n0xffff 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.c16zmo(src,0xffff,0xffff)) ) + // 914b
-			'\n0x1d0f 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.c16zmo(src,0x1d0f,0x0000)) ) + // c53d
-			'\n0x1d0f 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.c16zmo(src,0x1d0f,0xffff)) ) + // 3ac2
-			'\n0x0000 0x1d0f: '+EnDe.i2h(2, EnDe.z2n(this.c16zmo(src,0x0000,0x1d0f)) ) + // a45a
+			'\n0x0000 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.c16zmo(src,0x0000,0x0000))) + // b955
+			'\n0xffff 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.c16zmo(src,0xffff,0x0000))) + // 6eb4
+			'\n0x0000 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.c16zmo(src,0x0000,0xffff))) + // 46aa
+			'\n0xffff 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.c16zmo(src,0xffff,0xffff))) + // 914b
+			'\n0x1d0f 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.c16zmo(src,0x1d0f,0x0000))) + // c53d
+			'\n0x1d0f 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.c16zmo(src,0x1d0f,0xffff))) + // 3ac2
+			'\n0x0000 0x1d0f: '+EnDe.i2h(2, EnDe.z2n(this.c16zmo(src,0x0000,0x1d0f))) + // a45a
 			//                                                     iv     mask  plynom     | expected result
 			'\n== crc16(0x1021):' +
-			'\n0x0000 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0x0000,0x0000,0x1021)) ) + // 31C3
-			'\n0xffff 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0xffff,0x0000,0x1021)) ) + // 29B1
-			'\n0x0000 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0x0000,0xffff,0x1021)) ) + // cec3
-//	'\n0x0000 0xFFFF: '+EnDe.i2h(2, EnDe.z2n(this.reflect(this.crc16(src,0x0000,0xffff,0x1021),16,8)) ) + // cec3
-//	'\n0x0000 0xFFFF: '+EnDe.i2h(2, EnDe.z2n(this.reflectByte(this.crc16(src,0x0000,0xffff,0x1021))) ) + // cec3
-			'\n0xffff 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0xffff,0xffff,0x1021)) ) + // d64e
+			'\n0x0000 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0x0000,0x0000,0x1021))) + // 31C3
+			'\n0xffff 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0xffff,0x0000,0x1021))) + // 29B1
+			'\n0x0000 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0x0000,0xffff,0x1021))) + // cec3
+//	'\n0x0000 0xFFFF: '+EnDe.i2h(2, EnDe.z2n(this.reflect(this.crc16(src,0x0000,0xffff,0x1021),16,8))) + // cec3
+//	'\n0x0000 0xFFFF: '+EnDe.i2h(2, EnDe.z2n(this.reflectByte(this.crc16(src,0x0000,0xffff,0x1021))))  + // cec3
+			'\n0xffff 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0xffff,0xffff,0x1021))) + // d64e
 			'\n== crc16(0x1d0f):' +
-			'\n0x0000 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0x0000,0x0000,0x1d0f)) ) + // 73a7
-			'\n0xffff 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0xffff,0x0000,0x1d0f)) ) + // 59e9
-			'\n0x0000 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0x0000,0xffff,0x1d0f)) ) + // 8c58
-			'\n0xffff 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0xffff,0xffff,0x1d0f)) ) + // a616
+			'\n0x0000 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0x0000,0x0000,0x1d0f))) + // 73a7
+			'\n0xffff 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0xffff,0x0000,0x1d0f))) + // 59e9
+			'\n0x0000 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0x0000,0xffff,0x1d0f))) + // 8c58
+			'\n0xffff 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0xffff,0xffff,0x1d0f))) + // a616
 			'\n== crc16(0x3d65):' +
-			'\n0x0000 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0x0000,0x0000,0x3d65)) ) + // 3d48
-			'\n0xffff 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0xffff,0x0000,0x3d65)) ) + // bbb6
-			'\n0x0000 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0x0000,0xffff,0x3d65)) ) + // c2b7
-			'\n0xffff 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0xffff,0xffff,0x3d65)) ) + // 4449
+			'\n0x0000 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0x0000,0x0000,0x3d65))) + // 3d48
+			'\n0xffff 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0xffff,0x0000,0x3d65))) + // bbb6
+			'\n0x0000 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0x0000,0xffff,0x3d65))) + // c2b7
+			'\n0xffff 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0xffff,0xffff,0x3d65))) + // 4449
 			'\n== crc16(0x8408):' +
-			'\n0x0000 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0x0000,0x0000,0x8408)) ) + // 96a8
-			'\n0xffff 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0xffff,0x0000,0x8408)) ) + // 520
-			'\n0x0000 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0x0000,0xffff,0x8408)) ) + // 6957
-			'\n0xffff 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0xffff,0xffff,0x8408)) ) + // fadf
+			'\n0x0000 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0x0000,0x0000,0x8408))) + // 96a8
+			'\n0xffff 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0xffff,0x0000,0x8408))) + // 520
+			'\n0x0000 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0x0000,0xffff,0x8408))) + // 6957
+			'\n0xffff 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0xffff,0xffff,0x8408))) + // fadf
 			'\n== crc16(0x8005):' +
-			'\n0x0000 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0x0000,0x0000,0x8005)) ) + // 96a8
-			'\n0xffff 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0xffff,0x0000,0x8005)) ) + // 520
-			'\n0x0000 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0x0000,0xffff,0x8005)) ) + // 6957
-			'\n0xffff 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0xffff,0xffff,0x8005)) ) + // fadf
+			'\n0x0000 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0x0000,0x0000,0x8005))) + // 96a8
+			'\n0xffff 0x0000: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0xffff,0x0000,0x8005))) + // 520
+			'\n0x0000 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0x0000,0xffff,0x8005))) + // 6957
+			'\n0xffff 0xffff: '+EnDe.i2h(2, EnDe.z2n(this.crc16(src,0xffff,0xffff,0x8005))) + // fadf
 			'';
 		break;
 /*

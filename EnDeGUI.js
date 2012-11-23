@@ -3,12 +3,12 @@
 # vim: ts=4:
 #?
 #? NAME
-#?      %M%
+#?      EnDeGUI.js
 #?
 #? SYNOPSIS
 #?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="EnDeFile.js"></SCRIPT>
 #?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="EnDeText.js"></SCRIPT>
-#?      <SCRIPT language="JavaScript1.5" type="text/javascript" src="%M%"></SCRIPT>
+#?      <SCRIPT language="JavaScript1.5" type="text/javascript" src="EnDeGUI.js"></SCRIPT>
 #?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="EnDeGUIx.js"></SCRIPT>
 #?
 #?      Note  that it should be used with    language="JavaScript1.5"   because
@@ -102,7 +102,7 @@
 #       Mozilla 1.x which has this property.
 #?
 #? VERSION
-#?      @(#) %M% %I% %E% %U%
+#?      @(#) EnDeGUI.js 3.92 12/11/15 21:46:12
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -114,8 +114,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '%I%';
-this.sid        = function() {  return('@(#) %M% %I% %E% %U% EnDeGUI'); };
+this.SID        = '3.92';
+this.sid        = function() {  return('@(#) EnDeGUI.js 3.92 12/11/15 21:46:12 EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 

@@ -26,7 +26,7 @@
 #?          4. hexCase reanmed to hexcase (as in sha1.js)
 #?
 #? VERSION
-#?      @(#) sha512.js 3.3 11/12/30 19:12:03
+#?      @(#) sha512.js 3.4 12/11/23 19:31:19
 #?
 #? AUTHOR
 #?      08-jul-08 Achim Hoffmann, mailto: ende (at) my (dash) stp (dot) net
@@ -36,8 +36,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.SHA5 = new function() {
-this.SID      = '3.3';
-this.sid      = function() { return('@(#)  sha512.js 3.3 11/12/30 19:12:03 EnDe.SHA5'); };
+this.SID      = '3.4';
+this.sid      = function() { return('@(#)  sha512.js 3.4 12/11/23 19:31:19 EnDe.SHA5'); };
 
 /*
  * Configurable variables. Defaults typically work
@@ -49,7 +49,7 @@ this.hexcase  = 0; /* hex output format. 0 - lowercase; 1 - uppercase		*/
  * The below function is what you want to call.  It take the string to be hashed, as well as
  * the SHA-2 variant you want to use (SHA-384, SHA-512)
  */
-this. hex_sha = function(string, variant) {return binb2hex(coreSHA2(str2binb(string), string.length * EnDe.SHA5.charSize, variant));};
+this.hex_sha  = function(string, variant) {return binb2hex(coreSHA2(str2binb(string), string.length * EnDe.SHA5.charSize, variant));};
 //#? SHA-384, SHA-512 hash 
 
 var K = new Array(

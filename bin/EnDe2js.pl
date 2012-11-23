@@ -24,6 +24,8 @@
 #?        *2html    - HTML data is generated
 #?        *2js      - JavaScript data is generated
 #?
+#?      Parsing data from input file will be stopped when  __NOGEN__ is found.
+#?
 #?   Given (expected) data:
 #?      var EnDe    = new function()  {
 #?      this.OBJECT = new function(par1,par2,par3) {
@@ -167,6 +169,7 @@ sub phead($$$) {
 		print "// $txt\n"; 
 		print "/*\n * $use\n */\n";
 		print "if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }\n";
+		print "if (typeof(EnDe.Func)==='undefined') { EnDe.Func = new function() {}; }\n";
 		print "$obj   = new function() {\n\tthis.SID    = '$sid';\n\tthis.list   = {\n ";
 	}
 	if ($mode eq 'HTML') {
@@ -183,7 +186,7 @@ sub phead($$$) {
 		print "<caption>List of Functions</caption>\n";
 		print "<th colspan=\"10\" class=\"h\">$obj</th></tr>\n";
 	}
-}
+} # phead
 
 sub pfunc($$$$$$$$) {
 	# convert given line to output format specified in mode
@@ -195,14 +198,16 @@ sub pfunc($$$$$$$$) {
 	my $type = shift; # type of parameter param
 	my $idx  = shift; # unique ID used as XML attribute
 	my $attr = shift;
-	#dbx print "\n"; chomp $line;
-	#dbx print "##line: $line\n";
-	#dbx print "##name: $name\n";
-	#dbx print "##func: $func\n";
-	#dbx print "##parm: $parm\n";
-	#dbx print "##type: $type\n";
-	#dbx print "##attr: $attr\n";
-	#dbx print "##idx: $idx\n";
+	if ($debug) { #dbx#
+		 print "\n"; chomp $line;
+		 print "##pfunc line: $line\n";
+		 print "##pfunc name: $name\n";
+		 print "##pfunc func: $func\n";
+		 print "##pfunc parm: $parm\n";
+		 print "##pfunc type: $type\n";
+		 print "##pfunc attr: $attr\n";
+		 print "##pfunc idx: $idx\n";
+	} #dbx#
 	if (($name eq '') or ($func eq '')) {
 	   $name = $::name;
 	   $func = $::func;
@@ -227,13 +232,13 @@ sub pfunc($$$$$$$$) {
 	if ($mode eq 'JS') {
 		# generate prototype key:value
 		$line =~ s/^  /    /;
-		$line =~ s/this\./$name:\t[$func\./;
+		$line =~ s/this\./$name:\t["$func\./;  # open quote
 		$line =~ s/\s*=\s*function\s*\(/\t(/;
 		# "**double quote in previous substitute**";
 		$line =~ s/,/,\t/g;
 		$line =~ s/uppercase/upper/g;
 		$line =~ s/delimiter/delim/g;
-		$line =~ s/\).*$/),/;
+		$line =~ s/\).*$/)",/;          # close quote
 		# "**double quote in previous substitute**";
 		$line =~ s/\n//;
 		# replce type by value, if any
@@ -304,18 +309,24 @@ sub pfunc($$$$$$$$) {
 		print "\t<name>$func.$name</name>\n";
 		print "$line";
 	}
-}
+} # pfunc
 
 sub pdesc($$$) {
 	my $mode = shift;
 	my $line = shift;
 	my $func = shift;
+	if ($debug) { #dbx#
+		 print "\n"; chomp $line;
+		 print "##pdesc mode: $mode\n";
+		 print "##pdesc line: $line\n";
+		 print "##pdesc func: $func\n";
+	} #dbx#
 	if ($func eq '') {
 	   $func = $::func;
 	}
 	if ($mode eq 'JS') {
+		$line =~ s/\\/\\\\/g;   # sequence important!
 		$line =~ s/'/\\'/g;
-		$line =~ s/\\/\\\\/g;
 		print "\t'$line'],\n";
 	}
 	if ($mode eq 'TXT') {
@@ -330,13 +341,20 @@ sub pdesc($$$) {
 	if ($mode eq 'HTML') {
 		print "<td colspan=\"2\" class=\"l\">&#160;</td><td colspan=\"8\" class=\"l\">$line</td></tr>\n";
 	}
-}
+} # pdesc
 
-sub pfoot($$) {
+sub pfoot($$$) {
 	my $mode = shift;
 	my $line = shift;
+	my $func = shift;
+	if ($debug) { #dbx#
+		 print "\n"; chomp $line;
+		 print "##pfoot mode: $mode\n";
+		 print "##pfoot line: $line\n";
+		 print "##pfoot func: $func\n";
+	} #dbx#
 	if ($mode eq 'JS') {
-		print "  desc: '$line'\n\t}; // .list\n};\n";
+		print "  desc: '$line'\n\t}; // .list\n}; // .$func\n";
 		#print "var EnDeFunc = new _EnDeFunc();\n"
 	}
 	if ($mode eq 'XML') {
@@ -361,7 +379,7 @@ sub pfoot($$) {
 			print "use\t$use\n" if ($use ne "EnDe");
 		}
 	}
-}
+} # pfoot
 
 # generated list of all functions
 my @l;
@@ -372,6 +390,9 @@ my $noh  = 0;
 my $nof  = 0;
 my $attr = 0;
 my $SID  = '';
+my $obj  = '';
+my $func = 0;  # 1 if beginning of function definition written
+my $dumm = '-- no description available --';
 undef $\;
 while (my $arg = shift @ARGV) {
 	# parse options and arguments
@@ -381,16 +402,19 @@ while (my $arg = shift @ARGV) {
 	@l   = ();
 	#$noh = 0;
 	#$nof = 0;
+	$obj = '';
 	$attr= 0;
 	if ($arg =~/-nohead/) { $noh = 1; next; }
 	if ($arg =~/-nofoot/) { $nof = 1; next; }
 	if ($arg =~/-attr/)   { $attr= 1; next; }
 	$file= $arg;
 	open(E,$file) or die "**ERROR $0: cannot open $file: $!";
-	while(<E>) {
+	while(<E>) {  # ugly, quick&dirty ...
 		my $sub = '';
 		next      if ($skip eq 1);
 		$skip = 1 if (m#^\s* }[ ;]*//\s*EnDe$#);
+		last      if (m#__NOGEN__#);
+		$obj  = 'EnDe' if ($file eq 'EnDe.js'); # ugly hack
 	
 		# get version of source and print initial header
 		if (m/^#\?\s*@.#..(.*)/) { $SID = $1; }
@@ -398,20 +422,26 @@ while (my $arg = shift @ARGV) {
 
 		# find start of object and initialize level stack
 		# // ToDo: HTTPGUI is temporary
+		# // ToDo: SHA5  disabled 'cause inval JavaScript generation
 		if (m/^(?:\s*var\s+)?(EnDe)\.?(AES|DES|CRC|MD4|MD5|RMD|SHA|SHA5|B64|Blowfish|HTTPGUI|HTTP|IP|TS|Test)?\s+=/) {
 			$sub = $2;
+			$obj = $sub if ($obj eq '');
 			$_=~s/EnDe/EnDe,Func/;
+			if (($mode eq 'JS') && ($sub eq 'SHA')) { $obj = ''; last; }
 			push(@l,'EnDe');
 			push(@l,$sub) if ($sub ne '');
+			print "#dbx sub: $sub {\n" if $debug;
 			if ($noh==0) {
 				phead($mode,$SID,join(".",@l));
 			} else {
 				if ($mode eq 'JS') {
 					# //ToDo: JS is not yet ready
+					pdesc($mode,$dumm,'') if ($func == 1);
+					$func = 0;
 					phead($mode,$SID,join(".",@l));
 				}
 				if ($mode eq 'HTML') {
-					# sme as below
+					# same as below
 					my $cnt = "&nbsp" x $#l; # very simple identation
 					print "<tr><th colspan=\"10\" class=\"h\">$cnt " . join(".",@l) . "</th></tr>\n";
 				}
@@ -425,13 +455,21 @@ while (my $arg = shift @ARGV) {
 			# now check if text right to last . matches last stored object
 			my $sub = $1;
 			$sub =~ s#.*?([A-Za-z0-9_]+)\s*$#$1#;
-			#dbx print "## $_ -- $sub == $l[-1]\n";
 			if ($l[-1]) {
 				if ($sub eq $l[-1]) {
+					pdesc($mode,$dumm,'') if ($func == 1);
+					$func = 0;
 					pop(@l);
-					if ($mode eq 'JS') {
-						print "\t'dumm':'dumm'},\n";
+					# ToDo: ugly check for EnDe.js which is different, somehow ..
+					if (($#l > 0) || ($file eq 'EnDe.js')) { # nested objects only
+					  if ($sub ne 'EnDe') {
+						if ($mode eq 'JS') {
+							print "\t\t'dumm':'dumm'\n";
+							print "\t}, // .$sub\n";
+						}
+					  }
 					}
+					print "#dbx obj: $sub }\n" if $debug;
 					next;
 				}
 			}
@@ -439,10 +477,14 @@ while (my $arg = shift @ARGV) {
 	
 		# find definition of sub-object; push to stack
 		if (m/^\s*this\.([^\s]+)\s*=\s*new\s+function/) {
+			print "#dbx obj: $1 {\n" if $debug;
 			push(@l,$1);
 			if ($mode eq 'TXT') {
 			}
 			if ($mode eq 'JS') {
+				pdesc($mode,$dumm,'') if ($func == 1);
+				$func = 0;
+				#print "\t},\n";# if ($#l > 0); # nested object
 				print "\n  $1: {\n";
 			}
 			if ($mode eq 'HTML') {
@@ -454,7 +496,7 @@ while (my $arg = shift @ARGV) {
 	
 		# find end of object definition; pop from stack
 		if (m#^\s*}[ ;]*//.*\.([^\s]+)\s*$#) {
-			print "#".$. .": ".$1." == ".$l[$#l]  if $debug;
+			print "#dbx".$. .": ".$1." == ".$l[$#l] if $debug;
 			if ($l[-1]) {
 				if ($1 eq $l[$#l]) {
 					my $n=pop(@l);
@@ -462,9 +504,12 @@ while (my $arg = shift @ARGV) {
 						#dbx print "## ",join(".",@l),"\n";
 					}
 					if ($mode eq 'JS') {
-						print "    desc:\t'$n'\n";
-						print "  }, // $n\n";
+						pdesc($mode,'V'.$dumm,'') if ($func == 1);
+						$func = 0;
+						#print "    desc:\t'$n'\n";
+						#print "  }, // $n\n";
 					}
+					print "#dbx sub: }\n" if $debug;
 					next;
 				}
 			}
@@ -475,10 +520,12 @@ while (my $arg = shift @ARGV) {
 			my $n = $1;
 			my $f = join(".",@l);
 			next if ($n=~/^(SID|sid|dbx|dpr)/); # internal function not needed
+			pdesc($mode,$dumm,'') if ($func == 1);
 			$cnt++;
 			$idx++;
 			storefunc(  $n,$f,$_,'','');
 			pfunc($mode,$n,$f,$_,'','',$idx,$attr);
+			$func = 1;
 			next;
 		}
 	
@@ -486,6 +533,7 @@ while (my $arg = shift @ARGV) {
 		if (m:^\s*//\s*#\?\s*(.*)$:) {
 			next if ($1=~/dpr/); # //ToDo:ugly hack (get rid of: "wrapper for EnDeGUI.dpr()"
 			pdesc($mode,$1,'');
+			$func = 0;
 			next;
 		}
 	
@@ -494,6 +542,7 @@ while (my $arg = shift @ARGV) {
 			my $desc = $2;
 			my $parm = $1;
 			my $type = $2;
+			pdesc($mode,"V".$dumm,'') if ($func == 1);
 			$idx++;
 			$type =~ s/^([^\s:]*)[\s:].*/$1/;
 			pfunc($mode,'','','',$parm,$type,$idx,$attr); # uses values from global store
@@ -501,21 +550,22 @@ while (my $arg = shift @ARGV) {
 			next;
 		}
 	} # while <E>
+#print "\n### END $l[-1]) $#l $obj\n";
 	if ($mode eq 'JS') {
 		# //ToDo: JS is not yet ready
-		pfoot($mode,$cnt);
+		pfoot($mode,$cnt,$obj) if ($obj ne '');
 	}
 	if ($mode ne 'HTML') {
-		pfoot($mode,$cnt) if ($nof==0);
+		pfoot($mode,$cnt,$obj) if ($nof==0);
 	}
 	if ($mode ne 'JSON') {
-		pfoot($mode,$cnt) if ($nof==0);
+		pfoot($mode,$cnt,$obj) if ($nof==0);
 	}
 	if ($mode ne 'TEXT') {
 		# does not have a footer
 	}
 	if ($mode ne 'XML') {
-		pfoot($mode,$cnt) if ($nof==0);
+		pfoot($mode,$cnt,$obj) if ($nof==0);
 	}
 } # while @ARG
 if ($mode eq 'TXT') {
@@ -532,7 +582,7 @@ if ($mode eq 'TXT') {
 		print "$::g{$use}\n";
 	}
 	print "\n";
-	pfoot($mode,$cnt);
+	pfoot($mode,$cnt,$obj);
 }
 
 exit(0);

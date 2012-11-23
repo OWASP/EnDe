@@ -3,45 +3,61 @@
 // vim: ts=4:
 #?
 #? NAME
-#?      %M%
+#?      EnDeMaps.js
 #?
 #? SYNOPSIS
-#?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="%M%"></SCRIPT>
+#?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="EnDeMaps.gen.js"></SCRIPT>
+#?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="EnDeMaps.js"></SCRIPT>
 #?
 #? DESCRIPTION
-#?      Functions to initialize character maps loaded using XMLHttpRequest();
+#?      Functions to initialize character maps defined in  EnDe.MAPS  or loaded
+#?      from  EnDeMaps.txt  using XMLHttpRequest();
 #?
 #?      Initializes following maps:
-#?          EnDe.intMap  - array of [standard, Entity, Group, Desciption]
-#?                         index is charCode
-#?          EnDe.ncrMap  - array of char codes
-#?                         index is entity name
-#           EnDe.ucsMap  - array of characters where unicode base cannot be
-#                          calculated from its integer value
-#?          EnDe.dupMap  - array of duplicate entity names
-#?                         unsorted, no index
-#?          EnDe.xmlMap  - array of entities for XML
-#?                         index is charCode
-#                          this map may be extended dynamically
-#?          EnDe.winMap  - for CP-1252 codings
-#?          EnDe.winfMap - for CP-1252 codings
-#?          EnDe.figsMap - Baudot figures
-#?          EnDe.ltrsMap - Baudot letters
-#?          EnDe.sosMap  - array of Morse characters
-#?          EnDe.osoMap  - reverse array of Morse characters
+#?          EnDe.intMap     - array of [standard, Entity, Group, Desciption]
+#?                            index is charCode
+#?          EnDe.ncrMap     - array of char codes
+#?                            index is entity name
+#           EnDe.ucsMap     - array of characters where unicode base cannot be
+#                             calculated from its integer value
+#?          EnDe.dupMap     - array of duplicate entity names (of EnDe.intMap)
+#?                            unsorted, no index
+#?          EnDe.xmlMap     - array of entities for XML
+#?                            index is charCode
+#                             this map may be extended dynamically
+#?          EnDe.winMap     - for CP-1252 codings
+#?          EnDe.winfMap    - for CP-1252 codings
+#?          EnDe.figsMap    - Baudot figures
+#?          EnDe.ltrsMap    - Baudot letters
+#?          EnDe.sosMap     - array of Morse characters
+#?          EnDe.osoMap     - reverse array of Morse characters
 #?          EnDe.asciiMap   - array 8-bit ASCII characters
 #?          EnDe.ebcdicMap  - array 8-bit EBCDIC characters
 #?          EnDe.ebcdicUTF  - array 8-bit UTF-EBCDIC characters
 #?          EnDe.romanMap   - array 8-bit Mac OS Roman characters
 #?          EnDe.a2eMap     - index is ASCII charCode, value index to ebcdicMap
 #?          EnDe.e2aMap     - index is EBCDIC charCode, value index to asciiMap
+#?          EnDe.AbrMap     - ASCII Braille characters
+#?                            index is character, value is string
+#?          EnDe.DbrMap     - Standard (dotless) Braille characters
+#?                            index is character, value is string
+#?          EnDe.DadMap     - Dada Urka
+#?                            index is character, value is string
+#?          EnDe.spaceMap   -
+#?          EnDe.uhwMap     -
+#?          EnDe.asciiMap   -
+#?          EnDe.BladeMap   -
+#?          EnDe.DIN66003Map    -
+#?          EnDe.DIN66003fMap   -
+#?          EnDe.dnaMap     -
+#?          EnDe.rangeMap   -
 #?
 #? SEE ALSO
 #?      EnDe.js
 #?      EnDeMaps.txt
 #?
 #? VERSION
-#?      @(#) %M% %I% %E% %U%
+#?      @(#) EnDeMaps.js 3.19 12/11/23 23:12:06
 #?
 #? AUTHOR
 #?      05-jun-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -272,8 +288,8 @@ EnDe.DadMap['Z']='+---\n|   \n+---';
 // ========================================================================= //
 
 EnDe.Maps   = new function() {
-	this.SID    = '%I%';
-	this.sid    = function() { return('@(#) %M% %I% %E% %U% EnDe.Maps'); };
+	this.SID    = '3.19';
+	this.sid    = function() { return('@(#) EnDeMaps.js 3.19 12/11/23 23:12:06 EnDe.Maps'); };
 	this.trace  = false;
 
 	this.traces = [];   /* used for trace, as GUI function are not avaialable
@@ -314,7 +330,7 @@ EnDe.Maps   = new function() {
 	var map = '';
 	var typ = '';
 	var ccc = '';
-	var bbb = new XMLHttpRequest();
+	var bbb = null; // XMLHttpRequest()
 	var arr = null;
 	var req = null;
 	var skip= true;
@@ -335,26 +351,39 @@ EnDe.Maps   = new function() {
 		}
 	}; 
 
-
-	// maps from external file
-	req = bbb.open('GET', file, false);             // load synchronous, to avoid specifying a handler
-	bbb.setRequestHeader('Accept', 'text/plain');   // workaround for some picky browsers reading from file:///
-	req = bbb.send(null);
-	if ((bbb.status!==200) && (bbb.status!==0)) {   // contribution to GUI which may use lib/ directory
-		file= 'lib/' + file;
-		req = bbb.open('GET', file, false);
-		bbb.setRequestHeader('Accept', 'text/plain');
+	if (typeof(EnDe.MAPS)!=='undefined') {
+		// requires: <script src="EnDeMaps.gen.js"></script> in EnDe.html
+		// or: EnDeMaps.gen.js being part of code (if used as library)
+		__dbx('EnDe.Maps.init: EnDe.MAPS');
+		txt = EnDe.MAPS;
+		delete EnDe.MAPS;
+	} else { 
+		// if <script src="EnDeMaps.gen.js"></script> failed try to read
+		// plain text file
+		__dbx('EnDe.Maps.init: XMLHttpRequest.open(GET, ' + file + ')');
+		if (typeof(XMLHttpRequest)==='undefined') { return; }
+		bbb = new XMLHttpRequest();
+		// maps from external file
+		req = bbb.open('GET', file, false);          // load synchronous, to avoid specifying a handler
+		bbb.setRequestHeader('Accept', 'text/plain');// workaround for some picky browsers reading from file:///
 		req = bbb.send(null);
-		// if there was no lib/ directory, it's just a useless request
+		if ((bbb.status!==200) && (bbb.status!==0)) {// contribution to GUI which may use lib/ directory
+			file= 'lib/' + file;
+			req = bbb.open('GET', file, false);
+			bbb.setRequestHeader('Accept', 'text/plain');
+			req = bbb.send(null);
+			// if there was no lib/ directory, it's just a useless request
+		}
+		txt = bbb.responseText;
+		if ((bbb.status!==200) && (bbb.status!==0)) {
+			// 200 from http:// request; 0 from file:/// request
+			txt = null; bbb = null;
+	// ToDo: alert() is a bad idea! think about a better solution
+			//alert('**ERROR: reading ' + file + ' failed');
+			return;
+		}
 	}
-	txt = bbb.responseText;
-	if ((bbb.status!==200) && (bbb.status!==0)) {
-		// 200 from http:// request; 0 from file:/// request
-		txt = null; bbb = null;
-// ToDo: alert() is a bad idea! think about a better solution
-		//alert('**ERROR: reading ' + file + ' failed');
-		return;
-	}
+
 	kkk = txt.split('\n');
 	__dbx('EnDe.Maps.init: initialize mapping: ' + kkk.length + ' lines ...');
 	while ((bbb = kkk.shift())!==undefined) {

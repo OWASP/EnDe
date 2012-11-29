@@ -3,11 +3,11 @@
 # vim: set ts=4:
 #?
 #? NAME
-#?      %M%
+#?      crc.js
 #?
 #? SYNOPSIS
 #?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="EnDe.js"></SCRIPT>
-#?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="%M%"></SCRIPT>
+#?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="crc.js"></SCRIPT>
 #?
 #? DESCRIPTION
 #?      Functions for CRC checksums.
@@ -22,7 +22,7 @@
 #?      // ToDo: // some INFOs found in EnDe.man.txt
 #?
 #? VERSION
-#?      @(#) %M% %I% %E% %U%
+#?      @(#) crc.js 3.6 12/11/23 21:31:45
 #?
 #? AUTHOR
 #?      12-oct-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -37,7 +37,7 @@
 if ((typeof EnDe)==='undefined') { EnDe = new function() {}; } // contribution to runtime raise condition and some stupid browsers
 
 EnDe.CRC     = new function() {
-  this.SID      = '%I%';
+  this.SID      = '3.6';
   this.sid      = function() { return(EnDe.sid() + '.CRC'); };
   this.dbx      = function(src,nl) { return EnDe.dbx(src,nl); };
 

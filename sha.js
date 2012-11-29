@@ -10,7 +10,7 @@
 #?      A JavaScript implementation of the Secure Hash Standard.
 #?
 #? VERSION
-#?      @(#) sha.js 3.4 11/12/30 19:58:48
+#?      @(#) sha.js 3.6 12/06/03 12:22:20
 #?
 #? AUTHOR
 #?      Some parts of the code are derivied from
@@ -23,8 +23,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.SHA = new function() {
-  this.SID	= '3.4';
-  this.sid	= function() { return('@(#) sha.js 3.4 11/12/30 19:58:48 EnDe.SHA'); };
+  this.SID      = '3.6';
+  this.sid      = function() { return('@(#) sha.js 3.6 12/06/03 12:22:20 EnDe.SHA'); };
 
   // ======================================================================= //
   // global variables                                                        //
@@ -34,8 +34,8 @@ EnDe.SHA = new function() {
    * the server-side, but the defaults work in most cases.
    */
   this.hexcase  = 0; /* hex output format. 0 - lowercase; 1 - uppercase      */
-  this.b64pad 	= "";/* base-64 pad character. "=" for strict RFC compliance */
-  this.bits   	= 8; /* bits per input character. 8 - ASCII; 16 - Unicode    */
+  this.b64pad   = "";/* base-64 pad character. "=" for strict RFC compliance */
+  this.bits     = 8; /* bits per input character. 8 - ASCII; 16 - Unicode    */
 
   // ======================================================================= //
   // general utility functions for SHA1 and SHA2                             //
@@ -209,7 +209,7 @@ EnDe.SHA = new function() {
 			var hash = EnDe.SHA.sha1.core(ipad.concat(EnDe.SHA.str2binb(data)), 512 + data.length * EnDe.SHA.bits);
 			return EnDe.SHA.sha1.core(opad.concat(hash), 512 + 160);
 		};
-	};
+	}; // hmac
 
   }; // EnDe.SHA.sha1
 
@@ -298,12 +298,12 @@ EnDe.SHA = new function() {
 
 // ToDo: 
 /*
-	this.hmac   = new function() {
-		this.sid= function() { return(EnDe.SHA.sha2.sid() + '.hmac'); };
-		this.hex= function(key, s){ return EnDe.SHA.binb2hex(EnDe.SHA.sha2.hmac.core(key, s));};
-		this.b64= function(key, s){ return EnDe.SHA.binb2b64(EnDe.SHA.sha2.hmac.core(key, s));};
-		this.str= function(key, s){ return EnDe.SHA.binb2str(EnDe.SHA.sha2.hmac.core(key, s));};
-	};
+ *	this.hmac   = new function() {
+ *		this.sid= function() { return(EnDe.SHA.sha2.sid() + '.hmac'); };
+ *		this.hex= function(key, s){ return EnDe.SHA.binb2hex(EnDe.SHA.sha2.hmac.core(key, s));};
+ *		this.b64= function(key, s){ return EnDe.SHA.binb2b64(EnDe.SHA.sha2.hmac.core(key, s));};
+ *		this.str= function(key, s){ return EnDe.SHA.binb2str(EnDe.SHA.sha2.hmac.core(key, s));};
+ *	}; // hmac
 */
   }; // EnDe.SHA.sha2
 

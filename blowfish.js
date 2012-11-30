@@ -35,6 +35,7 @@
 #?          2. all following references prefixed with  EnDe.Blowfish.
 #?          3. exception:  if (k.length==0) throw "0 length key";
 #?              removed to allow empty cipher text
+#?          4. some missing ; added
 #?
 #? EXAMPLES
 #?      EnDe.Blowfish.encrypt("text for the key", "text to encrypt");
@@ -51,7 +52,7 @@
 #?      abcdefgh  <-->  3acbc7bcd0f698c6
 #?
 #? VERSION
-#?      @(#) blowfish.js 3.2 12/06/16 09:49:43
+#?      @(#) blowfish.js 3.4 12/11/23 20:25:44
 #?
 #? AUTHOR
 #?      10-jun-10 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -61,8 +62,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.Blowfish   = new function() {
-	this.SID    = '3.2';
-	this.sid    = function() { return('@(#)  blowfish.js 3.2 12/06/16 09:49:43 EnDe.Blowfish'); };
+	this.SID    = '3.4';
+	this.sid    = function() { return('@(#)  blowfish.js 3.4 12/11/23 20:25:44 EnDe.Blowfish'); };
 
 	// ===================================================================== //
 	// public Blowfish functions                                             //
@@ -74,13 +75,19 @@ EnDe.Blowfish   = new function() {
 	 * The API is adapted to those used in aes.js
 	 */
 	this.encrypt    = function(key,src){ var bux = new Blowfish(key); return bux.encrypt(src); };
+	//#? Blowfish encryption (alias for EnDe.Blowfish.EN.blowfish)
 	this.decrypt    = function(key,src){ var bux = new Blowfish(key); return bux.decrypt(src); };
+	//#? Blowfish decryption (alias for EnDe.Blowfish.DE.blowfish)
 	this.EN     = new function() {
 		this.blowfish   = function(key,src) { return EnDe.Blowfish.encrypt(key, src); };
+		//#? Blowfish encryption
 	}; // EN
 	this.DE     = new function() {
 		this.blowfish   = function(key,src) { return EnDe.Blowfish.decrypt(key, src); };
+		//#? Blowfish decryption
 	}; // DE
+
+	// __NOGEN__ no more generations by EnDe2*.pl below here
 
 	// ===================================================================== //
 	// Blowfish functions                                                    //
@@ -382,7 +389,7 @@ Blowfish.prototype.encrypt = function (t) {
 		enc += this.wordescape(this.xl_par) + this.wordescape(this.xr_par);
 	}
 	return enc;
-}
+};
 
 // remix compatible with Crypt::Blowfish
 Blowfish.prototype.decrypt = function (t){
@@ -405,7 +412,7 @@ Blowfish.prototype.decrypt = function (t){
 		dec += this.wordescape(this.xl_par) + this.wordescape(this.xr_par);
 	}
 	return this.unescape(dec);
-}
+};
 
 Blowfish.prototype.wordescape=function(w){
 	var r='';

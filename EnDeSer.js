@@ -10,7 +10,7 @@
 #? DESCRIPTION
 #?      This file contains user defined functions/methods used in  EnDe.js .
 #?      It defines the  EnDe.Ser  object with following functions:
-#?          .EN.ser     - fold viewstate (ASP.NET 1.x only, 2.x experimental)
+#?          .EN.ser     - serialize data
 #?          .DE.ser     - expand serialized data
 #?          .init       - initialize user data
 #?
@@ -24,7 +24,7 @@
 # HACKER's INFO
 #
 #? VERSION
-#?      @(#) EnDeSer.js 1.2 12/11/14 00:01:55
+#?      @(#) EnDeSer.js 1.3 12/12/08 15:53:01
 #?
 #? AUTHOR
 #?      21-jul-12 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -38,8 +38,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.Ser    = new function() {
-	this.SID    = '1.2';
-	this.sid    = function() { return('@(#) EnDeSer.js 1.2 12/11/14 00:01:55 EnDe.Ser'); };
+	this.SID    = '1.3';
+	this.sid    = function() { return('@(#) EnDeSer.js 1.3 12/12/08 15:53:01 EnDe.Ser'); };
 
 	// ===================================================================== //
 	// global variables                                                      //
@@ -117,13 +117,18 @@ EnDe.Ser    = new function() {
 	this.EN     = new function() {
 		this.sid  = function() { return(EnDe.Ser.sid() + '.EN'); };
 		this.ser  = function(mode,src) {
+		//#? // ToDo not yet implemented
 		}; // ser
 
 		this.dispatch = function(type,mode,uppercase,src,prefix,suffix,delimiter) {
 		//#? dispatcher for user encoding functions
 			__dbx(this.sid()+'.dispatch: '+type+'\t:uppercase='+uppercase+'\tprefix='+prefix+'\tsuffix='+suffix+'\tdelimiter='+delimiter);
+	 		var bbb = '';
 			switch (type) {
-			  case 'viewstate': return this.ser(src); break;
+			  case 'SRb64':     bbb = 'txt';    break;
+			  case 'SRb64XML':  bbb = 'XML';    break;
+			  case 'SRb64txt':  bbb = 'txt';    break;
+			  case 'SRraw':     bbb = 'null';   break;
 			}
 			return null;
 		}; // dispatch

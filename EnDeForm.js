@@ -31,7 +31,7 @@
 #       call may become a perfromance bottleneck.
 #?
 #? VERSION
-#?      @(#) EnDeForm.js 3.14 12/11/14 00:09:40
+#?      @(#) EnDeForm.js 3.16 12/12/08 09:22:55
 #?
 #? AUTHOR
 #?      15-nov-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -50,8 +50,8 @@ if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 // ========================================================================= //
 
 EnDe.Form   = new function() {
-	this.SID    = '3.14';
-	this.sid    = function()    { return('@(#) EnDeForm.js 3.14 12/11/14 00:09:40 EnDe.Form'); };
+	this.SID    = '3.16';
+	this.sid    = function()    { return('@(#) EnDeForm.js 3.16 12/12/08 09:22:55 EnDe.Form'); };
 
 	// ===================================================================== //
 	// global EnDe.Form variables                                            //
@@ -67,8 +67,8 @@ EnDe.Form   = new function() {
 	// ===================================================================== //
 
 	function __dbx(t,n) { if(EnDe.Form.trace===true) { EnDe.dbx(t,n); } };
-	function __err(src) { return '// **ERROR** ' + EnDe.Text.Entity(src); };
-	function __wrn(src) { return '// *WARNING* ' + EnDe.Text.Entity(src); };
+	function __err(src) { return '// **ERROR: '   + EnDe.Text.Entity(src); };
+	function __wrn(src) { return '// **WARNING: ' + EnDe.Text.Entity(src); };
 	function __src(src,idx) {
 		var s = src.substr( (idx-8), 16 );
 		return  '\n// ** \u2025\u2025' + EnDe.Text.Entity(s) + 
@@ -396,9 +396,9 @@ EnDe.Form   = new function() {
 				doNotMainEval:      white.shift()
 				});
 			if (white.shift()==true) {
-			try { bux.runCheck(); } catch(e) { err  = "'**Error JSReg.runCheck():'\n// " + e + '\n\n'; }
+			try { bux.runCheck(); } catch(e) { err  = "'**ERROR: JSReg.runCheck():'\n// " + e + '\n\n'; }
 			}
-			try { bux.eval(src);  } catch(e) { err += "'**Error JSReg.eval():'\n// " + e.lineNumber + '\n\n'; }
+			try { bux.eval(src);  } catch(e) { err += "'**ERROR: JSReg.eval():'\n// " + e.lineNumber + '\n\n'; }
 			return err
 				+     "'given Code:'\n"            + src
 				+ "\n\n'JSReq Code:'\n"            + kkk
@@ -444,7 +444,7 @@ EnDe.Form   = new function() {
 			return 'image: <img src="' + bux + '" ><br><pre>' + bux + '</pre>';
 			break;
 		}
-		return '**ERROR EnDe.Form.dispatch**'; // fallback
+		return '**ERROR: EnDe.Form.dispatch**'; // fallback
 	}; // dispatch
 
 }; // EnDe.Form

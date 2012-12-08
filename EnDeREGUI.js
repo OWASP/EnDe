@@ -31,7 +31,7 @@
 #?      EnDeGUI.js, EnDeFile.js, EnDeMenu.txt
 #?
 #? VERSION
-#?      @(#) EnDeREGUI.js 3.9 12/04/09 19:24:20
+#?      @(#) EnDeREGUI.js 3.10 12/12/08 12:13:28
 #?
 #? AUTHOR
 #?      08-mar-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -41,7 +41,7 @@
 if (typeof(EnDe)==='undefined')    { EnDe   = new function() {}; } // will have problems if missing ...
 if (typeof(EnDeRE)==='undefined')  { EnDeRE = new function() {}; }
 
-var EnDeREGUI = new function() { this.SID = '3.9'; }
+var EnDeREGUI = new function() { this.SID = '3.10'; }
 
   // ======================================================================= //
   // GUI functions                                                           //
@@ -53,15 +53,16 @@ EnDeRE.init     = function() {
 	var bux = null;
 
 	/* initialize DOM for menus */
+	/* NOTE: null check needed if EnDeGUI.Obj.create() fails */
 	try {
 		bux = EnDeGUI.Obj.create('EnDeDOM.RE.Actions',EnDeGUI.Obj.menus['RegEx'], '-undef-','menu',false);
-		this.$(bux.inside).appendChild(bux);
+		if (null!==bux) { this.$(bux.inside).appendChild(bux); }
 		//delete EnDeGUI.Obj.menus['RegEx']; // don't delete, needed in iniHLP()
 	} catch(e){ EnDeGUI.alert('**ERROR: EnDeRE.init: RegEx',e); }
 	delete bux; bux = null;
 	try {
 		bux = EnDeGUI.Obj.create('EnDeDOM.RE.Menu',EnDeGUI.Obj.menus['RE.Text'],'-undef-','menu',false);
-		this.$(bux.inside).appendChild(bux);
+		if (null!=bux) { this.$(bux.inside).appendChild(bux); }
 		delete EnDeGUI.Obj.menus['RE.Text'];
 	} catch(e){ EnDeGUI.alert('**ERROR: EnDeRE.init: RE.Text',e); }
 	delete bux; bux = null;

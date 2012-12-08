@@ -147,7 +147,7 @@
 # ?         MySQL 4.x is same as 5.x and 6.x according RegEx.
 #?
 #? VERSION
-#?      @(#) EnDeRE.js 3.6 12/01/15 10:52:32
+#?      @(#) EnDeRE.js 3.7 12/12/08 09:22:18
 #?
 #? AUTHOR
 #?      02-mar-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -181,8 +181,8 @@
 // ========================================================================= //
 
 var EnDeRE      = new function() {  // already initializes in EnDeREMaps.js
-  this.SID	= '3.6';
-  this.sid	= function()    { return('@(#) EnDeRE.js 3.6 12/01/15 10:52:32 EnDeRE'); };
+  this.SID	= '3.7';
+  this.sid	= function()    { return('@(#) EnDeRE.js 3.7 12/12/08 09:22:18 EnDeRE'); };
 
   // ======================================================================= //
   // public and alias functions                                              //
@@ -635,7 +635,7 @@ this.out = function(tag,src) {
 									} else {
 										//kkk =''
 										//ccc = src;
-										bux = this.explain(ccc[0], goab, meta, '** WARNING: probably unescaped [ character inside character class **') + goab.ident;
+										bux = this.explain(ccc[0], goab, meta, '**WARNING: probably unescaped [ character inside character class **') + goab.ident;
 										return(bux);
 										break; // never reached
 									}
@@ -654,7 +654,7 @@ this.out = function(tag,src) {
 					// we reach here if it is not a class string
 					if ((goab.isclass == true) && (goab.isesc == false)) {
 // ToDo: this check should be part of EnDeREMap.js (new column in EnDeTMP._context.class needed)
-						bux = this.explain('[', goab, meta, '** WARNING: unescaped [ character inside character class **');
+						bux = this.explain('[', goab, meta, '**WARNING: unescaped [ character inside character class **');
 						return(bux);
 					}
 					break;

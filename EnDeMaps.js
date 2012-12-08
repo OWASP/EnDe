@@ -57,7 +57,7 @@
 #?      EnDeMaps.txt
 #?
 #? VERSION
-#?      @(#) EnDeMaps.js 3.19 12/11/23 23:12:06
+#?      @(#) EnDeMaps.js 3.20 12/12/08 15:44:19
 #?
 #? AUTHOR
 #?      05-jun-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -288,8 +288,8 @@ EnDe.DadMap['Z']='+---\n|   \n+---';
 // ========================================================================= //
 
 EnDe.Maps   = new function() {
-	this.SID    = '3.19';
-	this.sid    = function() { return('@(#) EnDeMaps.js 3.19 12/11/23 23:12:06 EnDe.Maps'); };
+	this.SID    = '3.20';
+	this.sid    = function() { return('@(#) EnDeMaps.js 3.20 12/12/08 15:44:19 EnDe.Maps'); };
 	this.trace  = false;
 
 	this.traces = [];   /* used for trace, as GUI function are not avaialable
@@ -492,4 +492,6 @@ EnDe.Maps   = new function() {
 
 }; // EnDe.Maps
 
+// ToDo: loading EnDeMaps.gen.js from EnDe.html fails in Chrome
+// window.setTimeout() cannot be used here as it is a LIB file
 EnDe.Maps.init();

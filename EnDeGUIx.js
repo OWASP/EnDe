@@ -93,7 +93,7 @@
 #?      trace output. This allows to enable tracing for individual objects.
 #?
 #? VERSION
-#?      @(#) EnDeGUIx.js 3.1 12/06/10 12:54:14
+#?      @(#) EnDeGUIx.js 3.3 12/12/08 14:54:18
 #?
 #? AUTHOR
 #?      10-aug-10 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -105,7 +105,7 @@
 // ========================================================================= //
 
 var EnDeGUIx = new function() {
-	this.SID = '3.1';
+	this.SID = '3.3';
 }
 EnDeGUI.__files = {     // hash to hold data for menu from files
 	/* source file          - file where menu is defined (will be read from)
@@ -155,7 +155,7 @@ EnDeGUI.txt = new function() {
 	//#? wrapper for EnDe.File.read(): read file and store content in EnDeGUI.txt.content
 		/* if given src is a plain filename the filename is first checked for
 		 * in EnDeGUI.usr  directory, if that returns empty content (file not
-		 * found) then the file itself is read
+		 * found) then the file itself (as specified in src) is read
 		 */
 // ToDo: should return data instead of setting EnDeGUI.txt.content
 		/* read data and remove comment and empty lines */
@@ -530,7 +530,7 @@ EnDeGUI.txt = new function() {
 				  case 'browser': /* NOT YET SUPPORTED */    break;
 	/* this is dangerous, so we don't allow eval for arbitrary data, see 'opts' instead
 	 *			  case 'eval':
-	 *				try {     eval(txt); }
+	 *				try     { eval(txt); }
 	 *				catch(e){ EnDeGUI.alert('this.menu: ['+c+'] eval('+txt+') failed', e); };
 	 *				break;
 	 */
@@ -698,16 +698,18 @@ EnDeGUI.Obj = new function() {
 		 * hidden:    true if created element should be display:none
 		 * NOTE: label 'repeat' is handled special
 		 */
-		__dbx('.Obj.create('+pid+', '+parenttyp+', '+typ+', '+hidden+')');
+		__dbx('EnDeGUI.Obj.create('+pid+', (src)'+parenttyp+', '+typ+', '+hidden+')');
 		var bux = null;
 		var bbb = null;
 		var ccc = null;
 		var obj = null;
 		var kkk = null;
-		if (src===null) {
-			// #dbx alert('**ERROR: null object');
-			__dbx('  src=[null]');
-			return bux;
+		// check for undefined or null object which may occour when reading .txt file failed
+		if (src===null) {       bux = 'null'; }
+		if (src===undefined) {  bux = 'undefined'; }
+		if (bux!==null) {
+			__dbx('  src=[' + bux + '] **failed**');
+			return null;
 		}
 		//#dbx var t=''; for (var xxx in src) { t+=xxx+':'+src[xxx]+'\n';} __dbx('.Obj.create: '+t);
 		/* WARNING: above debug produces huge output, may result in performance problems */
@@ -1025,8 +1027,8 @@ EnDeGUI.Obj = new function() {
 		__dbx('EnDeGUI.Obj.menu(txt=' + txt + ', src=' + key + ')');
 		var ccc = null;
 		var obj = null;
-		try { obj = EnDeGUI.Obj.create('-undef-', src, '-undef-', 'menu', false); }
-		catch(e) { alert('.Obj.create: '+e); }
+		try     { obj = EnDeGUI.Obj.create('-undef-', src, '-undef-', 'menu', false); }
+		catch(e){ EnDeGUI.alert('EnDeGUI.Obj.menu: create: ', e); }
 		if (txt!=='') {
 			ccc = document.createElement('SPAN');
 			ccc.innerHTML = obj.label;
@@ -1143,6 +1145,11 @@ EnDeGUI.__menu  = function(src) {
 EnDeGUI.makemenu= function(src) {
 //#? read file with XML or JSON data and create menu from its content
 	var __dbx = function(t,n) { if (EnDeGUI.Mnu.trace===true) { EnDeGUI.dpr(t, n); } };
+	if (/^\s*$/.test(src)===true) {
+		__dbx('EnDeGUI.makemenu: no src given');
+		EnDeGUI.dau('create menu');
+		return false;
+	}
 	__dbx('EnDeGUI.makemenu(' + src + ') {');
 
 	this.txt.content = this.__menu(src);
@@ -1156,8 +1163,8 @@ EnDeGUI.makemenu= function(src) {
 		 */
 		this.txt.menu();
 		// need try-catch to avoid page reload for erroneous user files
-		try { this.Obj.menu('with label', this.Obj.menus[kkk]); }
-		catch(e) { EnDeGUI.alert('EnDeGUI.makemenu: EnDeGUI.Obj.menu('+kkk+'): ' + e + ' **IGNORED;'); }
+		try     { this.Obj.menu('with label', this.Obj.menus[kkk]); }
+		catch(e){ EnDeGUI.alert('EnDeGUI.makemenu: EnDeGUI.Obj.menu('+kkk+'): ' + e + ' **IGNORED;'); }
 	}
 	__dbx('EnDeGUI.makemenu }');
 	return false;
@@ -1166,6 +1173,11 @@ EnDeGUI.makemenu= function(src) {
 EnDeGUI.makelist= function(src) {
 //#? read file with XML or JSON data and create list of payloads from its content
 	var __dbx = function(t,n) { if (EnDeGUI.Mnu.trace===true) { EnDeGUI.dpr(t, n); } };
+	if (/^\s*$/.test(src)===true) {
+		__dbx('EnDeGUI.makelist: no src given');
+		EnDeGUI.dau('show payloads');
+		return false;
+	}
 	__dbx('EnDeGUI.makelist('+src+') {');
 
 	this.txt.content = this.__menu(src);
@@ -1273,32 +1285,38 @@ EnDeGUI.initMenus= function() {
 
 	_spr('EnDeGUI.initMenus()');
 	__dbx('EnDeGUI.initMenus() {'); /* dummy } */
-	var bbb     = 0;
+	var bbb     = '';
 	var ccc     = null;
 	var menu    = null;
-	var target  = [
-		/* GUI Options       */ 'OnlyMenu', 'BrowserMenu',  'API.Options',  'Files',
-		/* Tools             */ 'Encoding', 'Decoding',     'IP', 'TS', 'Functions',
-		/* special menus     */ 'CH.Unicode', 'MP.Unicode', 'MP.Characters',
-		/* text manipulation */ 'EN.Text',  'DE.Text',      'IP.Text',  'FF.Text',
-		/* guess             */ 'EN.Guess', 'DE.Guess'
-		];
+	var target  = [ 'EnDeMenu.txt', 'EnDeOpts.txt', 'EnDeFile.txt' ];
 
 	// load menu data from file and generate objects
-	try {     this.txt.read('EnDeMenu.txt'); this.txt.menu(); bbb++; }
-	catch(e){ this.alert('EnDeGUI.initMenus: EnDeMenu.txt', e); }
-	try {     this.txt.read('EnDeOpts.txt'); this.txt.menu(); bbb++; }
-	catch(e){ this.alert('EnDeGUI.initMenus: EnDeOpts.txt', e); }
-	try {     this.txt.read('EnDeFile.txt'); this.txt.menu(); bbb++; }
-	catch(e){ this.alert('EnDeGUI.initMenus: EnDe.File.txt', e); }
-	if (bbb<3) {
+	while ((ccc=target.shift())!==undefined) {
+		// ToDo: this.txt.read() should return true or false,
+		// ToDo: but we get undefined here, hence cannot avoid this.txt.menu()
+		// ToDo: call which fails with "Cannot call method 'split' of null"
+		// ToDo: therefore the collected message in bbb is misleading
+		try     { this.txt.read(ccc); this.txt.menu(); }
+		catch(e){ bbb += 'EnDeGUI.initMenus: ' + ccc + ': ' + e + '\n'; }
+	}
+	if (bbb!=='') {
+		bbb = '**ERROR: reading files failed\n' + bbb + '\n';
 		if (/NETWORK_ERR.*XMLHttpRequest/.test(EnDe.File.errors.join())===true) {
-			this.alert('**ERROR: reading files failed',
-					'\n\nfor Chromium or Google Chrome browser try with commandline option'
+			this.alert(bbb +
+					'for Chromium or Google Chrome browser try with commandline option'
 					+ '\n\n--allow-file-access-from-files');
+		} else {
+			this.alert(bbb + 'probably text file missing');
 		}
+		EnDeGUI.errors.push(bbb);
 		/* dummy { */ __dbx('EnDeGUI.initMenus }');
-		return; // stop here to avoid continous errors
+		return null; // stop here to avoid continous errors
+		/*
+		 * just for future improvements:
+		 * Firefox uses following exception string when reading file:/// fails:
+		 * Exception... "Access to restricted URI denied"  code: "1012" nsresult: "0x805303f4 (NS_ERROR_DOM_BAD_URI)"  location: "file:///---path--here---/EnDeFile.js Line: xxx" ]
+		 * could be handled here or in EnDeFile.js
+		 */
 	}
 	// generate menu data and generate objects
 	_guessMenu('Encoding'); this.txt.menu();
@@ -1312,6 +1330,13 @@ EnDeGUI.initMenus= function() {
 	 * The destination (HTML tag in DOM) is defined in the menu's inside keyword.
 	 * This allows to use a generic loop just using/knowing the menu definition.
 	 */
+	target  = [
+		/* GUI Options       */ 'OnlyMenu', 'BrowserMenu',  'API.Options',  'Files',
+		/* Tools             */ 'Encoding', 'Decoding',     'IP', 'TS', 'Functions',
+		/* special menus     */ 'CH.Unicode', 'MP.Unicode', 'MP.Characters',
+		/* text manipulation */ 'EN.Text',  'DE.Text',      'IP.Text',  'FF.Text',
+		/* guess             */ 'EN.Guess', 'DE.Guess'
+		];
 	while ((ccc=target.shift())!==undefined) {
 		if (ccc==='unknown') { //#dbx WARNING: produces huge output
 			_dprint('EnDeGUI.initMenus: Menu: '+ccc+'\n', this.Obj.menus[ccc]);

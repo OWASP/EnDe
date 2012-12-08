@@ -111,15 +111,17 @@ INTRODUCTION
 |	  [66c]     4oKsdXJv    %E2%82%ACuro   203B6DA413075E767581E4BE9354295B
 |	  [69]      gHVybw==    %80uro         203b6da413075e767581e4be9354295b
 |	  [71]      gHVyb3==    %80uro         203b6da413075e767581e4be9354295b
-|	  [72]      gHVybw==    €uro           203b6da413075e767581e4be9354295b
-|	  [73]      P3Vybw==    %E2%82%ACuro   59DA12B00E4E700E1C5E4B1157FB595B
-|	  [74]      4oKsdXJv    %e2%82%acuro
-|	  [75]                                 
+|	  [72]      gHVyb3==    %80uro         203b6da413075e767581e4be9354295b
+|	  [73]      gHVybw==    €uro           203b6da413075e767581e4be9354295b
+|	  [74]      P3Vybw==    %E2%82%ACuro   59DA12B00E4E700E1C5E4B1157FB595B
+|	  [75]      4oKsdXJv    %e2%82%acuro
+|	  [76]                                 
+|	  [77]      4oKsdXJv    %e2%82%acuro   36F9D3BB76279BE66536E2D4E250C7AD
 |	  [81]                                 
 |	  [88]      4oKsdXJvCg==               42dfe0927d2ea6daced8c118bbb8002b
 +-
 	
-	This are 12 different base64 and 12 different MD5 results for 31 tools.
+	This are 12 different base64 and 12 different MD5 results for 32 tools.
 	Differences in URL-UTF-8 encodings not counted.
 	
 <!--
@@ -127,7 +129,7 @@ INTRODUCTION
 [33] http://www.zorc.breitbandkatze.de/crc.html  CRC-32 1FB0BA15
 [35] http://www.prox42.de/produkt/convert/demo.php CRC-32 3035337571 oder  6393ebb4
 [36] http://www.webutils.pl/Ascii85 CRC-32 b4eb9363
-[72] http://www.nosec.org/web/files/Encoder.exe CRC-32 5E23A421
+[73] http://www.nosec.org/web/files/Encoder.exe CRC-32 5E23A421
 -->
 	The results are different. We'll have even more fun when copying (copy
 	& paste) from one tool to another.
@@ -164,7 +166,7 @@ INTRODUCTION
 	[52]  (2010) http://widgets.opera.com/category/web-developer/ Text Encoder
 	Java Tools
 	[62]  (2010) http:// @stake WebProxy (Linux, Mac OSX, Windows)
-	[63]  (2011) http://portswigger.net burp 1.3
+	[63]  (2012) http://portswigger.net burp 1.3, 1.4, 1.5
 	[64a] (2011) http://www.owasp.org/index.php/Category:OWASP_JBroFuzz 2.x (Mac OSX)
 	[64b] (2011) http://www.owasp.org/index.php/Category:OWASP_JBroFuzz 2.x (Windows)
 	[64c] (2010) http://www.owasp.org/index.php/Category:OWASP_JBroFuzz 1.8 (Windows)
@@ -176,10 +178,12 @@ INTRODUCTION
 	[69]  (2010) https://www.owasp.org/index.php/Category:OWASP_WebScarab_Project WebScarab 20100414-0036 (Windows)
 	Windows Binaries
 	[71]  (2011) https://www.bindshell.net/tools/coder/ Coder
-	[72]  (2011) http://www.nosec.org/web/files/Encoder.exe NOSEC Encoder
-	[73]  (2010) http://parosproxy.org/ Paros Build-in Tool Encode/Hash
-	[74]  (2010) http://www.fiddler2.com/fiddler/ Fiddler
-	[75]  (2010) http://code.google.com/webslayer/ WebSlayer
+	[72]  (2012) http://www.acunetix.com/ WVS 8
+	[73]  (2011) http://www.nosec.org/web/files/Encoder.exe NOSEC Encoder
+	[74]  (2010) http://parosproxy.org/ Paros Build-in Tool Encode/Hash
+	[75]  (2010) http://www.fiddler2.com/fiddler/ Fiddler
+	[76]  (2010) http://code.google.com/webslayer/ WebSlayer
+	[77]  (2012) http://ironwasp.org/ IronWASP
 	Other Tools
 	[81]  (2010) http://www.owasp.org/index.php/Category:OWASP_Webslayer_Project WebSlayer
 	Unix shell (ash, bash, csh, ...) Intel CPU (little endian)
@@ -2679,7 +2683,7 @@ EPILOG
 	
 VERSION
 	
-	@# EnDe <!-- @(#) EnDe.man.txt 3.39 18:21:29 12/09/08 -->
+	@# EnDe <!-- @(#) EnDe.man.txt 3.40 16:46:01 12/12/08 -->
 	
 	
 AUTHOR

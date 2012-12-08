@@ -29,7 +29,7 @@
 #?          .strip     - true: remove comments (#) and empty lines
 #?
 #? VERSION
-#?      @(#) EnDeFile.js 3.14 12/01/22 20:49:15
+#?      @(#) EnDeFile.js 3.15 12/12/08 16:36:28
 #?
 #? AUTHOR
 #?      07-may-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -43,8 +43,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.File   = new function() {
-	this.SID    = '3.14';
-	this.sid    = function() { return('@(#) EnDeFile.js 3.14 12/01/22 20:49:15 EnDe.File'); };
+	this.SID    = '3.15';
+	this.sid    = function() { return('@(#) EnDeFile.js 3.15 12/12/08 16:36:28 EnDe.File'); };
 
 	this.trace  = false;
 
@@ -159,11 +159,13 @@ EnDe.File   = new function() {
 			//bbb = kkk.match(/\n(?:(?:#\?\s)*@\(#\)\s*)([^\n]*)/);
 			// we use a lazy regex to match string behind  @
 			// NOTE that this matches the first occourance
+			// if file does not contain this magic string, .verion and .fileSID
+			// will be empty (that's ok, we allow foreign files too :)
 			bbb = kkk.match(/@\(#\)\s*([^\n]*)/);
 			if (bbb!==null) {
 				EnDe.File.version = bbb[1];
+				bbb = EnDe.File.version.split(/[ ]+/);
 			}
-			bbb = EnDe.File.version.split(/[ ]+/);
 			if (bbb!==null) {
 				EnDe.File.fileSID = bbb[1].replace(/[^0-9.]/g, '');
 			}

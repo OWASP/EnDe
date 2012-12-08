@@ -31,6 +31,7 @@
 #?          .win              - create new browser window
 #?          .help             - show help window
 #?          .scratch          - show scratchpad window
+#?          .dau              - show alert box with text for stupid usage
 #?          .stat             - show alert box with statistic about text
 #?          .cont             - show code (text, whatever) window
 #?          .info             - show code (text, whatever) window with title
@@ -100,9 +101,12 @@
 #    if (foo=='indexOf') { continue; }
 #       This check inside  'for (key in array)'  loops is a contribution to old
 #       Mozilla 1.x which has this property.
+#
+#    Also defines the EnDeGUI.errors array.  If there are errors detected while 
+#    building the GUI, EnDeGUI.init() will show the "Browser Quirks" window.
 #?
 #? VERSION
-#?      @(#) EnDeGUI.js 3.92 12/11/15 21:46:12
+#?      @(#) EnDeGUI.js 3.96 12/12/08 16:41:47
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -114,8 +118,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '3.92';
-this.sid        = function() {  return('@(#) EnDeGUI.js 3.92 12/11/15 21:46:12 EnDeGUI'); };
+this.SID        = '3.96';
+this.sid        = function() {  return('@(#) EnDeGUI.js 3.96 12/12/08 16:41:47 EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 
@@ -158,6 +162,7 @@ this.winX       = '800';//  width of new window
 this.winY       = '400';// height of new window
 
 this.SIDs       = {};   // hash to store all SID vor checkupdate() function
+this.errors     = [];   // array to store GUI errors
 
 /* empty definition, see EnDeGUIx.js
 this.Obj        = new function() {}
@@ -388,6 +393,10 @@ alert(2);
 	this.charID = 0;    // counter for dynamically generated rows
 	this.newrow = function() {
 	//#? create a new row with input fields for character replacement
+		if ($('EnDeDOM.MP.Characters.s')===null) {
+			EnDeGUI.errors.push('EnDeGUI.MP.newrow: EnDeDOM.MP.Characters.s===null');
+			return null;
+		}
 		this.charID++;
 		$('EnDeDOM.MP.Characters.s').appendChild(EnDeGUI.Obj.create('EnDeDOM.MP.c'+this.charID,['item4','\char'+this.charID,'','','new: replacement character'],'TABLE','group',false));
 		return false;
@@ -643,6 +652,31 @@ this.scratch    = function(item,txt) {
 	}
 	return false;
 }; // scratch
+
+this.dau        = function(src) {
+//#? show alert box with text for stupid usage
+	var bbb = '-';
+	var ccc = '-';
+	switch (src) {
+	  case 'show payloads':     bbb = 'show';   ccc = 'from'; break;
+	  case 'create menu':       bbb = 'create'; ccc = 'based on'; break;
+	  case 'EnDeDOM.GUI.toDE':  bbb = 'create'; ccc = 'based on'; src = 'create Decoding menu'; break;
+	  case 'EnDeDOM.GUI.toEN':  bbb = 'create'; ccc = 'based on'; src = 'create Encoding menu'; break;
+	  case 'EnDeDOM.GUI.toRE':  bbb = 'create'; ccc = 'based on'; src = 'create RegEx menu';    break;
+	}
+	EnDeGUI.alert('**WARNING',
+		 '\n\nTo ' + bbb + ' all ' + ccc + ' nothing is a very simple task.'
+		+'\nBut you have choosen to "' + src + '" ' + ccc + ' nothing, which'
+		+' conufes me. Should I ' + bbb + ' nothing, or should I ' + bbb + ' all?'
+		+' If you want to ' + bbb + ' nothing, no button needs to be clicked,'
+		+' then you will not see anything, even not this messages, which is'
+		+' nothing then, as requested. Or you want to ' + bbb + ' all ' + ccc
+		+' nothing' +' which does not contain anything and hence there is no'
+		+' need to ' + bbb + ' it anyway.\n\n'
+		+'So, please make your decission first'
+		);
+}; // .dau
+
 
 this.stat       = function(txt) {
 //#? show alert box with statistic about text
@@ -1756,7 +1790,7 @@ try {
 		}
 		_dpr(bux);
 		bux = '';
-} catch(e){ _dpr('**ERROR '+ e); }
+} catch(e){ _dpr('**ERROR: '+ e); }
 	}
 	return false;
 }; // showArr
@@ -2348,7 +2382,7 @@ this.EN         = new function() {
 		kkk = null;
 		kkk = src.match(/(window|document|eval)/);
 		if (kkk!==null) {
-			if (confirm('** WARNING **\nsource probably contains malicious function "'+ kkk[1] + '"\n\n\tabort?')) {
+			if (confirm('**WARNING:\nsource probably contains malicious function "'+ kkk[1] + '"\n\n\tabort?')) {
 				alert('* good descision *');
 				return false;
 			}
@@ -3969,13 +4003,14 @@ this.pathhack   = function(obj,src) {
 this.readlocal  = function(src,obj) {
 //#? try to read local file as specified in given object of type=file
 	/* returns file content or null */
+	_spr('EnDeGUI.readlocal(src=' + src + ', obj=' + obj.id + ')');
 	if (obj===null) { return null; }
 	try {       // Jan. 2010: Firefox 3.x only
 		_dpr('EnDeGUI.readlocal: files[0]=' + obj.files[0].fileName);
 		return obj.files[0].getAsBinary(); // .getAsText('utf-8'); .getAsDataURL();
 	}
 	catch(e) {  // all other browsers most likely throw an error here
-		_dpr('EnDeGUI.readlocal: ' + e);
+		_dpr('EnDeGUI.readlocal: ignored error (none Firefox): ' + e); e='';
 		return null;
 	}
 	return null;// failsafe
@@ -3992,13 +4027,18 @@ this.readfile   = function(obj,item) {
 	var bux = null;
 	var kkk = null;
 	switch (obj.id) {
-	  case 'EnDeDOM.FF.load'  : bux = $('EnDeDOM.FF.text'); kkk = $('EnDeDOM.FF.file');  break;
-	  case 'EnDeDOM.GUI.toEN' :
+	  case 'EnDeDOM.FF.load':   bux = $('EnDeDOM.FF.text'); kkk = $('EnDeDOM.FF.file');  break;
+	  case 'EnDeDOM.GUI.toEN':
 	  case 'EnDeDOM.EN.Menu.s': bux = $('EnDeDOM.EN.text'); kkk = $('EnDeDOM.GUI.file'); break;
-	  case 'EnDeDOM.GUI.toDE' :
+	  case 'EnDeDOM.GUI.toDE':
 	  case 'EnDeDOM.DE.Menu.s': bux = $('EnDeDOM.DE.text'); kkk = $('EnDeDOM.GUI.file'); break;
-	  case 'EnDeDOM.GUI.toRE' :
-	  case 'EnDeREtext'       : bux = $('EnDeDOM.RE.text'); kkk = $('EnDeDOM.GUI.file'); break;
+	  case 'EnDeDOM.GUI.toRE':
+	  case 'EnDeREtext':        bux = $('EnDeDOM.RE.text'); kkk = $('EnDeDOM.GUI.file'); break;
+	}
+	if (/^\s*$/.test(kkk.value)===true) {
+		_dpr('EnDeGUI.readfile: no src given');
+		this.dau(obj.id);
+		return false;
 	}
 	EnDeGUI.txt.content = null;
 	try {
@@ -4537,6 +4577,12 @@ alert(14);
 */
 
 	this.dbxtrace();
+
+	if (EnDeGUI.errors.length!=0) {
+		EnDeGUI.alert ('ERROR', '\n detected ' + EnDeGUI.errors.length + ' errors while building GUI');
+		// ToDo: need to display errors, somehow ...
+		this.display('EnDeDOM.f.QQ');
+	}
 
 //EnDeGUI.highlight('EnDeDOM.f.ED');
 //setTimeout("EnDeGUI.highlight('EnDeDOM.f.ED')",3000);

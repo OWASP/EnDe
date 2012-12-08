@@ -43,7 +43,7 @@
 #?      csv2xml.pl
 #?
 #? VERSION
-#?      @(#) %M% %I% %E% %U%
+#?      @(#) sqlPattern.txt 3.11 12/12/08 16:43:54
 #?
 #? AUTHOR
 #?      17-feb-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net

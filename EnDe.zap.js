@@ -22,7 +22,7 @@
 # HACKER's INFO
 #?
 #? VERSION
-#?      @(#) EnDe.zap.js 3.2 12/12/08 22:16:44
+#?      @(#) EnDe.zap.js 3.3 12/12/09 02:40:20
 #?
 #? AUTHOR
 #?      16-nov-12 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -42,7 +42,16 @@ function alert(str) {
 
 function print(str) {
 //#? wrapper for ZAP's print to console
-	org.parosproxy.paros.view.View.getSingleton().getOutputPanel().append(str);
+	org.parosproxy.paros.view.View.getSingleton().getOutputPanel().append(str+'\n');
+};
+
+function help(str) {
+//#? wrapper for EnDe.ZAP.help()
+	org.parosproxy.paros.view.View.getSingleton().getOutputPanel().append(
+		EnDe.ZAP.help(str)
+		+'\n'
+	);
+
 };
 
 // ========================================================================= //
@@ -51,7 +60,7 @@ function print(str) {
 
 if (typeof(EnDe)!=='undefined') {
 	EnDe.ZAP    = true;
-	EnDe.alert  = new function(str) {
+	EnDe.alert  = function(str) {
 		org.parosproxy.paros.view.View.getSingleton().showMessageDialog(str);
 	};
 };
@@ -61,8 +70,9 @@ if (typeof(EnDe)!=='undefined') {
 // ========================================================================= //
 
 EnDe.ZAP    = new function() {
-	this.SID    = '3.2';
-	this.sid    = function() { return '@(#) EnDe.zap.js 3.2 12/12/08 22:16:44 EnDe.ZAP'; };
+	this.SID    = '3.3';
+	this.sid    = function() { return '@(#) EnDe.zap.js 3.3 12/12/09 02:40:20 EnDe.ZAP'; };
+	this.help   = function(str) { return EnDe.Func.help(str); }
 
 	// NOT YET USED
 };

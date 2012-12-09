@@ -93,7 +93,7 @@
 #?      trace output. This allows to enable tracing for individual objects.
 #?
 #? VERSION
-#?      @(#) EnDeGUIx.js 3.3 12/12/08 14:54:18
+#?      @(#) EnDeGUIx.js 3.4 12/12/09 17:58:09
 #?
 #? AUTHOR
 #?      10-aug-10 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -105,7 +105,7 @@
 // ========================================================================= //
 
 var EnDeGUIx = new function() {
-	this.SID = '3.3';
+	this.SID = '3.4';
 }
 EnDeGUI.__files = {     // hash to hold data for menu from files
 	/* source file          - file where menu is defined (will be read from)
@@ -253,7 +253,7 @@ EnDeGUI.txt = new function() {
 			if (bbb.match(/^options\t/)!==null) {           // these are special ..
 				// for options lines tabs must not be squeezed
 				ccc = bbb.split(/\t/, 11);
-				if (ccc[10]===undefined) { EnDeGUI.alert('**ERROR: misformated options line: ', '"' + bbb + '"'+ccc.length); }
+				if (ccc[10]===undefined) { EnDeGUI.alert('ERROR: misformated options line', '"' + bbb + '"'+ccc.length); }
 				// no ToDo: above check matches in IE8 'cause tabs are squeezed there
 				obj.items.push([ccc[0], _gen(ccc[1]), ccc[1], ccc[9], ccc[10]]);
 				EnDeGUI.opts[ccc[1]] = new Array();
@@ -294,7 +294,7 @@ EnDeGUI.txt = new function() {
 			  case 'head'   : /* ignored */         break;
 			  case 'menu'   :
 				//#dbx __dbx(' .txt.menu: '+bbb, '\n');
-				if (ccc[3]===undefined) { EnDeGUI.alert('**ERROR: misformated menu line: ', '"' + bbb + '"'); }
+				if (ccc[3]===undefined) { EnDeGUI.alert('ERROR: misformated menu line', '"' + bbb + '"'); }
 				if (obj!==null) {
 					EnDeGUI.Obj.addGrp(obj);
 					delete this.obj;
@@ -305,7 +305,7 @@ EnDeGUI.txt = new function() {
 				break;
 			  case 'group'  :
 				//#dbx __dbx('*** .txt.menu: group='+bbb, '\n');
-				if (ccc[3]===undefined) { EnDeGUI.alert('**ERROR: misformated group line: ', '"' + bbb + '"'); }
+				if (ccc[3]===undefined) { EnDeGUI.alert('ERROR: misformated group line', '"' + bbb + '"'); }
 				if (obj!==null) {
 					EnDeGUI.Obj.addGrp(obj);
 					delete this.obj;
@@ -314,7 +314,7 @@ EnDeGUI.txt = new function() {
 				obj = new __obj(ccc[0], ccc[1], ccc[2], ccc[3]);
 				break;
 			  case 'file'  : // is a variant of item3
-				if (ccc[6]===undefined) { EnDeGUI.alert('**ERROR: misformated file line: ', '"' + bbb + '"'); }
+				if (ccc[6]===undefined) { EnDeGUI.alert('ERROR: misformated file line', '"' + bbb + '"'); }
 				EnDeGUI.__filesSet(ccc[1], ccc[4], ccc[5], ccc[6], ccc[2]);
 				// no break;
 			  case 'hide3' :
@@ -324,7 +324,7 @@ EnDeGUI.txt = new function() {
 					dat = ccc[1].replace(/<!.CDATA/, '');
 					// NOTE that we keep the initial [
 				} else {
-					if (ccc[3]===undefined) { EnDeGUI.alert('**ERROR: misformated item3 line: ', '"' + bbb + '"'); }
+					if (ccc[3]===undefined) { EnDeGUI.alert('ERROR: misformated item3 line', '"' + bbb + '"'); }
 					if (obj.showHEX===true) {
 						if (obj.realUCS===true) {
 							ccc[3] = '0x' + ccc[1].replace(/ /g, '') + ': ' + ccc[3];
@@ -336,7 +336,7 @@ EnDeGUI.txt = new function() {
 				}
 				break;
 			  case 'item4'  : // is a variant of item3
-				if (ccc[4]===undefined) { EnDeGUI.alert('**ERROR: misformated item4 line: ', '"' + bbb + '"'); }
+				if (ccc[4]===undefined) { EnDeGUI.alert('ERROR: misformated item4 line', '"' + bbb + '"'); }
 				obj.input.push([ccc[0], _gen(ccc[1]), ccc[1], ccc[2], ccc[3], ccc[4]]);
 				break;
 			  case 'makeID' : genid = 1;              break;
@@ -364,7 +364,7 @@ EnDeGUI.txt = new function() {
 			  default       :
 				this.errors += EnDeGUI.txt.lines[idx] + ': unknown "' + ccc[0] + '"\t# ' + bbb + '\n';
 				if (this.warning!=='none') { // very lazy check
-					EnDeGUI.alert('**ERROR: unknown ', '"'+ccc[0]+'"');
+					EnDeGUI.alert('ERROR: unknown', '"'+ccc[0]+'"');
 				}
 				if (this.error==='exit') {   // very lazy check
 					brk = 1;
@@ -378,7 +378,7 @@ EnDeGUI.txt = new function() {
 		if (this.errors != '') {
 			bbb = this.ME + '.menu: **ERRORs found in file:\n' + this.errors;
 			_dpr( bbb );
-			EnDeGUI.alert( bbb );
+			EnDeGUI.alert('ERROR '+this.ME+'.menu: errors found in file', this.errors);
 			this.errors = '';
 		}
 // #dbx print groups# var t=''; for (var idx in EnDeGUI.Obj.groups) { t+=idx+'\n';} alert(t);
@@ -732,7 +732,7 @@ EnDeGUI.Obj = new function() {
 				if (ccc==='indexOf') { continue; }
 				if (src.use[ccc].match(/function/)  !==null) { continue; } // contribution to old Mozilla
 				if (EnDeGUI.Obj.groups[src.use[ccc]]===null) { // defensive programming
-					EnDeGUI.alert('**ERROR: undefined use ', '"'+src.use[ccc]+'"');
+					EnDeGUI.alert('ERROR: EnDeGUI.Obj.create', 'undefined use "'+src.use[ccc]+'"');
 					continue;
 				}
 				EnDeGUI.Obj.menuCHR = src.realCHR;
@@ -755,7 +755,7 @@ EnDeGUI.Obj = new function() {
 				  case 'BUTTON':
 				  case 'TABLE':
 				  default:
-					EnDeGUI.alert( '**ERROR: EnDeGUI.Obj.create', 'object "' + src.typ + '" with items; ignored' );
+					EnDeGUI.alert( 'ERROR: EnDeGUI.Obj.create', 'object "'+src.typ+'" with items; ignored' );
 					break;
 				}
 				if (kkk!=='') {
@@ -780,7 +780,7 @@ EnDeGUI.Obj = new function() {
 			for (ccc in src.input) {
 				if (ccc==='indexOf') { continue; }
 				if (src.input[ccc] == null) {       // defensive programming
-					EnDeGUI.alert('**ERROR: undefined input ', '"'+src.use[ccc]+'"');
+					EnDeGUI.alert('ERROR: EnDeGUI.Obj.create', 'undefined input "'+src.use[ccc]+'"');
 					continue;
 				}
 				obj = EnDeGUI.Obj.create(src.id, src.input[ccc], 'TABLE', 'group', hidden);
@@ -1028,7 +1028,7 @@ EnDeGUI.Obj = new function() {
 		var ccc = null;
 		var obj = null;
 		try     { obj = EnDeGUI.Obj.create('-undef-', src, '-undef-', 'menu', false); }
-		catch(e){ EnDeGUI.alert('EnDeGUI.Obj.menu: create: ', e); }
+		catch(e){ EnDeGUI.alert('ERROR: EnDeGUI.Obj.menu: create', e); }
 		if (txt!=='') {
 			ccc = document.createElement('SPAN');
 			ccc.innerHTML = obj.label;
@@ -1042,7 +1042,7 @@ EnDeGUI.Obj = new function() {
 		}
 */
 		try     { $(obj.inside).appendChild(obj); }
-		catch(e){ EnDeGUI.alert('EnDeGUI.Obj.menu: ' + key, e); }
+		catch(e){ EnDeGUI.alert('ERROR: EnDeGUI.Obj.menu ' + key, e); }
 		obj = null; ccc = null;
 	}; // .menu
 
@@ -1065,11 +1065,11 @@ EnDeGUI.Obj = new function() {
 			  case 'menu':  EnDeGUI.Obj.menus[ src.key] = src; break;
 			  case 'group': EnDeGUI.Obj.groups[src.key] = src; break;
 			  default:
-				EnDeGUI.alert('**ERROR: EnDeGUI.Obj.addGrp', 'unknow object type "'+src.typ+'"');
+				EnDeGUI.alert('ERROR: EnDeGUI.Obj.addGrp', 'unknow object type "'+src.typ+'"');
 				break;
 			}
 		} else {
-			EnDeGUI.alert('**ERROR: EnDeGUI.Obj.addGrp', 'empty object type');
+			EnDeGUI.alert('ERROR: EnDeGUI.Obj.addGrp', 'empty object type');
 		}
 		return void(0);
 	}; // .addGrp
@@ -1164,7 +1164,7 @@ EnDeGUI.makemenu= function(src) {
 		this.txt.menu();
 		// need try-catch to avoid page reload for erroneous user files
 		try     { this.Obj.menu('with label', this.Obj.menus[kkk]); }
-		catch(e){ EnDeGUI.alert('EnDeGUI.makemenu: EnDeGUI.Obj.menu('+kkk+'): ' + e + ' **IGNORED;'); }
+		catch(e){ EnDeGUI.alert('EnDeGUI.makemenu: EnDeGUI.Obj.menu('+kkk+')', e + '\n**IGNORED;'); }
 	}
 	__dbx('EnDeGUI.makemenu }');
 	return false;
@@ -1300,13 +1300,13 @@ EnDeGUI.initMenus= function() {
 		catch(e){ bbb += 'EnDeGUI.initMenus: ' + ccc + ': ' + e + '\n'; }
 	}
 	if (bbb!=='') {
-		bbb = '**ERROR: reading files failed\n' + bbb + '\n';
+		bbb = 'ERROR: reading files failed' + bbb;
 		if (/NETWORK_ERR.*XMLHttpRequest/.test(EnDe.File.errors.join())===true) {
-			this.alert(bbb +
-					'for Chromium or Google Chrome browser try with commandline option'
+			this.alert(bbb,
+					'\nfor Chromium or Google Chrome browser try with commandline option'
 					+ '\n\n--allow-file-access-from-files');
 		} else {
-			this.alert(bbb + 'probably text file missing');
+			this.alert(bbb, 'probably text file missing');
 		}
 		EnDeGUI.errors.push(bbb);
 		/* dummy { */ __dbx('EnDeGUI.initMenus }');

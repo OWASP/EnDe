@@ -106,7 +106,7 @@
 #    building the GUI, EnDeGUI.init() will show the "Browser Quirks" window.
 #?
 #? VERSION
-#?      @(#) EnDeGUI.js 3.96 12/12/08 16:41:47
+#?      @(#) EnDeGUI.js 3.98 12/12/09 18:06:28
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -118,8 +118,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '3.96';
-this.sid        = function() {  return('@(#) EnDeGUI.js 3.96 12/12/08 16:41:47 EnDeGUI'); };
+this.SID        = '3.98';
+this.sid        = function() {  return('@(#) EnDeGUI.js 3.98 12/12/09 18:06:28 EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 
@@ -184,7 +184,7 @@ this.alert      = function(func,src) {
 	// this is the internal function used for delivering messages to the user
 	// ** needs to be adapted to the environment where EnDeGUI object is used **
 	//return;
-	alert('**' + func + ': ' + src);
+	alert('**' + func + ':\n' + src);
 };
 
 	// ===================================================================== //
@@ -606,7 +606,7 @@ this.win        = new function() {
 							+',status=no,menubar=no,toolbar=no,location=no'
 							+',innerHeight=400,innerWidth=800,width=800,height=400'
 						 );
-	} catch (e) { EnDeGUI.alert('EnDeGUI.win.scratch: window: ',e); }
+	} catch (e) { EnDeGUI.alert('EnDeGUI.win.scratch (window)',e); }
 	try {
 		if (EnDeGUI.isKonqueror===true) {
 			// some browsers behave strange ..
@@ -618,7 +618,7 @@ this.win        = new function() {
 			area.id = 'scratch';
 			win.document.body.appendChild(area);
 		}
-	} catch (e) { EnDeGUI.alert('EnDeGUI.win.scratch',e); }
+	} catch (e) { EnDeGUI.alert('EnDeGUI.win.scratch (Konqueror)',e); }
 	return win;
   }; // win.scratch
 }; // win
@@ -664,16 +664,16 @@ this.dau        = function(src) {
 	  case 'EnDeDOM.GUI.toEN':  bbb = 'create'; ccc = 'based on'; src = 'create Encoding menu'; break;
 	  case 'EnDeDOM.GUI.toRE':  bbb = 'create'; ccc = 'based on'; src = 'create RegEx menu';    break;
 	}
-	EnDeGUI.alert('**WARNING',
+	EnDeGUI.alert('WARNING',
 		 '\n\nTo ' + bbb + ' all ' + ccc + ' nothing is a very simple task.'
-		+'\nBut you have choosen to "' + src + '" ' + ccc + ' nothing, which'
-		+' conufes me. Should I ' + bbb + ' nothing, or should I ' + bbb + ' all?'
+		+'\nBut you have chosen to "' + src + '" ' + ccc + ' nothing, which'
+		+' confuses me. Should I ' + bbb + ' nothing, or should I ' + bbb + ' all?'
 		+' If you want to ' + bbb + ' nothing, no button needs to be clicked,'
 		+' then you will not see anything, even not this messages, which is'
 		+' nothing then, as requested. Or you want to ' + bbb + ' all ' + ccc
 		+' nothing' +' which does not contain anything and hence there is no'
 		+' need to ' + bbb + ' it anyway.\n\n'
-		+'So, please make your decission first'
+		+'So, please make your decission first.'
 		);
 }; // .dau
 
@@ -868,7 +868,7 @@ this.guess      = function(type,mode,uppercase,src,prefix,suffix,delimiter) {
 								EnDe.DE.dispatch(bbb,mode,uppercase,src,prefix,suffix,delimiter),
 								'',';',''); break;
 		}
-		} catch(e) { EnDeGUI.alert('EnDeGUI.guess('+bbb+'):\n',e); }
+		} catch(e) { EnDeGUI.alert('EnDeGUI.guess('+bbb+')',e); }
 		bux += '</td></tr>';
 	}
 	if ((type.split('@')[2]==='ALL') || (type.match(/base64/)!==null)) {  // following ugly code but result looks nice ;-)
@@ -2312,7 +2312,7 @@ this.EN         = new function() {
 	var outform     = $('EnDeDOM.API.typ').value;
 	var mode        = EnDeGUI.get_radio('mode');
 	if (isMem==='isHex') {
-		EnDeGUI.alert(this.sid(),' cannot encode from "Hex"');
+		EnDeGUI.alert(this.sid(),'cannot encode from "Hex"');
 		return false;
 	}
 	if (ishex===true) {
@@ -2388,7 +2388,7 @@ this.EN         = new function() {
 			}
 				alert('* you have been warned *');
 		}
-		try { bux = eval(src); } catch(e) { bux = src; EnDeGUI.alert('EnDeGUI.EN.dispatch',' JSeval failed:\n'+e); }
+		try { bux = eval(src); } catch(e) { bux = src; EnDeGUI.alert('EnDeGUI.EN.dispatch','JSeval failed:\n'+e); }
 		$('EnDeDOM.DE.text').value  = bux;
 		return false;
 		break;
@@ -2419,7 +2419,7 @@ this.EN         = new function() {
 		return false;   // fallback
 		break;
 	  case 'test'       :
-		EnDeGUI.alert('EnDeGUI.EN.dispatch: ','just a TEST');
+		EnDeGUI.alert('EnDeGUI.EN.dispatch','just a TEST');
 		return false;
 		break;
 //	  case 'crc32b64'   : if (wrapbreak > 0) { delimiter= wrapbreak; } else { delimiter = 0; } break;
@@ -2499,7 +2499,7 @@ this.DE         = new function() {
 	var outform     = $('EnDeDOM.API.typ').value;
 	var mode        = EnDeGUI.get_radio('mode');
 	if (isMem==='isHex') {
-		EnDeGUI.alert(this.sid(),' cannot decode from "Hex"');
+		EnDeGUI.alert(this.sid(),'cannot decode from "Hex"');
 		return false;
 	}
 	if (ishex===true) {
@@ -2557,13 +2557,13 @@ this.DE         = new function() {
 		kkk = null;
 		kkk = src.match(/(window|document|eval)/);
 		if (kkk!==null) {
-			if (confirm('** WARNING **\nsource probably contains malicious function "'+ kkk[1] + '"\n\n\tabort?')) {
+			if (confirm('**WARNING:\nsource probably contains malicious function "'+ kkk[1] + '"\n\n\tabort?')) {
 				alert('* good descision *');
 				return false;
 			}
 				alert('* you have been warned *');
 		}
-		try { bux = eval(src); } catch(e) { bux = src; EnDeGUI.alert('EnDeGUI.DE.dispatch',' JSeval failed:\n'+e); }
+		try { bux = eval(src); } catch(e) { bux = src; EnDeGUI.alert('EnDeGUI.DE.dispatch','JSeval failed:\n'+e); }
 		$('EnDeDOM.EN.text').value  = bux;
 		return false;
 		break;
@@ -2816,7 +2816,7 @@ this.IP         = new function() {
 	  case 'big':
 		if (src==='') { return false; }
 		if (src>= EnDe.CONST.INT.exp53) { // beat JavaScript dragons
-			EnDeGUI.alert('EnDeGUI.IP.dispatch: number too large: ',src+' > '+EnDe.CONST.INT.exp53);
+			EnDeGUI.alert('EnDeGUI.IP.dispatch','number too large: ',src+' > '+EnDe.CONST.INT.exp53);
 			return false;
 		}
 		if (smallbig===true) {  // treat small values like 32-bit int
@@ -2828,7 +2828,7 @@ this.IP         = new function() {
 	  case 'num':
 		if (src==='') { return false; }
 		if (src>= EnDe.CONST.INT.exp32) {
-			EnDeGUI.alert('EnDeGUI.IP.dispatch: number too large: ',src+' > '+EnDe.CONST.INT.exp32);
+			EnDeGUI.alert('EnDeGUI.IP.dispatch', 'number too large: ',src+' > '+EnDe.CONST.INT.exp32);
 			return false;
 		}
 		ip = EnDe.IP.dispatch('num2ip',  mode,uppercase,src,'','',delimiter);
@@ -4579,7 +4579,7 @@ alert(14);
 	this.dbxtrace();
 
 	if (EnDeGUI.errors.length!=0) {
-		EnDeGUI.alert ('ERROR', '\n detected ' + EnDeGUI.errors.length + ' errors while building GUI');
+		EnDeGUI.alert('ERROR','detected ' + EnDeGUI.errors.length + ' errors while building GUI');
 		// ToDo: need to display errors, somehow ...
 		this.display('EnDeDOM.f.QQ');
 	}

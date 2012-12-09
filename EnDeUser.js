@@ -47,7 +47,7 @@
 #       Simple debugging available if  userdebug  given in QUERY_STRING.
 #
 #? VERSION
-#?      @(#) EnDeUser.js 3.19 12/07/15 18:09:27
+#?      @(#) EnDeUser.js 3.20 12/12/09 17:36:08
 #?
 #? AUTHOR
 #?      27-nov-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -61,8 +61,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.User   = new function() {
-	this.SID    = '3.19';
-	this.sid    = function() { return('@(#) EnDeUser.js 3.19 12/07/15 18:09:27 EnDe.User'); };
+	this.SID    = '3.20';
+	this.sid    = function() { return('@(#) EnDeUser.js 3.20 12/12/09 17:36:08 EnDe.User'); };
 
 	// ===================================================================== //
 	// global variables                                                      //
@@ -117,7 +117,7 @@ this.DE     = new function() {
   //#mode: '/XML': for XML output (close tag)
   //#mode: 'txt':  for simple text output
 	if (EnDeGUI.isKonqueror){
-		EnDeGUI.alert('** Sorry, Konqueror cannot use this function **');
+		EnDeGUI.alert('EnDe.User.DE.vs','Sorry, Konqueror cannot use this function');
 		return src;
 	}
 	if (mode === 'XML') {
@@ -143,7 +143,7 @@ this.DE     = new function() {
 	                	// used to beautify idents
 	    	key = 1;    // we assume that the viewstate's first character is a key
 		while (i<src.length) {
-			if (i>EnDe.User.maxloop) { EnDeGUI.alert('viewstate too large'); return _v1; break; }
+			if (i>EnDe.User.maxloop) { EnDeGUI.alert('EnDe.User.DE._vs1','viewstate too large'); return _v1; break; }
 			ccc = src.charAt(i);
 			i++;
 			if (esc==1) {
@@ -440,7 +440,7 @@ this.DE     = new function() {
 		var _v2 = '';
 		var bbb = '';
 		var ccc = 0; // count items in list, hashlist, arraylist, ...
-		if (EnDe.User.pos>199999) { EnDeGUI.alert('viewstate too large'); return _v2; }
+		if (EnDe.User.pos>199999) { EnDeGUI.alert('EnDe.User.DE._vs2','viewstate too large'); return _v2; }
 		EnDe.User.typ = EnDe.User.str[EnDe.User.pos];
 		//bbb = EnDe.EN.hex(2,'lazy',false,EnDe.User.typ,'\\x','','');
 		//__dbx(', typ=' + bbb,'');
@@ -651,7 +651,7 @@ this.DE     = new function() {
 	//#dbx# bux += src + '\n\n'; __dbx(src + '\n');
 	EnDe.User.str = src; // store in a global
 	while (ccc<src.length) { // detect viewstate, silently ignore anything before
-		if (ccc>99999) { EnDeGUI.alert('viewstate too large'); break; }
+		if (ccc>99999) { EnDeGUI.alert('EnDe.User.DE.vs','viewstate too large'); break; }
 		switch (src[ccc]) {
 		  case '\uff01':                                    net = 2;    break;
 		  case '\xff'  : if (src[ccc+1] == '\x01') { ccc++; net = 2; }; break; 

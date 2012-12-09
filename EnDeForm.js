@@ -31,7 +31,7 @@
 #       call may become a perfromance bottleneck.
 #?
 #? VERSION
-#?      @(#) EnDeForm.js 3.16 12/12/08 09:22:55
+#?      @(#) EnDeForm.js 3.17 12/12/09 17:37:48
 #?
 #? AUTHOR
 #?      15-nov-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -50,8 +50,8 @@ if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 // ========================================================================= //
 
 EnDe.Form   = new function() {
-	this.SID    = '3.16';
-	this.sid    = function()    { return('@(#) EnDeForm.js 3.16 12/12/08 09:22:55 EnDe.Form'); };
+	this.SID    = '3.17';
+	this.sid    = function()    { return('@(#) EnDeForm.js 3.17 12/12/09 17:37:48 EnDe.Form'); };
 
 	// ===================================================================== //
 	// global EnDe.Form variables                                            //
@@ -350,7 +350,7 @@ EnDe.Form   = new function() {
 			kkk = src;
 			bux = 'EnDeJSwrapper=function(){' + src + ';}';
 			try {      eval(bux); }
-			catch(e) { EnDeGUI.alert('EnDe.Form.dispatch: ',' syntax error in code: ' + e); }
+			catch(e) { EnDeGUI.alert('EnDe.Form.dispatch','syntax error in code:\n' + e); }
 			delete this.bux;
 			bux = null;
 // ToDo: should return here if there was a catch
@@ -363,7 +363,7 @@ EnDe.Form   = new function() {
 			// replace last line does not work :-(
 			kkk = src;
 			try {      kkk = (EnDeJSwrapper).toSource(0); }
-			catch(e) { EnDeGUI.alert('EnDe.Form.dispatch: ',' browser does not support "().toSource"'); }
+			catch(e) { EnDeGUI.alert('EnDe.Form.dispatch','browser does not support "().toSource"'); }
 			delete EnDeJSwrapper;
 			return kkk;
 			break;

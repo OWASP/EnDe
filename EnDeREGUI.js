@@ -31,7 +31,7 @@
 #?      EnDeGUI.js, EnDeFile.js, EnDeMenu.txt
 #?
 #? VERSION
-#?      @(#) EnDeREGUI.js 3.10 12/12/08 12:13:28
+#?      @(#) EnDeREGUI.js 3.11 12/12/09 18:02:19
 #?
 #? AUTHOR
 #?      08-mar-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -41,7 +41,7 @@
 if (typeof(EnDe)==='undefined')    { EnDe   = new function() {}; } // will have problems if missing ...
 if (typeof(EnDeRE)==='undefined')  { EnDeRE = new function() {}; }
 
-var EnDeREGUI = new function() { this.SID = '3.10'; }
+var EnDeREGUI = new function() { this.SID = '3.11'; }
 
   // ======================================================================= //
   // GUI functions                                                           //
@@ -58,13 +58,13 @@ EnDeRE.init     = function() {
 		bux = EnDeGUI.Obj.create('EnDeDOM.RE.Actions',EnDeGUI.Obj.menus['RegEx'], '-undef-','menu',false);
 		if (null!==bux) { this.$(bux.inside).appendChild(bux); }
 		//delete EnDeGUI.Obj.menus['RegEx']; // don't delete, needed in iniHLP()
-	} catch(e){ EnDeGUI.alert('**ERROR: EnDeRE.init: RegEx',e); }
+	} catch(e){ EnDeGUI.alert('ERROR: EnDeRE.init: RegEx',e); }
 	delete bux; bux = null;
 	try {
 		bux = EnDeGUI.Obj.create('EnDeDOM.RE.Menu',EnDeGUI.Obj.menus['RE.Text'],'-undef-','menu',false);
 		if (null!=bux) { this.$(bux.inside).appendChild(bux); }
 		delete EnDeGUI.Obj.menus['RE.Text'];
-	} catch(e){ EnDeGUI.alert('**ERROR: EnDeRE.init: RE.Text',e); }
+	} catch(e){ EnDeGUI.alert('ERROR: EnDeRE.init: RE.Text',e); }
 	delete bux; bux = null;
 }; // init
 
@@ -76,7 +76,7 @@ EnDeRE.initHLP  = function() {
 	var bux = null;
 	/* need to load menu definition again, 'cause probably in a new window */
 	try {     EnDeGUI.txt.read('EnDeMenu.txt'); EnDeGUI.txt.menu(); }
-	catch(e){ EnDeGUI.alert('**ERROR: EnDeRE.initHLP: EnDeMenu.txt',e); }
+	catch(e){ EnDeGUI.alert('ERROR: EnDeRE.initHLP: EnDeMenu.txt',e); }
 	try {
 		bux = EnDeGUI.Obj.menus['RegEx'];
 		bux.onClick = 'return EnDeRE.help(this.value);'; // have different handler in help window
@@ -85,7 +85,7 @@ EnDeRE.initHLP  = function() {
 		bux = EnDeGUI.Obj.create('EnDeDOM.RE.mHelp',  EnDeGUI.Obj.menus['RegEx'],'-undef-','menu',false);
 		this.$('Blubb').appendChild(bux);
 		this.$('Gemmal').innerHTML = '<h2>Overview</h2>' + EnDeRE.h_table();
-	} catch(e){ EnDeGUI.alert('**ERROR: EnDeRE.initHLP: Blubb',e); }
+	} catch(e){ EnDeGUI.alert('ERROR: EnDeRE.initHLP: Blubb',e); }
 	// don't need definitions anymore
 	for (bux in EnDeGUI.Obj.menus) { delete EnDeGUI.Obj.menus[bux]; }
 }; // initHLP
@@ -465,7 +465,7 @@ EnDeRE.dispatch = function(obj,item) {
 	  case ':Piet'  :
 	  case ':Speed' :
 	  case ':SPL'   :
-			EnDeGUI.alert('**EnDeRE.dispatch: "' + item + '"not yet implemented');
+			EnDeGUI.alert('WARNING: EnDeRE.dispatch', '"' + item + '"not yet implemented');
 			return false;
 			break;
 	  case ':Cow'   :
@@ -581,7 +581,7 @@ x = '<?xml version="1.0"?><rex>' +x + '</rex>';
 				EnDeGUI.winX = x;
 				EnDeGUI.winY = y;
 			} else {
-				EnDeGUI.alert('EnDeRE.dispatch','**unknown mode: ' + item);
+				EnDeGUI.alert('ERROR: EnDeRE.dispatch','unknown mode "' + item + '"');
 			}
 			kkk = null;
 			return false;

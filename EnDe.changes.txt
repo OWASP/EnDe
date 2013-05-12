@@ -1,6 +1,18 @@
 
 CHANGE HISTORY
 	
+1.0rc14 12-may-13
+    * LIB, API
+	"xss-evation.txt" more pattern added
+	"xss-evation.txt" $_SERVER['PHP_SELF'] added
+	"EnDeUser.js" bugfix: viewstate deserialization improved
+
+    * GUI
+	"EnDe.man.txt" Glossar improved
+	"EnDe.html" new button "Show Characters"
+	"EnDe.css" .ucs class added
+	"EnDeGUIx.js" '.makechar()' for "Show Characters"
+	
 1.0rc13 02-jan-13
     * LIB, API
 	"sqlPattern.txt" improved

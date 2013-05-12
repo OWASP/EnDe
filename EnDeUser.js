@@ -1,12 +1,12 @@
 /* ========================================================================= //
 #?
 #? NAME
-#?      %M%
+#?      EnDeUser.js
 #?
 #? SYNOPSIS
 #?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="EnDeGUI.js"></SCRIPT>
 #?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="EnDeSer.js"></SCRIPT>
-#?      <SCRIPT language="JavaScript1.5" type="text/javascript" src="%M%"></SCRIPT>
+#?      <SCRIPT language="JavaScript1.5" type="text/javascript" src="EnDeUser.js"></SCRIPT>
 #?
 #? DESCRIPTION
 #?      This file contains user defined functions/methods used in  EnDe.js .
@@ -47,7 +47,7 @@
 #       Simple debugging available if  userdebug  given in QUERY_STRING.
 #
 #? VERSION
-#?      @(#) %M% %I% %E% %U%
+#?      @(#) EnDeUser.js 3.22 13/05/12 10:58:14
 #?
 #? AUTHOR
 #?      27-nov-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -61,8 +61,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.User   = new function() {
-	this.SID    = '%I%';
-	this.sid    = function() { return('@(#) %M% %I% %E% %U% EnDe.User'); };
+	this.SID    = '3.22';
+	this.sid    = function() { return('@(#) EnDeUser.js 3.22 13/05/12 10:58:14 EnDe.User'); };
 
 	// ===================================================================== //
 	// global variables                                                      //

@@ -9,7 +9,7 @@
 #       Makefile
 #?
 #? VERSION
-#?      @(#) EnDe.css 3.20 12/09/30 14:02:54
+#?      @(#) EnDe.css 3.21 13/05/12 19:39:38
 #?
 #? AUTHOR
 #?      30-may-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -498,6 +498,18 @@ span.popup                 { float:     none; }
 /* character */
 .chr { width:           4em; text-align:center;
 	background:     #ffffcf;
+}
+/* single characters in "Special Characters" window */
+.ucs {
+	margin-left:    0.3em;
+	padding-left:   0.3em;
+	padding-right:  0.3em;
+	border-radius:  2px;
+	box-shadow:     1px 1px 3px 3px #e2e2e2;
+	-moz-border-radius:2px;
+	-khtml-border-radius:2px;
+	-moz-box-shadow:1px 1px 3px 3px #e2e2e2;
+	-khtml-box-shadow:1px 1px 3px 3px #e2e2e2;
 }
 
 /* "direct/nested" and "replace map" inset window */

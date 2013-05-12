@@ -11,8 +11,8 @@
 	<meta name="DC.language"      content="en" >
 	<meta name="DC.rights"        content="https://github.com/EnDe/EnDe license.txt" >
 	<meta name="DC.license"       content="https://github.com/EnDe/EnDe license.txt" >
-	<meta name="DC.modified"      content="12/11/23" >
-	<meta name="DC.Source"        content="@(#) EnDe.html 3.41 12/11/23 23:07:13"  >
+	<meta name="DC.modified"      content="13/05/12" >
+	<meta name="DC.Source"        content="@(#) EnDe.html 3.43 13/05/12 19:53:52"  >
 	<meta name="DC.Date"          content="07-apr-07" >
 	<meta name="DC.creator"       content="Achim Hoffmann" >
 	<meta name="DC.Author"        content="Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net" >
@@ -221,7 +221,7 @@
 					<th>User API Options</th><th>values</th><th>Prefix</th><th>Suffix</th><th>Delimiter</th><th>Key/Cipher</th><th>output format</th><th hide="1">mode</th>
 				</tr>
 				<tr>
-					<td rowspan="2"><div    id="EnDeDOM.API.Menu"   class="select" ><!-- class="middle"     SELECT added by init() --></div><br><br></td>
+					<td rowspan=2><div    id="EnDeDOM.API.Menu"   class="select" ><!-- class="middle"     SELECT added by init() --></div><br></td>
 					<td>size <select id="EnDeDOM.API.size">
 						<option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select></td>
 					<td><input  id="EnDeDOM.API.prefix"    type="text" value=""   size="4"></td>
@@ -368,7 +368,7 @@
 					<th>hex</th>    <th>binary</th>
 				</tr>
 				<tr>
-				<td rowspan="6"><div  id="EnDeDOM.CH.Menu"    class="select popup"><!-- SELECT added by init() --></div><br></td>
+				<td><div   id="EnDeDOM.CH.Menu"    class="select popup"><!-- SELECT added by init() --></div></td>
 				<td><input id="EnDeDOM.CH.chr" type="text"      value=""    class="chr" accesskey="C" onKeyup="return EnDeGUI.CH.set($('EnDeDOM.CH.chr').value.substr(-1));" >
 				<td><input id="EnDeDOM.CH.hex" type="text"      value=""    class="chr"         onKeypress="return EnDeGUI.CH.dispatch(this,'hex');" >
 				<td><input id="EnDeDOM.CH.dec" type="text"      value=""    class="chr"         onKeypress="return EnDeGUI.CH.dispatch(this,'dec');" >
@@ -378,6 +378,7 @@
 				<td><input id="EnDeDOM.CH.bin" type="text"      value=""    class="text"        onKeypress="return EnDeGUI.CH.dispatch(this,'bin');" >
 				</tr>
 				<tr>
+				<td><button id="EnDeDOM.API.bl"     onClick="return EnDeGUI.makechar();" >Special Characters</button></td>
 				<td colspan="4">
 				    <input id="EnDeDOM.CH.toEN" type="button"   value=">Encoding"   class="button"  onClick="$('EnDeDOM.EN.text').value+=$('EnDeDOM.CH.chr').value;return false;" >
 				    <input id="EnDeDOM.CH.toDE" type="button"   value=">Decoding"   class="button"  onClick="$('EnDeDOM.DE.text').value+=$('EnDeDOM.CH.chr').value;return false;" >
@@ -1047,6 +1048,7 @@ EnDeGUI.titles  = {
 	'EnDeDOM.QQ.wp':    "",
 	'EnDeDOM.QQ.xp':    "",
 	'EnDeDOM.API.bf':   "API section header",
+	'EnDeDOM.API.bl':   "open window with special characters",
 	'EnDeDOM.API.mode0':"function throw exception on error",
 	'EnDeDOM.API.mode1':"function silently ignore errors",
 	'EnDeDOM.API.mode2':"function return message for each error",

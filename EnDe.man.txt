@@ -96,6 +96,7 @@ INTRODUCTION
 |	  [44]      4oKsdXJv %E2%82%AC%75%72%6F 36f9d3bb76279be66536e2d4e250c7ad
 |	  [45]      4oKsdXJv                   24bd7d579377f38cafec01ee4c8ab976
 |	  [46]      gHVybw==                    
+|	  [47]      4oKsdXJv    %E2%82%ACuro   36f9d3bb76279be66536e2d4e250c7ad
 |	  [49]      HVybw==     %u20ACuro      08c1d37a0b3394da278b77116cc4e615
 |	  [51]      4oKsdXJv                   36F9D3BB76279BE66536E2D4E250C7AD
 |	  [52]      rHVybw==
@@ -161,6 +162,7 @@ INTRODUCTION
 	[44]  (2010) https://chrome.google.com/webstore/detail/iihoicgdaflndmojghlcnfgjkpkhpgee?hl=en-US JavaScript Toolbox (Linux)
 	[45]  (2010) https://chrome.google.com/extensions/detail/gncnbkghencmkfgeepfaonmegemakcol d3coder (Linux)
 	[46]  (2010) https://chrome.google.com/webstore/detail/ochhcobhdebiaimobmlnjogeggcgafgd?hl=en-US# Advanced Encoder/Decode (Linux)
+	[47]  (2013) https://chrome.google.com/webstore/detail/kignjplbjlocolcfldfhbonmbblpfbjb Hasher (Linux)
 	Opera Widgets (Mac OSX)
 	[51]  (2010) http://widgets.opera.com/category/web-developer/ FastHash, rHash 0.2
 	[52]  (2010) http://widgets.opera.com/category/web-developer/ Text Encoder
@@ -207,6 +209,7 @@ INTRODUCTION
 |	  [39]      4oKsdXJv    â‚¬ur
 |	  [40] undefinedHVybw   
 |	  [41]      HVybw       
+|	  [47]      4oKsdXJv    â‚¬uro
 |	  [48]      IKx1cm8=    ¿ro
 |	  [48]      IKx1cm8     
 |	  [49]      HVybw==     \›À
@@ -2247,12 +2250,15 @@ GLOSSAR
 	
 	A short list of used terms and acronyms, always incomplete ...
 	
+	AAD     - additional authenticated data
 	AAV     - Accountholder Authentication Value
 	Adler32 - hash function
 	ACS     - Access Control Server (mainly used in payment industry)
 	ADH     - Anonymous Diffie-Hellman
 	AES     - Advanced Encryption Standard
+	AEAD    - Authenticated Encryption with Additional Data
 	AIA     - Authority Information Access
+	AKID    - Authority Key IDentifier
 	ANSI    - American National Standards Institute
 	ANSI    - sometimes acronym for code page 1252 (aka CP-1252)
 	ASCII   - American Standard Code for Information Interchange
@@ -2270,6 +2276,7 @@ GLOSSAR
 	Base32Url   - alias for Base-32hex
 	Base-N  - (EnDe's internal term for all Base* codings)
 	BEAST   - Browser Exploit Against SSL/TLS
+	BER     - Basic Encoding Rules
 	BIN     - Bank Identification Number
 	BOM     - Byte Order Mark
 	BMP     - Basic Multilingual Plane (Unicode plane 0000-ffff)
@@ -2291,6 +2298,7 @@ GLOSSAR
 	CBC     - Cipher Block Chaining (sometimes)
 	CBC     - Ciplier Block Chaining (see http://www.itl.nist.gov/fipspubs/fip81.htm )
 	CCID    - Credit Card ID, see CSC
+	CCM     - CBC-MAC Mode
 	CDP     - CRL Distribution Points
 	CEF     - character encoding form
 	CEK     - Content Encryption Key
@@ -2305,6 +2313,7 @@ GLOSSAR
 	CMAC    - block cipher algorithm
 	CMP     - X509 Certificate Management Protocol
 	CMS     - Cryptographic Message Syntax (see http://tools.ietf.org/html/rfc3852 )
+	CMVP    - Cryptographic Module Validation Program (NIST)
 	CN      - Common Name
 	CPS     - Certification Practice Statement
 	CRC     - Cyclic Redundancy Check
@@ -2316,7 +2325,9 @@ GLOSSAR
 	CSI     - Code Structure Identifier (for SICI)
 	CSC     - Card Security Code
 	CSP     - Certificate Service Provider
+	CSP     - Critical Security Parameter (used in FIPS 140-2)
 	CSR     - Certificate Signing Request
+	CTS     - Cipher Text Stealing
 	CVC     - sometimes called Card Validation Code
 	CVC     - sometimes (wrongly?) called Card Verification Code
 	CVC1    - see CVC
@@ -2330,6 +2341,7 @@ GLOSSAR
 	DEA     - Data Encryption Algorithm (sometimes a synonym for DES)
 	DER     - Distinguished Encoding Rules
 	DES     - Data Encryption Standard
+	DESede  - alias for 3DES (? java only?)
 	3DES    - Triple DES
 	3DES-EDE- alias for 3DES
 	DECIPHER- synonym for decryption
@@ -2340,8 +2352,11 @@ GLOSSAR
 	DOI     - Digital Object Identifier
 	DSA     - Digital Signature Algorithm
 	DSS     - Digital Signature Standard
+	DTLS    - Datagram TLS
+	DTLSv1  - Datagram TLS 1.0
 	DUCET   - Default Unicode Collation Element Table
 	D-U-N-S - Data Universal Numbering System
+	DV      - Domain Validation
 	DV-SSL  - Domain Validated Certificate
 	EAN     - European Article Numbers
 	EAN-13  - 13-digit EAN
@@ -2354,6 +2369,7 @@ GLOSSAR
 	ECDH    - Elliptic Curve Diffie-Hellman
 	ECDHE   - Ephemeral ECDH
 	ECDSA   - Elliptic Curve Digital Signature Algorithm
+	ECMQV   - Elliptic Curve Menezes-Qu-Vanstone
 	EDE     - Encryption-Decryption-Encryption
 	EDH     - Ephemeral Diffie-Hellman
 	EFT     - Electronic Funds Transfer Routing Number Check (10-digit)
@@ -2370,6 +2386,7 @@ GLOSSAR
 	FIPS46-2    - FIPS Data Encryption Standard (DES)
 	FIPS73      - FIPS Guidelines for Security of Computer Applications
 	FIPS140-2   - FIPS Security Requirements for Cryptographic Modules
+	FIPS140-3   - proposed revision of FIPS 140-2
 	FIPS180-3   - FIPS Secure Hash Standard
 	              (requires: FIPS PUB 46-2, FIPS PUB 73, FIPS PUB 140-1, FIPS PUB 186)
 	FIPS186-3   - FIPS Digital Signature Standard (DSS)
@@ -2382,7 +2399,7 @@ GLOSSAR
 	GCGID   - Graphic Character Global Identifier
 	GLN     - International Location Number, see EAN
 	GTIN    - Global Trade Item Number, see EAN
-	GCM     - Galois/Counter Mode
+	GCM     - Galois/Counter Mode ((block cipher mode)
 	GOST    - gosudarstvennyy standart (???? - ??????????????? ????????)
 	GS1     - Global Standards One, see EAN
 	GZIP    - Lossless compression file format (see http://tools.ietf.org/html/rfc1952 )
@@ -2452,17 +2469,34 @@ GLOSSAR
 	NSM     - nonspacing mark
 	NULL    - no encryption
 	NVE     - Nummer der Versandeinheit (aka SSCC)
+	OAEP    - Optimal Asymmetric Encryption Padding
 	OFB     - Output Feedback
+	OFBx    - Output Feedback x bit mode
 	OID     - Object Identifier
 	OTP     - One Time Pad
 	OCSP    - Online Certificate Status Protocol
-	OV-SSL  - Organisation Validation Certificate
+	OCSP stapling  - formerly known as: TLS Certificate Status Request
+	OV      - Organisation Validation
+	OV-SSL  - Organisational Validated Certificate
 	OTP     - One Time Password (see http://tools.ietf.org/html/rfc2289 )
+	P12     - see PKCS#12
+	P7B     - see PKCS#7
+	PBE     - Password Based Encryption
+	PCBC    - Propagating Cipher Block Chaining
 	PED     - PIN entry devices
 	PEM     - Privacy Enhanced Mail
+	PFS     - Perfect Forward Secrecy
+	PFX     - see PKCS#12
 	PII     - Personally Identifiable Information
 	PKCS    - Public Key Cryptography Standards
+	PKCS1   - PKCS #1: RSA Encryption Standard
+	PKCS6   - PKCS #6: RSA Extended Certificate Syntax Standard
+	PKCS7   - PKCS #7: RSA Cryptographic Message Syntax Standard
+	PKCS8   - PKCS #8: RSA Private-Key Information Syntax Standard
+	PKCS12  - PKCS #12: RSA Private-Key Information Syntax Standard
 	PKI     - Public Key Infrastructure
+	PKIX    - Internet Public Key Infrastructure Using X.509
+	PRF     - pseudo-random function
 	PSK     - Pre-shared Key
 	PUA     - Private Use Area (Unicode plane f0000-10ffff)
 	Rabbit  - stream cipher algorithm
@@ -2475,6 +2509,7 @@ GLOSSAR
 	Rijndael- symmetric block cipher algorithm
 	RIPEMD  - RACE Integrity Primitives Evaluation Message Digest
 	ROT-13  - see XOR
+	RTP     - Real-time Transport Protocol
 	RSA     - public key cryptographic algorithm
 	RSS-14  - Reduced Space Symbology, see GS1
 	RTN     - Routing transit number
@@ -2485,7 +2520,7 @@ GLOSSAR
 	SCEP    - Simple Certificate Enrollment Protocol
 	SCSU    - Standard Compression Scheme for Unicode (compressed UTF-16)
 	SCVP    - Server-Based Certificate Validation Protocol
-	SEED    - block cipher algorithm
+	SEED    - 128-bit Symmetric Block Cipher
 	Serpent - symmetric key block cipher
 	SGC     - Server-Gated Cryptography
 	SGML    - Standard Generalized Markup Language (aka ISO 8879)
@@ -2511,6 +2546,7 @@ GLOSSAR
 	SNI     - Server Name Indication
 	Square  - block cipher
 	SRP     - Secure Remote Password protocol
+	SRTP    - Secure RTP
 	SSCC    - Serial Shipping Container Code (aka NVE)
 	SSL     - Secure Sockets Layer
 	SSN     - (U.S.) Social Security Number
@@ -2569,7 +2605,11 @@ GLOSSAR
 	UTS     - Unicode Technical Standard
 	WHIRLPOOL   - hash function
 	WKN     - Wertpapierkennnummer
+	X680'   - X.680: ASN.1
+	X509'   - X.509: The Directory - Authentication Framework
+	XKMS    - XML Key Management Specification
 	XML     - eXtensible Markup Language (subset of SGML)
+	XMLSIG  - XML-Signature Syntax and Processing
 	XTEA    - extended Tiny Encryption Algorithm
 	XUDA    - Xcert Universal Database API
 	XXTEA   - enhanced/corrected Tiny Encryption Algorithm
@@ -2725,7 +2765,7 @@ EPILOG
 	
 VERSION
 	
-	@# EnDe <!-- @(#) EnDe.man.txt 3.41 20:59:19 13/01/02 -->
+	@# EnDe <!-- @(#) EnDe.man.txt 3.43 10:55:21 13/05/12 -->
 	
 	
 AUTHOR

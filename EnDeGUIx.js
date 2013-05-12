@@ -93,7 +93,7 @@
 #?      trace output. This allows to enable tracing for individual objects.
 #?
 #? VERSION
-#?      @(#) EnDeGUIx.js 3.4 12/12/09 17:58:09
+#?      @(#) EnDeGUIx.js 3.6 13/05/12 19:50:09
 #?
 #? AUTHOR
 #?      10-aug-10 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -105,7 +105,7 @@
 // ========================================================================= //
 
 var EnDeGUIx = new function() {
-	this.SID = '3.4';
+	this.SID = '3.6';
 }
 EnDeGUI.__files = {     // hash to hold data for menu from files
 	/* source file          - file where menu is defined (will be read from)
@@ -1202,6 +1202,61 @@ EnDeGUI.makelist= function(src) {
 	__dbx('EnDeGUI.makelist }');
 	return false;
 }; // .makelist
+
+EnDeGUI.makechar= function() {
+//#? read EnDeMenu.txt file and create HTML for special characters
+	// ToDo: quick&dirty code
+	var __dbx = function(t,n) { if (EnDeGUI.Mnu.trace===true) { EnDeGUI.dpr(t, n); } };
+	this.txt.content = this.__menu('EnDeMenu.txt');
+	if (this.txt.content===null) {
+		_dpr('EnDeGUI.makechar: __read: **failed**');
+	} else {
+		var kkk = this.txt.content.split('\n');
+		//var bux = '<style type="text/css"><link rel="stylesheet" type="text/css" charset="utf-8" href="EnDe.css" media="screen"></style>';  // ToDo: does not work
+		var bux = '<style type="text/css">.ucs{margin-left:0.3em;padding-left:0.3em;padding-right:0.3em;border-radius:2px;box-shadow:1px 1px 3px 3px #e2e2e2;-moz-border-radius:2px;-moz-box-shadow:1px 1px 3px 3px #e2e2e2;}</style>';
+		var bbb = '';
+		var ccc = [];
+		var idx = 0;
+		var skip= 1;
+		/* groups to be parsed:
+		 * UCS.Angle.l UCS.Angle.r UCS.Curly UCS.Square UCS.Round UCS.Quote
+		 * UCS.Slash  UCS.Bar UCS.Dash UCS.Dot UCS.Comma UCS.Semicolon  UCS.Latin-eq 
+		 *
+		 * Example of lines to be parsed
+		 * [0]	[1]	[2]	[3]
+		group	UCS.Quote	Unicode Quotes		Unicode quotaion marks and comma
+		item3	329	'n	small n, apostrophe
+		item3	700	'	rising single quote, right (high)
+		 */
+		while ((bbb = kkk.shift())!==undefined) {   // store data in anonymous objects
+			idx++; if (idx===9999) { break; }       // avoid loops
+			ccc = bbb.split(/\t/);
+			switch (ccc[0]) { //
+			  case 'group':
+				if (ccc[1].match(/^UCS\.(Angle\..|Curly|Square|Round|Quote|Slash|Bar|Dash|Coma|Semicolon|Latin-eq)/)) {
+					bux += '<h4>' +  EnDe.Text.Entity(ccc[2] + ' - ' + ccc[3]) + '</h4>';
+					skip=0;
+				} else {
+					skip=1;
+				}
+				break;
+			  case 'item3':
+				if (skip==0) {
+					bux += '<span class="ucs" title="'
+					    +  EnDe.Text.Entity(ccc[1] + ' - 0x' + parseInt(ccc[1], 10).toString(16) + ' : ' + ccc[3])
+					    + '">&#' + ccc[1] + ';</span>';
+				}
+				break;
+			  default: break;
+			}
+		}
+		if (bux==='') { bux = this.txt.content; }   // pesimistic fallback
+		this.info('Characters: ', bux);
+	}
+	kkk = null;
+	__dbx('EnDeGUI.makechar }');
+	return false;
+}; // .makechar
 
 EnDeGUI.initMenus= function() {
 //#? initialise GUI menus (tool actions and text manipulation menus)

@@ -1,12 +1,12 @@
 /* ========================================================================= //
 #?
 #? NAME
-#?      EnDeUser.js
+#?      %M%
 #?
 #? SYNOPSIS
 #?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="EnDeGUI.js"></SCRIPT>
 #?      <SCRIPT language="JavaScript1.3" type="text/javascript" src="EnDeSer.js"></SCRIPT>
-#?      <SCRIPT language="JavaScript1.5" type="text/javascript" src="EnDeUser.js"></SCRIPT>
+#?      <SCRIPT language="JavaScript1.5" type="text/javascript" src="%M%"></SCRIPT>
 #?
 #? DESCRIPTION
 #?      This file contains user defined functions/methods used in  EnDe.js .
@@ -47,7 +47,7 @@
 #       Simple debugging available if  userdebug  given in QUERY_STRING.
 #
 #? VERSION
-#?      @(#) EnDeUser.js 3.20 12/12/09 17:36:08
+#?      @(#) %M% %I% %E% %U%
 #?
 #? AUTHOR
 #?      27-nov-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -61,8 +61,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.User   = new function() {
-	this.SID    = '3.20';
-	this.sid    = function() { return('@(#) EnDeUser.js 3.20 12/12/09 17:36:08 EnDe.User'); };
+	this.SID    = '%I%';
+	this.sid    = function() { return('@(#) %M% %I% %E% %U% EnDe.User'); };
 
 	// ===================================================================== //
 	// global variables                                                      //
@@ -210,7 +210,7 @@ this.DE     = new function() {
 	function _short() {
 		// return integer16 from next 2 bytes
 		// it's assumed that bytes start at EnDe.User.pos and are in LSB order
-		// increments EnDe.User.pos by 1
+		//+ increments EnDe.User.pos by 1
 		EnDe.User.pos++;
 		return  (parseInt(EnDe.User.str.charCodeAt(EnDe.User.pos)) << 8) + (parseInt(EnDe.User.str.charCodeAt(EnDe.User.pos-1)));
 	} // _short
@@ -218,7 +218,7 @@ this.DE     = new function() {
 	function _unsigned() {
 		// return unsigned integer from next one, two or three bytes
 		// it's assumed that bytes start at EnDe.User.pos and are in LSB order
-		// increments EnDe.User.pos by 1, 2 or 3
+		//+ increments EnDe.User.pos by 1, 2 or 3
 		EnDe.User.pos++;
 		var __y;
 		var __u = parseInt(EnDe.User.str.charCodeAt(EnDe.User.pos));
@@ -239,7 +239,7 @@ this.DE     = new function() {
 	function _long() {
 		// return 4-byte integer from next 4 bytes
 		// it's assumed that bytes start at EnDe.User.pos and are in LSB order
-		// increments EnDe.User.pos by 4
+		//+ increments EnDe.User.pos by 4
 		EnDe.User.pos++;
 // ToDo: experimental
 		var __l = 0;
@@ -256,6 +256,7 @@ this.DE     = new function() {
 		  case '\x03':
 		  case '\x0f':
 		  case '\x10':
+		  case '\x14':
 		  case '\x15':
 		  case '\x16':
 		  case '\x17':
@@ -333,6 +334,7 @@ this.DE     = new function() {
 	} // _is_hash
 
 	function _string(mode,num) {
+		//+ increments EnDe.User.pos
 		var __s = '';
 		var __t = 0;
 		for (t=0; t<num; t++) {
@@ -344,6 +346,7 @@ this.DE     = new function() {
 
 	function _hash(mode,tag) {
 		// return hash if any
+		//+ increments EnDe.User.pos
 		var __h = '';
 		var hhh = '';
 		switch (_is_hash()) {
@@ -367,6 +370,7 @@ this.DE     = new function() {
 		  case '\xfe': __d += 'v1.0';   break;
 		  case '\xff': __d += 'v2.0';   break;
 		  case '\x0b': __d += ''     ;  break;
+		  case '\x2b':
 		  case '\x64': __d += 'NULL' ;  break;
 		  case '\x65': __d += ''     ;  break;
 		  case '\x66': __d += '0'    ;  break;
@@ -399,12 +403,14 @@ this.DE     = new function() {
 		  case '\x0c': __m += 'StringC'       ; break; // ToDo: unsure
 		  case '\x0f': __m += 'Pair'          ; break;
 		  case '\x10': __m += 'Triple'        ; break;
+//		  case '\x14': __m += 'Array_System'  ; break; // aka List
 		  case '\x15': __m += 'Array_Strings' ; break; // aka List
-		  case '\x16': __m += 'Array_Objects' ; break; // aka List
+		  case '\x16': __m += 'Array_Objects' ; break; // aka List, aka Collections.ArrayList
 		  case '\x17': __m += 'Arraylist'     ; break;
 		  case '\x18': __m += 'Controlstate'  ; break; // aka Hashlist aka HybridDictionary
 		  case '\x1e': __m += 'IndexedString' ; break;
 		  case '\x1f': __m += 'IndexedNumber' ; break;
+//		  case '\x2b': __m += 'Array_SysObject';break; // is NULL
 		  case '\x3c': __m += 'Array_SysObject';break; // ToDo: unsure
 		  case '\x64': __m += 'Pair'          ; break; // pair node is NULL
 		  case '\x65': __m += 'String'        ; break; // string value is NULL
@@ -436,6 +442,8 @@ this.DE     = new function() {
 		// start parsing at EnDe.User.pos
 		// this ugly code is build on reverse engeneering sample data
 		// ToDo: _v2_parse() still incomplete and buggy
+		//+ increments EnDe.User.pos
+		//+ modifies EnDe.User.typ
 		__dbx('EnDe.User.DE._v2_parse(){ [' + EnDe.User.pos + '], level=' + EnDe.User.level.length,''); // dumm }
 		var _v2 = '';
 		var bbb = '';
@@ -449,7 +457,9 @@ this.DE     = new function() {
 			__dbx(', typ=' + EnDe.EN.hex(2,'lazy',false,EnDe.User.typ,'\\x','',''),'');
 			//return '**ERROR: undefined';
 		}
+		//if (EnDe.User.typ != '\x14') {
 		_v2 += _start(mode,EnDe.User.typ);
+		//}
 		switch (EnDe.User.typ) {
 		  //case '\u1f64':  special end; skip
 		  case '\x64':
@@ -476,7 +486,7 @@ this.DE     = new function() {
 				EnDe.User.pos++;
 				break;
 		  case '\x04':  // ToDo: integer probably 4 bytes fixed
-				__dbx(' I ', '');
+				__dbx(' J ', '');
 				ccc  = _long();
 				_v2 += _daten(mode,ccc);
 				__dbx(ccc);
@@ -503,33 +513,23 @@ this.DE     = new function() {
 				__dbx(' S ');
 				bbb  = '';
 				ccc =  _unsigned();
-//#dbx# if (ccc == 279) ccc = 234;  // fuer das Beispiel: //wEPDwUJNzI3N ... ujKjWEoh7QoW
 				_v2 += _count(mode,ccc);
-				if (ccc > 127) { // ToDo: seems to be Integer32; calculation unknown
-					// we have one more bytes
-					_v2 += '\n<ERROR pos=' + EnDe.User.pos + ' "unknown string size; following data corrupted" />\n';
-				}
-/* // ToDo: when structure is known herein
-				if (ccc > 127) { // ToDo: see above
-					while (EnDe.User.pos<EnDe.User.str.length) { // ugly workaround
-						ccc = EnDe.User.str[EnDe.User.pos];
-						if ((ccc > 127) || (ccc < 32)) { break; }
-						bbb += EnDe.User.str[EnDe.User.pos];
-						EnDe.User.pos++;
-					}
-				}
-*/
+				//if (ccc > 127) { // ToDo: seems to be Integer32; calculation unknown
+				//	// we have one more bytes
+				//	_v2 += '\n<ERROR pos=' + EnDe.User.pos + ' "unknown string size; following data corrupted" />\n';
+				//}
 				_v2 += _daten(mode,_string(mode,ccc));
 				EnDe.User.pos++;
 				bbb = null;
 				break;
 		  case '\x15':  // {size} Array of Strings 
 				__dbx(' A ');
-				var b = 0;
+				var _vb = 0;
 				bbb  = '';
 				ccc  = _unsigned();
 				_v2 += _count(mode,ccc);
-				for (b=0; b<ccc; b++) {
+				for (_vb=0; _vb<ccc; _vb++) {
+					//_v2 += _index(mode,_vb);
 					_v2 += _start(mode,'\x05');
 					bbb  = _unsigned();
 					_v2 += _count(mode,ccc);
@@ -537,12 +537,13 @@ this.DE     = new function() {
 					_v2 += _stopp(mode);
 				}
 				ccc = null;
+				EnDe.User.pos++;
 				break;
 		  case '\x3c':  // Array System.Object
 	// ToDo: structure unknown, simply occupay next 5 bytes, then continue as usual
 				__dbx(' Y ');
-				var k = 0;
-				for (k=0; k<5; k++) {
+				var _vs = 0;
+				for (_vs=0; _vs<5; _vs++) {
 					EnDe.User.pos++;
 					_v2 += _start(mode,'\x1d');
 					_v2 += _daten(mode,EnDe.EN.hex(2,'lazy',false,EnDe.User.str[EnDe.User.pos],'\\x','',''));
@@ -553,26 +554,26 @@ this.DE     = new function() {
 				break;
 		  case '\x03':  // {size} Array of Booleans 
 		  case '\x16':  // {size} Array of objects 
-				__dbx(' B ');
-				var a = 0;
+				__dbx(' o ');
+				var _vo = 0;
 				ccc  = _unsigned();
 				_v2 += _count(mode,ccc);
 				EnDe.User.pos++;
-				for (a=0; a<ccc; a++) {
-					_v2 += _index(mode,a);
+				for (_vo=0; _vo<ccc; _vo++) {
+					_v2 += _index(mode,_vo);
 					_v2 += _v2_parse(mode);
 				}
 				ccc = null;
 				break;
 		  case '\x18':  // {size} ControlState object 
 				__dbx(' C ');
-				var a = 0;
+				var _vc = 0;
 				_v2 += _start(mode,'\x19');     // HybridDictionary
 				ccc  = _unsigned();             // number of DictionaryEntries
 				_v2 += _count(mode,ccc);
 				EnDe.User.pos++;
-				for (a=0; a<ccc; a++) {
-					_v2 += _index(mode,a);
+				for (_vc=0; _vc<ccc; _vc++) {
+					_v2 += _index(mode,_vc);
 					_v2 += _start(mode,'\x1a'); // DictionaryEntry
 					_v2 += _v2_parse(mode);     // String
 					_v2 += _v2_parse(mode);
@@ -592,7 +593,7 @@ this.DE     = new function() {
 				if (__t === '\x10') { _v2 += _v2_parse(mode); }
 				break;
 		  case '\x1f':  // {number} Indexed element, {number} indicates the index within an array 
-				__dbx(' N');
+				__dbx(' N ');
 				ccc  = _unsigned();
 				_v2 += _daten(mode,ccc);
 				EnDe.User.pos++;

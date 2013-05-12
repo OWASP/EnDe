@@ -1,5 +1,5 @@
 /*****************************************************************************\
-|                  Copyright (c) 2006 - 2012 Achim Hoffmann
+|                  Copyright (c) 2006 - 2013 Achim Hoffmann
 |------------------------------------------------------------------------------
 | You may obtain a copy of the license at  https://github.com/EnDe/EnDe
 |------------------------------------------------------------------------------
@@ -38,6 +38,7 @@
 |    http://www.augustana.ab.ca/~mohrj/algorithms/checkdigit.html
 |               used for Verhoeff's Dihedral Group D5 Check in EnDeCheck.js
 |               (no license information but copyright as copied on 17-feb-2008)
+|    jsmin.c    - see http://crockford.com/javascript/jsmin
 |    JsDecoder.js   - see http://code.gosu.pl/dl/JsDecoder/demo/JsDecoder.js
 |------------------------------------------------------------------------------
 |    JsColorizer.js - see http://code.gosu.pl/dl/JsDecoder/demo/JsColorizer.js

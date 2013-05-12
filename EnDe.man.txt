@@ -2252,12 +2252,15 @@ GLOSSAR
 	ACS     - Access Control Server (mainly used in payment industry)
 	ADH     - Anonymous Diffie-Hellman
 	AES     - Advanced Encryption Standard
+	AIA     - Authority Information Access
 	ANSI    - American National Standards Institute
 	ANSI    - sometimes acronym for code page 1252 (aka CP-1252)
 	ASCII   - American Standard Code for Information Interchange
 	Ascii85 - alias for Base-85
 	ARC4    - Alleged RC4 (see RC4)
 	ARCFOUR - alias for ARC4
+	ASN     - Autonomous System Number
+	ASN.1   - Abstract System Notation One
 	AVS     - Address Verification System
 	Base-32hex  - binary to text encoding (path save)
 	Base-32 - binary to text encoding
@@ -2275,6 +2278,7 @@ GLOSSAR
 	Blowfish- symmetric block cipher
 	BOCU-1  - Binary Ordered Compression for Unicode
 	Braille - writing system, letters used for blind people
+	CAMELLIA- Encryption algorithm by Mitsubishi and NTT
 	CAP     - Chip Authentication Programme
 	CAST-128- Carlisle Adams and Stafford Tavares, block cipher
 	CAST5   - alias for CAST-128
@@ -2286,26 +2290,37 @@ GLOSSAR
 	CBC     - Cyclic Block Chaining
 	CBC     - Cipher Block Chaining (sometimes)
 	CBC     - Ciplier Block Chaining (see http://www.itl.nist.gov/fipspubs/fip81.htm )
+	CCID    - Credit Card ID, see CSC
+	CDP     - CRL Distribution Points
 	CEF     - character encoding form
+	CEK     - Content Encryption Key
 	CES     - character encoding scheme
 	CFB     - Cipher Feedback
 	CFB3    - Cipher Feedback
 	CHAP    - Challenge Handshake Authentication Protocol
+	CID     - Card Identification (see CVC and CVV)
 	CJK     - Acronym for Chinese, Japanese, and Korean
 	CJKV    - Acronym for Chinese, Japanese, Korean, and Vietnamese
-	CMAC    - block cipher algorithm
-	CMS     - Cryptographic Message Syntax (see http://tools.ietf.org/html/rfc3852 )
 	CLDR    - Common Locale Data Repository
+	CMAC    - block cipher algorithm
+	CMP     - X509 Certificate Management Protocol
+	CMS     - Cryptographic Message Syntax (see http://tools.ietf.org/html/rfc3852 )
+	CN      - Common Name
+	CPS     - Certification Practice Statement
 	CRC     - Cyclic Redundancy Check
 	CRC-16  - 
 	CRC-32  - 
 	CRC-32b - 
-	CCID    - Credit Card ID, see CSC
+	CRIME   - Exploit SSL/TLS
+	CRL     - Certificate Revocation List
 	CSI     - Code Structure Identifier (for SICI)
 	CSC     - Card Security Code
-	CVC     - sometimes called Card Verification Code
-	CVC1    - see CVV
-	CVC2    - see CVV
+	CSP     - Certificate Service Provider
+	CSR     - Certificate Signing Request
+	CVC     - sometimes called Card Validation Code
+	CVC     - sometimes (wrongly?) called Card Verification Code
+	CVC1    - see CVC
+	CVC2    - see CVC
 	CVV     - sometimes called Card Verification Value
 	CVV1    - see CVV
 	CVV2    - printed CVV on bankvard (see CVV)
@@ -2316,7 +2331,8 @@ GLOSSAR
 	DER     - Distinguished Encoding Rules
 	DES     - Data Encryption Standard
 	3DES    - Triple DES
-	DECIPHER    - synonym for decryption
+	3DES-EDE- alias for 3DES
+	DECIPHER- synonym for decryption
 	DH      - Diffie-Hellman
 	DHE     - Diffie-Hellman ephemeral
 	DPA     - Dynamic Passcode Authentication (see CAP)
@@ -2326,6 +2342,7 @@ GLOSSAR
 	DSS     - Digital Signature Standard
 	DUCET   - Default Unicode Collation Element Table
 	D-U-N-S - Data Universal Numbering System
+	DV-SSL  - Domain Validated Certificate
 	EAN     - European Article Numbers
 	EAN-13  - 13-digit EAN
 	EAN-8   - 8-digit EAN
@@ -2342,8 +2359,10 @@ GLOSSAR
 	EFT     - Electronic Funds Transfer Routing Number Check (10-digit)
 	EGC     - extended grapheme cluster
 	EMV     - Europay, MasterCard, and Visa (see CAP)
-	ENCIPHER    - synonym for encryption
+	ENCIPHER- synonym for encryption
 	ESP     - Encapsulating Security Payload
+	EV      - Extended Validation
+	EV-SSL  - Extended Validation Certificate
 	EUDC    - end-user defined character
 	FAC     - Final Assembly Code (Endmontagekennung bei Mobiles)
 	FEAL    - Fast Data Encryption Algorithm
@@ -2371,6 +2390,7 @@ GLOSSAR
 	HAS-160 - hash function
 	HAS-V   - hash function
 	HMAC    - keyed-Hash Message Authentication Code
+	HSTS    - HTTP Strict Transport Security
 	HTOP    - HMAC-Based One-Time Password (see http://tools.ietf.org/html/rfc4226 )
 	IAN     - International Article Number, see EAN
 	IANA    - Internet Assigned Numbers Authority
@@ -2401,12 +2421,14 @@ GLOSSAR
 	IV      - Initialization Vector (i.e. for CBC, CFB, OFB)
 	JTC1    - Joint Technical Committee 1
 	KEA     - Key Exchange Algorithm (see http://tools.ietf.org/html/rfc2773 )
+	KEK     - Key Encryption Key
 	KPN     - Kartenprüfnummer
 	LDML    - Locale Data Markup Language
 	LSB     - least significant byte
 	LZW     - Lempel-Ziv-Welch (compression algorithm)
 	LM      - LAN Manager hash
 	MAC     - Message Authentication Code
+	MARS    - 
 	MBCS    - multibyte character set
 	MDC-2   - Modification Detection Code 2 (aka Meyer-Schilling)
 	MD2     - Message Digest 2 (see http://tools.ietf.org/html/rfc1319 )
@@ -2428,11 +2450,20 @@ GLOSSAR
 	NFKD    - Normalization Form KD
 	NSIN    - National Securities Identifikation Number (Nationale Wertpapierkennnummer), part of ISIN
 	NSM     - nonspacing mark
+	NULL    - no encryption
 	NVE     - Nummer der Versandeinheit (aka SSCC)
 	OFB     - Output Feedback
+	OID     - Object Identifier
+	OTP     - One Time Pad
+	OCSP    - Online Certificate Status Protocol
+	OV-SSL  - Organisation Validation Certificate
 	OTP     - One Time Password (see http://tools.ietf.org/html/rfc2289 )
 	PED     - PIN entry devices
-	PKCS    - Public-Key Cryptography Standards
+	PEM     - Privacy Enhanced Mail
+	PII     - Personally Identifiable Information
+	PKCS    - Public Key Cryptography Standards
+	PKI     - Public Key Infrastructure
+	PSK     - Pre-shared Key
 	PUA     - Private Use Area (Unicode plane f0000-10ffff)
 	Rabbit  - stream cipher algorithm
 	Radix-64- alias for Base-64
@@ -2449,12 +2480,13 @@ GLOSSAR
 	RTN     - Routing transit number
 	SAFER   - Secure And Fast Encryption Routine, block cipher
 	SAM     - syriac abbreviation mark
+	SAN     - Subject Alternate Name
 	SBCS    - single-byte character set
 	SCEP    - Simple Certificate Enrollment Protocol
 	SCSU    - Standard Compression Scheme for Unicode (compressed UTF-16)
-	Serpent -
-	SCEP    - Simple Certificate Enrollment Protocol
+	SCVP    - Server-Based Certificate Validation Protocol
 	SEED    - block cipher algorithm
+	Serpent - symmetric key block cipher
 	SGC     - Server-Gated Cryptography
 	SGML    - Standard Generalized Markup Language (aka ISO 8879)
 	SIP     - Supplementary Ideographic Plane (Unicode plane 20000-2ffff)
@@ -2476,22 +2508,31 @@ GLOSSAR
 	SKIPJACK- block cipher algorithm (part of FORTEZZA)
 	SMP     - Supplementary Multilingual Plane (Unicode plane 10000-1ffff)
 	Snefu   - hash function
+	SNI     - Server Name Indication
 	Square  - block cipher
+	SRP     - Secure Remote Password protocol
 	SSCC    - Serial Shipping Container Code (aka NVE)
-	SSP     - Supplementary Special-purpose Plane (Unicode plane 30000-3ffff)
+	SSL     - Secure Sockets Layer
 	SSN     - (U.S.) Social Security Number
+	SSP     - Supplementary Special-purpose Plane (Unicode plane 30000-3ffff)
+	SSPI    - Security Support Provider Interface
+	SST     - Serialized Certificate Store format
 	TAC     - Type Approval Code (Baumuster-Akkreditierungskennung bei Mobiles)
 	TEA     - Tiny Encryption Algorithm
 	TES     - transfer encoding syntax
 	TEX     - computer language designed for use in typesetting
+	Threefish   - hash function
 	Tiger   - hash function
 	TIN     - Global Trade Item Number, see EAN
 	TLS     - Transport Layer Security
 	TLSv1   - Transport Layer Security version 1
 	TMSI    - Temporary Mobile Subscriber Identity
-	Threefish   - hash function
+	TSK     - Transmission Security Key
+	TTP     - trusted Third Party
 	Twofish - symmetric key block cipher
 	UAX     - Unicode Standard Annex
+	UC      - Unified Communications (SSL Certificate using SAN)
+	UCC     - Unified Communications Certificate (rarley used)
 	UCA     - Unicode Collation Algorithm
 	UCAF    - Universal Cardholder Authentication Field
 	UCD     - Unicode Character Database
@@ -2530,6 +2571,7 @@ GLOSSAR
 	WKN     - Wertpapierkennnummer
 	XML     - eXtensible Markup Language (subset of SGML)
 	XTEA    - extended Tiny Encryption Algorithm
+	XUDA    - Xcert Universal Database API
 	XXTEA   - enhanced/corrected Tiny Encryption Algorithm
 	z-Base32- binary to text encoding
 	ZLIB    - Lossless compression file format
@@ -2683,7 +2725,7 @@ EPILOG
 	
 VERSION
 	
-	@# EnDe <!-- @(#) EnDe.man.txt 3.40 16:46:01 12/12/08 -->
+	@# EnDe <!-- @(#) EnDe.man.txt 3.41 20:59:19 13/01/02 -->
 	
 	
 AUTHOR

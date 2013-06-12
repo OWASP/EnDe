@@ -88,7 +88,7 @@
 #?      EnDeGUIx.js, EnDeGUI.js
 #?
 #? VERSION
-#?      @(#) EnDeMenu.txt 3.48 12/09/30 16:14:59
+#?      @(#) EnDeMenu.txt 3.50 13/06/12 22:21:33
 #?
 #? AUTHOR
 #?      09-jun-09 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -699,6 +699,8 @@ item3	dumpxDO		od-x style (LE)		show traditional od -x style: hex values left, c
 #------+---------------+-----------------------+------------------------------+
 group	EN.Symbols	Symbols			convertion to (ASCII) symbols
 item3	SOS		Morse			convert to Morse characters
+item3	Digit3x5-0	ASCII 3x5 digit 0	convert to 3x5 matrix variant 0 (MathGuard)
+item3	Digit3x5-1	ASCII 3x5 digit 1	convert to 3x5 matrix variant 1
 hide3	ASCIIBr		ASCII Braille		convert to ASCII Braille symbols
 hide3	dotBr		standard Braille	convert to standard (dotless) Braille symbols
 #item3	braille		Braille (Mac OS only)	you should learn how disabled people want to feel text
@@ -946,6 +948,12 @@ group	xDE.NOTYET	NOTYET			*not yet implemented*
 item3	BinHex	BinHex	encode to BinHex format (RFC1741)
 
 #------+---------------+-----------------------+------------------------------+
+group	DE.Symbols	Symbols			convert (ASCII) symbols to characters
+#item3	SOS		Morse			convert from Morse characters
+item3	Digit3x5-0	ASCII 3x5 digit 0	convert from 3x5 matrix variant 0 (MathGuard)
+item3	Digit3x5-1	ASCII 3x5 digit 1	convert from 3x5 matrix variant 1
+
+#------+---------------+-----------------------+------------------------------+
 menu	Decoding	Decoding		decode with selected function
 html	ANCHOR
 inside	EnDeDOM.DE.Actions
@@ -964,6 +972,7 @@ use	Decryption
 use	DE.JS/built-in
 use	DE.Escape
 use	DE.Special
+use	DE.Symbols
 use	Fuzzy
 use	TXT.Beautify
 item3	repeat		Repeat			repeat last action

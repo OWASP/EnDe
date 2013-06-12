@@ -848,6 +848,20 @@ GUI
 	only one action and the mode ("raw", "hex" or "base64") is selected by
 	an option elsewhere.
 	
+	Symbols (ASCII 3x5)
+	=======================================
+	The en-/decoding functions  "ASCII 3x5 digit"  encode digits to  a 3x5
+	matrix with characters, or decode such a matrix back to the digit.
+	Thesse functions use the  "Prefix", "Suffix" parameters to add leading
+	or trailing spaces to each matrix. Therefor these parameters must only
+	contain spaces. Otherwise one space will be used for each.
+	If  "uppercase"  is set true, only upper characters and digits will be
+	used. This is the original mode of the `MathGuard' implementation.
+	Otherwise upper case, lower case characters and digits will be used.
+	
+	While decoding, empty columns (means those only containing spaces) are
+	treated as matrix separator and therefore ignored.
+	
 	Fuzzy Decoding
 	=======================================
 	All en-/decoding functions process each charcater or string pattern in
@@ -2765,7 +2779,7 @@ EPILOG
 	
 VERSION
 	
-	@# EnDe <!-- @(#) EnDe.man.txt 3.43 10:55:21 13/05/12 -->
+	@# EnDe <!-- @(#) EnDe.man.txt 3.44 22:31:46 13/06/12 -->
 	
 	
 AUTHOR

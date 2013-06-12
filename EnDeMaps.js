@@ -51,13 +51,15 @@
 #?          EnDe.DIN66003fMap   -
 #?          EnDe.dnaMap     -
 #?          EnDe.rangeMap   -
+#?          EnDe.mg0Map     - (MathGuard) 3x5 matrix for digits; variuant 0
+#?          EnDe.mg1Map     - (MathGuard) 3x5 matrix for digits; variuant 1
 #?
 #? SEE ALSO
 #?      EnDe.js
 #?      EnDeMaps.txt
 #?
 #? VERSION
-#?      @(#) EnDeMaps.js 3.20 12/12/08 15:44:19
+#?      @(#) EnDeMaps.js 3.23 13/06/11 23:07:36
 #?
 #? AUTHOR
 #?      05-jun-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -104,7 +106,9 @@ EnDe.a2rMap     = new Array(256);
 EnDe.r2aMap     = new Array(256); 
 EnDe.a2eMap     = new Array(256);
 EnDe.e2aMap     = new Array(256); 
-EnDe.BladeMap   = Array(16);
+EnDe.BladeMap   = new Array(16);
+EnDe.mg0Map     = new Array(10);
+EnDe.mg1Map     = new Array(10);
 ------------- */
 
 // ToDo following settings need to be moved to EnDeMaps.txt (missing 'cause we
@@ -283,13 +287,57 @@ EnDe.DadMap['X']='+--+\n|* |\n+--+';
 EnDe.DadMap['Y']='+--+\n|**|\n+--+';
 EnDe.DadMap['Z']='+---\n|   \n+---';
 
+/*
+ * (MathGuard) 3x5 matrix for digits; variant 0
+ */
+EnDe.mg0Map['0']=Array(7, 5, 5, 5, 7);
+EnDe.mg0Map['1']=Array(2, 6, 2, 2, 7);
+EnDe.mg0Map['2']=Array(7, 1, 7, 4, 7);
+EnDe.mg0Map['3']=Array(7, 1, 7, 1, 7);
+EnDe.mg0Map['4']=Array(4, 5, 7, 1, 1);
+EnDe.mg0Map['5']=Array(7, 4, 7, 1, 7);
+EnDe.mg0Map['6']=Array(7, 4, 7, 5, 7);
+EnDe.mg0Map['7']=Array(7, 1, 1, 1, 1);
+EnDe.mg0Map['8']=Array(7, 5, 7, 5, 7);
+EnDe.mg0Map['9']=Array(7, 5, 7, 1, 7);
+EnDe.mg0Map['+']=Array(0, 2, 7, 2, 0);
+EnDe.mg0Map['-']=Array(0, 0, 7, 0, 0);
+EnDe.mg0Map['*']=Array(0, 5, 2, 5, 0);
+EnDe.mg0Map['/']=Array(0, 1, 2, 4, 0);
+EnDe.mg0Map['=']=Array(0, 7, 0, 7, 0);
+EnDe.mg0Map['.']=Array(0, 0, 0, 2, 0);
+EnDe.mg0Map[',']=Array(0, 0, 0, 2, 2);
+EnDe.mg0Map[' ']=Array(0, 0, 0, 0, 0);
+
+/*
+ * (MathGuard) 3x5 matrix for digits; variant 1
+ */
+EnDe.mg1Map['0']=Array(2, 5, 5, 5, 2);
+EnDe.mg1Map['1']=Array(2, 6, 2, 2, 2);
+EnDe.mg1Map['2']=Array(6, 1, 2, 4, 7);
+EnDe.mg1Map['3']=Array(6, 1, 6, 1, 6);
+EnDe.mg1Map['4']=Array(1, 3, 7, 1, 1);
+EnDe.mg1Map['5']=Array(7, 4, 6, 1, 6);
+EnDe.mg1Map['6']=Array(2, 4, 6, 5, 2);
+EnDe.mg1Map['7']=Array(7, 1, 1, 2, 4);
+EnDe.mg1Map['8']=Array(2, 5, 2, 5, 2);
+EnDe.mg1Map['9']=Array(2, 5, 3, 1, 2);
+EnDe.mg1Map['+']=Array(0, 2, 7, 2, 0);
+EnDe.mg1Map['-']=Array(0, 0, 7, 0, 0);
+EnDe.mg1Map['*']=Array(0, 5, 2, 5, 0);
+EnDe.mg1Map['/']=Array(0, 1, 2, 4, 0);
+EnDe.mg1Map['=']=Array(0, 7, 0, 7, 0);
+EnDe.mg1Map['.']=Array(0, 0, 0, 2, 0);
+EnDe.mg1Map[',']=Array(0, 0, 0, 2, 4);
+EnDe.mg1Map[' ']=Array(0, 0, 0, 0, 0);
+
 // ========================================================================= //
 // EnDe.Maps object methods                                                  //
 // ========================================================================= //
 
 EnDe.Maps   = new function() {
-	this.SID    = '3.20';
-	this.sid    = function() { return('@(#) EnDeMaps.js 3.20 12/12/08 15:44:19 EnDe.Maps'); };
+	this.SID    = '3.23';
+	this.sid    = function() { return('@(#) EnDeMaps.js 3.23 13/06/11 23:07:36 EnDe.Maps'); };
 	this.trace  = false;
 
 	this.traces = [];   /* used for trace, as GUI function are not avaialable
@@ -486,6 +534,20 @@ EnDe.Maps   = new function() {
 			}
 		}
 		kkk = null;
+	}
+
+	__dbx('EnDe.Maps.init: 3x5 digits (MathGuard) (' + EnDe.mg0Map.length + ')');
+	// reverse map is simply a string concatenated from all array values
+	// [3] = new Araay(7,1,7,1,7)  --> ['71717'] = '3'
+	for (ccc in EnDe.mg0Map) {             // ------------------- reverse 3x5
+		kkk = '';
+		for (a=0; a<EnDe.mg0Map[ccc].length ;a++) { kkk += EnDe.mg0Map[ccc][a]; }
+		EnDe.gm0Map[kkk] = ccc;
+	}
+	for (ccc in EnDe.mg1Map) {             // ------------------- reverse 3x5
+		kkk = '';
+		for (a=0; a<EnDe.mg1Map[ccc].length ;a++) { kkk += EnDe.mg1Map[ccc][a]; }
+		EnDe.gm1Map[kkk] = ccc;
 	}
 
 	}; // .init

@@ -83,7 +83,7 @@
 #       _n2_, _n3_, _n4_, _n5_, _n6_, and _n7_ .
 #?
 #? VERSION
-#?      @(#) EnDe.js 3.40 12/11/23 21:19:44
+#?      @(#) EnDe.js 3.42 13/06/12 22:01:51
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -96,8 +96,8 @@
 
 var EnDe    = new function() {
 
-this.SID    = '3.40';
-this.sid    = function() { return('@(#) EnDe.js 3.40 12/11/23 21:19:44 EnDe'); };
+this.SID    = '3.42';
+this.sid    = function() { return('@(#) EnDe.js 3.42 13/06/12 22:01:51 EnDe'); };
 
 	// ===================================================================== //
 	// debug functions                                                       //
@@ -294,6 +294,10 @@ this.a2eMap     = new Array(256);   // [ASCII] = EBCDIC
 this.e2aMap     = new Array(256);   // [EBCDIC] = ASCII
 this.spaceMap   = new Array(50);    // all Unicode space characters
 this.dnaMap     = new Array(256);   // DNA/DNS (genetic) codes
+this.mg0Map     = new Array(20);    // (MathGuard) 3x5 matrix for digits; variuant 0
+this.mg1Map     = new Array(20);    // (MathGuard) 3x5 matrix for digits; variuant 1
+this.gm0Map     = new Array(20);    // reverse 3x5 matrix for digits; variuant 0
+this.gm1Map     = new Array(20);    // reverse 3x5 matrix for digits; variuant 1
 /*
 this.uhwMap = new Array(256);       // map with Unicode halfwidth characters
 */
@@ -2375,6 +2379,59 @@ this.EN     = new function() {
 	return bux;
   }; // baudot
 
+  this.mgd      = function(type,mode,uppercase,src,prefix,suffix,delimiter) {
+  //#? convert digits to 3x5 matrix (MathGuard)
+  //#type? Digit3x5-0:  use 3x5 matrix variant 0 (MathGuard)
+  //#type? Digit3x5-1:  use 3x5 matrix variant 1
+  //#uppercase? true:   use upper and lower case characters
+  //#prefix? SPACES:    prefix final matrix if only spaces; default 1 space
+  //#suffix? SPACES:    append final matrix if only spaces; default 1 space
+	function _line (_t, src) {
+		var _s = '123456789ABCDEFGHIJKLMNOPQRTSTUWXYZ';
+		if (uppercase===false) { _s += 'abcdefghijklmnopqrstuvwxyz'; }
+		var _c = '*';
+		var _x = '';
+		var _z = src;
+		while (_z > 0) {
+			if (_t==='Digit3x5-0') { _c = _s[Math.floor(Math.random() * 100 % (_s.length-1))]; }
+			_x += (_z%2) ? _c : ' ';
+			_z = Math.floor(_z / 2);
+		}
+		for (_z=_x.length; _z<3; _z++) {  _x += " "; }
+		return EnDe.reverse(_x);
+	};
+	var bux = '';
+	var bbb = new Array('','','','','','');
+	var ccc = null;
+	var kkk = null;
+	var i   = 0;
+	var k   = 0;
+	if (/^ +$/.test(prefix)===false) { prefix = " "; }
+	if (/^ +$/.test(suffix)===false) { suffix = " "; }
+	switch (type) {
+	  case 'Digit3x5-0': ccc = EnDe.mg0Map; break;
+	  case 'Digit3x5-1': ccc = EnDe.mg1Map; break;
+	}
+	/*
+	 * constructing a 3x5 matrix is done by using one array for each of
+	 * the 5 lines, finally these array are concatenated
+	 */
+	for (i=0; i<src.length; i++) {
+		if (/[0-9,. =+*/-]/.test( src.charAt(i))===false) { continue; } // ToDo: need to compute RegEx from array indicies
+		kkk = ccc[src.charAt(i)];
+		for (k=0; k<kkk.length; k++) {
+			bbb[k] += prefix + _line(type, kkk[k]) + suffix;
+		}
+	}
+	for (k=0; k<5; k++) {
+		bux +=  bbb[k] + "\n";
+	}
+	while (bbb.pop()!=null) {}
+	ccc = null;
+	kkk = null;
+	return bux;
+  }; // mgd
+
   this.braille  = function(type,mode,_n3_,src,prefix,_n6_,delimiter) {
   //#? convert to Braille characters
   //#type? ASCIIBr:  use ASCII-Braille symbols
@@ -2948,6 +3005,8 @@ xxx1Z3A+!Z22ZA7$Z25Z26Z2F()Z3DZ3FZ0DZ0Axxx2Z3A+Z7BZ5BZ5DZ7DZ5CZ60ZB4Z0DZ0Axxx3Z3
 	case 'urlPNY_'  : return this.idn('PNY_',  mode, uppercase, src, '',     suffix, ''       ); break;
 	case 'SOS'      : return this.sos('null',  mode, uppercase, src, prefix, suffix, delimiter); break;
 	case 'Baudot'   : return this.baudot('null',mode,uppercase, src, prefix, suffix, delimiter); break;
+	case 'Digit3x5-0':return this.mgd(type,    mode, uppercase, src, prefix, suffix, delimiter); break;
+	case 'Digit3x5-1':return this.mgd(type,    mode, uppercase, src, prefix, suffix, delimiter); break;
 	case 'ASCIIBr'  : return this.braille(type,mode, uppercase, src, prefix, suffix, delimiter); break;
 	case 'dotBr'    : return this.braille(type,mode, uppercase, src, prefix, suffix, delimiter); break;
 	case 'NumBr'    : return this.braille(type,mode, uppercase, src, prefix, suffix, delimiter); break;
@@ -3852,6 +3911,53 @@ this.DE     = new function() {
 	return bux;
   }; // baudot
 
+  this.mgd      = function(type,mode,src,prefix,_n6_,delimiter) {
+  //#? convert 3x5 matrix (MathGuard) to digits
+  //#type? Digit3x5-0:  use 3x5 matrix variant 0 (MathGuard)
+  //#type? Digit3x5-1:  use 3x5 matrix variant 1
+	var sid = this.sid() + '.mgd';
+	function _todigit(_m) {
+		var _i = 0;
+		for (_i=0; _i<_m.length; _i++) {
+		}
+	};
+	var bux = '';
+	var kkk = src.split('\n');
+	var ccc = '';
+	var exp = 0;
+	var bit = 0;
+	var a   = 0;
+	var i   = 0;
+	var k   = 0;
+	if (kkk.length<=4) { return src; }  // need at least 5 lines
+					    // all lines must have same amount of characters
+	for (k=0; k<(kkk.length-1); k++) { if (kkk[k].length!=kkk[0].length) { return src; } } // ToDo alert('mismatch'); 
+	this.dbx(sid+': ['+i+"]: '"+kkk[0]+"' '"+kkk[1]+"' '"+kkk[2]+"' '"+kkk[3]+"' '"+kkk[4]);
+	// now parse text, character by character
+	while (i<kkk[0].length) {           // any length is ok, kkk[0].length is just one
+		// if character in each row is space, it's a separator line between matrices
+		if (kkk[0][i]==' ' && kkk[1][i]==' ' && kkk[2][i]==' ' && kkk[3][i]==' ' && kkk[4][i]==' ') { i++; continue; }
+		// now process matrix
+		ccc = '';
+		// now convert to character/digit
+		for (k=0; k<(kkk.length-1); k++) { // process kkk.length-1 (5) rows
+			exp = 2;
+			bit = 0;
+			for (a=i; a<(i+3); a++) {  // process 3 columns
+				bit += (kkk[k][a]===' ') ? 0 : Math.pow(2,exp);
+				exp--;
+			}
+			this.dbx(sid+': ['+i+']: '+kkk[k][i]+kkk[k][i+1]+kkk[k][i+2]+' -> '+bit);
+			ccc += bit;
+		}
+		this.dbx(sid+': ['+i+"]: "+ccc+' -> '+EnDe.gm0Map[ccc]);
+		bux += EnDe.gm0Map[ccc];
+		i += 3;
+	}
+	if (typeof(kkk)==='object') { while (kkk.pop()!=null) {} }
+	return bux;
+  }; // mgd
+
   this.dmp      = function(type,mode,uppercase,src,prefix,suffix,delimiter) {
   //#? convert from traditional xdump or od style: (hex values left only)
   //#type? hex: 'xdump' style input (space seperated hex values left, strings right)
@@ -4346,6 +4452,8 @@ this.DE     = new function() {
 	case 'urlPNY_'  : return this.idn('PNY_',  mode, src, '',     suffix, ''       ); break;
 	case 'SOS'      : return this.sos('null',  mode, src, prefix, suffix, delimiter); break;
 	case 'Baudot'   : return this.baudot('null',mode,src, prefix, suffix, delimiter); break;
+	case 'Digit3x5-0':return this.mgd(type,    mode, src, prefix, suffix, delimiter); break;
+	case 'Digit3x5-1':return this.mgd(type,    mode, src, prefix, suffix, delimiter); break;
 	case 'dumphex'  : return this.dmp('hex',   mode, uppercase, src, prefix, suffix, delimiter); break;
 	case 'dumpODx'  : return this.dmp('ODx',   mode, uppercase, src, prefix, suffix, ''       ); break;
 	case 'dumpxDO'  : return this.dmp('xDO',   mode, uppercase, src, prefix, suffix, ''       ); break;
@@ -4449,7 +4557,7 @@ this.DE     = new function() {
 	// ===================================================================== //
 
 this.Misc   = new function() {
-this.sid        = function()  { return('@(#) EnDe.js 3.40 12/11/23 21:19:44 EnDeMisc'); };
+this.sid        = function()  { return('@(#) EnDe.js 3.42 13/06/12 22:01:51 EnDeMisc'); };
 
 	// ===================================================================== //
 	// global variables                                                      //

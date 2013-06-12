@@ -1,14 +1,16 @@
 
 CHANGE HISTORY
 	
-1.0rc14 12-may-13
+1.0rc14 12-jun-13
     * LIB, API
+	"EnDe.js" *.mgd(): Digit3x5-0, Digit3x5-1 added
+	"EnDeMenu.txt" Digit3x5-0, Digit3x5-1 added
 	"xss-evation.txt" more pattern added
 	"xss-evation.txt" $_SERVER['PHP_SELF'] added
 	"EnDeUser.js" bugfix: viewstate deserialization improved
 
     * GUI
-	"EnDe.man.txt" Glossar improved
+	"EnDe.man.txt" Glossar improved; *mgd() added
 	"EnDe.html" new button "Show Characters"
 	"EnDe.css" .ucs class added
 	"EnDeGUIx.js" '.makechar()' for "Show Characters"

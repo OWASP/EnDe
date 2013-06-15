@@ -43,8 +43,8 @@ HowTo
 	    EnDeFile.txt   - the "Load File Menu:" in the  GUI OPTIONS
 
 	There is "usr/EnDeMenu-Sample.txt" which contains simple flat menu for
-	some of the action menus. Simply rename it to  "usr/EnDeMenu.txt"  and
-	reload your browser.
+	some of the action menus. Simply rename it to  "usr/EnDeMenu.txt" then
+	change it to your needs and reload your browser.
 
 
 Troubleshooting
@@ -66,9 +66,9 @@ Troubleshooting (GUI only)
 
     Why do some select menus in the index.html not work?
 	This is a browser issue.
-	The W3C definitions of HTML describe the  'onClick' and the  'onChange'
-	event. Both must be supported by the browser.  Unfortunatelly there are
-	some browsers  which do only support  one of them.  Therefore it's very
+	The W3C definitions of HTML describe the 'onClick' and the  'onChange'
+	event. Both must be supported by the browser. Unfortunatelly there are
+	some browsers  which do only support  one of them. Therefore it's very
 	difficult to implement a proper solution for all browsers. Please refer
 	to the [Browser Quirks] button for changing this behaviour.
 	Most (but not all) Webkit-based browsers suffer from this problem.
@@ -119,12 +119,12 @@ Miscellaneous
 
 Administration
 
-    Why can I not find EnDe at SourceForge?
-	Mainly because  the author  has his own opinion about how a repository 
-	should work for the developer and the comunity.
-
-	This is not meant offencive anyhow  to SourceForge or any other public
-	repository, they all do a wonderful job providing such services.
+    Why is EnDe's repository?
+	Ende will be hosted at github.com (2013).
+	Currently Ende hat it's own repository there:
+		https://github.com/EnDe/EnDe
+	but it will move to
+		https://github.com/OWASP/OWASP-EnDe
 
     Why is there no public editable source of EnDe?
 	Well,  the sources are public and can be modified as needed.  Just the
@@ -189,5 +189,5 @@ Development
 
 Version of FAQ
 
-	@(#) EnDe.FAQ.txt 3.2 13/06/15 10:01:58
+	@(#) EnDe.FAQ.txt 3.3 13/06/15 10:54:39
 

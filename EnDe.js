@@ -83,7 +83,7 @@
 #       _n2_, _n3_, _n4_, _n5_, _n6_, and _n7_ .
 #?
 #? VERSION
-#?      @(#) EnDe.js 3.42 13/06/12 22:01:51
+#?      @(#) EnDe.js 3.43 13/06/15 09:44:57
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -96,8 +96,8 @@
 
 var EnDe    = new function() {
 
-this.SID    = '3.42';
-this.sid    = function() { return('@(#) EnDe.js 3.42 13/06/12 22:01:51 EnDe'); };
+this.SID    = '3.43';
+this.sid    = function() { return('@(#) EnDe.js 3.43 13/06/15 09:44:57 EnDe'); };
 
 	// ===================================================================== //
 	// debug functions                                                       //
@@ -3923,12 +3923,17 @@ this.DE     = new function() {
 	};
 	var bux = '';
 	var kkk = src.split('\n');
-	var ccc = '';
+	var bbb = '';
+	var ccc = null;
 	var exp = 0;
 	var bit = 0;
 	var a   = 0;
 	var i   = 0;
 	var k   = 0;
+	switch (type) {
+	  case 'Digit3x5-0': ccc = EnDe.gm0Map; break;
+	  case 'Digit3x5-1': ccc = EnDe.gm1Map; break;
+	}
 	if (kkk.length<=4) { return src; }  // need at least 5 lines
 					    // all lines must have same amount of characters
 	for (k=0; k<(kkk.length-1); k++) { if (kkk[k].length!=kkk[0].length) { return src; } } // ToDo alert('mismatch'); 
@@ -3938,7 +3943,7 @@ this.DE     = new function() {
 		// if character in each row is space, it's a separator line between matrices
 		if (kkk[0][i]==' ' && kkk[1][i]==' ' && kkk[2][i]==' ' && kkk[3][i]==' ' && kkk[4][i]==' ') { i++; continue; }
 		// now process matrix
-		ccc = '';
+		bbb = '';
 		// now convert to character/digit
 		for (k=0; k<(kkk.length-1); k++) { // process kkk.length-1 (5) rows
 			exp = 2;
@@ -3948,10 +3953,10 @@ this.DE     = new function() {
 				exp--;
 			}
 			this.dbx(sid+': ['+i+']: '+kkk[k][i]+kkk[k][i+1]+kkk[k][i+2]+' -> '+bit);
-			ccc += bit;
+			bbb += bit;
 		}
-		this.dbx(sid+': ['+i+"]: "+ccc+' -> '+EnDe.gm0Map[ccc]);
-		bux += EnDe.gm0Map[ccc];
+		this.dbx(sid+': ['+i+"]: "+bbb+' -> '+ccc[bbb]);
+		bux += ccc[bbb];
 		i += 3;
 	}
 	if (typeof(kkk)==='object') { while (kkk.pop()!=null) {} }
@@ -4557,7 +4562,7 @@ this.DE     = new function() {
 	// ===================================================================== //
 
 this.Misc   = new function() {
-this.sid        = function()  { return('@(#) EnDe.js 3.42 13/06/12 22:01:51 EnDeMisc'); };
+this.sid        = function()  { return('@(#) EnDe.js 3.43 13/06/15 09:44:57 EnDeMisc'); };
 
 	// ===================================================================== //
 	// global variables                                                      //

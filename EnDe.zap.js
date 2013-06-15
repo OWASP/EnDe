@@ -7,7 +7,7 @@
 #?      Used in EnDe.lib.js when loaded in ZAP.
 #?
 #? DESCRIPTION
-#?      Defines additionl JavaScript functions for in ZAP's ScriptConsole.
+#?      Defines additionl JavaScript functions for ZAP's ScriptConsole.
 #?      Provided (global) functions:
 #?           alert()           - use ZAP's API to show a alert window
 #?           print()           - use ZAP's API to print text on console
@@ -22,7 +22,7 @@
 # HACKER's INFO
 #?
 #? VERSION
-#?      @(#) EnDe.zap.js 3.3 12/12/09 02:40:20
+#?      @(#) EnDe.zap.js 3.4 13/06/15 09:50:17
 #?
 #? AUTHOR
 #?      16-nov-12 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -70,8 +70,8 @@ if (typeof(EnDe)!=='undefined') {
 // ========================================================================= //
 
 EnDe.ZAP    = new function() {
-	this.SID    = '3.3';
-	this.sid    = function() { return '@(#) EnDe.zap.js 3.3 12/12/09 02:40:20 EnDe.ZAP'; };
+	this.SID    = '3.4';
+	this.sid    = function() { return '@(#) EnDe.zap.js 3.4 13/06/15 09:50:17 EnDe.ZAP'; };
 	this.help   = function(str) { return EnDe.Func.help(str); }
 
 	// NOT YET USED

@@ -15,7 +15,7 @@
 #?      EnDeCheck.js
 #?
 #? VERSION
-#?      @(#) EnDeCheck.txt 1.1 11/02/05 18:12:43
+#?      @(#) EnDeCheck.txt 3.1 13/06/15 10:27:55
 #?
 #? AUTHOR
 #?      16-feb-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net

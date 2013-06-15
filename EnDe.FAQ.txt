@@ -189,5 +189,5 @@ Development
 
 Version of FAQ
 
-	@(#) EnDe.FAQ.txt 1.10 11/12/30 23:05:54
+	@(#) EnDe.FAQ.txt 3.2 13/06/15 10:01:58
 

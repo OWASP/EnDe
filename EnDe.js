@@ -83,7 +83,7 @@
 #       _n2_, _n3_, _n4_, _n5_, _n6_, and _n7_ .
 #?
 #? VERSION
-#?      @(#) EnDe.js 3.43 13/06/15 09:44:57
+#?      @(#) EnDe.js 3.44 13/06/16 23:49:15
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -96,8 +96,8 @@
 
 var EnDe    = new function() {
 
-this.SID    = '3.43';
-this.sid    = function() { return('@(#) EnDe.js 3.43 13/06/15 09:44:57 EnDe'); };
+this.SID    = '3.44';
+this.sid    = function() { return('@(#) EnDe.js 3.44 13/06/16 23:49:15 EnDe'); };
 
 	// ===================================================================== //
 	// debug functions                                                       //
@@ -2379,111 +2379,125 @@ this.EN     = new function() {
 	return bux;
   }; // baudot
 
-  this.mgd      = function(type,mode,uppercase,src,prefix,suffix,delimiter) {
-  //#? convert digits to 3x5 matrix (MathGuard)
+  this.symbol   = function(type,mode,uppercase,src,prefix,suffix,delimiter) {
+  //#? convert digits to MxN matrix (MathGuard)
   //#type? Digit3x5-0:  use 3x5 matrix variant 0 (MathGuard)
   //#type? Digit3x5-1:  use 3x5 matrix variant 1
-  //#uppercase? true:   use upper and lower case characters
-  //#prefix? SPACES:    prefix final matrix if only spaces; default 1 space
-  //#suffix? SPACES:    append final matrix if only spaces; default 1 space
-	function _line (_t, src) {
-		var _s = '123456789ABCDEFGHIJKLMNOPQRTSTUWXYZ';
-		if (uppercase===false) { _s += 'abcdefghijklmnopqrstuvwxyz'; }
-		var _c = '*';
-		var _x = '';
-		var _z = src;
-		while (_z > 0) {
-			if (_t==='Digit3x5-0') { _c = _s[Math.floor(Math.random() * 100 % (_s.length-1))]; }
-			_x += (_z%2) ? _c : ' ';
-			_z = Math.floor(_z / 2);
-		}
-		for (_z=_x.length; _z<3; _z++) {  _x += " "; }
-		return EnDe.reverse(_x);
-	};
-	var bux = '';
-	var bbb = new Array('','','','','','');
-	var ccc = null;
-	var kkk = null;
-	var i   = 0;
-	var k   = 0;
-	if (/^ +$/.test(prefix)===false) { prefix = " "; }
-	if (/^ +$/.test(suffix)===false) { suffix = " "; }
-	switch (type) {
-	  case 'Digit3x5-0': ccc = EnDe.mg0Map; break;
-	  case 'Digit3x5-1': ccc = EnDe.mg1Map; break;
-	}
-	/*
-	 * constructing a 3x5 matrix is done by using one array for each of
-	 * the 5 lines, finally these array are concatenated
-	 */
-	for (i=0; i<src.length; i++) {
-		if (/[0-9,. =+*/-]/.test( src.charAt(i))===false) { continue; } // ToDo: need to compute RegEx from array indicies
-		kkk = ccc[src.charAt(i)];
-		for (k=0; k<kkk.length; k++) {
-			bbb[k] += prefix + _line(type, kkk[k]) + suffix;
-		}
-	}
-	for (k=0; k<5; k++) {
-		bux +=  bbb[k] + "\n";
-	}
-	while (bbb.pop()!=null) {}
-	ccc = null;
-	kkk = null;
-	return bux;
-  }; // mgd
-
-  this.braille  = function(type,mode,_n3_,src,prefix,_n6_,delimiter) {
-  //#? convert to Braille characters
   //#type? ASCIIBr:  use ASCII-Braille symbols
   //#type? dotBr:    use dot-Braille symbols
   //#type? NumBr:    use number symbols
   //#type? DadaUrka: use Dada Urka symbols
+  //#uppercase? true:   use upper and lower case characters
+  //#prefix? SPACES:    prefix final matrix if only spaces; default 1 space
+  //#suffix? SPACES:    append final matrix if only spaces; default 1 space
+	this.dbx('EnDe.EN.symbol: (' + type + ',' + prefix + ',' + suffix + ',' + delimiter + ')');
+	function _line (_t, _in, _c) {
+		// convert interger to `bitmask', where each bit is * or random character
+		var _s = '123456789ABCDEFGHIJKLMNOPQRTSTUWXYZ';
+		if (uppercase===false) { _s += 'abcdefghijklmnopqrstuvwxyz'; }
+		var _b = '*';
+		var _x = '';
+		var _z = _in;
+		while (_z > 0) {
+			if (_t==='Digit3x5-0') { _b = _s[Math.floor(Math.random() * 100 % (_s.length-1))]; }
+			_x += (_z%2) ? _b : ' ';
+			_z = Math.floor(_z / 2);
+		}
+		for (_z=_x.length; _z<_c; _z++) {  _x += ' '; }
+		return EnDe.reverse(_x);
+	};
 	var bux = '';
-	var bbb = new Array();
-	var ccc = '';
+	var bbb = new Array('','','','','','','','','');
 	var kkk = null;
-	var c   = 0;
+	var ccc = null;
+	var map = null;
 	var i   = 0;
+	var k   = 0;
+	var row = 0; // number of rows in matrix (dynamically calculated)
+	var col = 2; // number of columns in matrix
 	var dot = (delimiter != '') ? delimiter : ' ';
 	    dot = dot.substring(0,1);
-	bbb[0] = ''; bbb[1] = ''; bbb[2] = ''; bbb[3] = '';
+	if (/^ +$/.test(prefix)===false) { prefix = ' '; }
+	if (/^ +$/.test(suffix)===false) { suffix = ' '; }
+	switch (type) {
+	  case 'Digit3x5-0':    map = EnDe.mg0Map;   col = 3; break;
+	  case 'Digit3x5-1':    map = EnDe.mg1Map;   col = 3; break;
+	  case 'Blade':         map = EnDe.BladeMap; col = 1; break;
+	  case 'ASCIIBr':       map = EnDe.AbrMap;  break;
+	  case 'dotBr':         map = EnDe.DbrMap;  break;
+	  case 'NumBr':         map = EnDe.NbrMap;  break;
+	  case 'DadaUrka':      map = EnDe.DadMap;  break;
+	  default:              return bux;         break; // ToDo: may discuss if this behaviour depends on mode
+	}
 	for (i=0; i<src.length; i++) {
-		ccc = src.charAt(i).toLowerCase();
+		kkk = map[src.charAt(i).toLowerCase()]; // .toLowerCase() works for all maps (2013)
+		this.dbx('EnDe.EN.symbol: [' + i + '] ' + kkk );
+		if (kkk == undefined) { // character not defined in the map
+			switch (mode) {
+			  case 'strict':    return ''; break;
+			  case 'verbose':   // ToDo: to be implemented (currently a dirty hack)
+					 bbb[0] += prefix + '    ';
+					 bbb[1] += prefix + '   ' + src.charAt(i);
+					 bbb[2] += prefix + '    ';
+					break;
+			  case 'lazy':      continue;  break;
+			  default:          continue;  break;
+			}
+		}
+		row = (row < kkk.length) ? kkk.length : row;
 		switch (type) {
-		  case 'ASCIIBr': ccc = EnDe.AbrMap[ccc]; break;
-		  case 'dotBr'  : ccc = EnDe.DbrMap[ccc]; break;
-		  case 'NumBr'  : ccc = EnDe.NbrMap[ccc]; break;
-		  case 'DadaUrka':ccc = EnDe.DadMap[ccc]; break;
-		  case 'Blade'  : ccc = EnDe.Blademap[ccc]; break;
-		  //case 'Blade'  : (/^[]$/.test(ccc)===true) ? ccc = EnDe.BladeMap[ccc] : ccc; break;
-			// ToDo: purpose above test got Blade unknown; probaly browser issue
-		  default       : ccc = EnDe.DbrMap[ccc]; break;
+		  // maps which use explizit characters in a matrix seperated by \n
+		  case 'DadaUrka':
+				/* Example: "***\n  *\n***\n  *\n***" ==> 3 (as 3x5 matrix)
+				 * constructing a NxM matrix by spliting at \n
+				 * then each line contains columns
+				 */
+				row = 0;
+				kkk = kkk.replace(/ /g, dot).split('\n');
+				bbb[kkk.length] += prefix + '  ' + ' ';
+				for (k=0; k<kkk.length; k++) {
+					bbb[k] += prefix + kkk[k] + suffix;
+				}
+				row = (row < kkk.length) ? kkk.length : row;
+				break;
+		  // maps which use array of integers as bitmap
+		  default:
+				/* Example: Array(7,1,7,1,7) ==> 3 (as 3x5 matrix)
+				 * constructing a NxM matrix is done by using one array for
+				 * each of the 5 lines, finally these arrays are concatenated
+				 */
+				bbb[kkk.length] += prefix + '   ' + ' ';
+				for (k=0; k<kkk.length; k++) {
+					ccc = _line(type, kkk[k], col);
+					if (type.match(/^Digit/)===null) { ccc = ccc.replace(/ /g, dot); }
+					bbb[k] += prefix + ccc + suffix;
+					this.dbx('EnDe.EN.symbol: [' + i + '] ' + kkk[k] + ' -> ' + bbb[k]);
+				}
+				break;
 		}
-		if (ccc != undefined) {
-			bbb[0] += prefix + '  ' + ' ';
-			kkk  = ccc.replace(/ /g, dot).split('\n');
-			for (c=0; c<kkk.length; c++) {
-				bbb[c+1] += prefix + kkk[c] + ' ';
-			}
-		} else {
-			// Dada Urka only
-			if (type == 'DadaUrka') {
-				bbb[0] += prefix + '    ';
-				bbb[1] += prefix + '    ';
-				bbb[2] += prefix + ' ' + src.charAt(i) + '  ';
-				bbb[3] += prefix + '    ';
-			}
-		}
-		// force line break
+		// ToDo: force line break
+/*
 		if ((bbb[1].length % 75)<(3+prefix.length)) { // ToDo: replace hardcoded value
 			bux += bbb[0] + '\n' + bbb[1] + '\n' + bbb[2] + '\n' + bbb[3] + '\n';
 			bbb[0] = ''; bbb[1] = ''; bbb[2] = ''; bbb[3] = '';
 		}
-	}
-	bux += bbb[0] + '\n' + bbb[1] + '\n' + bbb[2] + '\n' + bbb[3] + '\n';
-	while (kkk.pop()!=null) {}
-	while (bbb.pop()!=null) {}
+*/
+	} // src
+	this.dbx('EnDe.EN.symbol: rows='+row);
+	for (k=0; k<row; k++) { bux +=  bbb[k] + '\n'; }
+	if (typeof(bbb)==='object') { while (bbb.pop()!=null) {}; }; bbb = null;
+	if (typeof(kkk)==='object') { while (kkk.pop()!=null) {}; }; kkk = null;
 	return bux;
+  }; // symbol
+
+  this.mathguard= function(uppercase,src,prefix,suffix) { return EnDe.EN.symbol('Digit3x5-0','strict',uppercase,src,prefix,suffix,'5'); }
+  //#? convert digit to MathGuard 3x5 matrix (strict mode allows only digits)
+
+  this.matrix3x5= function(src,prefix,suffix) { return EnDe.EN.symbol('Digit3x5-1','strict',false,src,prefix,suffix,delimiter); }
+  //#? convert digit to 3x5 matrix (matrix is variant of MathGuard matrix; strict mode allows only digits)
+
+  this.braille  = function(src,prefix,suffix) { return EnDe.EN.symbol('ASCIIBr',   'strict',false,src,prefix,suffix,delimiter);
+  //#? convert to Braille characters (ASCII Braille)
   }; // braille
 
   this.blade    = function(type,mode,_n3_,src,_n5_,_n6_,_n7_) {
@@ -3005,13 +3019,14 @@ xxx1Z3A+!Z22ZA7$Z25Z26Z2F()Z3DZ3FZ0DZ0Axxx2Z3A+Z7BZ5BZ5DZ7DZ5CZ60ZB4Z0DZ0Axxx3Z3
 	case 'urlPNY_'  : return this.idn('PNY_',  mode, uppercase, src, '',     suffix, ''       ); break;
 	case 'SOS'      : return this.sos('null',  mode, uppercase, src, prefix, suffix, delimiter); break;
 	case 'Baudot'   : return this.baudot('null',mode,uppercase, src, prefix, suffix, delimiter); break;
-	case 'Digit3x5-0':return this.mgd(type,    mode, uppercase, src, prefix, suffix, delimiter); break;
-	case 'Digit3x5-1':return this.mgd(type,    mode, uppercase, src, prefix, suffix, delimiter); break;
-	case 'ASCIIBr'  : return this.braille(type,mode, uppercase, src, prefix, suffix, delimiter); break;
-	case 'dotBr'    : return this.braille(type,mode, uppercase, src, prefix, suffix, delimiter); break;
-	case 'NumBr'    : return this.braille(type,mode, uppercase, src, prefix, suffix, delimiter); break;
-	case 'DadaUrka' : return this.braille(type,mode, uppercase, src, prefix, suffix, delimiter); break;
-	case 'Blade'    : return this.blade(type,  mode, uppercase, src, prefix, suffix, delimiter); break;
+	case 'symbol'   : return this.symbol('null',mode,uppercase, src, prefix, suffix, delimiter); break;
+	case 'MathGuard': return this.symbol('Digit3x5-0',mode,uppercase,src,prefix,suffix,delimiter); break;
+	case 'matrix3x5': return this.symbol('Digit3x5-1',mode,uppercase,src,prefix,suffix,delimiter); break;
+	case 'ASCIIBr'  : return this.symbol(type, mode, uppercase, src, prefix, suffix, delimiter); break;
+	case 'dotBr'    : return this.symbol(type, mode, uppercase, src, prefix, suffix, delimiter); break;
+	case 'NumBr'    : return this.symbol(type, mode, uppercase, src, prefix, suffix, delimiter); break;
+	case 'DadaUrka' : return this.symbol(type, mode, uppercase, src, prefix, suffix, delimiter); break;
+	case 'Blade'    : return this.blade( type, mode, uppercase, src, '',     '',     ''       ); break;
 	case 'crc_8'    : return this.crc('h_8',   mode, uppercase, src, 0x0000, 0x0000, ''       ); break;
 	case 'crc_16'   : return this.crc('user',  mode, uppercase, src, 0x0000, 0x0000, 'ARCtab' ); break;
 	case 'crc_cciitt':return this.crc('user',  mode, uppercase, src, 0xffff, 0x0000, 0x1021   ); break;
@@ -3911,20 +3926,17 @@ this.DE     = new function() {
 	return bux;
   }; // baudot
 
-  this.mgd      = function(type,mode,src,prefix,_n6_,delimiter) {
-  //#? convert 3x5 matrix (MathGuard) to digits
+  this.symbol   = function(type,mode,src,_n5_,_n6_,rows) {
+  //#? convert NxM matrix (MathGuard) to digits
+  // #type? null:        use MxN matrix ** NOT YET IMPLEMENTED **
   //#type? Digit3x5-0:  use 3x5 matrix variant 0 (MathGuard)
   //#type? Digit3x5-1:  use 3x5 matrix variant 1
-	var sid = this.sid() + '.mgd';
-	function _todigit(_m) {
-		var _i = 0;
-		for (_i=0; _i<_m.length; _i++) {
-		}
-	};
+  //#rows? <integer>:   number of rows to process, i.e. 5
+	var sid = 'EnDe.DE.mgd'; // this.sid() + '.mgd';
 	var bux = '';
 	var kkk = src.split('\n');
 	var bbb = '';
-	var ccc = null;
+	var ccc = EnDe.gm0Map;
 	var exp = 0;
 	var bit = 0;
 	var a   = 0;
@@ -3933,11 +3945,14 @@ this.DE     = new function() {
 	switch (type) {
 	  case 'Digit3x5-0': ccc = EnDe.gm0Map; break;
 	  case 'Digit3x5-1': ccc = EnDe.gm1Map; break;
+	  // default: // see ccc declaration
 	}
-	if (kkk.length<=4) { return src; }  // need at least 5 lines
+	if (kkk.length<=4)   { return src; }// need at least 5 lines
+	if (kkk.length<rows) { return src; }// need at least rows lines
 					    // all lines must have same amount of characters
+	for (k=0; k<(kkk.length-1); k++) { bbb += " '" + kkk[k] + "'"; }
+	this.dbx(sid+': [' + i + ']:'+bbb);
 	for (k=0; k<(kkk.length-1); k++) { if (kkk[k].length!=kkk[0].length) { return src; } } // ToDo alert('mismatch'); 
-	this.dbx(sid+': ['+i+"]: '"+kkk[0]+"' '"+kkk[1]+"' '"+kkk[2]+"' '"+kkk[3]+"' '"+kkk[4]);
 	// now parse text, character by character
 	while (i<kkk[0].length) {           // any length is ok, kkk[0].length is just one
 		// if character in each row is space, it's a separator line between matrices
@@ -3961,7 +3976,13 @@ this.DE     = new function() {
 	}
 	if (typeof(kkk)==='object') { while (kkk.pop()!=null) {} }
 	return bux;
-  }; // mgd
+  }; // symbol
+
+  this.mathguard= function(src) { return EnDe.DE.symbol('Digit3x5-0','strict',src,'','',5); };
+  //#? convert MathGuard 3x5 matrix to digits
+
+  this.matrix3x5= function(src) { return EnDe.DE.symbol('Digit3x5-1', 'lazy', src,'','',5); };
+  //#? convert from 3x5 matrix to digits (matrix is variant of MathGuard matrix)
 
   this.dmp      = function(type,mode,uppercase,src,prefix,suffix,delimiter) {
   //#? convert from traditional xdump or od style: (hex values left only)
@@ -4457,8 +4478,9 @@ this.DE     = new function() {
 	case 'urlPNY_'  : return this.idn('PNY_',  mode, src, '',     suffix, ''       ); break;
 	case 'SOS'      : return this.sos('null',  mode, src, prefix, suffix, delimiter); break;
 	case 'Baudot'   : return this.baudot('null',mode,src, prefix, suffix, delimiter); break;
-	case 'Digit3x5-0':return this.mgd(type,    mode, src, prefix, suffix, delimiter); break;
-	case 'Digit3x5-1':return this.mgd(type,    mode, src, prefix, suffix, delimiter); break;
+	case 'symbol'   : return this.symbol('null',mode,src, prefix, suffix, delimiter); break;
+	case 'MathGuard': return this.mathguard(         src                           ); break;
+	case 'matrix3x5': return this.matrix3x5(         src                           ); break;
 	case 'dumphex'  : return this.dmp('hex',   mode, uppercase, src, prefix, suffix, delimiter); break;
 	case 'dumpODx'  : return this.dmp('ODx',   mode, uppercase, src, prefix, suffix, ''       ); break;
 	case 'dumpxDO'  : return this.dmp('xDO',   mode, uppercase, src, prefix, suffix, ''       ); break;
@@ -4562,7 +4584,7 @@ this.DE     = new function() {
 	// ===================================================================== //
 
 this.Misc   = new function() {
-this.sid        = function()  { return('@(#) EnDe.js 3.43 13/06/15 09:44:57 EnDeMisc'); };
+this.sid        = function()  { return('@(#) EnDe.js 3.44 13/06/16 23:49:15 EnDeMisc'); };
 
 	// ===================================================================== //
 	// global variables                                                      //

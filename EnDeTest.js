@@ -42,7 +42,7 @@
 #?
 #?
 #? VERSION
-#?      @(#) EnDeTest.js 3.9 12/11/14 00:04:40
+#?      @(#) EnDeTest.js 3.10 13/06/16 23:47:30
 #?
 #? AUTHOR
 #?      22-jun-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -56,8 +56,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.Test   = new function() {
-	this.SID    = '3.9';
-	this.sid    = function() { return '@(#) EnDeTest.js 3.9 12/11/14 00:04:40 EnDe.Test'; },
+	this.SID    = '3.10';
+	this.sid    = function() { return '@(#) EnDeTest.js 3.10 13/06/16 23:47:30 EnDe.Test'; },
 
 	// ===================================================================== //
 	// global variables                                                      //
@@ -134,7 +134,8 @@ EnDe.Test   = new function() {
 	this.test   = function(src) {
 	//#? run test for data given in src; returns array with results
 // ToDo: need to describe format of returned array
-		_dpr('EnDe.Test.test(\n'+src+'\n)\n');
+		var sid = 'EnDe.Test.test';
+		_dpr(sid+'(\n'+src+'\n)\n');
 
 		function _txt(src) {
 		// #? check if plain text, convert \uHHHH and \xHH to text; return raw text enclosed in ' or "
@@ -230,8 +231,11 @@ EnDe.Test   = new function() {
 			dec = '';
 			err = null;
 			try { // run test
+				_dpr(sid+': func='+func+', mode='+mode);
 				if ((mode==='encode') || (mode==='en-/decode')) {
 					enc = EnDe.EN.dispatch(func,'strict',uppercase,txt,prefix,suffix,delimiter);
+					_dpr(sid+': (enc==expect)='+(enc===expect));
+					//#dbx# alert('.'+expect+'.\n.'+enc);
 					if (enc!==expect) { // failed, no more tests possible
 						bux.push(new Array(func,expect,enc,((mode==='en-/decode')?'-undef-':null),err));
 						continue;
@@ -259,8 +263,9 @@ EnDe.Test   = new function() {
 					if (r!=='') {
 						dec = EnDe.DE.dispatch(r,'strict',false,enc,prefix,suffix,delimiter);
 					}
+					//#dbx# alert('.'+dec+'.\n.'+txt);
+					_dpr(sid+': (dec==txt)='+(dec===txt));
 					if (dec!==txt) { // failed, no more tests possible
-//#dbx# alert ('de:\n'+dec+'\n'+expect+'\n'+txt);
 						bux.push(new Array(func,expect,null,dec,err));
 						continue;
 					}
@@ -269,11 +274,12 @@ EnDe.Test   = new function() {
 			} catch(e) {
 				bux.push(new Array(func,expect,enc,dec,e));
 			}
+			_dpr(sid);
 		} // while line
 		if (fileerr!=='') {
 			bux.push(new Array('_error','errors found in ' + src + ':\n' + fileerr,null,null,null));
 		}
-		_dpr('EnDe.Test.test {\n'+bux.join('\n}\n'));
+		_dpr(sid+' {\n'+bux.join('\n')+'\n}');
 		return bux;
 	}; // text
 

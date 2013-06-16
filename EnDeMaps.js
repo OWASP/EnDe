@@ -51,15 +51,15 @@
 #?          EnDe.DIN66003fMap   -
 #?          EnDe.dnaMap     -
 #?          EnDe.rangeMap   -
-#?          EnDe.mg0Map     - (MathGuard) 3x5 matrix for digits; variuant 0
-#?          EnDe.mg1Map     - (MathGuard) 3x5 matrix for digits; variuant 1
+#?          EnDe.mg0Map     - 3x5 matrix for digits; MathGuard style
+#?          EnDe.mg1Map     - 3x5 matrix for digits; MathGuard variuant
 #?
 #? SEE ALSO
 #?      EnDe.js
 #?      EnDeMaps.txt
 #?
 #? VERSION
-#?      @(#) EnDeMaps.js 3.23 13/06/11 23:07:36
+#?      @(#) EnDeMaps.js 3.24 13/06/16 23:52:06
 #?
 #? AUTHOR
 #?      05-jun-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -111,11 +111,11 @@ EnDe.mg0Map     = new Array(10);
 EnDe.mg1Map     = new Array(10);
 ------------- */
 
-// ToDo following settings need to be moved to EnDeMaps.txt (missing 'cause we
 //      to unescape \n here (see _u() below)
 
 /*
- * Braille characters
+ * Symbol characters (i.e. Braille)
+ * for en-/decoding see EnDe.{EN,DE}.symbol()
  */
 /*
 	following Braille character: 1-3-4-5
@@ -124,12 +124,16 @@ EnDe.mg1Map     = new Array(10);
 		 *
 		*
 
-	will be written as:
+	can be written as:
 
 		'**\n *\n* '
 		 14  25  36
+
+	or as array:
+
+		Array(3,1,2)
  */
-/* References
+/* References dor Braille
  * http://www.dotlessbraille.org/FACInfo.htm
  * http://www.brl.org/
  * http://de.wikipedia.org/wiki/Brailleschrift
@@ -139,97 +143,143 @@ EnDe.mg1Map     = new Array(10);
  * Standard (dotless) Braille characters
  */
 EnDe.DbrMap['digit']=' *\n *\n**'; // used as prefix to digits same as '#'
-EnDe.DbrMap[' ']='  \n* \n  ';
-EnDe.DbrMap['1']='* \n  \n  ';
-EnDe.DbrMap['2']='* \n* \n  ';
-EnDe.DbrMap['3']='**\n  \n  ';
-EnDe.DbrMap['4']='**\n *\n  ';
-EnDe.DbrMap['5']='* \n *\n  ';
-EnDe.DbrMap['6']='**\n* \n  ';
-EnDe.DbrMap['7']='**\n**\n  ';
-EnDe.DbrMap['8']='* \n**\n  ';
-EnDe.DbrMap['9']=' *\n* \n  ';
-EnDe.DbrMap['0']=' *\n**\n  ';
+EnDe.DbrMap[' ']=Array(0,2,0);  // '  \n* \n  '
+EnDe.DbrMap['1']=Array(2,0,0);  // '* \n  \n  '
+EnDe.DbrMap['2']=Array(2,2,0);  // '* \n* \n  '
+EnDe.DbrMap['3']=Array(3,0,0);  // '**\n  \n  '
+EnDe.DbrMap['4']=Array(3,1,0);  // '**\n *\n  '
+EnDe.DbrMap['5']=Array(2,1,0);  // '* \n *\n  '
+EnDe.DbrMap['6']=Array(3,2,0);  // '**\n* \n  '
+EnDe.DbrMap['7']=Array(3,3,0);  // '**\n**\n  '
+EnDe.DbrMap['8']=Array(2,3,0);  // '* \n**\n  '
+EnDe.DbrMap['9']=Array(1,2,0);  // ' *\n* \n  '
+EnDe.DbrMap['0']=Array(1,3,0);  // ' *\n**\n  '
 //
-EnDe.DbrMap['a']='* \n  \n  ';
-EnDe.DbrMap['b']='* \n* \n  ';
-EnDe.DbrMap['c']='**\n  \n  ';
-EnDe.DbrMap['d']='**\n *\n  ';
-EnDe.DbrMap['e']='* \n *\n  ';
-EnDe.DbrMap['f']='**\n* \n  ';
-EnDe.DbrMap['g']='**\n**\n  ';
-EnDe.DbrMap['h']='* \n**\n  ';
-EnDe.DbrMap['i']=' *\n* \n  ';
-EnDe.DbrMap['j']=' *\n**\n  ';
+EnDe.DbrMap['a']=Array(2,0,0);  // '* \n  \n  '
+EnDe.DbrMap['b']=Array(2,2,0);  // '* \n* \n  '
+EnDe.DbrMap['c']=Array(3,0,0);  // '**\n  \n  '
+EnDe.DbrMap['d']=Array(3,1,0);  // '**\n *\n  '
+EnDe.DbrMap['e']=Array(2,1,0);  // '* \n *\n  '
+EnDe.DbrMap['f']=Array(3,2,0);  // '**\n* \n  '
+EnDe.DbrMap['g']=Array(3,3,0);  // '**\n**\n  '
+EnDe.DbrMap['h']=Array(2,3,0);  // '* \n**\n  '
+EnDe.DbrMap['i']=Array(1,2,0);  // ' *\n* \n  '
+EnDe.DbrMap['j']=Array(1,3,0);  // ' *\n**\n  '
 //
-EnDe.DbrMap['k']='* \n  \n* ';
-EnDe.DbrMap['l']='* \n* \n* ';
-EnDe.DbrMap['m']='**\n  \n* ';
-EnDe.DbrMap['n']='**\n *\n* ';
-EnDe.DbrMap['o']='* \n *\n* ';
-EnDe.DbrMap['p']='**\n* \n* ';
-EnDe.DbrMap['q']='**\n**\n* ';
-EnDe.DbrMap['r']='* \n**\n* ';
-EnDe.DbrMap['s']=' *\n* \n* ';
-EnDe.DbrMap['t']=' *\n**\n* ';
+EnDe.DbrMap['k']=Array(2,0,2);  // '* \n  \n* '
+EnDe.DbrMap['l']=Array(2,2,2);  // '* \n* \n* '
+EnDe.DbrMap['m']=Array(3,0,2);  // '**\n  \n* '
+EnDe.DbrMap['n']=Array(3,1,2);  // '**\n *\n* '
+EnDe.DbrMap['o']=Array(2,1,2);  // '* \n *\n* '
+EnDe.DbrMap['p']=Array(3,2,2);  // '**\n* \n* '
+EnDe.DbrMap['q']=Array(3,3,2);  // '**\n**\n* '
+EnDe.DbrMap['r']=Array(2,3,2);  // '* \n**\n* '
+EnDe.DbrMap['s']=Array(1,2,2);  // ' *\n* \n* '
+EnDe.DbrMap['t']=Array(1,3,2);  // ' *\n**\n* '
 //
-EnDe.DbrMap['u']='* \n  \n**';
-EnDe.DbrMap['v']='* \n* \n**';
-EnDe.DbrMap['w']=' *\n**\n *';
-EnDe.DbrMap['x']='**\n  \n**';
-EnDe.DbrMap['y']='**\n *\n**';
-EnDe.DbrMap['z']='* \n *\n**';
-EnDe.DbrMap['ß']=' *\n* \n**';
-EnDe.DbrMap['st']=' *\n**\n**';
-EnDe.DbrMap['au']='* \n  \n *';
-EnDe.DbrMap['eu']='* \n* \n *';
+EnDe.DbrMap['u']=Array(2,0,3);  // '* \n  \n**'
+EnDe.DbrMap['v']=Array(2,2,3);  // '* \n* \n**'
+EnDe.DbrMap['w']=Array(1,3,1);  // ' *\n**\n *'
+EnDe.DbrMap['x']=Array(3,0,3);  // '**\n  \n**'
+EnDe.DbrMap['y']=Array(3,1,3);  // '**\n *\n**'
+EnDe.DbrMap['z']=Array(2,1,3);  // '* \n *\n**'
+EnDe.DbrMap['ß']=Array(1,2,3);  // ' *\n* \n**'
+EnDe.DbrMap['st']=Array(1,3,3); // ' *\n**\n**'
+EnDe.DbrMap['au']=Array(2,0,1); // '* \n  \n *'
+EnDe.DbrMap['eu']=Array(2,2,1); // '* \n* \n *'
 //
-EnDe.DbrMap[',']='  \n* \n  ';
-EnDe.DbrMap[';']='  \n* \n* ';
-EnDe.DbrMap[':']='  \n**\n  ';
-EnDe.DbrMap['.']='  \n  \n* ';
-EnDe.DbrMap['?']='  \n* \n *';
-EnDe.DbrMap['!']='  \n**\n* ';
-EnDe.DbrMap['(']='  \n**\n**';
-EnDe.DbrMap[')']='  \n**\n**';
-EnDe.DbrMap['"']='  \n* \n**';
-EnDe.DbrMap['"']='  \n *\n**';
-EnDe.DbrMap['-']='  \n  \n**';
+EnDe.DbrMap[',']=Array(0,2,0);  // '  \n* \n  '
+EnDe.DbrMap[';']=Array(0,2,2);  // '  \n* \n* '
+EnDe.DbrMap[':']=Array(0,3,0);  // '  \n**\n  '
+EnDe.DbrMap['.']=Array(0,0,2);  // '  \n  \n* '
+EnDe.DbrMap['?']=Array(0,2,1);  // '  \n* \n *'
+EnDe.DbrMap['!']=Array(0,3,2);  // '  \n**\n* '
+EnDe.DbrMap['(']=Array(0,3,3);  // '  \n**\n**'
+EnDe.DbrMap[')']=Array(0,3,3);  // '  \n**\n**'
+EnDe.DbrMap['"']=Array(0,2,3);  // '  \n* \n**'
+EnDe.DbrMap['"']=Array(0,1,3);  // '  \n *\n**'
+EnDe.DbrMap['-']=Array(0,0,3);  // '  \n  \n**'
 /*
  * ASCII Braille characters
  */
 EnDe.AbrMap     = EnDe.DbrMap;
-EnDe.AbrMap[' ']='  \n  \n *';
+EnDe.AbrMap[' ']=Array(0,0,1);  // '  \n  \n *'
 //
-EnDe.AbrMap[',']='  \n  \n *';
-EnDe.AbrMap[';']='  \n *\n *';
-EnDe.AbrMap[':']='* \n *\n *';
-EnDe.AbrMap['.']=' *\n  \n *';
-EnDe.AbrMap['?']='**\n *\n *';
-EnDe.AbrMap['!']=' *\n* \n**';
-EnDe.AbrMap['(']='* \n**\n**';
-EnDe.AbrMap[')']=' *\n**\n**';
-EnDe.AbrMap['"']='  \n *\n  ';
-EnDe.AbrMap['"']='  \n  \n *';
-EnDe.AbrMap['-']='  \n  \n**';
+EnDe.AbrMap[',']=Array(0,0,1);  // '  \n  \n *'
+EnDe.AbrMap[';']=Array(0,2,1);  // '  \n *\n *'
+EnDe.AbrMap[':']=Array(0,2,1);  // '* \n *\n *'
+EnDe.AbrMap['.']=Array(0,0,1);  // ' *\n  \n *'
+EnDe.AbrMap['?']=Array(0,2,1);  // '**\n *\n *'
+EnDe.AbrMap['!']=Array(0,2,3);  // ' *\n* \n**'
+EnDe.AbrMap['(']=Array(0,2,3);  // '* \n**\n**'
+EnDe.AbrMap[')']=Array(0,2,3);  // ' *\n**\n**'
+EnDe.AbrMap['"']=Array(0,2,0);  // '  \n *\n  '
+EnDe.AbrMap['"']=Array(0,0,1);  // '  \n  \n *'
+EnDe.AbrMap['-']=Array(0,0,3);  // '  \n  \n**'
 //
-EnDe.AbrMap['#']=' *\n *\n**';
-EnDe.AbrMap['$']='**\n* \n *';
-EnDe.AbrMap['%']='**\n  \n *';
-EnDe.AbrMap['&']='**\n* \n**';
-EnDe.AbrMap["'"]='  \n  \n* ';
-EnDe.AbrMap['*']='* \n  \n *';
-EnDe.AbrMap['+']=' *\n  \n**';
-EnDe.AbrMap['/']=' *\n  \n* ';
-EnDe.AbrMap['<']='* \n* \n *';
-EnDe.AbrMap['=']='**\n**\n**';
-EnDe.AbrMap['>']=' *\n *\n* ';
-EnDe.AbrMap['@']=' *\n  \n  ';
-EnDe.AbrMap['[']=' *\n* \n *';
-EnDe.AbrMap['\\']='* \n**\n *';
-EnDe.AbrMap[']']='**\n**\n *';
-EnDe.AbrMap['^']=' *\n *\n  ';
-EnDe.AbrMap['_']=' *\n *\n* ';
+EnDe.AbrMap['#']=Array(1,1,3);  // ' *\n *\n**'
+EnDe.AbrMap['$']=Array(3,2,1);  // '**\n* \n *'
+EnDe.AbrMap['%']=Array(3,0,1);  // '**\n  \n *'
+EnDe.AbrMap['&']=Array(3,2,3);  // '**\n* \n**'
+EnDe.AbrMap["'"]=Array(0,0,2);  // '  \n  \n* '
+EnDe.AbrMap['*']=Array(2,0,1);  // '* \n  \n *'
+EnDe.AbrMap['+']=Array(1,0,3);  // ' *\n  \n**'
+EnDe.AbrMap['/']=Array(1,0,2);  // ' *\n  \n* '
+EnDe.AbrMap['<']=Array(2,2,1);  // '* \n* \n *'
+EnDe.AbrMap['=']=Array(3,3,3);  // '**\n**\n**'
+EnDe.AbrMap['>']=Array(1,1,2);  // ' *\n *\n* '
+EnDe.AbrMap['@']=Array(1,0,0);  // ' *\n  \n  '
+EnDe.AbrMap['[']=Array(1,2,1);  // ' *\n* \n *'
+EnDe.AbrMap['\\']=Array(2,3,1); // '* \n**\n *'
+EnDe.AbrMap[']']=Array(3,3,1);  // '**\n**\n *'
+EnDe.AbrMap['^']=Array(1,1,0);  // ' *\n *\n  '
+EnDe.AbrMap['_']=Array(1,1,2);  // ' *\n *\n* '
+
+/*
+ * (MathGuard) 3x5 matrix for digits; variant 0
+ */
+EnDe.mg0Map['0']=Array(7,5,5,5,7);
+EnDe.mg0Map['1']=Array(2,6,2,2,7);
+EnDe.mg0Map['2']=Array(7,1,7,4,7);
+EnDe.mg0Map['3']=Array(7,1,7,1,7);
+EnDe.mg0Map['4']=Array(4,5,7,1,1);
+EnDe.mg0Map['5']=Array(7,4,7,1,7);
+EnDe.mg0Map['6']=Array(7,4,7,5,7);
+EnDe.mg0Map['7']=Array(7,1,1,1,1);
+EnDe.mg0Map['8']=Array(7,5,7,5,7);
+EnDe.mg0Map['9']=Array(7,5,7,1,7);
+EnDe.mg0Map['+']=Array(0,2,7,2,0);
+EnDe.mg0Map['-']=Array(0,0,7,0,0);
+EnDe.mg0Map['*']=Array(0,5,2,5,0);
+EnDe.mg0Map['/']=Array(0,1,2,4,0);
+EnDe.mg0Map['=']=Array(0,7,0,7,0);
+EnDe.mg0Map['.']=Array(0,0,0,2,0);
+EnDe.mg0Map[',']=Array(0,0,0,2,2);
+EnDe.mg0Map[' ']=Array(0,0,0,0,0);
+
+/*
+ * (MathGuard) 3x5 matrix for digits; variant 1
+ */
+EnDe.mg1Map['0']=Array(2,5,5,5,2);
+EnDe.mg1Map['1']=Array(2,6,2,2,2);
+EnDe.mg1Map['2']=Array(6,1,2,4,7);
+EnDe.mg1Map['3']=Array(6,1,6,1,6);
+EnDe.mg1Map['4']=Array(1,3,7,1,1);
+EnDe.mg1Map['5']=Array(7,4,6,1,6);
+EnDe.mg1Map['6']=Array(2,4,6,5,2);
+EnDe.mg1Map['7']=Array(7,1,1,2,4);
+EnDe.mg1Map['8']=Array(2,5,2,5,2);
+EnDe.mg1Map['9']=Array(2,5,3,1,2);
+EnDe.mg1Map['+']=Array(0,2,7,2,0);
+EnDe.mg1Map['-']=Array(0,0,7,0,0);
+EnDe.mg1Map['*']=Array(0,5,2,5,0);
+EnDe.mg1Map['/']=Array(0,1,2,4,0);
+EnDe.mg1Map['=']=Array(0,7,0,7,0);
+EnDe.mg1Map['.']=Array(0,0,0,2,0);
+EnDe.mg1Map[',']=Array(0,0,0,2,4);
+EnDe.mg1Map[' ']=Array(0,0,0,0,0);
+
+// ToDo following settings need to be moved to EnDeMaps.txt (missing 'cause we
 
 /*
  * Dada Urka  http://www.leiber.ws/dirk/dadaurka.htm
@@ -287,57 +337,13 @@ EnDe.DadMap['X']='+--+\n|* |\n+--+';
 EnDe.DadMap['Y']='+--+\n|**|\n+--+';
 EnDe.DadMap['Z']='+---\n|   \n+---';
 
-/*
- * (MathGuard) 3x5 matrix for digits; variant 0
- */
-EnDe.mg0Map['0']=Array(7, 5, 5, 5, 7);
-EnDe.mg0Map['1']=Array(2, 6, 2, 2, 7);
-EnDe.mg0Map['2']=Array(7, 1, 7, 4, 7);
-EnDe.mg0Map['3']=Array(7, 1, 7, 1, 7);
-EnDe.mg0Map['4']=Array(4, 5, 7, 1, 1);
-EnDe.mg0Map['5']=Array(7, 4, 7, 1, 7);
-EnDe.mg0Map['6']=Array(7, 4, 7, 5, 7);
-EnDe.mg0Map['7']=Array(7, 1, 1, 1, 1);
-EnDe.mg0Map['8']=Array(7, 5, 7, 5, 7);
-EnDe.mg0Map['9']=Array(7, 5, 7, 1, 7);
-EnDe.mg0Map['+']=Array(0, 2, 7, 2, 0);
-EnDe.mg0Map['-']=Array(0, 0, 7, 0, 0);
-EnDe.mg0Map['*']=Array(0, 5, 2, 5, 0);
-EnDe.mg0Map['/']=Array(0, 1, 2, 4, 0);
-EnDe.mg0Map['=']=Array(0, 7, 0, 7, 0);
-EnDe.mg0Map['.']=Array(0, 0, 0, 2, 0);
-EnDe.mg0Map[',']=Array(0, 0, 0, 2, 2);
-EnDe.mg0Map[' ']=Array(0, 0, 0, 0, 0);
-
-/*
- * (MathGuard) 3x5 matrix for digits; variant 1
- */
-EnDe.mg1Map['0']=Array(2, 5, 5, 5, 2);
-EnDe.mg1Map['1']=Array(2, 6, 2, 2, 2);
-EnDe.mg1Map['2']=Array(6, 1, 2, 4, 7);
-EnDe.mg1Map['3']=Array(6, 1, 6, 1, 6);
-EnDe.mg1Map['4']=Array(1, 3, 7, 1, 1);
-EnDe.mg1Map['5']=Array(7, 4, 6, 1, 6);
-EnDe.mg1Map['6']=Array(2, 4, 6, 5, 2);
-EnDe.mg1Map['7']=Array(7, 1, 1, 2, 4);
-EnDe.mg1Map['8']=Array(2, 5, 2, 5, 2);
-EnDe.mg1Map['9']=Array(2, 5, 3, 1, 2);
-EnDe.mg1Map['+']=Array(0, 2, 7, 2, 0);
-EnDe.mg1Map['-']=Array(0, 0, 7, 0, 0);
-EnDe.mg1Map['*']=Array(0, 5, 2, 5, 0);
-EnDe.mg1Map['/']=Array(0, 1, 2, 4, 0);
-EnDe.mg1Map['=']=Array(0, 7, 0, 7, 0);
-EnDe.mg1Map['.']=Array(0, 0, 0, 2, 0);
-EnDe.mg1Map[',']=Array(0, 0, 0, 2, 4);
-EnDe.mg1Map[' ']=Array(0, 0, 0, 0, 0);
-
 // ========================================================================= //
 // EnDe.Maps object methods                                                  //
 // ========================================================================= //
 
 EnDe.Maps   = new function() {
-	this.SID    = '3.23';
-	this.sid    = function() { return('@(#) EnDeMaps.js 3.23 13/06/11 23:07:36 EnDe.Maps'); };
+	this.SID    = '3.24';
+	this.sid    = function() { return('@(#) EnDeMaps.js 3.24 13/06/16 23:52:06 EnDe.Maps'); };
 	this.trace  = false;
 
 	this.traces = [];   /* used for trace, as GUI function are not avaialable

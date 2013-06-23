@@ -245,7 +245,7 @@ INTRODUCTION
     BROWSER TOOL - EnDe
 	
 	While having so much trouble to get the right encoding,  EnDe was born
-	so that (hopfully) a reliable coding, hashing etc. exists in browsers.
+	so that (hopefully) reliable coding, hashing etc. exists in browsers.
 	EnDe does not claim to do it the right way,  but it at least tells you
 	how the input data is used (always Unicode, except told otherwise).
 	
@@ -280,7 +280,7 @@ DESCRIPTION
     IT IS NOT ..
 	
 	* .. a replacement of all/most of the tools mentioned at  LINKS  below
-	* .. a perfect implementation (hey, you're engaded to fix all existing
+	* .. a perfect implementation (hey, you're engaged to fix all existing
 	     bugs you find, add new features, improve usability, etc. :-)
 	* .. a secure browser application
 	* .. test for RegEx syntax (lint or alike)
@@ -295,7 +295,7 @@ DESCRIPTION
 	
 CONVENTIONS, TEXT MARKUP
 	
-	Following text markups are used herein:
+	Following text markups are used herein (this help text):
 	* [button] button  is a button in the GUI
 	* "some text" is either a label in the GUI or a filename
 	* 'some text' is a literal text
@@ -453,12 +453,12 @@ GUI
     GENERAL DESIGN HINTS
 	
 	All buttons, checkboxes and select menus will show a brief description
-	when the mouse is over the element (using the tags 'title' attribute).
+	when the mouse is over the element (using the tag's 'title' attribute).
 	If the description is  missing, mainly for  'SELECT' tags, then please
 	refer to  KNOWN PROBLEMS  for more details.
 	
 	Any select menu item calls an action which changes something somewhere.
-	Same applies to all (light-blue) coloured buttons.
+	Same applies to all <input size=14 class=button value="(light-blue) coloured"/> buttons.
 	Whereas all buttons in standard browser style open a new window and do
 	not change other fields, usually.
 	
@@ -483,6 +483,7 @@ GUI
           [?] button      to show the description (what you see here)
 	
 	On bottom of most tools (mainly below the textarea input field):
+          [-] button      quickly clear textarea input field
           [clear] menu    various actions, see  TEXT MENU  below
           [guess] button
           [guess] menu    to call a guessing action for the tool
@@ -929,7 +930,7 @@ GUI
 	
 	Each action from menu opens a window  with such an explanation for the
 	RegEx (found in RegEx textarea).  This window also displays the result
-	of that regex matched against the text found in Text textarea.
+	of that RegEx matched against the text found in Text textarea.
 	
 	RegEx has it's own description see http:EnDe.man.html?EnDeRE.man.txt .
 	
@@ -1019,7 +1020,7 @@ GUI
 	called in the API.
 	
 	 "mode"
-		** NOT YET IMPLEMENTED ** <!--  .. EnDe*.js does not use exceptions -->
+		** NOT YET fully IMPLEMENTED ** <!--  .. EnDe*.js does not use exceptions -->
 		Mode how to deal with error in coding/converting functions:
 		"() strict"
 			return empty string if any error occours
@@ -1027,6 +1028,8 @@ GUI
 		"() lazy"
 			silently ignore errors
 			some characters or strings may be missing then
+			This is the default for all functions. It should mainly
+			behave as humans expect it to be.
 			NOTE: this may return wrong results in some cases
 		"() verbose"
 			return an error message enclosed in brackets
@@ -2134,7 +2137,7 @@ HACKER's INFO
 
 	* 'EnDe'    - all variables and functions used in the  API  
 	* 'EnDeGUI  - all variables and functions used in the  GUI  
-	* 'EnDeRE   - all variables and functions used in the Regex GUI
+	* 'EnDeRE   - all variables and functions used in the RegEx GUI
 	
     XMLHttpRequest()
 	
@@ -2779,7 +2782,7 @@ EPILOG
 	
 VERSION
 	
-	@# EnDe <!-- @(#) EnDe.man.txt 3.44 22:31:46 13/06/12 -->
+	@# EnDe <!-- @(#) EnDe.man.txt 3.46 00:35:44 13/06/24 -->
 	
 	
 AUTHOR

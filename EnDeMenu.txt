@@ -88,7 +88,7 @@
 #?      EnDeGUIx.js, EnDeGUI.js
 #?
 #? VERSION
-#?      @(#) EnDeMenu.txt 3.51 13/06/16 23:49:42
+#?      @(#) EnDeMenu.txt 3.52 13/06/23 01:08:54
 #?
 #? AUTHOR
 #?      09-jun-09 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -281,6 +281,7 @@ item3	072f		/			/ prefixed by ISO-8859-1 character
 item3	073c		<			< prefixed by ISO-8859-1 character
 item3	073e		>			> prefixed by ISO-8859-1 character
 item3	075c		\			\ prefixed by ISO-8859-1 character
+item3	2603		&			& postfixed by ISO-8859-1 character
 
 #------+---------------+-----------------------+------------------------------+
 group	TXT.UCS-UTF	insert 2 UCS Characters	Unicode/UTF-8 mismatch characters sequences
@@ -523,6 +524,10 @@ item3	ucsUTF7_	UTF-7 (all)		convert plain text to UTF-7 encoded text (convert al
 item3	ucsHALFw	halfwidth		convert fullwidth Unicode to halfwidth Unicode
 item3	ucsFULLw	fullwidth (UTF-16)	convert halfwidth Unicode to fullwidth Unicode (UTF-16, 2 bytes)
 item3	ucsFULL8	fullwidth (UTF-8)	convert halfwidth Unicode to fullwidth Unicode (UTF-8, 3 bytes)
+item3	ucs2Super	to superscript		convert (halfwidth) Unicode to superscript Unicode
+item3	ucs2Sub		to subscript		convert (halfwidth) Unicode to subscript Unicode
+item3	ucsSuper	from superscript	convert superscript Unicode to (halfwidth) Unicode
+item3	ucsSub		from subscript		convert subscript Unicode to (halfwidth) Unicode
 item3	ucsUTF16	UTF-16			convert plain text to Unicode UTF-16 (big endian, no BOM)
 item3	ucsUTF8b	UTF-8 (BOM)		convert plain text to UTF-8 encoded text with BOM
 item3	ucs16LEb	UTF-16-LE (BOM)		convert plain text to Unicode UTF-16 little endian with BOM
@@ -803,6 +808,10 @@ item3	ucsUTF8		UTF-8			convert UTF-8 encoded text to plain text
 item3	ucsUTF7		UTF-7			convert UTF-7 encoded text to plain text
 item3	ucsHALFw	halfwidth		convert fullwidth Unicode to halfwidth Unicode
 item3	ucsFULLw	fullwidth		convert halfwidth Unicode to fullwidth Unicode
+item3	ucs2Super	to superscript		convert (halfwidth) Unicode to superscript Unicode
+item3	ucs2Sub		to subscript		convert (halfwidth) Unicode to subscript Unicode
+item3	ucsSuper	from superscript	convert superscript Unicode to (halfwidth) Unicode
+item3	ucsSub		from subscript		convert subscript Unicode to (halfwidth) Unicode
 
 #------+---------------+-----------------------+------------------------------+
 group	DE.Base-N	Base-N			various Base-N decodings
@@ -1685,6 +1694,7 @@ group	UCS.Quote	Unicode Quotes		Unicode quotaion marks and comma
 item3	329	'n	small n, apostrophe
 item3	700	'	rising single quote, right (high)
 item3	712	'	apostrophe
+item3	180	'	acute
 item3	8216	'	single quotation mark, left
 item3	8217	'	single quotation mark, right
 item3	8218	,	rising single quote, left (low)
@@ -1815,7 +1825,9 @@ item3	1147	o	(small o)
 item3	3664	o	(small o, Thai)
 item3	59178	o	small omega, Greek
 item3	59179	O	capital omega, Greek
+item3	937	O	capital omega, Greek
 item3	65327	O	capital O, fullwidth
+item3	1086	O	capital O, Cyrillic
 item3	1086	O	capital O, Cyrillic
 item3	65359	o	small o, fullwidth
 item3	65463	O	(capital O)
@@ -1881,6 +1893,7 @@ group	UCS.Symbols	various Unicode symbols		various Unicode symbols
 item3	8617	<-'	leftward arrow with hook
 item3	8618	'->	rightward arrow with hook
 item3	8623	|/v	downwards zigzag arrow
+item3	9731	ö	snowman
 item3	9774	(y)	peace symbol
 item3	9775	(~)	yin yang symbol
 item3	9785	:(	white frouning face

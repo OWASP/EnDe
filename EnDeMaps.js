@@ -35,6 +35,10 @@
 #?          EnDe.ebcdicMap  - array 8-bit EBCDIC characters
 #?          EnDe.ebcdicUTF  - array 8-bit UTF-EBCDIC characters
 #?          EnDe.romanMap   - array 8-bit Mac OS Roman characters
+#?          EnDe.u2superMap - Unicode = Unicode superscript characters
+#?          EnDe.super2uMap - Unicode superscript = Unicode characters
+#?          EnDe.u2subMap   - Unicode = Unicode subscript characters
+#?          EnDe.sub2uMap   - Unicode subscript = Unicode characters
 #?          EnDe.a2eMap     - index is ASCII charCode, value index to ebcdicMap
 #?          EnDe.e2aMap     - index is EBCDIC charCode, value index to asciiMap
 #?          EnDe.AbrMap     - ASCII Braille characters
@@ -59,7 +63,7 @@
 #?      EnDeMaps.txt
 #?
 #? VERSION
-#?      @(#) EnDeMaps.js 3.24 13/06/16 23:52:06
+#?      @(#) EnDeMaps.js 3.25 13/06/23 01:03:16
 #?
 #? AUTHOR
 #?      05-jun-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -102,6 +106,10 @@ EnDe.DIN66003fMap=new Array(256);
 EnDe.ebcdicMap  = new Array(256);
 EnDe.ebcdicUTF  = new Array(256);
 EnDe.romanMap   = new Array(256);
+EnDe.u2superMap = new Array(256);
+EnDe.super2uMap = new Array(256);
+EnDe.u2subMap   = new Array(256);
+EnDe.sub2uMap   = new Array(256);
 EnDe.a2rMap     = new Array(256);
 EnDe.r2aMap     = new Array(256); 
 EnDe.a2eMap     = new Array(256);
@@ -342,8 +350,8 @@ EnDe.DadMap['Z']='+---\n|   \n+---';
 // ========================================================================= //
 
 EnDe.Maps   = new function() {
-	this.SID    = '3.24';
-	this.sid    = function() { return('@(#) EnDeMaps.js 3.24 13/06/16 23:52:06 EnDe.Maps'); };
+	this.SID    = '3.25';
+	this.sid    = function() { return('@(#) EnDeMaps.js 3.25 13/06/23 01:03:16 EnDe.Maps'); };
 	this.trace  = false;
 
 	this.traces = [];   /* used for trace, as GUI function are not avaialable
@@ -409,8 +417,11 @@ EnDe.Maps   = new function() {
 		// requires: <script src="EnDeMaps.gen.js"></script> in EnDe.html
 		// or: EnDeMaps.gen.js being part of code (if used as library)
 		__dbx('EnDe.Maps.init: EnDe.MAPS');
+
 		txt = EnDe.MAPS;
 		delete EnDe.MAPS;
+		// file included by *.html, add to list
+		EnDe.File.list.push([ 'HTML', true, '', txt.split('\n').length, 'EnDeMaps.gen.js', '?' ]);
 	} else { 
 		// if <script src="EnDeMaps.gen.js"></script> failed try to read
 		// plain text file
@@ -450,8 +461,8 @@ EnDe.Maps   = new function() {
 		bbb = bbb.replace(/\t{2,}/g, '\t');         // squeeze multiple TABs
 		arr = bbb.split(/\t/);
 		switch (arr[0]) {   // only have 2 keywords, anything else is data
-		  case 'group': map = arr[1]; break;
-		  case 'map':   typ = arr[1]; break;
+		  case 'group': map = arr[1]; __dbx('EnDe.Maps.init: group = ' + map); break;
+		  case 'map':   typ = arr[1]; __dbx('EnDe.Maps.init: map   = ' + typ); break;
 		  default:          // data
 			switch(typ) {       // define index or hash for each line
 			  case 'index':     idx = parseInt(arr[0],10);      break;
@@ -472,6 +483,18 @@ EnDe.Maps   = new function() {
 			  case 'spaceMap':  EnDe.spaceMap[idx] = arr[1];    break;
 			  case 'BladeMap':  EnDe.BladeMap[idx] = arr[1];    break;
 			  case 'dnaMap':    EnDe.dnaMap[idx]   = arr[1];    break;
+			  case 'superMap':
+				ccc =  arr[1].charCodeAt();
+				EnDe.super2uMap[idx] = arr[1];
+				EnDe.u2superMap[ccc] = String.fromCharCode(idx);
+				// __dbx('EnDe.Maps.init: initialize EnDe.u2superMap: ' + idx + ' <-> ' +  ccc);
+				break;
+			  case 'subMap':
+				ccc =  arr[1].charCodeAt();
+				EnDe.sub2uMap[idx] = arr[1];
+				EnDe.u2subMap[ccc] = String.fromCharCode(idx);
+				// __dbx('EnDe.Maps.init: initialize EnDe.u2subMap: ' + idx + ' <-> ' +  ccc);
+				break;
 			  case 'DIN66003Map':
 				ccc = new Number(arr[1]);           // force cast to number!
 				EnDe.DIN66003Map[idx]  = arr;
@@ -498,8 +521,8 @@ EnDe.Maps   = new function() {
 			  default:          /* simply ignore */             break;
 			}
 			break;
-		}
-	}
+		} // switch keyword
+	} // while
 
 	__dbx('EnDe.Maps.init: reverse Morse mapping');
 	for (ccc in EnDe.sosMap) {              // ------------------- reverse Morse

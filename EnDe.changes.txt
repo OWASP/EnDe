@@ -1,8 +1,11 @@
 
 CHANGE HISTORY
 	
-1.0rc14 12-jun-13
+1.0rc14 21-jun-13
     * LIB, API
+	"EnDeMaps.txt" superMap and subMap implemented
+	"EnDeMaps.js" superMap and subMap implemented; initialize EnDe.File.list[] with EnDeMaps.gen.js
+	"EnDe.js" *.EN.braille() --> *.EN.symbol()
 	"EnDe.js" *.mgd(): Digit3x5-0, Digit3x5-1 added
 	"EnDeMenu.txt" Digit3x5-0, Digit3x5-1 added
 	"xss-evation.txt" more pattern added
@@ -10,7 +13,11 @@ CHANGE HISTORY
 	"EnDeUser.js" bugfix: viewstate deserialization improved
 
     * GUI
+	"EnDeMenu.txt" to/from superscript/subscript added
+	"EnDeGUIx.js"  trace output for EnDe.u2superMap and EnDe.u2subMap added
+	"EnDe.html" bugfix: include EnDeFile.js right after EnDe.js
 	"EnDe.man.txt" Glossar improved; *mgd() added
+	"EnDe.html" new buttons [-] to delete content in textarea fields
 	"EnDe.html" new button "Show Characters"
 	"EnDe.css" .ucs class added
 	"EnDeGUIx.js" '.makechar()' for "Show Characters"

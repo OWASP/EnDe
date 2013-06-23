@@ -92,8 +92,8 @@
 	<meta name="DC.language"      content="en" >
 	<meta name="DC.rights"        content="https://github.com/EnDe/EnDe license.txt" >
 	<meta name="DC.license"       content="https://github.com/EnDe/EnDe license.txt" >
-	<meta name="DC.modified"      content="13/05/12" >
-	<meta name="DC.Source"        content="@(#) EnDe.html 3.43 13/05/12 19:53:52"  >
+	<meta name="DC.modified"      content="13/06/23" >
+	<meta name="DC.Source"        content="@(#) EnDe.html 3.45 13/06/23 01:05:22"  >
 	<meta name="DC.Date"          content="07-apr-07" >
 	<meta name="DC.creator"       content="Achim Hoffmann" >
 	<meta name="DC.Author"        content="Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net" >
@@ -101,7 +101,9 @@
 	<link rel="shortcut icon"        href="img/EnDe.ico">
 	<link rel="stylesheet"           type="text/css"        charset="utf-8" href="EnDe.css"     media="screen" title="most w3c-conform browsers" >
 
+	<!-- sequence of following files is important! -->
 	<script language="JavaScript1.3" type="text/javascript" charset="utf-8" src="EnDe.js"></script>
+	<script language="JavaScript1.3" type="text/javascript" charset="utf-8" src="EnDeFile.js"></script>
 	<script language="JavaScript1.3" type="text/javascript" charset="utf-8" src="EnDeMaps.gen.js"></script>
 	<script language="JavaScript1.3" type="text/javascript" charset="utf-8" src="crc.js"></script>
 	<script language="JavaScript1.3" type="text/javascript" charset="utf-8" src="md4.js"></script>
@@ -117,7 +119,6 @@
 	<script language="JavaScript1.3" type="text/javascript" charset="utf-8" src="EnDeTS.js"></script>
 	<script language="JavaScript1.3" type="text/javascript" charset="utf-8" src="EnDeMaps.js"></script>
 	<script language="JavaScript1.3" type="text/javascript" charset="utf-8" src="EnDeVersion.js"></script>
-	<script language="JavaScript1.3" type="text/javascript" charset="utf-8" src="EnDeFile.js"></script>
 	<script language="JavaScript1.3" type="text/javascript" charset="utf-8" src="EnDeText.js"></script>
 	<script language="JavaScript1.5" type="text/javascript" charset="utf-8" src="EnDeTest.js"></script>
 	<script language="JavaScript1.5" type="text/javascript" charset="utf-8" src="EnDeGUI.js"></script>
@@ -183,7 +184,7 @@
 		<div  id="EnDeDOM.DBX">
 			<textarea   id="EnDeDOM.DBX.text"></textarea>
 			&#160;&#160;
-			<button     id="EnDeDOM.DBX.bc" onClick="$('EnDeDOM.DBX.text').value='';return false;">clear</button>
+			<button     id="EnDeDOM.DBX.bc" onClick="$('EnDeDOM.DBX.text').value='';return false;" class="button" >clear</button>
 			&#160;&#160;
 			<button     id="EnDeDOM.DBX.bl" onClick="return EnDeGUI.showFiles();">loaded files</button>
 			<button     id="EnDeDOM.DBX.bm" onClick="return EnDeGUI.showMap();">constants and maps</button>
@@ -510,6 +511,7 @@
 				<input      id="EnDeDOM.EN.isTxt"   type="button"   value="Text"    class="tab" checked="1" onClick="return EnDeGUI.data(this,'EnDeDOM.EN')" >
 				<input      id="EnDeDOM.EN.isHex"   type="button"   value="Hex"     class="bat"             onClick="return EnDeGUI.data(this,'EnDeDOM.EN')" >
 				<input      id="EnDeDOM.EN.isURI"   type="button"   value="parsed"  class="bat"             onClick="return EnDeGUI.data(this,'EnDeDOM.EN')" >
+				<input      id="EnDeDOM.EN.doClr"   type="button"   value="-"       class="button"             onClick="return EnDeGUI.reset($('EnDeDOM.EN.text'));" >
 				&#160;
 				<span       id="EnDeDOM.EN.Menu"    class="select popup"><!-- SELECT added by init() --></span>
 				&#160;
@@ -530,6 +532,7 @@
 				<input      id="EnDeDOM.DE.isTxt"   type="button"   value="Text"    class="tab" checked="1" onClick="return EnDeGUI.data(this,'EnDeDOM.DE')" >
 				<input      id="EnDeDOM.DE.isHex"   type="button"   value="Hex"     class="bat"             onClick="return EnDeGUI.data(this,'EnDeDOM.DE')" >
 				<input      id="EnDeDOM.DE.isURI"   type="button"   value="parsed"  class="bat"             onClick="return EnDeGUI.data(this,'EnDeDOM.DE')" >
+				<input      id="EnDeDOM.DE.doClr"   type="button"   value="-"       class="button"             onClick="return EnDeGUI.reset($('EnDeDOM.DE.text'));" >
 				&#160;
 				<span       id="EnDeDOM.DE.Menu"    class="select popup"><!-- SELECT added by init() --></span>
 				&#160;
@@ -753,9 +756,10 @@
 				<input      id="EnDeDOM.RE.isTxt"   type="button"   value="Text"    class="tab" checked="1" onClick="return EnDeGUI.data(this,'EnDeDOM.RE')" >
 				<input      id="EnDeDOM.RE.isHex"   type="button"   value="Hex"     class="bat"             onClick="return EnDeGUI.data(this,'EnDeDOM.RE')" >
 				<input      id="EnDeDOM.RE.isURI"   type="button"   value="parsed"  class="bat"             onClick="return EnDeGUI.data(this,'EnDeDOM.RE')" >
-				&#160;&#160;
+				<input      id="EnDeDOM.RE.doClr"   type="button"   value="-"       class="button"             onClick="return EnDeGUI.reset($('EnDeDOM.RE.text'));" >
+				&#160;
 				<span       id="EnDeDOM.RE.Menu"    class="select popup"><!-- SELECT added by init() --></span>
-				&#160;&#160;
+				&#160;
 				<button     id="EnDeDOM.RE.bg" onClick="return EnDeGUI.RE.dispatch(this,'guess')" disabled>guess</button>
 				<button     id="EnDeDOM.RE.bw" onClick="return EnDeGUI.RE.dispatch(this,'code')"    >Window ..</button>
 				<button     id="EnDeDOM.RE.bs" onClick="return EnDeGUI.RE.dispatch(this,'scratch')" >Scratchpad ..</button>
@@ -1194,6 +1198,7 @@ EnDeGUI.titles  = {
 	'EnDeDOM.EN.isTxt': "show text literaly",
 	'EnDeDOM.EN.isHex': "show text as hex values",
 	'EnDeDOM.EN.isURI': "show text URI-style parsed",
+	'EnDeDOM.EN.doClr': "clear above textarea",
 	'EnDeDOM.EN.bg':    "use all codings",
 	'EnDeDOM.EN.bw':    "show value in new window",
 	'EnDeDOM.EN.bs':    "add value to scratchpad",
@@ -1201,6 +1206,7 @@ EnDeGUI.titles  = {
 	'EnDeDOM.DE.isTxt': "show text literaly",
 	'EnDeDOM.DE.isHex': "show text as hex values",
 	'EnDeDOM.DE.isURI': "show text UI-style parsed",
+	'EnDeDOM.DE.doClr': "clear above textarea",
 	'EnDeDOM.DE.bg':    "automatically analyses and guesses given format",
 	'EnDeDOM.DE.bw':    "show value in new window",
 	'EnDeDOM.DE.bs':    "add value to scratchpad",
@@ -1271,6 +1277,7 @@ EnDeGUI.titles  = {
 	'EnDeDOM.RE.isTxt': "show text literaly",
 	'EnDeDOM.RE.isHex': "show text as hex values",
 	'EnDeDOM.RE.isURI': "simple pretty printer",
+	'EnDeDOM.RE.doClr': "clear above textarea",
 	'EnDeDOM.RE.bg':    "** not yet implemented**",
 	'EnDeDOM.RE.bw':    "show value in new window",
 	'EnDeDOM.RE.bs':    "add value to scratchpad",

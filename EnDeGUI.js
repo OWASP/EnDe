@@ -106,7 +106,7 @@
 #    building the GUI, EnDeGUI.init() will show the "Browser Quirks" window.
 #?
 #? VERSION
-#?      @(#) EnDeGUI.js 3.98 12/12/09 18:06:28
+#?      @(#) EnDeGUI.js 3.99 13/06/23 01:07:17
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -118,8 +118,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '3.98';
-this.sid        = function() {  return('@(#) EnDeGUI.js 3.98 12/12/09 18:06:28 EnDeGUI'); };
+this.SID        = '3.99';
+this.sid        = function() {  return('@(#) EnDeGUI.js 3.99 13/06/23 01:07:17 EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 
@@ -1997,6 +1997,30 @@ try {
 		txt += '<tr><td>[' + i + ']</td><td>' + EnDe.romanMap[i][EnDe.mapChr] + '</td><td>' + EnDe.romanMap[i][EnDe.mapDsc] + '</td><tr>';
 	}
 	txt += '</table>';
+
+	/*
+	 * EnDe.u2superMap
+	 */
+	txt += '<button onClick="return _show(\'_table_range\');" title="Unicode superscript characters">EnDe.u2superMap</button><br>';	
+	txt += ccc + 'id="_table_range"><caption>EnDe.u2superMap[]</caption>';
+	txt += '<tr><th>   index   </th><th> u2superMap[i] </th><tr>';
+	for (i in EnDe.u2superMap) {
+		txt += '<tr><td>[' + i + ']</td><td>' + EnDe.u2superMap[i] + '</td><tr>';
+	}
+	txt += '</table>';
+
+	/*
+	 * EnDe.u2subMap
+	 */
+	txt += '<button onClick="return _show(\'_table_range\');" title="Unicode subscript characters">EnDe.u2subMap</button><br>';	
+	txt += ccc + 'id="_table_range"><caption>EnDe.u2subMap[]</caption>';
+	txt += '<tr><th>   index   </th><th> u2subMap[i] </th><tr>';
+	for (i in EnDe.u2subMap) {
+		txt += '<tr><td>[' + i + ']</td><td>' + EnDe.u2subMap[i] + '</td><tr>';
+	}
+	txt += '</table>';
+
+	// ToDo: EnDe.super2uMap EnDe.sub2uMap
 
 	/*
 	 * EnDe.ebcdicUTF

@@ -81,7 +81,7 @@
 #?      EnDeMaps.js
 #?
 #? VERSION
-#?      @(#) EnDeMaps.txt 3.8 12/11/15 23:48:08
+#?      @(#) EnDeMaps.txt 3.9 13/06/24 00:40:15
 #?
 #? AUTHOR
 #?      05-jun-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -404,6 +404,11 @@ map	index
 
 603	-	varepsilon	:alias:	ISOgrk3 epsiv
 603	-	epsiv	ISOgrk3	varepsilon
+688	-	-	-	superscript small h
+690	-	-	-	superscript small j
+691	-	-	-	superscript small r
+695	-	-	-	superscript small w
+696	-	-	-	superscript small y
 710	HTML-40	circ	ISOdia,ISOpub	modifier letter circumflex accent
 711	-	Hacek	:alias:	ISOdia caron
 711	-	caron	ISOdia	caron
@@ -417,6 +422,9 @@ map	index
 732	HTML-40	tilde	ISOdia	tilde
 733	-	DiacriticalDoubleAcute	:alias:	ISOdia dblac
 733	-	dblac	ISOdia	double acute accent
+737	-	-	-	superscript small j
+738	-	-	-	superscript small s
+739	-	-	-	superscript small x
 
 #	03
 
@@ -666,6 +674,129 @@ map	index
 5760	-	-	-	ogham space mark
 6158	-	-	-	mongolian vowel separator
 
+#	?
+
+7468	-	-	-	superscript capital A
+7469	-	-	-	superscript capital AE
+7470	-	-	-	superscript capital B
+7471	-	-	-	superscript capital B/
+#747?	-	-	-	superscript capital C
+7472	-	-	-	superscript capital D
+7473	-	-	-	superscript capital E
+7474	-	-	-	superscript capital (reverse) E
+#747?	-	-	-	superscript capital F
+7475	-	-	-	superscript capital G
+7476	-	-	-	superscript capital H
+7477	-	-	-	superscript capital I
+7478	-	-	-	superscript capital J
+7479	-	-	-	superscript capital K
+7480	-	-	-	superscript capital L
+7481	-	-	-	superscript capital M
+7482	-	-	-	superscript capital N
+7483	-	-	-	superscript capital (reverse) N
+7484	-	-	-	superscript capital O
+7485	-	-	-	superscript capital letter 8
+7486	-	-	-	superscript capital P
+#748?	-	-	-	superscript capital Q
+7487	-	-	-	superscript capital R
+#748?	-	-	-	superscript capital S
+7488	-	-	-	superscript capital T
+7489	-	-	-	superscript capital U
+#749?	-	-	-	superscript capital V
+7490	-	-	-	superscript capital W
+#7521	-	-	-	superscript capital X
+#7518	-	-	-	superscript capital Y
+#749?	-	-	-	superscript capital Z
+7491	-	-	-	superscript small a
+7492	-	-	-	superscript small (upside down) a
+7493	-	-	-	superscript small greek a (alpha) 
+7494	-	-	-	superscript small ae
+7495	-	-	-	superscript small b
+#7580	-	-	-	superscript small c
+7496	-	-	-	superscript small d
+7497	-	-	-	superscript small e
+7498	-	-	-	superscript small (reverse) e
+7499	-	-	-	superscript small greek e (epsilon)
+7500	-	-	-	superscript small (reverse) epsilon
+#7584	-	-	-	superscript small f
+7501	-	-	-	superscript small g
+#688	-	-	-	superscript small h
+#8305	-	-	-	superscript small i
+#690	-	-	-	superscript small j
+7502	-	-	-	superscript small !
+7503	-	-	-	superscript small k
+#737	-	-	-	superscript small l
+7504	-	-	-	superscript small m
+7505	-	-	-	superscript small ny
+7506	-	-	-	superscript small o
+7507	-	-	-	superscript small (reverse) c
+7508	-	-	-	superscript small (upside down) u
+7509	-	-	-	superscript small (half) u
+7510	-	-	-	superscript small p
+#750?	-	-	-	superscript small q
+#691	-	-	-	superscript small r
+#738	-	-	-	superscript small s
+7511	-	-	-	superscript small t
+7512	-	-	-	superscript small u
+7513	-	-	-	superscript small (reverse long) c
+#695	-	-	-	superscript small w
+#739	-	-	-	superscript small x
+#696	-	-	-	superscript small y
+7514	-	-	-	superscript small greek w (omega)
+7515	-	-	-	superscript small v
+7516	-	-	-	-undefined-
+7517	-	-	-	superscript small greek b (beta)
+7518	-	-	-	superscript small greek g (gamma)
+7519	-	-	-	superscript small greek d (delta)
+7520	-	-	-	superscript small greek f (phi)
+7521	-	-	-	superscript small greek x (chi)
+#
+# more see below
+7522	-	-	-	subscript small i
+7523	-	-	-	subscript small r
+7524	-	-	-	subscript small u
+7525	-	-	-	subscript small v
+7526	-	-	-	subscript small greek b (beta)
+7527	-	-	-	subscript small greek g (gamma)
+7528	-	-	-	subscript small greek r (rho)
+7529	-	-	-	subscript small greek x (chi)
+7530	-	-	-	subscript small greek x
+7579	-	-	-	superscript phonetic (reverse) a
+7580	-	-	-	superscript small c
+7581	-	-	-	superscript phometic ??
+7582	-	-	-	superscript phonetic d (th)
+7583	-	-	-	superscript phonetic e
+7584	-	-	-	superscript phonetic f
+7585	-	-	-	superscript phonetic (upside down) f
+7586	-	-	-	superscript phonetic g
+7587	-	-	-	superscript phonetic u
+7588	-	-	-	superscript ??
+7589	-	-	-	superscript ??
+7590	-	-	-	superscript ??
+7591	-	-	-	superscript ??
+7592	-	-	-	superscript ??
+7593	-	-	-	superscript ?? small greek j (iota)
+7594	-	-	-	superscript ??
+7595	-	-	-	superscript ??
+7596	-	-	-	superscript small greek m
+7597	-	-	-	superscript small greek w (psi)
+7598	-	-	-	superscript small greek (reverse) h (eta)
+7599	-	-	-	superscript small greek h (eta)
+7600	-	-	-	superscript capital greek N (ny)
+7601	-	-	-	superscript capital greek T (Theta)
+7602	-	-	-	superscript capital greek F (phi)
+7603	-	-	-	superscript small greek x (xi)
+7604	-	-	-	superscript ??
+7605	-	-	-	superscript ??
+7606	-	-	-	superscript ??
+7607	-	-	-	superscript ?? capital (reverse) w (omega)
+7608	-	-	-	superscript ??
+7609	-	-	-	superscript small greek n (ny)
+7610	-	-	-	superscript capital L (lambda)
+7611	-	-	-	superscript small z
+7615	-	-	-	superscript small greek t (theta)
+# more see below
+
 #	20
 
 8192	-	-	-	en space (1/2-em)
@@ -736,6 +867,54 @@ map	index
 8260	HTML-40	frasl	ISO8879	fraction slashfraction slash
 8287	-	-	-	4/18-em space (medium mathematical space)
 8288	-	-	-	word joiner
+8304	-	-	-	superscript digit 0
+#185	-	-	-	superscript digit 1
+#178	-	-	-	superscript digit 2
+#179	-	-	-	superscript digit 3
+8305	-	-	-	superscript small i
+8306	-	-	-	-undefined-
+8307	-	-	-	-undefined-
+8308	-	-	-	superscript digit 4
+8309	-	-	-	superscript digit 5
+8310	-	-	-	superscript digit 6
+8311	-	-	-	superscript digit 7
+8312	-	-	-	superscript digit 8
+8313	-	-	-	superscript digit 8
+8314	-	-	-	superscript +
+8315	-	-	-	superscript -
+8316	-	-	-	superscript =
+8317	-	-	-	superscript (
+8318	-	-	-	superscript )
+8319	-	-	-	superscript small n
+8320	-	-	-	subscript digit 0
+8321	-	-	-	subscript digit 1
+8322	-	-	-	subscript digit 2
+8323	-	-	-	subscript digit 3
+8324	-	-	-	subscript digit 4
+8325	-	-	-	subscript digit 5
+8326	-	-	-	subscript digit 6
+8327	-	-	-	subscript digit 7
+8328	-	-	-	subscript digit 8
+8329	-	-	-	subscript digit 9
+8330	-	-	-	subscript digit +
+8331	-	-	-	subscript digit -
+8332	-	-	-	subscript digit =
+8333	-	-	-	subscript digit (
+8334	-	-	-	subscript digit )
+8335	-	-	-	-undefined-
+8336	-	-	-	subscript small a
+8337	-	-	-	subscript small e
+8338	-	-	-	subscript small o
+8339	-	-	-	subscript small x
+8340	-	-	-	subscript small (upsite down) e
+8341	-	-	-	subscript small h
+8342	-	-	-	subscript small k
+8343	-	-	-	subscript small l
+8344	-	-	-	subscript small m
+8345	-	-	-	subscript small n
+8346	-	-	-	subscript small p
+8347	-	-	-	subscript small s
+8348	-	-	-	subscript small t
 8364	HTML-40	euro	ISO8879	euro sign
 8411	-	TripleDot	:alias:	ISOtech tdot
 8411	-	tdot	ISOtech	three dots above
@@ -2629,6 +2808,211 @@ map	index
 ## 65511	-undef-
 ## 65535	-undef-
 ##------+-------+------------------------------------------
+
+# =========================================================================== #
+# Unicode superscript characters                                              #
+# =========================================================================== #
+
+group	superMap
+map	index
+# for details see intMap above
+#  See also: https://en.wikipedia.org/wiki/Unicode_subscripts_and_superscripts
+#
+#------+-------+------------------------------------------
+# Int	Char    Descvription
+#------+-------+------------------------------------------
+7468	A	superscript capital A
+7469	#	superscript capital AE
+7470	B	superscript capital B
+7471	ᴯ	superscript capital B/
+#747?	#	superscript capital C
+7472	D	superscript capital D
+7473	E	superscript capital E
+7474	ᴲ	superscript phonetic E
+#747?	#	superscript capital F
+7475	G	superscript capital G
+7476	H	superscript capital H
+7477	I	superscript capital I
+7478	J	superscript capital J
+7479	K	superscript capital K
+7480	L	superscript capital L
+7481	M	superscript capital M
+7482	N	superscript capital N
+7483	ᴻ	superscript capital phonetic N
+7484	O	superscript capital O
+7485	ᴽ	superscript phonetic letter 8
+7486	P	superscript capital P
+#748?	#	superscript capital Q
+7487	R	superscript capital R
+#748?	#	superscript capital S
+7488	T	superscript capital T
+7489	U	superscript capital U
+#749?	#	superscript capital V
+7490	W	superscript capital W
+#7521	#	superscript capital X
+#7518	#	superscript capital Y
+#749?	#	superscript capital Z
+7491	a	superscript small a
+7492	ᵄ	superscript small (upside down) a
+7494	ᵆ	superscript small ae
+7495	b	superscript small b
+7580	c	superscript small c
+7496	d	superscript small d
+7497	e	superscript small e
+7498	#	superscript small (reverse) e
+7500	#	superscript small (reverse) epsilon
+7584	f	superscript small f
+7501	g	superscript small g
+688	h	superscript small h
+8305	i	superscript small i
+690	j	superscript small j
+7502	!	superscript small !
+7503	k	superscript small k
+737	j	superscript small j
+7504	m	superscript small m
+8319	n	superscript small n
+7505	#	superscript small ny
+7506	o	superscript small o
+7507	#	superscript small (reverse) c
+7508	#	superscript small (upside down) u
+7509	#	superscript small (half) u
+7510	p	superscript small p
+#750?	#	superscript small q
+691	r	superscript small r
+738	s	superscript small s
+7511	t	superscript small t
+7512	u	superscript small u
+7513	#	superscript small (reverse long) c
+7515	v	superscript small v
+695	w	superscript small w
+739	x	superscript small x
+696	y	superscript small y
+7611	z	superscript small z
+#	7516	-undefined-
+7493	#	superscript small greek a (alpha) 
+7517	#	superscript small greek b (beta)
+7518	#	superscript small greek g (gamma)
+7519	#	superscript small greek d (delta)
+7499	#	superscript small greek e (epsilon)
+7581	#	superscript small greek z (zeta)
+7599	#	superscript small greek h (eta)
+7615	#	superscript small greek t (theta)
+7593	#	superscript small greek j (iota)
+#???	#	superscript small greek k (kapa)
+7589	#	superscript small greek l (lambda)
+7609	#	superscript small greek n (ny)
+7603	#	superscript small greek x (xi)
+#???	#	superscript small greek o (omicron)
+#???	#	superscript small greek p (pi)
+#???	#	superscript small greek r (rho)
+#???	#	superscript small greek r (sigma)
+#???	#	superscript small greek r (tau)
+#???	#	superscript small greek r (ypsilon)
+7520	#	superscript small greek f (phi)
+7521	#	superscript small greek x (chi)
+7514	#	superscript small greek w (omega)
+7579	#	superscript phonetic a
+7582	#	superscript phonetic d (th)
+7583	#	superscript phonetic e
+7585	#	superscript phonetic (upside down) f
+7586	#	superscript phonetic g
+7587	#	superscript phonetic u
+7588	#	superscript ??
+7590	#	superscript ??
+7591	#	superscript ??
+7592	#	superscript ??
+7594	#	superscript ??
+7595	#	superscript ??
+7596	#	superscript small greek m
+7597	#	superscript small greek w (psi)
+7598	#	superscript small greek (reverse) h (eta)
+7600	#	superscript capital greek N (ny)
+7601	#	superscript capital greek T (Theta)
+7602	#	superscript capital greek F (phi)
+7604	#	superscript ??
+7605	#	superscript ??
+7606	#	superscript ??
+7607	#	superscript ?? capital (reverse) w (omega)
+7608	#	superscript ??
+7610	ᶺ	superscript capital greekL (lambda)
+8304	0	superscript digit 0
+185	1	superscript digit 1
+178	2	superscript digit 2
+179	3	superscript digit 3
+#8306	-undefined-
+#8307	-undefined-
+8308	4	superscript digit 4
+8309	5	superscript digit 5
+8310	6	superscript digit 6
+8311	7	superscript digit 7
+8312	8	superscript digit 8
+8313	9	superscript digit 9
+8314	+	superscript +
+8315	-	superscript -
+8316	=	superscript =
+8317	(	superscript (
+8318	)	superscript )
+
+# =========================================================================== #
+# Unicode subscript characters                                                #
+# =========================================================================== #
+
+group	subMap
+map	index
+# for details see intMap above
+#  See also: https://en.wikipedia.org/wiki/Unicode_subscripts_and_superscripts
+#
+#------+-------+------------------------------------------
+# Int	Char    Description
+#------+-------+------------------------------------------
+
+#8335	-undefined-
+8336	a	subscript small a
+8337	e	subscript small e
+#???	b
+#???	c
+#???	d
+#???	f
+#???	g
+8341	h	subscript small h
+7522	i	subscript small i
+#???	j
+8342	k	subscript small k
+8343	l	subscript small l
+8344	m	subscript small m
+8345	n	subscript small n
+8338	2	subscript small o
+8346	p	subscript small p
+#???	q
+7523	r	subscript small r
+8347	s	subscript small s
+8348	t	subscript small t
+7524	u	subscript small u
+7525	v	subscript small v
+#???	w
+8339	x	subscript small x
+#???	z
+8320	0	subscript digit 0
+8321	1	subscript digit 1
+8322	2	subscript digit 2
+8323	3	subscript digit 3
+8324	4	subscript digit 4
+8325	5	subscript digit 5
+8326	6	subscript digit 6
+8327	7	subscript digit 7
+8328	8	subscript digit 8
+8329	9	subscript digit 9
+8330	+	subscript digit +
+8331	-	subscript digit -
+8332	=	subscript digit =
+8333	(	subscript digit (
+8334	)	subscript digit )
+8340	#	subscript small (upsite down) e
+7526	#	subscript small greek b (beta)
+7527	#	subscript small greek g (gamma)
+7528	#	subscript small greek r (rho)
+7529	#	subscript small greek x (chi)
+7530	#	subscript small greek x
 
 # =========================================================================== #
 # Windows CP-1252 versus ASCII                                                #

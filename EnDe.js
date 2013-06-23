@@ -83,7 +83,7 @@
 #       _n2_, _n3_, _n4_, _n5_, _n6_, and _n7_ .
 #?
 #? VERSION
-#?      @(#) EnDe.js 3.44 13/06/16 23:49:15
+#?      @(#) EnDe.js 3.45 13/06/24 00:39:43
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -96,8 +96,8 @@
 
 var EnDe    = new function() {
 
-this.SID    = '3.44';
-this.sid    = function() { return('@(#) EnDe.js 3.44 13/06/16 23:49:15 EnDe'); };
+this.SID    = '3.45';
+this.sid    = function() { return('@(#) EnDe.js 3.45 13/06/24 00:39:43 EnDe'); };
 
 	// ===================================================================== //
 	// debug functions                                                       //
@@ -263,6 +263,9 @@ this.pairs['$'] = '$';
 this.pairs['!'] = '!';
 this.pairs['='] = '=';
 
+/* Sizes in following Array definition are rather a guess
+ * JavaScript is clever enough to expand them as needed.
+ */
 // HTML Entity Name
 this.intMap     = new Array(256*256);// array of [standard, Entity, Group, Description]
 this.ncrMap     = new Array();      // array of char codes
@@ -292,6 +295,10 @@ this.a2rMap     = new Array(256);   // [ASCII] = Mac OS Roman
 this.r2aMap     = new Array(256);   // [Mac OS Roman] = ASCII
 this.a2eMap     = new Array(256);   // [ASCII] = EBCDIC
 this.e2aMap     = new Array(256);   // [EBCDIC] = ASCII
+this.u2superMap = new Array(256);   // Unicode = Unicode superscript characters
+this.super2uMap = new Array(256);   // Unicode superscript = Unicode characters
+this.u2subMap   = new Array(256);   // Unicode = Unicode subscript characters
+this.sub2uMap   = new Array(256);   // Unicode subscript = Unicode characters
 this.spaceMap   = new Array(50);    // all Unicode space characters
 this.dnaMap     = new Array(256);   // DNA/DNS (genetic) codes
 this.mg0Map     = new Array(20);    // (MathGuard) 3x5 matrix for digits; variuant 0
@@ -1256,7 +1263,7 @@ this.UCS    = new function() {
   };
 
   this.f2h      = function(src) {
-  //#? convert fullwidth Unicode to halfwidth Unicode characters
+  //#? convert fullwidth Unicode to (usual) halfwidth Unicode characters
 	var bux = '';
 	var ccc = 0;
 	var i   = 0;
@@ -1273,7 +1280,7 @@ this.UCS    = new function() {
   }; // f2h
 
   this.h2f      = function(src) {
-  //#? convert halfwidth Unicode to fullwidth Unicode characters
+  //#? convert (usual) halfwidth Unicode to fullwidth Unicode characters
 	var bux = '';
 	var ccc = 0;
 	var i   = 0;
@@ -1288,6 +1295,45 @@ this.UCS    = new function() {
 	}
 	return bux;
   }; // h2f
+
+  this.u2s      = function(type,mode,src) {
+  //#? convert (halfwidth) Unicode to superscript Unicode characters or vise versa
+  //#? convert superscript Unicode to (halfwidth) Unicode characters
+  //#type? 2super: Unicode to superscript
+  //#type? 2sub:   Unicode to subscript
+  //#type? super2: superscript to Unicode 
+  //#type? sub2:   subscript to Unicode 
+	/*
+	 * Converts normal (halfwidth) Unicode characters to superscript or subscript
+	 * Unicode characters, or vice versa.
+	 * We have one map for each conversion, means 4 at all.
+	 */
+	var bux = '';
+	var ccc = 0;
+	var i   = 0;
+	var map = null;
+	switch(type) {
+	  case 'super2': map = EnDe.super2uMap; break;
+	  case 'sub2':   map = EnDe.sub2uMap;   break;
+	  case '2super': map = EnDe.u2superMap; break;
+	  case '2sub':   map = EnDe.u2subMap;   break;
+	  default:      return '';              break; // ToDo: should depend on mode
+	}
+	for(i=0; i<src.length; i++) {
+		ccc = src.charCodeAt(i);
+		if (map[ccc]===undefined) {
+			switch(mode) {
+			  case 'strict':  break;
+			  case 'verbose': bux += '[EnDe.u2s: value ('+src[i]+'='+ccc+') out of range]'; break;
+			  case 'lazy':
+			  default:        bux += src[i]; break;
+			}
+			continue;
+		}
+		bux += map[ccc];
+	}
+	return bux;
+  }; // u2s
 
   this.utf16le  = function(src) {
   //#? convert Unicode to UTF-16-LE characters
@@ -2013,6 +2059,12 @@ this.EN     = new function() {
 	}
 	return ''; // fallback, never reached but keeps lint quiet
   }; // h2f
+
+  this.s2u      = function(type,mode,_n3_,src,_n5_,_n6_,_n7_) { return EnDe.UCS.u2s(type,mode,src); };
+  //#? convert (halfwidth) Unicode to superscript/subscript Unicode characters;  wrapper for EnDe.UCS.u2s()
+
+  this.u2s      = function(type,mode,_n3_,src,_n5_,_n6_,_n7_) { return EnDe.UCS.u2s(type,mode,src); };
+  //#? convert (halfwidth) Unicode to superscript/subscript Unicode characters;  wrapper for EnDe.UCS.u2s()
 
   this.ncr      = function(type,mode,uppercase,src,prefix,suffix,delimiter) {
   //#? convert plain text to named/numbered HTML-Entity
@@ -2984,6 +3036,10 @@ xxx1Z3A+!Z22ZA7$Z25Z26Z2F()Z3DZ3FZ0DZ0Axxx2Z3A+Z7BZ5BZ5DZ7DZ5CZ60ZB4Z0DZ0Axxx3Z3
 	case 'ucsUTF8'  : return this.utf8('null', mode, uppercase, src, '',     '',     ''       ); break;
 	case 'ucsUTF7'  : return this.utf7('null', mode, uppercase, src, prefix, '',     ''       ); break;
 	case 'ucsUTF7_' : return this.utf7('all',  mode, uppercase, src, prefix, '',     ''       ); break;
+	case 'ucs2Super': return this.u2s('2super',mode, uppercase, src, '',     '',     ''       ); break;
+	case 'ucsSuper' : return this.u2s('super2',mode, uppercase, src, '',     '',     ''       ); break;
+	case 'ucs2Sub'  : return this.u2s('2sub',  mode, uppercase, src, '',     '',     ''       ); break;
+	case 'ucsSub'   : return this.u2s('sub2',  mode, uppercase, src, '',     '',     ''       ); break;
 	case 'ucsHALFw' : return this.f2h('null',  mode, uppercase, src, '',     '',     ''       ); break;
 	case 'ucsFULLw' : return this.h2f('null',  mode, uppercase, src, '',     '',     ''       ); break;
 	case 'ucsFULL8' : return this.h2f('utf8',  mode, uppercase, src, '',     '',     ''       ); break;
@@ -3599,6 +3655,12 @@ this.DE     = new function() {
 
   this.h2f      = function(_n1_,_n2_,src,_n5_,_n6_,_n7_) { return EnDe.UCS.h2f(src); };
   //#? convert halfwidth Unicode to fullwidth Unicode characters; wrapper for EnDe.UCS.h2f()
+
+  this.s2u      = function(type,mode,src,_n5_,_n6_,_n7_) { return EnDe.UCS.u2s(type,mode,src); };
+  //#? convert Unicode to superscript/subscript (halfwidth) Unicode characters;  wrapper for EnDe.UCS.u2s()
+
+  this.u2s      = function(type,mode,src,_n5_,_n6_,_n7_) { return EnDe.UCS.u2s(type,mode,src); };
+  //#? convert Unicode to superscript/subscript (halfwidth) Unicode characters;  wrapper for EnDe.UCS.u2s()
 
   this.ncr      = function(type,mode,src,prefix,suffix,delimiter) {
   //#? convert named HTML-Entity to plain text
@@ -4455,6 +4517,10 @@ this.DE     = new function() {
 	case 'dualAiken': return this.aiken(   0,  mode, src, '',     '',     delimiter); break;
 	case 'ucsUTF8'  : return this.utf8('null', mode, src, prefix, '',     ''       ); break;
 	case 'ucsUTF7'  : return this.utf7('null', mode, src, prefix, '',     ''       ); break;
+	case 'ucs2Super': return this.u2s('2super',mode, src, '',     '',     ''       ); break;
+	case 'ucsSuper' : return this.u2s('super2',mode, src, '',     '',     ''       ); break;
+	case 'ucs2Sub'  : return this.u2s('2sub',  mode, src, '',     '',     ''       ); break;
+	case 'ucsSub'   : return this.u2s('sub2',  mode, src, '',     '',     ''       ); break;
 	case 'ucsHALFw' : return this.f2h('null',  mode, src, prefix, '',     ''       ); break;
 	case 'ucsFULLw' : return this.h2f('null',  mode, src, prefix, '',     ''       ); break;
 	case 'ncrNAME'  : return this.ncr('name',  mode, src, prefix, '',     ';'      ); break;
@@ -4584,7 +4650,7 @@ this.DE     = new function() {
 	// ===================================================================== //
 
 this.Misc   = new function() {
-this.sid        = function()  { return('@(#) EnDe.js 3.44 13/06/16 23:49:15 EnDeMisc'); };
+this.sid        = function()  { return('@(#) EnDe.js 3.45 13/06/24 00:39:43 EnDeMisc'); };
 
 	// ===================================================================== //
 	// global variables                                                      //

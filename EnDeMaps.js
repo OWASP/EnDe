@@ -63,7 +63,7 @@
 #?      EnDeMaps.txt
 #?
 #? VERSION
-#?      @(#) EnDeMaps.js 3.25 13/06/23 01:03:16
+#?      @(#) EnDeMaps.js 3.26 13/07/09 00:28:41
 #?
 #? AUTHOR
 #?      05-jun-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -350,8 +350,8 @@ EnDe.DadMap['Z']='+---\n|   \n+---';
 // ========================================================================= //
 
 EnDe.Maps   = new function() {
-	this.SID    = '3.25';
-	this.sid    = function() { return('@(#) EnDeMaps.js 3.25 13/06/23 01:03:16 EnDe.Maps'); };
+	this.SID    = '3.26';
+	this.sid    = function() { return('@(#) EnDeMaps.js 3.26 13/07/09 00:28:41 EnDe.Maps'); };
 	this.trace  = false;
 
 	this.traces = [];   /* used for trace, as GUI function are not avaialable
@@ -421,7 +421,10 @@ EnDe.Maps   = new function() {
 		txt = EnDe.MAPS;
 		delete EnDe.MAPS;
 		// file included by *.html, add to list
-		EnDe.File.list.push([ 'HTML', true, '', txt.split('\n').length, 'EnDeMaps.gen.js', '?' ]);
+	        if (typeof(EnDe.File)!=='undefined') {
+                    // EnDe.File probably not defined  in library
+		    EnDe.File.list.push([ 'HTML', true, '', txt.split('\n').length, 'EnDeMaps.gen.js', '?' ]);
+	        }
 	} else { 
 		// if <script src="EnDeMaps.gen.js"></script> failed try to read
 		// plain text file

@@ -88,7 +88,7 @@
 #?      EnDeGUIx.js, EnDeGUI.js
 #?
 #? VERSION
-#?      @(#) EnDeMenu.txt 3.52 13/06/23 01:08:54
+#?      @(#) EnDeMenu.txt 3.54 13/07/06 16:55:36
 #?
 #? AUTHOR
 #?      09-jun-09 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -302,6 +302,35 @@ item3	ebac bb3b	;			; prefixed by UTF-8 character
 item3	ebb0 bc3c	<			< prefixed by UTF-8 character
 item3	ebb5 bd7d	}			} prefixed by UTF-8 character
 item3	ebb8 be3e	>			> prefixed by UTF-8 character
+
+#------+---------------+-----------------------+------------------------------+
+group	TXT.UCS-UTF8	insert 1 UCS to force \	force \-escape leads to mismatch characters sequences
+# // ToDo: description needs to be improved
+# The trick here is if the application (like PHP's addslashes()) escapes some
+# characters by inserting a \ before the character (i.e. " or ').
+# Example:   bf27 --> bf5c27  which means bf5c a valid UTF-8 charcater then '
+# Note: could use b0, b1, .. be too instead of bf
+realUCS	true
+showHEX	true
+item3	bf22		"			" forced prefixed by UTF-8 character
+item3	bf27		'			' forced prefixed by UTF-8 character
+item3	bf2f		/			/ forced prefixed by UTF-8 character
+item3	bf3c		<			< forced prefixed by UTF-8 character
+item3	bf3e		>			> forced prefixed by UTF-8 character
+item3	bf5c		\			\ forced prefixed by UTF-8 character
+item3	bf2a		*			* forced prefixed by UTF-8 character
+item3	bf2b		+			+ forced prefixed by UTF-8 character
+item3	bf2c		,			, forced prefixed by UTF-8 character
+item3	bf2d		-			- forced prefixed by UTF-8 character
+item3	bf2e		.			. forced prefixed by UTF-8 character
+item3	bf3a		:			: forced prefixed by UTF-8 character
+item3	bf3b		;			; forced prefixed by UTF-8 character
+item3	bf3d		=			= forced prefixed by UTF-8 character
+item3	bf5b		[			[ forced prefixed by UTF-8 character
+item3	bf5d		]			] forced prefixed by UTF-8 character
+item3	bf7b		{			{ forced prefixed by UTF-8 character
+item3	bf7d		}			} forced prefixed by UTF-8 character
+item3	bf20		space			SPACE forced prefixed by UTF-8 character
 
 #------+---------------+-----------------------+------------------------------+
 group	TXT.Replace	Replace			replace special characters
@@ -1197,7 +1226,7 @@ item3	:INTERCAL	INTERCAL		INTERCAL
 #item3	:LOLCATS	LOLCATS			LOLCATS does not support RegEx, but try ..
 item3	:LOLCODE	LOLCODE			LOLCODE does not support RegEx, but try ..
 item3	:LOLSQL		LOLSQL			LOLSQL does not support RegEx, but try ..
-item3	:Malboge	Malboge			difficult language
+item3	:Malbolge	Malbolge		difficult language
 item3	:Ook		Ook!			Ook! does not support RegEx, but try ..
 item3	:Piet		Piet			Piet does not support RegEx, but try ..
 item3	:Rebol		Rebol			Rebol does not support RegEx, but try ..
@@ -1304,6 +1333,7 @@ use	TXT.Sample
 use	TXT.Insert
 use	TXT.UCS-ISO
 use	TXT.UCS-UTF
+use	TXT.UCS-UTF8
 use	TXT.Append
 use	TXT.Remove
 use	TXT.Replace
@@ -1941,6 +1971,11 @@ use	UCS.Dingbats
 use	UCS.Latin-eq
 use	UCS.Typograph
 use	UCS.Symbols
+# // ToDo: following does not work due to different definition of the group
+# // ToDo: need programatic conversion of menu or a separate menu definition
+# //       like UCS.* above
+#realUCS	true
+#use	TXT.UCS-UTF8
 
 #------+---------------+-----------------------+------------------------------+
 menu	MP.Unicode	Unicode			various Unicode characters
@@ -1962,5 +1997,7 @@ use	UCS.Spaces
 use	UCS.Numbers
 use	UCS.Dingbats
 use	UCS.Latin-eq
+use	UCS.Typograph
+use	UCS.Symbols
 
 __END

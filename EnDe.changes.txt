@@ -1,7 +1,7 @@
 
 CHANGE HISTORY
 	
-1.0rc14 21-jun-13
+1.0rc14 06-jul-13
     * LIB, API
 	"EnDeMaps.txt" superMap and subMap implemented
 	"EnDeMaps.js" superMap and subMap implemented; initialize EnDe.File.list[] with EnDeMaps.gen.js
@@ -13,6 +13,7 @@ CHANGE HISTORY
 	"EnDeUser.js" bugfix: viewstate deserialization improved
 
     * GUI
+	"EnDeMenu.txt" TXT.UCS-UTF8 menu added
 	"EnDeMenu.txt" to/from superscript/subscript added
 	"EnDeGUIx.js"  trace output for EnDe.u2superMap and EnDe.u2subMap added
 	"EnDe.html" bugfix: include EnDeFile.js right after EnDe.js

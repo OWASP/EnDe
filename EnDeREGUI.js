@@ -31,7 +31,7 @@
 #?      EnDeGUI.js, EnDeFile.js, EnDeMenu.txt
 #?
 #? VERSION
-#?      @(#) EnDeREGUI.js 3.11 12/12/09 18:02:19
+#?      @(#) EnDeREGUI.js 3.13 13/07/05 08:52:09
 #?
 #? AUTHOR
 #?      08-mar-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -41,7 +41,7 @@
 if (typeof(EnDe)==='undefined')    { EnDe   = new function() {}; } // will have problems if missing ...
 if (typeof(EnDeRE)==='undefined')  { EnDeRE = new function() {}; }
 
-var EnDeREGUI = new function() { this.SID = '3.11'; }
+var EnDeREGUI = new function() { this.SID = '3.13'; }
 
   // ======================================================================= //
   // GUI functions                                                           //
@@ -402,7 +402,7 @@ EnDeRE.help     = function(lng) {
 	  case ':INTERCAL'  : this.$('Tsahir').innerHTML += '* PLEASE IGNORE';                break;
 	  case ':LOLCODE'   : this.$('Tsahir').innerHTML += 'LOL ROFLOL';                     break;
 	  case ':LOLSQL'    : this.$('Tsahir').innerHTML += 'LOL ROFLOL';                     break;
-	  case ':Malboge'   : this.$('Tsahir').innerHTML += '';                               break;
+	  case ':Malbolge'  : this.$('Tsahir').innerHTML += '';                               break;
 	  case ':Ook'       : this.$('Tsahir').innerHTML += 'Ook? Ook! Ook.';                 break;
 	  case ':Piet'      : this.$('Tsahir').innerHTML += '';                               break;
 	  case ':Rebol'     : this.$('Tsahir').innerHTML += 'comment: {}';                    break;
@@ -461,7 +461,7 @@ EnDeRE.dispatch = function(obj,item) {
 	  // esoteric languages
 	  case ':Brainfuck':
 	  case ':Befunge':
-	  case ':Malboge':
+	  case ':Malbolge':
 	  case ':Piet'  :
 	  case ':Speed' :
 	  case ':SPL'   :
@@ -506,7 +506,7 @@ EnDeRE.dispatch = function(obj,item) {
 				}
 				break;
 			  case ':Taxi':
-				bux  = '[ this is a regualr expression written in Taxi programming language ]\n';
+				bux  = '[ this is a regular expression written in Taxi programming language ]\n';
 				bux += '[ ' + rex.value.replace(/\n/g,' ]\n[ ') + ' ]\n';
 				break;
 			  case ':Whirl':

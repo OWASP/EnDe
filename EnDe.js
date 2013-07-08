@@ -83,7 +83,7 @@
 #       _n2_, _n3_, _n4_, _n5_, _n6_, and _n7_ .
 #?
 #? VERSION
-#?      @(#) EnDe.js 3.45 13/06/24 00:39:43
+#?      @(#) EnDe.js 3.47 13/07/09 00:48:14
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -96,8 +96,8 @@
 
 var EnDe    = new function() {
 
-this.SID    = '3.45';
-this.sid    = function() { return('@(#) EnDe.js 3.45 13/06/24 00:39:43 EnDe'); };
+this.SID    = '3.47';
+this.sid    = function() { return('@(#) EnDe.js 3.47 13/07/09 00:48:14 EnDe'); };
 
 	// ===================================================================== //
 	// debug functions                                                       //
@@ -1298,7 +1298,6 @@ this.UCS    = new function() {
 
   this.u2s      = function(type,mode,src) {
   //#? convert (halfwidth) Unicode to superscript Unicode characters or vise versa
-  //#? convert superscript Unicode to (halfwidth) Unicode characters
   //#type? 2super: Unicode to superscript
   //#type? 2sub:   Unicode to subscript
   //#type? super2: superscript to Unicode 
@@ -2542,10 +2541,10 @@ this.EN     = new function() {
 	return bux;
   }; // symbol
 
-  this.mathguard= function(uppercase,src,prefix,suffix) { return EnDe.EN.symbol('Digit3x5-0','strict',uppercase,src,prefix,suffix,'5'); }
+  this.mathguard= function(uppercase,src,prefix,suffix) { return EnDe.EN.symbol('Digit3x5-0','strict',uppercase,src,prefix,suffix,'5'); };
   //#? convert digit to MathGuard 3x5 matrix (strict mode allows only digits)
 
-  this.matrix3x5= function(src,prefix,suffix) { return EnDe.EN.symbol('Digit3x5-1','strict',false,src,prefix,suffix,delimiter); }
+  this.matrix3x5= function(src,prefix,suffix) { return EnDe.EN.symbol('Digit3x5-1','strict',false,src,prefix,suffix,delimiter); };
   //#? convert digit to 3x5 matrix (matrix is variant of MathGuard matrix; strict mode allows only digits)
 
   this.braille  = function(src,prefix,suffix) { return EnDe.EN.symbol('ASCIIBr',   'strict',false,src,prefix,suffix,delimiter);
@@ -4650,7 +4649,7 @@ this.DE     = new function() {
 	// ===================================================================== //
 
 this.Misc   = new function() {
-this.sid        = function()  { return('@(#) EnDe.js 3.45 13/06/24 00:39:43 EnDeMisc'); };
+this.sid        = function()  { return('@(#) EnDe.js 3.47 13/07/09 00:48:14 EnDeMisc'); };
 
 	// ===================================================================== //
 	// global variables                                                      //

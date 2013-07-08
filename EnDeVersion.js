@@ -1,2 +1,2 @@
-EnDe.VERDATE  = '30-sep-12';
+EnDe.VERDATE  = '06-jul-13';
 EnDe.VERSION  = '1.0rc13';

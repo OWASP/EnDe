@@ -1630,6 +1630,19 @@ GUI
 	It should be possible to generate such test patterns using with user
 	functions specified in the Functions inset window.
 	
+	Using EnDe.lib.zap in Zed Attack Proxy (ZAP)
+	=======================================
+	EnDe's library (API) can be used in  ZAP's `Script Console'.  Therfore
+	"EnDe.lib.zap" can be used. It contains all functions from  EnDe's API
+	as well as some spezial functions to make usage in ZAP mor easy.
+	Usage of "EnDe.lib.zap" in ZAP is as follows:
+	* Load "EnDe.lib.zap" with ZAP's `Script Console' `Load script' button
+	* add your functions as need after loading, for example:
++-
+|		var a=EnDe.B64.EN.b64("heureca",72); alert(a);
++-
+	
+	
     JOKES
 	
 	Outdated since May 2008, see  EPILOG.  
@@ -1876,6 +1889,10 @@ HACKER's INFO
 		See  USER file "EnDeUser.js"  below.
 	* "EnDeCheck.js"
 		See  USER file "EnDeCheck.js"  below.
+	* "EnDe.zap.js"
+		Special file with simple helper functions for use in ZAP.
+	* "EnDe.lib.zap"
+		Special file for use in ZAP, contains all API functions.
 	
     GUI files:
 	
@@ -2234,6 +2251,7 @@ FEEDBACK
 	
 HISTORY
 	
+	* 12/2012  1.0rc13
 	* 05/2012  1.0rc10
 	* 12/2011  1.0rc9
 	* 11/2011  1.0rc8
@@ -2782,7 +2800,7 @@ EPILOG
 	
 VERSION
 	
-	@# EnDe <!-- @(#) EnDe.man.txt 3.46 00:35:44 13/06/24 -->
+	@# EnDe <!-- @(#) EnDe.man.txt 3.47 01:32:32 13/07/09 -->
 	
 	
 AUTHOR

@@ -26,7 +26,7 @@
 #?      EnDeMenu.txt
 #?
 #? VERSION
-#?      @(#) EnDeFile.txt 3.11 11/12/30 19:27:21
+#?      @(#) EnDeFile.txt 3.13 13/09/05 00:03:49
 #?
 #? AUTHOR
 #?      27-dez-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -61,8 +61,9 @@ file	EnDeCheck.txt	Digit Checksum Functions	functions to test checksum of a numb
 group	File.RegEx	RegEx (local file)		load local file with RegEx pattern
 file	core-rules.xml	ModSecurity Core Rule Set 1.6.1	ModSecurity Core Rule Set 1.6.1			EnDeDOM.f.RE	EnDeGUI.dispatch(this,'RE')	Core Rule Set 1.6.1:
 file	core-rules-2.0.xml	ModSecurity Core Rule Set 2.0	ModSecurity Core Rule Set 2.0		EnDeDOM.f.RE	EnDeGUI.dispatch(this,'RE')	Core Rule Set 2.0:
-file	core-rules-2.0-part1.xml	ModSecurity Core Rule Set 2.0 part-1	ModSecurity Core Rule Set 2.0 part-1		EnDeDOM.f.RE	EnDeGUI.dispatch(this,'RE')	Core Rule Set 2.0 (1):
-file	core-rules-2.0-part2.xml	ModSecurity Core Rule Set 2.0 part-2	ModSecurity Core Rule Set 2.0 part-2		EnDeDOM.f.RE	EnDeGUI.dispatch(this,'RE')	Core Rule Set 2.0 (2):
+file	core-rules-2.2.8.0-part1.xml	ModSecurity Core Rule Set 2.2.8.0 part-1	ModSecurity Core Rule Set 2.2.8.0 part-1		EnDeDOM.f.RE	EnDeGUI.dispatch(this,'RE')	Core Rule Set 2.2.8.0 (1):
+file	core-rules-2.2.8.0-part2.xml	ModSecurity Core Rule Set 2.2.8.0 part-2	ModSecurity Core Rule Set 2.2.8.0 part-2		EnDeDOM.f.RE	EnDeGUI.dispatch(this,'RE')	Core Rule Set 2.2.8.0 (2):
+file	core-rules-2.2.8.0-part2.xml	ModSecurity Core Rule Set 2.2.8.0 part-3	ModSecurity Core Rule Set 2.2.8.0 part-3		EnDeDOM.f.RE	EnDeGUI.dispatch(this,'RE')	Core Rule Set 2.2.8.0 (2):
 file	default_filter.xml	PHPIDS Rules		PHPIDS Rules					EnDeDOM.f.RE	EnDeGUI.dispatch(this,'RE')	PHPIDS Rules:
 file	OWASP-regex.xml	OWASP Validation Regex Repository	OWASP Validation Regex Repository	EnDeDOM.f.RE	EnDeGUI.dispatch(this,'RE')	OWASP Regex:
 

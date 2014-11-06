@@ -11,8 +11,8 @@
 	<meta name="DC.language"      content="en" >
 	<meta name="DC.rights"        content="https://github.com/EnDe/EnDe license.txt" >
 	<meta name="DC.license"       content="https://github.com/EnDe/EnDe license.txt" >
-	<meta name="DC.modified"      content="13/06/23" >
-	<meta name="DC.Source"        content="@(#) EnDe.html 3.45 13/06/23 01:05:22"  >
+	<meta name="DC.modified"      content="14/11/06" >
+	<meta name="DC.Source"        content="@(#) EnDe.html 3.47 14/11/06 21:25:13"  >
 	<meta name="DC.Date"          content="07-apr-07" >
 	<meta name="DC.creator"       content="Achim Hoffmann" >
 	<meta name="DC.Author"        content="Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net" >
@@ -50,6 +50,7 @@
 	<script language="JavaScript1.5" type="text/javascript" charset="utf-8" src="JSReg.js"></script>
 	<script language="JavaScript1.5" type="text/javascript" charset="utf-8" src="JsDecoder.js"></script>
 	<script language="JavaScript1.5" type="text/javascript" charset="utf-8" src="JsColorizer.js"></script>
+	<script language="JavaScript1.5" type="text/javascript" charset="utf-8" src="vkbeautify.js"></script>
 	<script language="JavaScript1.5" type="text/javascript" charset="utf-8" src="EnDeForm.js"></script>
 	<script language="JavaScript1.5" type="text/javascript" charset="utf-8" src="EnDeSer.js"></script>
 
@@ -70,9 +71,7 @@
 	<form id="EnDeDOM" name="EnDeDOM" accept-charset="utf-8" action="#" enctype="multipart/form-data" method="post" >
 	<br>
 	<a id="EnDeDOM.icon" title="about"  href="" onclick="return EnDeGUI.help('ABOUT');"><img src="img/ende-128x128.png" alt="EnDe Icon" width=28 height=28 ></a>
-	<!--
 	<a id="EnDeDOM.logo" title="sponsored by sic[!]sec GmbH" href="http://sicsec.de/" target="_sicsec"><img src="img/sicsec-87x26.png" alt="sic[!]sec" ></a>
-	-->
 	<fieldset   id="EnDeDOM.f.DBX">
 		<div    id="EnDeDOM.DBX.bf" class="head">
 			<span>
@@ -1193,7 +1192,7 @@ EnDeGUI.titles  = {
 	'EnDeDOM.RE.prefix':"pattern for string prefix befor the regular expression string",
 	'EnDeDOM.RE.raw':   "if checked RegEx will be raw data, otherwise it must be enclosed in proper delimiters and may conatin leading and trailing text",
 	'EnDeDOM.RE.desc':  "if checked parsed RegEx contains descriptive comments (following #)",
-	'EnDeDOM.RE.ere':   "if checked use extended regualr expressions of selected tool",
+	'EnDeDOM.RE.ere':   "if checked use extended regular expressions of selected tool",
 	'EnDeDOM.RE.text':  "RegEx text",
 	'EnDeDOM.RE.isTxt': "show text literaly",
 	'EnDeDOM.RE.isHex': "show text as hex values",

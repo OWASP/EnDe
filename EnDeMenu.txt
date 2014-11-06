@@ -88,7 +88,7 @@
 #?      EnDeGUIx.js, EnDeGUI.js
 #?
 #? VERSION
-#?      @(#) EnDeMenu.txt 3.55 14/11/06 19:02:04
+#?      @(#) EnDeMenu.txt 3.56 14/11/06 22:05:56
 #?
 #? AUTHOR
 #?      09-jun-09 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -343,6 +343,8 @@ item3	txtREPvt	\v			replace all \v by literal \v
 item3	txtREP00	\0			replace all \0 by literal \0
 item3	txtREPplus	+ by space		replace all + by space
 item3	txtREPspace	space by +		replace all space by +
+item3	txtREPbar	| by \n			replace all | by \n
+item3	txtREPrab	\n by |			replace all \n by |
 item3	txtREPdqsq	" by '			replace all " by '
 item3	txtREPsqdq	' by "			replace all ' by "
 item3	txtREPsqbt	' by `			replace all ' by `

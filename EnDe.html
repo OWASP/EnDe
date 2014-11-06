@@ -12,7 +12,7 @@
 	<meta name="DC.rights"        content="https://github.com/EnDe/EnDe license.txt" >
 	<meta name="DC.license"       content="https://github.com/EnDe/EnDe license.txt" >
 	<meta name="DC.modified"      content="14/11/06" >
-	<meta name="DC.Source"        content="@(#) EnDe.html 3.47 14/11/06 21:25:13"  >
+	<meta name="DC.Source"        content="@(#) EnDe.html 3.48 14/11/06 22:48:48"  >
 	<meta name="DC.Date"          content="07-apr-07" >
 	<meta name="DC.creator"       content="Achim Hoffmann" >
 	<meta name="DC.Author"        content="Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net" >
@@ -416,9 +416,14 @@
 			<label for="EnDeDOM.ED.0d"> <input  id="EnDeDOM.ED.0d"  type="checkbox" > 0x0d </label>
 			<label for="EnDeDOM.ED.da"> <input  id="EnDeDOM.ED.da"  type="checkbox" > 0x0d0a</label>
 			<label for="EnDeDOM.ED.aa"> <input  id="EnDeDOM.ED.aa"  type="checkbox" > 0x1a </label>
-&#160; &#160; &#160; &#160; &#160;
-			<label class="bold"> en-/decode: </label>
+
+			<label class="bold" style="border-left:1px solid black"> en-/decode: </label>
 			<label for="EnDeDOM.ED.uri"><input  id="EnDeDOM.ED.uri" type="checkbox" > URI/URL </label>
+
+			<label class="bold" style="border-left:1px solid black"> Sep. </label>
+			<label for="EnDeDOM.ED.sa"> <input  id="EnDeDOM.ED.sa"  type="radio" name="sep" value="&" checked="1" > &amp; </label>
+			<label for="EnDeDOM.ED.sb"> <input  id="EnDeDOM.ED.sb"  type="radio" name="sep" value="|"   > <b>|</b></label> <!-- bold for better visinility -->
+			<label for="EnDeDOM.ED.sn"> <input  id="EnDeDOM.ED.sn"  type="radio" name="sep" value="\n"  > \n </label>
 			<hr>
 		</div>
 		<fieldset id="EnDeDOM.f.EN"><legend> Encoding</legend>
@@ -1113,6 +1118,9 @@ EnDeGUI.titles  = {
 	'EnDeDOM.ED.0d':    "add carriage return (CR) character at end of input text",
 	'EnDeDOM.ED.da':    "add carriage return (CR) and newline (NL) character at end of input text",
 	'EnDeDOM.ED.aa':    "add End-of-Text character at end of input text",
+	'EnDeDOM.ED.sa':    "use  &  for spliting string (used in 'parsed' button)",
+	'EnDeDOM.ED.sb':    "use  |  for spliting string (used in 'parsed' button)",
+	'EnDeDOM.ED.sn':    "use  \n  for spliting string (used in 'parsed' button)",
 	'EnDeDOM.ED.uri':   "URL-encode after encoding, URL-decode before decoding",
 	'EnDeDOM.EN.text':  "decoded text",
 	'EnDeDOM.EN.isTxt': "show text literaly",

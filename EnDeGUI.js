@@ -106,7 +106,7 @@
 #    building the GUI, EnDeGUI.init() will show the "Browser Quirks" window.
 #?
 #? VERSION
-#?      @(#) EnDeGUI.js 3.99 13/06/23 01:07:17
+#?      @(#) EnDeGUI.js 3.100 14/11/06 21:39:13
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -118,8 +118,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '3.99';
-this.sid        = function() {  return('@(#) EnDeGUI.js 3.99 13/06/23 01:07:17 EnDeGUI'); };
+this.SID        = '3.100';
+this.sid        = function() {  return('@(#) EnDeGUI.js 3.100 14/11/06 21:39:13 EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 
@@ -2429,6 +2429,11 @@ this.EN         = new function() {
 		return EnDeGUI.code( EnDe.Form.dispatch(item,'lazy',src,true,5) );
 		return false;   // fallback
 		break;
+	  case 'XMLFormat'  :
+		// EnDeGUI.colour = true;
+		return EnDeGUI.code( EnDe.Form.dispatch(item,'lazy',src,true,5) );
+		return false;   // fallback
+		break;
 	  case 'JSReg'      :
 		add = [];       // pass checks to JSReg
 		add.push($('EnDeDOM.API.JSRcode' ).checked);
@@ -2600,6 +2605,11 @@ this.DE         = new function() {
 		return false;   // fallback
 		break;
 	  case 'JSDecode'   :
+		// EnDeGUI.colour = true;
+		return EnDeGUI.code( EnDe.Form.dispatch(item,'lazy',src,true,5) );
+		return false;   // fallback
+		break;
+	  case 'XMLFormat'  :
 		// EnDeGUI.colour = true;
 		return EnDeGUI.code( EnDe.Form.dispatch(item,'lazy',src,true,5) );
 		return false;   // fallback

@@ -106,7 +106,7 @@
 #    building the GUI, EnDeGUI.init() will show the "Browser Quirks" window.
 #?
 #? VERSION
-#?      @(#) EnDeGUI.js 3.100 14/11/06 21:39:13
+#?      @(#) EnDeGUI.js 3.101 14/11/07 00:12:44
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -118,8 +118,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '3.100';
-this.sid        = function() {  return('@(#) EnDeGUI.js 3.100 14/11/06 21:39:13 EnDeGUI'); };
+this.SID        = '3.101';
+this.sid        = function() {  return('@(#) EnDeGUI.js 3.101 14/11/07 00:12:44 EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 
@@ -1053,6 +1053,7 @@ this.copy       = function(txt) {
 this.data       = function(btn,obj) {
 //#? VIEW dispatcher for various data conversions (Text <--> Hex <--> parsed)
 	_spr('EnDeGUI.data(' + btn.id + ', ' + obj + ')');
+	var sep = EnDeGUI.get_radio('sep'); // Read separator directly from UI, is same for EN and DE
 	/*
 	 * Uses the given button object to identify source and target of conversion.
 	 */
@@ -1102,7 +1103,13 @@ this.data       = function(btn,obj) {
 			} else {
 				// else we assume that we have something like a beautified URI
 				src = EnDe.join('key',0,false,src,'','','');
-				$(obj + '.text').value = EnDe.join('arg',0,false,src,'','','');
+				switch (sep) {  // which separator to use
+				case 'n':  src = EnDe.join('dwr',0,false,src,'','',''); break;
+				case '|':  src = EnDe.join('gwt',0,false,src,'','',''); break;
+				case '&':
+				default:   src = EnDe.join('arg',0,false,src,'','',''); break;
+				}
+				$(obj + '.text').value = src;
 			}
 			t_c = u_c;
 			u_c = h_c;
@@ -1169,7 +1176,12 @@ this.data       = function(btn,obj) {
 					$(obj + '.text').value = EnDeGUI.RE.parse($(obj + '.text').value);
 				} else {
 					// else we assume something like an URI
-					src = EnDe.split('arg',0,false,src,'','','');
+					switch (sep) {  // which separator to use
+					case 'n':  src = EnDe.split('dwr',0,false,src,'','',''); break;
+					case '|':  src = EnDe.split('gwt',0,false,src,'','',''); break;
+					case '&':
+					default:   src = EnDe.split('arg',0,false,src,'','',''); break;
+					}
 /*
 					if (EnDeGUI.isOpera===true) { // Opera use \r\n, don't know why ...
 						src = src.replace(/\r\n/g, '\n'); // .. but does not work as expected
@@ -2165,6 +2177,7 @@ this.get_radio    = function(src) {
 	  case 'mode':  modes = ['EnDeDOM.API.mode0', 'EnDeDOM.API.mode1', 'EnDeDOM.API.mode2']; break;
 	  case 'value': modes = ['EnDeDOM.FF.varval0', 'EnDeDOM.FF.varval1']; break;
 	  case 'add':   modes = ['EnDeDOM.IP.add0', 'EnDeDOM.IP.add1', 'EnDeDOM.IP.add2', 'EnDeDOM.IP.add3', 'EnDeDOM.IP.add4']; break;
+	  case 'sep':   modes = ['EnDeDOM.ED.sa', 'EnDeDOM.ED.sb', 'EnDeDOM.ED.sn']; break;
 	  default:      return bux; break;
 	}
 	while ((radio=modes.pop())!=null) {

@@ -83,7 +83,7 @@
 #       _n2_, _n3_, _n4_, _n5_, _n6_, and _n7_ .
 #?
 #? VERSION
-#?      @(#) EnDe.js 3.47 13/07/09 00:48:14
+#?      @(#) EnDe.js 3.48 14/11/06 23:05:52
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -96,8 +96,8 @@
 
 var EnDe    = new function() {
 
-this.SID    = '3.47';
-this.sid    = function() { return('@(#) EnDe.js 3.47 13/07/09 00:48:14 EnDe'); };
+this.SID    = '3.48';
+this.sid    = function() { return('@(#) EnDe.js 3.48 14/11/06 23:05:52 EnDe'); };
 
 	// ===================================================================== //
 	// debug functions                                                       //
@@ -379,14 +379,18 @@ this.isTyp  = function(type,src) {
 this.join   = function(type,mode,_n3_,src,prefix,suffix,delimiter) {
 //#? global replace newlinw or tab character
 //#type? arg: global replace newline by &
+//#type? dwr: global replace newline by newline (do nothing)
+//#type? gwt: global replace newline by |
 //#type? key: global replace tabs by =
 //#type? del: global replace newline by given delimiter
 	var rex = /\n/;
 	var ccc = '';
 	switch (type) {
 	  case 'arg': rex = /\n/g; ccc = '&';       break;
+	  case 'gwt': rex = /\n/g; ccc = '|';       break;
 	  case 'key': rex = /\t/g; ccc = '=';       break;
 	  case 'del': rex = /\n/g; ccc = delimiter; break;
+	  case 'dwr': return src;                   break;
 	}
 	var bux = src.replace(rex,ccc);
 	rex = null;
@@ -395,15 +399,19 @@ this.join   = function(type,mode,_n3_,src,prefix,suffix,delimiter) {
 
 this.split  = function(type,mode,_n3_,src,prefix,suffix,delimiter) {
 //#? global split
-//#type? arg: global split, replace & by newline by &
-//#type? key: global split, replace = by tabs by =
-//#type? del: global split, replace given delimiter by newline
+//#type? arg: global split, replace & by newline
+//#type? gwt: global split, replace | by newline
+//#type? key: global split, replace = by tabs
+//#type? del: global split, replace given delimiter
+//#type? dwr: global split, replace newline by newline (do nothing)
 	var rex = null;
 	var ccc = '';
 	switch (type) {
 	  case 'arg': ccc = '\n';  rex = new RegExp('&','g');       break;
+	  case 'gwt': ccc = '\n';  rex = new RegExp('|','g');       break;
 	  case 'key': ccc = '\t';  rex = new RegExp('=','g');       break;
 	  case 'del': ccc = '\n';  rex = new RegExp(delimiter,'g'); break;
+	  case 'dwr': return src;                                   break;
 	  default   : ccc = '';    rex = new RegExp('&=','g');      break;
 	}
 	var bux = src.replace(rex,ccc);
@@ -4649,7 +4657,7 @@ this.DE     = new function() {
 	// ===================================================================== //
 
 this.Misc   = new function() {
-this.sid        = function()  { return('@(#) EnDe.js 3.47 13/07/09 00:48:14 EnDeMisc'); };
+this.sid        = function()  { return('@(#) EnDe.js 3.48 14/11/06 23:05:52 EnDeMisc'); };
 
 	// ===================================================================== //
 	// global variables                                                      //

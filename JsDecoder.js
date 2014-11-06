@@ -4,10 +4,10 @@
 #?      This file is a copy from:
 #?          http://code.gosu.pl/dl/JsDecoder/demo/JsDecoder.js
 #?      Following adaptions have been made to make it object-oriented:
-#?          1. emicolons for pedantic JavaScript syntax added.
+#?          1. semicolons for pedantic JavaScript syntax added.
 #?
 #? VERSION
-#?      @(#) JsDecoder.js 3.1 10/04/12 18:24:21
+#?      @(#) JsDecoder.js 3.2 14/11/06 20:52:22
 #?
 #? AUTHOR
 #?      08-sep-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net

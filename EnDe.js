@@ -83,7 +83,7 @@
 #       _n2_, _n3_, _n4_, _n5_, _n6_, and _n7_ .
 #?
 #? VERSION
-#?      @(#) EnDe.js 3.48 14/11/06 23:05:52
+#?      @(#) EnDe.js 3.49 14/11/07 00:07:50
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -96,8 +96,8 @@
 
 var EnDe    = new function() {
 
-this.SID    = '3.48';
-this.sid    = function() { return('@(#) EnDe.js 3.48 14/11/06 23:05:52 EnDe'); };
+this.SID    = '3.49';
+this.sid    = function() { return('@(#) EnDe.js 3.49 14/11/07 00:07:50 EnDe'); };
 
 	// ===================================================================== //
 	// debug functions                                                       //
@@ -408,7 +408,7 @@ this.split  = function(type,mode,_n3_,src,prefix,suffix,delimiter) {
 	var ccc = '';
 	switch (type) {
 	  case 'arg': ccc = '\n';  rex = new RegExp('&','g');       break;
-	  case 'gwt': ccc = '\n';  rex = new RegExp('|','g');       break;
+	  case 'gwt': ccc = '\n';  rex = new RegExp('[|]','g');      break;
 	  case 'key': ccc = '\t';  rex = new RegExp('=','g');       break;
 	  case 'del': ccc = '\n';  rex = new RegExp(delimiter,'g'); break;
 	  case 'dwr': return src;                                   break;
@@ -4657,7 +4657,7 @@ this.DE     = new function() {
 	// ===================================================================== //
 
 this.Misc   = new function() {
-this.sid        = function()  { return('@(#) EnDe.js 3.48 14/11/06 23:05:52 EnDeMisc'); };
+this.sid        = function()  { return('@(#) EnDe.js 3.49 14/11/07 00:07:50 EnDeMisc'); };
 
 	// ===================================================================== //
 	// global variables                                                      //

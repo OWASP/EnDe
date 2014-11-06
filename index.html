@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd" >
 <!--
 /*****************************************************************************\
-|                  Copyright (c) 2006 - 2013 Achim Hoffmann
+|                  Copyright (c) 2006 - 2014 Achim Hoffmann
 |------------------------------------------------------------------------------
 | You may obtain a copy of the license at  https://github.com/EnDe/EnDe
 |------------------------------------------------------------------------------
@@ -42,6 +42,7 @@
 |               (no license information but copyright as copied on 17-feb-2008)
 |    jsmin.c    - see http://crockford.com/javascript/jsmin
 |    JsDecoder.js   - see http://code.gosu.pl/dl/JsDecoder/demo/JsDecoder.js
+|    vkbeautify.js  - see https://code.google.com/p/vkbeautify/downloads/list
 |------------------------------------------------------------------------------
 |    JsColorizer.js - see http://code.gosu.pl/dl/JsDecoder/demo/JsColorizer.js
 |    JSReq.js       - see http://www.businessinfo.co.uk/labs/jsreg/JSReg.js
@@ -72,6 +73,8 @@
 |               blowfish.js
 | Files as copied 06-jun-2012:
 |               des.js
+| Files as copied 06-nov-2014:
+|               vkbeautify.js
 |
 | Files without license information as copied on 30-dec-2007, 20-dec-2010:
 |     xssAttacks.xml        http://ha.ckers.org/xssAttacks.xml
@@ -92,8 +95,8 @@
 	<meta name="DC.language"      content="en" >
 	<meta name="DC.rights"        content="https://github.com/EnDe/EnDe license.txt" >
 	<meta name="DC.license"       content="https://github.com/EnDe/EnDe license.txt" >
-	<meta name="DC.modified"      content="13/06/23" >
-	<meta name="DC.Source"        content="@(#) EnDe.html 3.45 13/06/23 01:05:22"  >
+	<meta name="DC.modified"      content="14/11/07" >
+	<meta name="DC.Source"        content="@(#) EnDe.html 3.49 14/11/07 00:11:19"  >
 	<meta name="DC.Date"          content="07-apr-07" >
 	<meta name="DC.creator"       content="Achim Hoffmann" >
 	<meta name="DC.Author"        content="Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net" >
@@ -131,6 +134,7 @@
 	<script language="JavaScript1.5" type="text/javascript" charset="utf-8" src="JSReg.js"></script>
 	<script language="JavaScript1.5" type="text/javascript" charset="utf-8" src="JsDecoder.js"></script>
 	<script language="JavaScript1.5" type="text/javascript" charset="utf-8" src="JsColorizer.js"></script>
+	<script language="JavaScript1.5" type="text/javascript" charset="utf-8" src="vkbeautify.js"></script>
 	<script language="JavaScript1.5" type="text/javascript" charset="utf-8" src="EnDeForm.js"></script>
 	<script language="JavaScript1.5" type="text/javascript" charset="utf-8" src="EnDeSer.js"></script>
 
@@ -151,6 +155,7 @@
 	<form id="EnDeDOM" name="EnDeDOM" accept-charset="utf-8" action="#" enctype="multipart/form-data" method="post" >
 	<br>
 	<a id="EnDeDOM.icon" title="about"  href="" onclick="return EnDeGUI.help('ABOUT');"><img src="img/ende-128x128.png" alt="EnDe Icon" width=28 height=28 ></a>
+	<a id="EnDeDOM.logo" title="sponsored by sic[!]sec GmbH" href="http://sicsec.de/" target="_sicsec"><img src="img/sicsec-87x26.png" alt="sic[!]sec" ></a>
 	<fieldset   id="EnDeDOM.f.DBX">
 		<div    id="EnDeDOM.DBX.bf" class="head">
 			<span>
@@ -495,9 +500,14 @@
 			<label for="EnDeDOM.ED.0d"> <input  id="EnDeDOM.ED.0d"  type="checkbox" > 0x0d </label>
 			<label for="EnDeDOM.ED.da"> <input  id="EnDeDOM.ED.da"  type="checkbox" > 0x0d0a</label>
 			<label for="EnDeDOM.ED.aa"> <input  id="EnDeDOM.ED.aa"  type="checkbox" > 0x1a </label>
-&#160; &#160; &#160; &#160; &#160;
-			<label class="bold"> en-/decode: </label>
+
+			<label class="bold" style="border-left:1px solid black"> en-/decode: </label>
 			<label for="EnDeDOM.ED.uri"><input  id="EnDeDOM.ED.uri" type="checkbox" > URI/URL </label>
+
+			<label class="bold" style="border-left:1px solid black"> Sep. </label>
+			<label for="EnDeDOM.ED.sa"> <input  id="EnDeDOM.ED.sa"  type="radio" name="sep" value="&" checked="1" > &amp; </label>
+			<label for="EnDeDOM.ED.sb"> <input  id="EnDeDOM.ED.sb"  type="radio" name="sep" value="|"  > <b>|</b></label> <!-- bold for better visinility -->
+			<label for="EnDeDOM.ED.sn"> <input  id="EnDeDOM.ED.sn"  type="radio" name="sep" value="n"  > \n </label>
 			<hr>
 		</div>
 		<fieldset id="EnDeDOM.f.EN"><legend> Encoding</legend>
@@ -1192,6 +1202,9 @@ EnDeGUI.titles  = {
 	'EnDeDOM.ED.0d':    "add carriage return (CR) character at end of input text",
 	'EnDeDOM.ED.da':    "add carriage return (CR) and newline (NL) character at end of input text",
 	'EnDeDOM.ED.aa':    "add End-of-Text character at end of input text",
+	'EnDeDOM.ED.sa':    "use  &  for spliting string (used in 'parsed' button)",
+	'EnDeDOM.ED.sb':    "use  |  for spliting string (used in 'parsed' button)",
+	'EnDeDOM.ED.sn':    "use  \n  for spliting string (used in 'parsed' button)",
 	'EnDeDOM.ED.uri':   "URL-encode after encoding, URL-decode before decoding",
 	'EnDeDOM.EN.text':  "decoded text",
 	'EnDeDOM.EN.isTxt': "show text literaly",
@@ -1271,7 +1284,7 @@ EnDeGUI.titles  = {
 	'EnDeDOM.RE.prefix':"pattern for string prefix befor the regular expression string",
 	'EnDeDOM.RE.raw':   "if checked RegEx will be raw data, otherwise it must be enclosed in proper delimiters and may conatin leading and trailing text",
 	'EnDeDOM.RE.desc':  "if checked parsed RegEx contains descriptive comments (following #)",
-	'EnDeDOM.RE.ere':   "if checked use extended regualr expressions of selected tool",
+	'EnDeDOM.RE.ere':   "if checked use extended regular expressions of selected tool",
 	'EnDeDOM.RE.text':  "RegEx text",
 	'EnDeDOM.RE.isTxt': "show text literaly",
 	'EnDeDOM.RE.isHex': "show text as hex values",

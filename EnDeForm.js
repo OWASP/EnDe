@@ -31,7 +31,7 @@
 #       call may become a perfromance bottleneck.
 #?
 #? VERSION
-#?      @(#) EnDeForm.js 3.17 12/12/09 17:37:48
+#?      @(#) EnDeForm.js 3.18 14/11/06 21:03:38
 #?
 #? AUTHOR
 #?      15-nov-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -50,8 +50,8 @@ if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 // ========================================================================= //
 
 EnDe.Form   = new function() {
-	this.SID    = '3.17';
-	this.sid    = function()    { return('@(#) EnDeForm.js 3.17 12/12/09 17:37:48 EnDe.Form'); };
+	this.SID    = '3.18';
+	this.sid    = function()    { return('@(#) EnDeForm.js 3.18 14/11/06 21:03:38 EnDe.Form'); };
 
 	// ===================================================================== //
 	// global EnDe.Form variables                                            //
@@ -332,6 +332,7 @@ EnDe.Form   = new function() {
 		/* for type=JSReg white parameter has special meaning, see below */
 		// ToDo: quick&dirty use of white parameter
 		var bux = '';
+		var bbb = '';
 		var kkk = '';
 		this.white  = white;
 		this.linked = linked;
@@ -346,6 +347,29 @@ EnDe.Form   = new function() {
 			return kkk;
 			break;
 		  case 'JSFormat'   : return this.format(src); break;
+		  case 'XMLFormat'  :
+			kkk = vkbeautify.xml(src, "  ");
+/*
+        alert('**FIXME: egenen XML-Parser bauen, vkbeautify.xml() ist buggy; kann nicht: <a x="</a>" >aaa</a>');
+			var x='<a id="a"><b id="b">hey!</b></a>';
+			var p=new DOMParser();
+			var dom=p.parseFromString(x,"text/xml");
+			var bux=dom.getElementsByTagName("*");
+			for (c=0;c<bux.length;c++) {
+        			try {     if (bux[c].childNodes.length == 0) { continue; } } // skip empty nodes
+        			catch(e){ __dbx('EnDe.Form.dispatch: 0 bux['+c+'].childNodes.length failed: '+e); };
+        			if (bux[c].nodeType          != 1) { continue; } // skip empty or text nodes
+        			kkk += '<' + bux[c].nodeName;
+					// loop attributes
+        			kkk += '>';
+        			bbb  = bux[c].childNodes[0].nodeValue;
+        			if (bbb !== null) { kkk += bbb; }
+					// loop childs
+        			kkk += '</' + bux[c].nodeName + '>';
+			}
+*/
+			return kkk;
+			break;
 		  case 'toSource'   :
 			kkk = src;
 			bux = 'EnDeJSwrapper=function(){' + src + ';}';

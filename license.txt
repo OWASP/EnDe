@@ -1,5 +1,5 @@
 /*****************************************************************************\
-|                  Copyright (c) 2006 - 2013 Achim Hoffmann
+|                  Copyright (c) 2006 - 2014 Achim Hoffmann
 |------------------------------------------------------------------------------
 | You may obtain a copy of the license at  https://github.com/EnDe/EnDe
 |------------------------------------------------------------------------------
@@ -40,6 +40,7 @@
 |               (no license information but copyright as copied on 17-feb-2008)
 |    jsmin.c    - see http://crockford.com/javascript/jsmin
 |    JsDecoder.js   - see http://code.gosu.pl/dl/JsDecoder/demo/JsDecoder.js
+|    vkbeautify.js  - see https://code.google.com/p/vkbeautify/downloads/list
 |------------------------------------------------------------------------------
 |    JsColorizer.js - see http://code.gosu.pl/dl/JsDecoder/demo/JsColorizer.js
 |    JSReq.js       - see http://www.businessinfo.co.uk/labs/jsreg/JSReg.js
@@ -70,6 +71,8 @@
 |               blowfish.js
 | Files as copied 06-jun-2012:
 |               des.js
+| Files as copied 06-nov-2014:
+|               vkbeautify.js
 |
 | Files without license information as copied on 30-dec-2007, 20-dec-2010:
 |     xssAttacks.xml        http://ha.ckers.org/xssAttacks.xml

@@ -54,6 +54,8 @@
 #?              txtREPalnum : replace all non-alhpanumeric characters by spaces
 #?              txtREPurl   : replace all non-printable chars by their %hex value
 #?              txtREPascii : replace all non-printable chars by their %hex value
+#?              txtREPbar   : replace | by \n anywhere in text
+#?              txtREPrab   : replace \n by | anywhere in text
 #?              txtREPsgml  : replace all < > </ /> <! by a single space
 #?              txtREPsqdq  : replace all ' by "
 #?              txtREPsqdq  : replace all " by '
@@ -83,7 +85,7 @@
 #       -----------------------------------------------------------------------
 #?
 #? VERSION
-#?      @(#) EnDeText.js 3.19 12/11/14 00:05:37
+#?      @(#) EnDeText.js 3.20 14/11/06 22:12:14
 #?
 #? AUTHOR
 #?      08-sep-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -97,8 +99,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.Text   = new function() {
-	this.SID    = '3.19';
-	this.sid    = function() { return('@(#) EnDeText.js 3.19 12/11/14 00:05:37 EnDe.Text'); };
+	this.SID    = '3.20';
+	this.sid    = function() { return('@(#) EnDeText.js 3.20 14/11/06 22:12:14 EnDe.Text'); };
 
 	this.trace  = false;
 
@@ -201,6 +203,8 @@ EnDe.Text   = new function() {
 		  case 'txtINSvt'   : bux = bux.slice(0,pos) + '\v' + bux.slice(pos);   break;
 		  case 'txtREPplus' : bux = bux.replace(/\+/g,            ' '   );      break;
 		  case 'txtREPspace': bux = bux.replace(/ /g,             '+'   );      break;
+		  case 'txtREPbar'  : bux = bux.replace(/\|/g,            '\n'  );      break;
+		  case 'txtREPrab'  : bux = bux.replace(/\n/g,            '|'   );      break;
 		  case 'txtREPdouble':bux = bux.replace(/\\/g,            '\\\\');      break;
 		  case 'txtREPreduce':bux = bux.replace(/\\\\/g,          '\\'  );      break;
 		  case 'txtREPascii': bux = bux.replace(/([^\x20-\x7e])/g, function(c){return EnDe.dez2hex('url4',0,false,c.charCodeAt(),'','');}); break;

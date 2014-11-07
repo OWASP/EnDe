@@ -384,7 +384,7 @@ INSTALLATION
 	Less problems are expected ... but see  KNOWN GUI PROBLEMS  also.
 	
 	Following browsers are known to work flawless:
-		Webkit, Mozilla 1.7.x, Firefox 2.x, Firefox 3.x .. 11.x
+		Webkit, Mozilla 1.7.x, Firefox 2.x, Firefox 3.x .. 34.x
 	For anything else the  BROWSER QUIRKS  need to be consulted.
 	
 	
@@ -484,6 +484,7 @@ GUI
 	
 	On bottom of most tools (mainly below the textarea input field):
           [-] button      quickly clear textarea input field
+          [reset] button  quickly clear input fields (similar to [-] button)
           [clear] menu    various actions, see  TEXT MENU  below
           [guess] button
           [guess] menu    to call a guessing action for the tool
@@ -603,6 +604,9 @@ GUI
 	hex, UTF and Unicode representation.
 	It also contains the  [Special Unicode] menu, see  UNICODE MENU  below
 	for details.
+        The  [Special Characters] button will show all characters as available
+	in the menu above, in a new window.
+
 	
     DETAILS En-/Decoding
 	
@@ -964,7 +968,7 @@ GUI
 	"HTTP-Test" link
 		Opens page with special tests for "EnDeHTTP.js".
 	
-    DETAILS Trace
+    DETAILS Trace / debug
 	
 	This section is for interanl use and debugging purpose.
 	Use the [trace] button or the '?trace' option to display this section.
@@ -2800,7 +2804,7 @@ EPILOG
 	
 VERSION
 	
-	@# EnDe <!-- @(#) EnDe.man.txt 3.47 01:32:32 13/07/09 -->
+	@# EnDe <!-- @(#) EnDe.man.txt 3.48 00:21:09 14/11/08 -->
 	
 	
 AUTHOR

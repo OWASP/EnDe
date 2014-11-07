@@ -93,7 +93,7 @@
 #?      trace output. This allows to enable tracing for individual objects.
 #?
 #? VERSION
-#?      @(#) EnDeGUIx.js 3.6 13/05/12 19:50:09
+#?      @(#) EnDeGUIx.js 3.7 14/11/08 00:27:03
 #?
 #? AUTHOR
 #?      10-aug-10 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -105,7 +105,7 @@
 // ========================================================================= //
 
 var EnDeGUIx = new function() {
-	this.SID = '3.6';
+	this.SID = '3.7';
 }
 EnDeGUI.__files = {     // hash to hold data for menu from files
 	/* source file          - file where menu is defined (will be read from)
@@ -1029,6 +1029,9 @@ EnDeGUI.Obj = new function() {
 		var obj = null;
 		try     { obj = EnDeGUI.Obj.create('-undef-', src, '-undef-', 'menu', false); }
 		catch(e){ EnDeGUI.alert('ERROR: EnDeGUI.Obj.menu: create', e); }
+		$(obj.inside).appendChild(document.createTextNode("\n\t"));     // these 3 lines are just
+		$(obj.inside).appendChild(document.createComment( " .menu()")); // to make generated source
+		$(obj.inside).appendChild(document.createTextNode("\t"));       // better human readable
 		if (txt!=='') {
 			ccc = document.createElement('SPAN');
 			ccc.innerHTML = obj.label;
@@ -1414,6 +1417,7 @@ EnDeGUI.initMenus= function() {
 	}
 
 	this.makemenu('EnDeFunc.txt');
+	$('EnDeDOM.f.FF').appendChild(document.createElement('BR'));   // ToDo: ugly hack to force line break in GUI
 	this.makemenu('EnDeUser.xml');
 
 	delete menu; menu = null; ccc = null; target = null;

@@ -116,10 +116,16 @@ Miscellaneous
     Where can I buy EnDe?
 	You cannot. EnDe is Open Source and so free for everyone.
 
+    What are the *zap* files for?
+	The files  EnDe.lib.zap and EnDe.zap.js provide an interface of EnDe's
+	functionality (the library, not the GUI) to OWASP's ZAP.  EnDe.lib.zap
+	can be loaded in ZAP's "Script Console" using the "Load script" button
+	there. Therafter all functions of EnDe can be used in ZAP.
+
 
 Administration
 
-    Why is EnDe's repository?
+    Where is EnDe's repository?
 	Ende will be hosted at github.com (2013).
 	Currently Ende hat it's own repository there:
 		https://github.com/EnDe/EnDe
@@ -175,7 +181,7 @@ Development
 	However, there is the  `tree' target in the "Makefile" which allows to
 	convert to a tree structure. EnDe's GUI "index.html" should work flaw-
 	less with the tree structure, but some references in or to the  online
-	documentation may be broken. Some more details is available with
+	documentation may be broken. Some more details are available with
 +-
 |	   make tree.doc
 +-
@@ -189,5 +195,5 @@ Development
 
 Version of FAQ
 
-	@(#) EnDe.FAQ.txt 3.3 13/06/15 10:54:39
+	@(#) EnDe.FAQ.txt 3.4 14/11/08 14:37:52
 

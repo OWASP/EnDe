@@ -106,7 +106,7 @@
 #    building the GUI, EnDeGUI.init() will show the "Browser Quirks" window.
 #?
 #? VERSION
-#?      @(#) EnDeGUI.js 3.101 14/11/07 00:12:44
+#?      @(#) EnDeGUI.js 3.102 14/11/08 12:33:17
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -118,8 +118,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '3.101';
-this.sid        = function() {  return('@(#) EnDeGUI.js 3.101 14/11/07 00:12:44 EnDeGUI'); };
+this.SID        = '3.102';
+this.sid        = function() {  return('@(#) EnDeGUI.js 3.102 14/11/08 12:33:17 EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 
@@ -1104,10 +1104,11 @@ this.data       = function(btn,obj) {
 				// else we assume that we have something like a beautified URI
 				src = EnDe.join('key',0,false,src,'','','');
 				switch (sep) {  // which separator to use
-				case 'n':  src = EnDe.join('dwr',0,false,src,'','',''); break;
-				case '|':  src = EnDe.join('gwt',0,false,src,'','',''); break;
+				case 'n':  src = EnDe.join('dwr', 0,false,src,'','',''); break;
+				case ':':  src = EnDe.join('apex',0,false,src,'','',''); break;
+				case '|':  src = EnDe.join('gwt', 0,false,src,'','',''); break;
 				case '&':
-				default:   src = EnDe.join('arg',0,false,src,'','',''); break;
+				default:   src = EnDe.join('arg', 0,false,src,'','',''); break;
 				}
 				$(obj + '.text').value = src;
 			}
@@ -1177,10 +1178,11 @@ this.data       = function(btn,obj) {
 				} else {
 					// else we assume something like an URI
 					switch (sep) {  // which separator to use
-					case 'n':  src = EnDe.split('dwr',0,false,src,'','',''); break;
-					case '|':  src = EnDe.split('gwt',0,false,src,'','',''); break;
+					case 'n':  src = EnDe.split('dwr', 0,false,src,'','',''); break;
+					case ':':  src = EnDe.split('apex',0,false,src,'','',''); break;
+					case '|':  src = EnDe.split('gwt', 0,false,src,'','',''); break;
 					case '&':
-					default:   src = EnDe.split('arg',0,false,src,'','',''); break;
+					default:   src = EnDe.split('arg', 0,false,src,'','',''); break;
 					}
 /*
 					if (EnDeGUI.isOpera===true) { // Opera use \r\n, don't know why ...

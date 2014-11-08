@@ -83,7 +83,7 @@
 #       _n2_, _n3_, _n4_, _n5_, _n6_, and _n7_ .
 #?
 #? VERSION
-#?      @(#) EnDe.js 3.49 14/11/07 00:07:50
+#?      @(#) EnDe.js 3.50 14/11/08 12:40:16
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -96,8 +96,8 @@
 
 var EnDe    = new function() {
 
-this.SID    = '3.49';
-this.sid    = function() { return('@(#) EnDe.js 3.49 14/11/07 00:07:50 EnDe'); };
+this.SID    = '3.50';
+this.sid    = function() { return('@(#) EnDe.js 3.50 14/11/08 12:40:16 EnDe'); };
 
 	// ===================================================================== //
 	// debug functions                                                       //
@@ -378,19 +378,23 @@ this.isTyp  = function(type,src) {
 
 this.join   = function(type,mode,_n3_,src,prefix,suffix,delimiter) {
 //#? global replace newlinw or tab character
+//#type? apex: global replace newline by :
 //#type? arg: global replace newline by &
 //#type? dwr: global replace newline by newline (do nothing)
 //#type? gwt: global replace newline by |
 //#type? key: global replace tabs by =
+//#type? list: global replace tabs by ,
 //#type? del: global replace newline by given delimiter
 	var rex = /\n/;
 	var ccc = '';
 	switch (type) {
-	  case 'arg': rex = /\n/g; ccc = '&';       break;
-	  case 'gwt': rex = /\n/g; ccc = '|';       break;
-	  case 'key': rex = /\t/g; ccc = '=';       break;
-	  case 'del': rex = /\n/g; ccc = delimiter; break;
-	  case 'dwr': return src;                   break;
+	  case 'apex':  rex = /\n/g; ccc = ':';       break;
+	  case 'arg':   rex = /\n/g; ccc = '&';       break;
+	  case 'gwt':   rex = /\n/g; ccc = '|';       break;
+	  case 'key':   rex = /\t/g; ccc = '=';       break;
+	  case 'list':  rex = /\t/g; ccc = ',';       break;
+	  case 'del':   rex = /\n/g; ccc = delimiter; break;
+	  case 'dwr':   return src;                   break;
 	}
 	var bux = src.replace(rex,ccc);
 	rex = null;
@@ -399,20 +403,24 @@ this.join   = function(type,mode,_n3_,src,prefix,suffix,delimiter) {
 
 this.split  = function(type,mode,_n3_,src,prefix,suffix,delimiter) {
 //#? global split
+//#type? apex: global split, replace : by newline
 //#type? arg: global split, replace & by newline
 //#type? gwt: global split, replace | by newline
 //#type? key: global split, replace = by tabs
+//#type? list: global split, replace , by tabs
 //#type? del: global split, replace given delimiter
 //#type? dwr: global split, replace newline by newline (do nothing)
 	var rex = null;
 	var ccc = '';
 	switch (type) {
-	  case 'arg': ccc = '\n';  rex = new RegExp('&','g');       break;
-	  case 'gwt': ccc = '\n';  rex = new RegExp('[|]','g');      break;
-	  case 'key': ccc = '\t';  rex = new RegExp('=','g');       break;
-	  case 'del': ccc = '\n';  rex = new RegExp(delimiter,'g'); break;
-	  case 'dwr': return src;                                   break;
-	  default   : ccc = '';    rex = new RegExp('&=','g');      break;
+	  case 'apex':  ccc = '\n';  rex = new RegExp(':','g');       break;
+	  case 'arg':   ccc = '\n';  rex = new RegExp('&','g');       break;
+	  case 'gwt':   ccc = '\n';  rex = new RegExp('[|]','g');     break;
+	  case 'key':   ccc = '\t';  rex = new RegExp('=','g');       break;
+	  case 'list':  ccc = '\t';  rex = new RegExp(',','g');       break;
+	  case 'del':   ccc = '\n';  rex = new RegExp(delimiter,'g'); break;
+	  case 'dwr':   return src;                                   break;
+	  default   :   ccc = '';    rex = new RegExp('&=','g');      break;
 	}
 	var bux = src.replace(rex,ccc);
 	rex = null;
@@ -4657,7 +4665,7 @@ this.DE     = new function() {
 	// ===================================================================== //
 
 this.Misc   = new function() {
-this.sid        = function()  { return('@(#) EnDe.js 3.49 14/11/07 00:07:50 EnDeMisc'); };
+this.sid        = function()  { return('@(#) EnDe.js 3.50 14/11/08 12:40:16 EnDeMisc'); };
 
 	// ===================================================================== //
 	// global variables                                                      //

@@ -614,6 +614,8 @@ GUI
 	There is no  detailed description of each action, the help text should
 	be self-explanating.
 	
+	Special Options
+	=======================================
 	There're following options, which manipulate the given data in the en-
 	or decoding textarea before they are passed to the selected action:
 	
@@ -628,11 +630,37 @@ GUI
 	"0x1a"
 		Add end-of-text (SUB) character to end of text.
 	
+	The  "en-/decode"  checkbox
+	"URI/URL"
+		If checked, text will be en-/decoded  before or after selected
+		action (see action menu) is performed. Text from decoding area
+		is URL-decoded before, text from encoding area is  URL-encoded
+		after action is performed.
+	
 	NOTE:  These characters are added to the text only  before processing.
 	They are not added to the textarea field.
 	
 	For practical usage of these options, see  EXAMPLES, HINTS  below.
 	
+	Additonally there are the  "Sep."  radio buttons:
+	
+	"&"
+		Use '&'  as separator characters in text (Query String style)
+	":"
+		Use ':'  as separator characters in text (APEX style)
+	"|"
+		Use '|'  as separator characters in text (GWT style)
+	"\n"
+		Use '\n' as separator characters in text (DWR style)
+	
+	They are used when clicking  [Text], [Hex] or [parsed]  button.
+
+	NOTE: These buttons provide a simple split of the text on the selected
+	character only.  More sophisticated `parsing' is provided in the inset
+	window "User functions", see  FUNCTIONS  below.
+	
+	Common Menu
+	=======================================
 	Following are common things and those which differ for some actions of
 	the en-/decoding tool.
 	
@@ -708,7 +736,7 @@ GUI
 		- strict  - all values are XML-escaped using:
 			'EnDe.EN.dispatch("escXML", ...)'
 		- lazy    - all values are printed as is
-		"xdump style"  decode space seperated hex values.
+		"xdump style"  decode space separated hex values.
 		Allowed formats:
 			left side with hex values separated by delimiter right
 			side any character:
@@ -723,7 +751,7 @@ GUI
 			     'de ad beef string'
 			     'de ad beef  $'
 			all 4 lines decode the hex values 'de' 'ad' and 'beef'
-		"od -x style"  decode space seperated 2- or 4-byte hex values.
+		"od -x style"  decode space separated 2- or 4-byte hex values.
 		Allowed formats same as for "xdump style", but:
 			The first field and all following spaces are ignored.
 			Example: prefix=x
@@ -759,7 +787,7 @@ GUI
 	Punycode, IDNA Punycode
 	=======================================
 	Punycode and IDNA Punycode is usefull for hostnames (FQDN) only.  Each
-	part of the FQDN needs to be en-/decoded seperately.  That is what the
+	part of the FQDN needs to be en-/decoded separately.  That is what the
 	standard "Punicode" and "(xn--)IDN" actions do.
 	Some systems provide the `libidn' with the corresponding `idn' program
 	which adds the '-' delimiter as trailing character if no character was
@@ -908,7 +936,7 @@ GUI
 	
 	Some useful combinations of  fuzzy decoding functions  can be found as
 	user functions in "EnDeUser.xml"  which are available in the Functions
-	inset window's "User functions", see  FUNCTIONS.  
+	inset window's "User functions", see  FUNCTIONS .  
 	
     DETAILS IP Converter
 	
@@ -1208,7 +1236,8 @@ GUI
 	The file content will be written to the  textarea field  where it then
 	can be "eval"uated.
 	Please save the function definitions yourself using your prefered text
-	editor and copy & paste from the textarea.
+	editor and copy & paste from the textarea. Refer to "EnDeUser.xml" for
+	syntax and examples.
 	NOTE see  LIMITATIONS  also.
 	
     REPLACE MAP
@@ -2168,7 +2197,7 @@ HACKER's INFO
 	There're  no browser detections and hence  different implementaions of
 	'XMLHttpRequest()' are not supported.
 	The function is also called in synchronous mode only, which avoids the
-	definition of a seperate handler function.  Further processing  of the
+	definition of a separate handler function.  Further processing  of the
 	read file content can be done by calling a proper function right after
 	the reading function complets.
 	
@@ -2804,7 +2833,7 @@ EPILOG
 	
 VERSION
 	
-	@# EnDe <!-- @(#) EnDe.man.txt 3.48 00:21:09 14/11/08 -->
+	@# EnDe <!-- @(#) EnDe.man.txt 3.49 12:23:43 14/11/08 -->
 	
 	
 AUTHOR

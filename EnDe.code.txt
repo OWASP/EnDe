@@ -77,11 +77,11 @@ FORCED SYNTAX RULES
 |		/*
 |		 * follwoing code will do something
 |                */
-|		dd = something;
+|		do = something;
 +-
 	
     Line Size
-	The length of code lines should be maximal 79 characters. That's not a
+	The length of code lines should be maximal 79 characters.  That's not a
 	strong requirement as modern tools don't stick on such limits.
 	
     Identation
@@ -90,7 +90,7 @@ FORCED SYNTAX RULES
 	not change leading TABs to spaces (even TABs are not used for anything).
 	**The initial TABs will be replaced by spaces in future ...**
 	
-	NOTE that TABS in other -- mainly .txt -- files are used different,  see
+	NOTE that TABS in other -- mainly .txt -- files are used different, see
 	documentation there.
 	
     Spaces
@@ -144,6 +144,7 @@ FORCED SYNTAX RULES
 	All code of the API (EnDe.lib.tgz) must not use  try .. catch to handle
 	runtime exceptions, as all runtime errors need to be expected and hence 
 	properly handled in the code itself.
+	Using try .. catch in code for the GUI is ok.
 	
     'prototype'
 	Used rarely.
@@ -170,7 +171,7 @@ LAZY RULES
     File Names
 	
 	File names always start with "EnDe". Exception are 3'rd party file (for
-	iexample "aes.js", "md5.js", etc.), which use the original name.
+	example "aes.js", "md5.js", etc.), which use the original name.
 	Further more the file name for JavaScript files reflect the object name
 	(if any) defined in the file.
 
@@ -178,7 +179,7 @@ LAZY RULES
 RULES for GENERATORS
 	
 	All JavaScript source files are used to generate other files. Therefore
-	The generator programs and scripts rely on some special syntax rules in
+	the generator programs and scripts rely on some special syntax rules in
 	the source files.
 	These are mainly coments as described above in  FORCED SYNTAX RULES  .
 	To generate proper descriptions, the syntax for JavaScript objects must
@@ -242,5 +243,5 @@ INCLUDES
 
 	
 VERSION
-	@(#) EnDe.code.txt 3.2 <!-- 13/06/15 10:25:13 -->
+	@(#) EnDe.code.txt 3.3 <!-- 14/11/08 13:10:59 -->
 

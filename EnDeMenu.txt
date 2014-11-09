@@ -88,7 +88,7 @@
 #?      EnDeGUIx.js, EnDeGUI.js
 #?
 #? VERSION
-#?      @(#) EnDeMenu.txt 3.56 14/11/06 22:05:56
+#?      @(#) EnDeMenu.txt 3.57 14/11/09 20:08:49
 #?
 #? AUTHOR
 #?      09-jun-09 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -1402,6 +1402,7 @@ item3	suffix		Suffix			replace all suffix variables with current suffix value
 item3	delimiter	Delimiter		replace all delimiter variables with current delimiter value
 item3	JSlc		lower case		replace all uppercase variables with "false"
 item3	JSuc		upper case		replace all uppercase variables with "true"
+item3	genXML		generate XML		wrap all text in XML to be used in EnDeUser.xml
 
 #------+---------------+-----------------------+------------------------------+
 menu	FF.Text		text manipulation	text manipulation functions

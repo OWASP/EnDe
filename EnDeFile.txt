@@ -20,13 +20,14 @@
 #?                     default, if missing:  :
 #?
 # HACKER's INFO
-#       
+#       This File cannot contain / reference to EnDeUser.xml. This is a bug
+#       in the GUI where EnDeUser.xml is already used elsewhere.
 #?
 #? SEE ALSO
 #?      EnDeMenu.txt
 #?
 #? VERSION
-#?      @(#) EnDeFile.txt 3.13 13/09/05 00:03:49
+#?      @(#) EnDeFile.txt 3.14 14/11/09 09:51:54
 #?
 #? AUTHOR
 #?      27-dez-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -80,6 +81,10 @@ group	File.Misc	Payloads			files with test pattern, not used in EnDe itself
 # values in target and function column below are dummies, must use [show payloads] button instead
 file	xss-evation.txt	XSS pattern			various XSS test pattern			EnDeDOM.f.EN	EnDeGUI.makelist(this.value)	none:
 
+### cannaot use this file here, however the group definition would be fine
+### but use File.User in the menu definition below will cause strange results
+#group	File.User	EnDe User Files		load local file with menus
+#file	EnDeUser.xml	EnDes User Menu		menu with user defined functions		EnDeDOM.f.EN	EnDeGUI.dispatch(this,'EN')	User Functons:
 
 #------+---------------+-----------------------+------------------------------+
 #head   key             text                    description

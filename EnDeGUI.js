@@ -106,7 +106,7 @@
 #    building the GUI, EnDeGUI.init() will show the "Browser Quirks" window.
 #?
 #? VERSION
-#?      @(#) EnDeGUI.js 3.102 14/11/08 12:33:17
+#?      @(#) EnDeGUI.js 3.103 14/11/09 19:05:19
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -118,8 +118,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '3.102';
-this.sid        = function() {  return('@(#) EnDeGUI.js 3.102 14/11/08 12:33:17 EnDeGUI'); };
+this.SID        = '3.103';
+this.sid        = function() {  return('@(#) EnDeGUI.js 3.103 14/11/09 19:05:19 EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 
@@ -3429,6 +3429,19 @@ this.FF         = new function() {
 		  case 'prefix' : $('EnDeDOM.FF.text').value = src.replace(/\$\('EnDeDOM\.API\.prefix'\)\.value/g,    __cmt(item) ); break;
 		  case 'suffix' : $('EnDeDOM.FF.text').value = src.replace(/\$\('EnDeDOM\.API\.suffix'\)\.value/g,    __cmt(item) ); break;
 		  case 'delimiter':$('EnDeDOM.FF.text').value= src.replace(/\$\('EnDeDOM\.API\.delimiter'\)\.value/g, __cmt(item) ); break;
+
+                  case 'genXML'  :
+			$('EnDeDOM.FF.text').value = '/* XML node to be used in i.e. EnDeUser.xml */\n'
+			+ '    <attack>\n'
+			+ '        <label>En-Decoding User Functions ..</label>\n'
+			+ '        <name>@@ add name of this function here @@</name>\n'
+			+ '        <desc>@@ add description of this function here @@</desc>\n'
+			+ '        <code><![CDATA[\n'
+			+ $('EnDeDOM.FF.text').value + '\n'
+			+ '        ]]></code>\n'
+			+ '    </attack>\n'
+			;
+			break;
 
 		  // following description hardcoded
 		  case 'param'  :

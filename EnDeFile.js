@@ -29,7 +29,7 @@
 #?          .strip     - true: remove comments (#) and empty lines
 #?
 #? VERSION
-#?      @(#) EnDeFile.js 3.15 12/12/08 16:36:28
+#?      @(#) EnDeFile.js 3.16 14/11/09 11:33:14
 #?
 #? AUTHOR
 #?      07-may-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -43,8 +43,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.File   = new function() {
-	this.SID    = '3.15';
-	this.sid    = function() { return('@(#) EnDeFile.js 3.15 12/12/08 16:36:28 EnDe.File'); };
+	this.SID    = '3.16';
+	this.sid    = function() { return('@(#) EnDeFile.js 3.16 14/11/09 11:33:14 EnDe.File'); };
 
 	this.trace  = false;
 
@@ -156,32 +156,44 @@ EnDe.File   = new function() {
 		// set EnDe.File.version
 		switch (typeof( kkk )) {
 		  case 'string':    // for type TXT
-			//bbb = kkk.match(/\n(?:(?:#\?\s)*@\(#\)\s*)([^\n]*)/);
-			// we use a lazy regex to match string behind  @
-			// NOTE that this matches the first occourance
-			// if file does not contain this magic string, .verion and .fileSID
-			// will be empty (that's ok, we allow foreign files too :)
-			bbb = kkk.match(/@\(#\)\s*([^\n]*)/);
-			if (bbb!==null) {
-				EnDe.File.version = bbb[1];
-				bbb = EnDe.File.version.split(/[ ]+/);
-			}
-			if (bbb!==null) {
-				EnDe.File.fileSID = bbb[1].replace(/[^0-9.]/g, '');
-			}
+			bux = kkk;
 			break;
 		  case 'object':    // for type XML
-// ToDo: parse XML and extract SID (not yet defined there)
+			bux = kkk;
+			if (typeof( kkk )==='object') { var s = new XMLSerializer(); bux = s.serializeToString(kkk); delete s; } // XML object
+// TODO: try, catch probably nice
+// FIXME not: IE uses its own serialize method: bux = kkk.xml; 
 			break;
 		}
+		//bbb = bux.match(/\n(?:(?:#\?\s)*@\(#\)\s*)([^\n]*)/);
+		// we use a lazy regex to match string behind  @
+		// NOTE that this matches the first occourance
+		// if file does not contain this magic string, .verion and .fileSID
+		// will be empty (that's ok, we allow foreign files too :)
+		bbb = bux.match(/@\(#\)\s*([^\n]*)/);
+		if (bbb!==null) {
+			EnDe.File.version = bbb[1];
+			bbb = EnDe.File.version.split(/[ ]+/);
+		}
+		if (bbb!==null) {
+			EnDe.File.fileSID = bbb[1].replace(/[^0-9.]/g, '');
+		}
+
 		// set EnDe.File.content
 		if (strip===false) {// get text as is
-			EnDe.File.content = kkk;
+			EnDe.File.content = kkk;        // keep string or object type here, as it will be handles later
+			bux = kkk;
+			if (typeof( kkk )==='object') { var s = new XMLSerializer(); bux = s.serializeToString(kkk); delete s; } // XML object
 			__dbx(' .content=['+typeof(EnDe.File.content)+']', '');
-			// EnDe.File.lines.push(???); // ToDo: set to a usefull value
+			bux = bux.split('\n');
+			while ((bbb = bux.shift())!==undefined) {
+				idx++;
+				EnDe.File.lines.push(idx);
+			}
 		} else {            // get text and remove comments and formating stuff
 			EnDe.File.content = '';
 			bux = kkk.split('\n');
+			if (typeof( kkk )==='onject') { bux = kkk.toString().split('\n'); } // XML object
 			while ((bbb = bux.shift())!==undefined) {   // squeeze content
 				idx++;
 				if (EnDe.File.strip===true) {

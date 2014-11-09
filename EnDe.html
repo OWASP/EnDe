@@ -11,8 +11,8 @@
 	<meta name="DC.language"      content="en" >
 	<meta name="DC.rights"        content="https://github.com/EnDe/EnDe license.txt" >
 	<meta name="DC.license"       content="https://github.com/EnDe/EnDe license.txt" >
-	<meta name="DC.modified"      content="14/11/08" >
-	<meta name="DC.Source"        content="@(#) EnDe.html 3.50 14/11/08 00:22:52"  >
+	<meta name="DC.modified"      content="14/11/09" >
+	<meta name="DC.Source"        content="@(#) EnDe.html 3.51 14/11/09 22:49:58"  >
 	<meta name="DC.Date"          content="07-apr-07" >
 	<meta name="DC.creator"       content="Achim Hoffmann" >
 	<meta name="DC.Author"        content="Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net" >
@@ -156,11 +156,11 @@
 				<select id="EnDeDOM.GUI.obj">
 				<option value="EnDeDOM.f.GUI"   title="create menu in GUI Options">GUI Options</option>
 				<option value="EnDeDOM.f.API"   title="create menu in API Options">API Options</option>
-				<option value="EnDeDOM.f.EN"    title="create menu in Encoding" selected>   Encoding</option>
-				<option value="EnDeDOM.f.DE"    title="create menu in Decoding">   Decoding</option>
+				<option value="EnDeDOM.EN.Edit" title="create menu in Encoding" selected>   Encoding</option>
+				<option value="EnDeDOM.DE.Edit" title="create menu in Decoding">   Decoding</option>
 				<option value="EnDeDOM.f.IP"    title="create menu in IP">         IP</option>
 				<option value="EnDeDOM.f.TS"    title="create menu in Timestamp">  Timestamp</option>
-				<option value="EnDeDOM.f.RE"    title="create menu in RegEx">      RegEx</option>
+				<option value="EnDeDOM.RE.Edit" title="create menu in RegEx">      RegEx</option>
 				<option value="EnDeDOM.f.PW"    title="create menu in Password">   Password</option>
 				<option value="EnDeDOM.f.FF"    title="create menu in Functions">  Functions</option>
 				<option value="EnDeDOM.f.DBX"   title="create menu in trace">      trace</option>
@@ -425,15 +425,16 @@
 			<label for="EnDeDOM.ED.uri"><input  id="EnDeDOM.ED.uri" type="checkbox" > URI/URL </label>
 
 			<label class="bold" style="border-left:1px solid black"> Sep. </label>
-			<label for="EnDeDOM.ED.sa"> <input  id="EnDeDOM.ED.sa"  type="radio" name="sep" value="&" checked="1" > &amp; </label>
+			<label for="EnDeDOM.ED.su"> <input  id="EnDeDOM.ED.su"  type="radio" name="sep" value="&" checked="1" > &amp; </label>
+			<label for="EnDeDOM.ED.sa"> <input  id="EnDeDOM.ED.sa"  type="radio" name="sep" value=":"  > <b>:</b></label>
 			<label for="EnDeDOM.ED.sb"> <input  id="EnDeDOM.ED.sb"  type="radio" name="sep" value="|"  > <b>|</b></label> <!-- bold for better visinility -->
 			<label for="EnDeDOM.ED.sn"> <input  id="EnDeDOM.ED.sn"  type="radio" name="sep" value="n"  > \n </label>
 			<hr>
 		</div>
 		<fieldset id="EnDeDOM.f.EN"><legend> Encoding</legend>
 			<div  id="EnDeDOM.EN">
-			<div  class="select left"  id="EnDeDOM.EN.Actions"><!-- SELECT added by init() --></div>
-			<div  class="middle">
+			<div  id="EnDeDOM.EN.Actions"   class="select left"><!-- SELECT added by init() --></div>
+			<div  id="EnDeDOM.EN.Edit"      class="middle">
 				<textarea   id="EnDeDOM.EN.text"    accesskey="E"></textarea>
 				&#160;
 				<input      id="EnDeDOM.EN.isMem"   type="hidden"   value="isTxt" >
@@ -453,8 +454,8 @@
 		</fieldset>
 		<fieldset id="EnDeDOM.f.DE"><legend> Decoding</legend>
 			<div  id="EnDeDOM.DE">
-			<div  class="select left"  id="EnDeDOM.DE.Actions"><!-- SELECT added by init() --></div>
-			<div  class="middle">
+			<div  id="EnDeDOM.DE.Actions"   class="select left"><!-- SELECT added by init() --></div>
+			<div  id="EnDeDOM.DE.Edit"      class="middle">
 				<textarea   id="EnDeDOM.DE.text"    accesskey="D"></textarea>
 				&#160;
 				<input      id="EnDeDOM.DE.isMem"   type="hidden"   value="isTxt" >
@@ -679,8 +680,8 @@
 			<label for="EnDeDOM.RE.ere">   <input   id="EnDeDOM.RE.ere"     type="checkbox"             >extended RegEx &#160; </label>
 			</span>
 			<hr>
-			<div  class="select left"   id="EnDeDOM.RE.Actions"><br><!-- SELECT added by init() --></div>
-			<div  class="middle">
+			<div  id="EnDeDOM.RE.Actions"   class="select left"><br><!-- SELECT added by init() --></div>
+			<div  id="EnDeDOM.RE.Edit"      class="middle">
 			<fieldset id="EnDeDOM.f.RE"><legend> RegEx</legend>
 				<textarea   id="EnDeDOM.RE.text"    accesskey="R"></textarea>
 				&#160;
@@ -1127,7 +1128,8 @@ EnDeGUI.titles  = {
 	'EnDeDOM.ED.0d':    "add carriage return (CR) character at end of input text",
 	'EnDeDOM.ED.da':    "add carriage return (CR) and newline (NL) character at end of input text",
 	'EnDeDOM.ED.aa':    "add End-of-Text character at end of input text",
-	'EnDeDOM.ED.sa':    "use  &  for spliting string (used in 'parsed' button)",
+	'EnDeDOM.ED.su':    "use  &  for spliting string (used in 'parsed' button)",
+	'EnDeDOM.ED.sa':    "use  :  for spliting string (used in 'parsed' button)",
 	'EnDeDOM.ED.sb':    "use  |  for spliting string (used in 'parsed' button)",
 	'EnDeDOM.ED.sn':    "use  \n  for spliting string (used in 'parsed' button)",
 	'EnDeDOM.ED.uri':   "URL-encode after encoding, URL-decode before decoding",

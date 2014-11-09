@@ -18,6 +18,8 @@
 #?         function- function to be called by SELECT menu
 #?         prefix  - prefix (label) prepended to generated SELECT menu
 #?                     default, if missing:  :
+#?                   This string may start with  <br> to force a line break
+#                    # TODO: (known to work in Gecko, but not Chrome).
 #?
 # HACKER's INFO
 #       This File cannot contain / reference to EnDeUser.xml. This is a bug
@@ -27,7 +29,7 @@
 #?      EnDeMenu.txt
 #?
 #? VERSION
-#?      @(#) EnDeFile.txt 3.14 14/11/09 09:51:54
+#?      @(#) EnDeFile.txt 3.15 14/11/09 18:47:08
 #?
 #? AUTHOR
 #?      27-dez-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -44,29 +46,29 @@ makeID	auto
 #head   key		text				description             			target		function			prefix
 #------+---------------+-------------------------------+-----------------------------------------------+---------------+-------------------------------+--------------+
 group	File.XSS.extern	XSS (external file)		load external file with XSS pattern
-file	http://ha.ckers.org/xssAttacks.xml	XSS Attacks (ha.ckers.org)	add XSS Attack Pattern to Encoding textarea	EnDeDOM.f.EN	EnDeGUI.dispatch(this,'EN')	XSS Cheat Seat:
-file	http://mario.heideri.ch/xss.xml		XSS Attacks (mario.heidri.ch)	add XSS Attack Pattern to Encoding textarea	EnDeDOM.f.EN	EnDeGUI.dispatch(this,'EN')	XSS Cheat Seat:
+file	http://ha.ckers.org/xssAttacks.xml	XSS Attacks (ha.ckers.org)	add XSS Attack Pattern to Encoding textarea	EnDeDOM.EN.Edit	EnDeGUI.dispatch(this,'EN')	<br>XSS Cheat Seat:
+file	http://mario.heideri.ch/xss.xml		XSS Attacks (mario.heidri.ch)	add XSS Attack Pattern to Encoding textarea	EnDeDOM.EN.Edit	EnDeGUI.dispatch(this,'EN')	<br>XSS Cheat Seat:
 
 group	File.XSS.local	XSS (local file)		load local file with XSS pattern
-file	xssAttacks.xml	XSS Attacks (ha.ckers.org)	add XSS Attack Pattern to Encoding textarea	EnDeDOM.f.EN	EnDeGUI.dispatch(this,'EN')	XSS Cheat Seat:
-file	xss.mario.xml	XSS Attacks (mario.heidri.ch)	add XSS Attack Pattern to Encoding textarea	EnDeDOM.f.EN	EnDeGUI.dispatch(this,'EN')	XSS Cheat Seat:
-file	xss.h4k.xml	XSS Attacks (h4k.in)		add XSS Attack Pattern to Encoding textarea	EnDeDOM.f.EN	EnDeGUI.dispatch(this,'EN')	XSS Cheat Seat:
+file	xssAttacks.xml	XSS Attacks (ha.ckers.org)	add XSS Attack Pattern to Encoding textarea	EnDeDOM.EN.Edit	EnDeGUI.dispatch(this,'EN')	<br>XSS Cheat Seat:
+file	xss.mario.xml	XSS Attacks (mario.heidri.ch)	add XSS Attack Pattern to Encoding textarea	EnDeDOM.EN.Edit	EnDeGUI.dispatch(this,'EN')	<br>XSS Cheat Seat:
+file	xss.h4k.xml	XSS Attacks (h4k.in)		add XSS Attack Pattern to Encoding textarea	EnDeDOM.EN.Edit	EnDeGUI.dispatch(this,'EN')	<br>XSS Cheat Seat:
 
 group	File.SQL.local	SQL (local file)		load local file with SQL pattern
-file	sqlPattern.xml	SQL Pattern			add SQL Injection Pattern to Encoding textarea	EnDeDOM.f.EN	EnDeGUI.dispatch(this,'EN')	SQL Cheat Seat:
+file	sqlPattern.xml	SQL Pattern			add SQL Injection Pattern to Encoding textarea	EnDeDOM.EN.Edit	EnDeGUI.dispatch(this,'EN')	<br>SQL Cheat Seat:
 
 group	File.Checksum	Checksum (local file)		load local file with Checksum functions
-file	EnDeCheck.txt	Digit Checksum Functions	functions to test checksum of a number		EnDeDOM.f.DE	EnDeGUI.dispatch(this,'Check')	Checksum:
+file	EnDeCheck.txt	Digit Checksum Functions	functions to test checksum of a number		EnDeDOM.DE.Edit	EnDeGUI.dispatch(this,'Check')	<br>Checksum:
 # 'Check' is special, see EnDeGUI.js
 
 group	File.RegEx	RegEx (local file)		load local file with RegEx pattern
-file	core-rules.xml	ModSecurity Core Rule Set 1.6.1	ModSecurity Core Rule Set 1.6.1			EnDeDOM.f.RE	EnDeGUI.dispatch(this,'RE')	Core Rule Set 1.6.1:
-file	core-rules-2.0.xml	ModSecurity Core Rule Set 2.0	ModSecurity Core Rule Set 2.0		EnDeDOM.f.RE	EnDeGUI.dispatch(this,'RE')	Core Rule Set 2.0:
-file	core-rules-2.2.8.0-part1.xml	ModSecurity Core Rule Set 2.2.8.0 part-1	ModSecurity Core Rule Set 2.2.8.0 part-1		EnDeDOM.f.RE	EnDeGUI.dispatch(this,'RE')	Core Rule Set 2.2.8.0 (1):
-file	core-rules-2.2.8.0-part2.xml	ModSecurity Core Rule Set 2.2.8.0 part-2	ModSecurity Core Rule Set 2.2.8.0 part-2		EnDeDOM.f.RE	EnDeGUI.dispatch(this,'RE')	Core Rule Set 2.2.8.0 (2):
-file	core-rules-2.2.8.0-part2.xml	ModSecurity Core Rule Set 2.2.8.0 part-3	ModSecurity Core Rule Set 2.2.8.0 part-3		EnDeDOM.f.RE	EnDeGUI.dispatch(this,'RE')	Core Rule Set 2.2.8.0 (2):
-file	default_filter.xml	PHPIDS Rules		PHPIDS Rules					EnDeDOM.f.RE	EnDeGUI.dispatch(this,'RE')	PHPIDS Rules:
-file	OWASP-regex.xml	OWASP Validation Regex Repository	OWASP Validation Regex Repository	EnDeDOM.f.RE	EnDeGUI.dispatch(this,'RE')	OWASP Regex:
+file	core-rules.xml	ModSecurity Core Rule Set 1.6.1	ModSecurity Core Rule Set 1.6.1			EnDeDOM.RE.Edit	EnDeGUI.dispatch(this,'RE')	<br>Core Rule Set 1.6.1:
+file	core-rules-2.0.xml	ModSecurity Core Rule Set 2.0	ModSecurity Core Rule Set 2.0		EnDeDOM.RE.Edit	EnDeGUI.dispatch(this,'RE')	<br>Core Rule Set 2.0:
+file	core-rules-2.2.8.0-part1.xml	ModSecurity Core Rule Set 2.2.8.0 part-1	ModSecurity Core Rule Set 2.2.8.0 part-1		EnDeDOM.RE.Edit	EnDeGUI.dispatch(this,'RE')	<br>Core Rule Set 2.2.8.0 (1):
+file	core-rules-2.2.8.0-part2.xml	ModSecurity Core Rule Set 2.2.8.0 part-2	ModSecurity Core Rule Set 2.2.8.0 part-2		EnDeDOM.RE.Edit	EnDeGUI.dispatch(this,'RE')	<br>Core Rule Set 2.2.8.0 (2):
+file	core-rules-2.2.8.0-part2.xml	ModSecurity Core Rule Set 2.2.8.0 part-3	ModSecurity Core Rule Set 2.2.8.0 part-3		EnDeDOM.RE.Edit	EnDeGUI.dispatch(this,'RE')	<br>Core Rule Set 2.2.8.0 (2):
+file	default_filter.xml	PHPIDS Rules		PHPIDS Rules					EnDeDOM.RE.Edit	EnDeGUI.dispatch(this,'RE')	<br>PHPIDS Rules:
+file	OWASP-regex.xml	OWASP Validation Regex Repository	OWASP Validation Regex Repository	EnDeDOM.RE.Edit	EnDeGUI.dispatch(this,'RE')	<br>OWASP Regex:
 
 group	File.Test	Test				load local file with test pattern for EnDe itself
 file	EnDeTest.txt	Test pattern for all functions	Test pattern for all EnDe functions (heureca!)		EnDeDOM.f.TST	EnDeGUI.dispatch(this,'EN')	Test pattern:
@@ -75,16 +77,16 @@ file	EnDeTest-Euro.txt	Test pattern for all functions	Test pattern for all EnDe 
 file	EnDeTest-UCS2.txt	Some test pattern (file in UCS2 format)	Some test pattern (file in UCS2 format)		EnDeDOM.f.TST	EnDeGUI.dispatch(this,'EN')	Test pattern:
 file	EnDeTest-UTF8.txt	Some test pattern (file in UTF8 format)	Some test pattern (file in UTF8 format)		EnDeDOM.f.TST	EnDeGUI.dispatch(this,'EN')	Test pattern:
 file	EnDeTest-UTF8-UCS2.txt	Some test pattern to explain UCS2/UTF8 problems	Some test pattern to explain UCS2/UTF8 problems		EnDeDOM.f.TST	EnDeGUI.dispatch(this,'EN')	Test pattern:
-file	EnDeTest-JSReg.xml	Test pattern for JSReg (debug)	Test pattern for JSReg (debug)			EnDeDOM.f.EN	EnDeGUI.dispatch(this,'EN')	JSreg test pattern:
+file	EnDeTest-JSReg.xml	Test pattern for JSReg (debug)	Test pattern for JSReg (debug)			EnDeDOM.EN.Edit	EnDeGUI.dispatch(this,'EN')	<br>JSreg test pattern:
 
 group	File.Misc	Payloads			files with test pattern, not used in EnDe itself
 # values in target and function column below are dummies, must use [show payloads] button instead
-file	xss-evation.txt	XSS pattern			various XSS test pattern			EnDeDOM.f.EN	EnDeGUI.makelist(this.value)	none:
+file	xss-evation.txt	XSS pattern			various XSS test pattern			EnDeDOM.EN.Edit	EnDeGUI.makelist(this.value)	<br>none:
 
 ### cannaot use this file here, however the group definition would be fine
 ### but use File.User in the menu definition below will cause strange results
 #group	File.User	EnDe User Files		load local file with menus
-#file	EnDeUser.xml	EnDes User Menu		menu with user defined functions		EnDeDOM.f.EN	EnDeGUI.dispatch(this,'EN')	User Functons:
+#file	EnDeUser.xml	EnDes User Menu		menu with user defined functions		EnDeDOM.EN.Edit	EnDeGUI.dispatch(this,'EN')	<br>User Functons:
 
 #------+---------------+-----------------------+------------------------------+
 #head   key             text                    description

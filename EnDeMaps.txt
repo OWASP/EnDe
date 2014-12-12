@@ -81,7 +81,7 @@
 #?      EnDeMaps.js
 #?
 #? VERSION
-#?      @(#) EnDeMaps.txt 3.9 13/06/24 00:40:15
+#?      @(#) EnDeMaps.txt 3.10 14/12/12 01:37:48
 #?
 #? AUTHOR
 #?      05-jun-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -429,6 +429,7 @@ map	index
 #	03
 
 770	-	Hat	:alias:	circumflex accent (circ in ISOdia)
+776	-	-	-	combining diaresis
 785	-	DownBreve	Lextra	breve, inverted (non-spacing)
 818	-	UnderBar	Lextra	combining low line
 902	-	Aacgr	ISOgrk2	capital Alpha, accent, Greek

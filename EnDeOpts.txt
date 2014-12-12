@@ -35,7 +35,7 @@
 #?      EnDeMenu.txt
 #?
 #? VERSION
-#?      @(#) EnDeOpts.txt 3.5 22:49:24 12/10/03
+#?      @(#) EnDeOpts.txt 3.6 01:14:42 14/12/12
 #?
 #? AUTHOR
 #?      17-jun-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -74,6 +74,7 @@ options	x_OOXML	4	true	false	_x	_		null	_x00HH_  OOXML hex numbers	OOXML hex num
 options	xapache	2	true	false	\x			null	\xHH     \x-escaped	\x-escaped as used for apache log files
 options	x_TCL	4	true	false	\x			null	\x00HH   \x-escaped	\x-escaped as used for TCL numbers
 options	x_perl	4	true	false	\x{	}		null	\x{00HH} \x-escaped with braces	\x-escaped with braces as used in perl
+options	x_ruby	4	true	false	\u{	}		null	\u{00HH} \u-escaped with braces	\u-escaped with braces as used in ruby
 options	$_hex	4	true	false	$			null	$00HH    $-prefixed	$-prefixed
 options	u_hex	4	true	false	u			null	u00HH    u-prefixed	u-prefixed
 options	U_hex	4	true	false	U			null	U00HH    U-prefixed	U-prefixed

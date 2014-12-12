@@ -88,7 +88,7 @@
 #?      EnDeGUIx.js, EnDeGUI.js
 #?
 #? VERSION
-#?      @(#) EnDeMenu.txt 3.57 14/11/09 20:08:49
+#?      @(#) EnDeMenu.txt 3.58 14/12/12 01:35:51
 #?
 #? AUTHOR
 #?      09-jun-09 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -332,6 +332,53 @@ item3	bf5d		]			] forced prefixed by UTF-8 character
 item3	bf7b		{			{ forced prefixed by UTF-8 character
 item3	bf7d		}			} forced prefixed by UTF-8 character
 item3	bf20		space			SPACE forced prefixed by UTF-8 character
+
+#------+---------------+-----------------------+------------------------------+
+group	TXT.UCS-diacrit	insert UCS diacritical	UTF-8 diacritical characters
+realUCS	true
+showHEX	true
+item3	0300		`			` COMBINING GRAVIS
+item3	0301		'			' COMBINING ACUTE
+item3	0302		^			^ COMBINING CIRCUMFLEX
+item3	0303		~			~ COMBINING TILDE
+item3	0304		-			- COMBINING MACRON
+item3	0305		-			- COMBINING MACRON
+item3	0306		u			u COMBINING BREVE
+item3	0307		 ̈			. COMBINING DOT
+item3	0308		"			" COMBINING DIAERESIS
+item3	030b		"			" COMBINING DOUBLE ACUTE
+item3	030c		 ̌			v COMBINING HATCHECK
+item3	0340		`			` COMBINING GRAVIS (old)
+item3	0341		'			' COMBINING ACUTE (old)
+item3	0342		~			~ COMBINING TILDE (old)
+item3	0354		<			< COMBINING LEFT ARROW
+item3	0355		>			> COMBINING RIGHT ARROW
+
+#------+---------------+-----------------------+------------------------------+
+group	TXT.UTF-misc	insert 2 UCS Characters	strange UTF-8 characters sequences
+realUCS	true
+showHEX	true
+item3	200e		LRM			LEFT TO RIGHT MARK
+item3	200f		RLM			RIGHT TO LEFT MARK
+item3	202a		LRE			LEFT TO RIGHT EMBEDDING
+item3	202b		RLE			RIGHT TO LEFT EMBEDDING
+item3	202c		PDF			PDF - Pop Directional Formatting
+item3	202d		LRO			LEFT TO RIGHT OVERRIDE
+item3	202e		RLO			RIGHT TO LEFT OVERRIDE
+item3	0308		"			" COMBINING DIAERESIS
+item3	0041 0308	Ä			Ä LATIN CAPITAL LETTER A + COMBINING DIAERESIS
+item3	0045 0308	Ë			Ë LATIN CAPITAL LETTER E + COMBINING DIAERESIS
+item3	0049 0308	Ï			Ï LATIN CAPITAL LETTER I + COMBINING DIAERESIS
+item3	004f 0308	Ö			Ö LATIN CAPITAL LETTER O + COMBINING DIAERESIS
+item3	0055 0308	Ü			Ü LATIN CAPITAL LETTER U + COMBINING DIAERESIS
+item3	0059 0308	Ÿ			Ÿ LATIN CAPITAL LETTER Y + COMBINING DIAERESIS
+item3	0061 0308	ä			ä LATIN SMALL LETTER a + COMBINING DIAERESIS
+item3	0065 0308	ë			ë LATIN SMALL LETTER e + COMBINING DIAERESIS
+item3	0069 0308	ï			ï LATIN SMALL LETTER i + COMBINING DIAERESIS
+item3	006f 0308	ö			ö LATIN SMALL LETTER o + COMBINING DIAERESIS
+item3	0075 0308	ü			ü LATIN SMALL LETTER u + COMBINING DIAERESIS
+item3	0079 0308	ÿ			ÿ LATIN SMALL LETTER y + COMBINING DIAERESIS
+
 
 #------+---------------+-----------------------+------------------------------+
 group	TXT.Replace	Replace			replace special characters
@@ -1342,6 +1389,8 @@ use	TXT.Remove
 use	TXT.Replace
 use	TXT.Special
 use	TXT.Recursive
+use	TXT.UCS-diacrit
+use	TXT.UTF-misc
 
 #------+---------------+-----------------------+------------------------------+
 menu	DE.Text		text manipulation	text manipulation functions
@@ -1358,6 +1407,8 @@ use	TXT.Remove
 use	TXT.Replace
 use	TXT.Special
 use	TXT.Recursive
+use	TXT.UCS-diacrit
+use	TXT.UTF-misc
 
 #------+---------------+-----------------------+------------------------------+
 group	TXT.Chars	character actions	text manipulation functions
@@ -1490,6 +1541,7 @@ group	UCS.Angle.l	Unicode (left) Angle Brackets		Unicode left/right, pointing, d
 # more at http://www.unicode.org/charts/PDF/U2B00.pdf
 #         http://www.unicode.org/charts/PDF/U2190.pdf
 item3	171	<<	angle quotation mark, left
+item3	852	<	combining left arrow
 item3	8249	<	CP-1252 best-fit mapping single left-pointing angle quotation mark
 item3	8592	<--	leftward arrow
 item3	8656	<=	left arrow; is implied by
@@ -1524,6 +1576,7 @@ item3	65513	<-	halfwidth leftwards arrow
 #------+-------+-------+----------------------------------
 group	UCS.Angle.r	Unicode (right) Angle Brackets		Unicode left/right, pointing, double angel bracket characters
 item3	187	>>	angle quotation mark, right
+item3	853	>	combining right arrow
 item3	2023	>	-unknown-
 item3	8250	>	CP-1252 best-fit mapping single right-pointing angle quotation mark
 item3	8594	-->	rightward arrow
@@ -1849,6 +1902,7 @@ item3	1045	E	capital IE, Cyrillic
 item3	628	E	Cyrillic N
 item3	1077	e	small e, Cyrillic
 item3	1105	e"	small e with umlaut, Cyrillic
+item3	305	i	small i, ??
 item3	1110	i	small i, Cyrillic
 item3	1112	j	small j, Cyrillic
 item3	186	o	ordinal indicator, masculine
@@ -1946,6 +2000,26 @@ item3	10008	x	bold ballot x
 # reference: http://sonderzeichen.de/
 
 #------+---------------+-----------------------+------------------------------+
+group	UCS.diacrit	insert UCS diacritical	UTF-8 diacritical characters
+# same as TXT.UCS-diacrit
+item3	768	`		` COMBINING GRAVIS
+item3	769	'		' COMBINING ACUTE
+item3	770	^		^ COMBINING CIRCUMFLEX
+item3	771	~		~ COMBINING TILDE
+item3	772	-		- COMBINING MACRON
+item3	773	-		- COMBINING MACRON
+item3	774	u		u COMBINING BREVE
+item3	775	 ̈		. COMBINING DOT
+item3	776	"		" COMBINING DIAERESIS
+item3	779	"		" COMBINING DOUBLE ACUTE
+item3	780	 ̌		v COMBINING HATCHECK
+item3	832	`		` COMBINING GRAVIS (old)
+item3	833	'		' COMBINING ACUTE (old)
+item3	834	~		~ COMBINING TILDE (old)
+item3	852	<		< COMBINING LEFT ARROW
+item3	853	>		> COMBINING RIGHT ARROW
+
+#------+---------------+-----------------------+------------------------------+
 #head	key		text			description
 #------+---------------+-----------------------+------------------------------+
 menu	CH.Unicode	Unicode			various Unicode characters
@@ -1975,6 +2049,7 @@ use	UCS.Dingbats
 use	UCS.Latin-eq
 use	UCS.Typograph
 use	UCS.Symbols
+use	TXT.UCS-diacrit
 # // ToDo: following does not work due to different definition of the group
 # // ToDo: need programatic conversion of menu or a separate menu definition
 # //       like UCS.* above

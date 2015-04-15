@@ -79,7 +79,7 @@
 #       This file contains UTF-8 characters!
 #?
 #? VERSION
-#?      @(#) EnDeCheck.js 3.8 12/01/22 16:14:00
+#?      @(#) EnDeCheck.js 3.9 12/06/02 17:22:47
 #?
 #? AUTHOR
 #?      08-feb-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -143,7 +143,7 @@
  * http://en.wikipedia.org/wiki/Bank_card_number
  * -----
  * http://www.merriampark.com/anatomycc.htm
- *    4408 0412 3456 7890       
+ *    4408 0412 3456 7890
  *    ---- ---- ---- ----
  *    |     ||         |\_________ Check Digit
  *    |\_  _/\_________/__________ Account Number
@@ -163,8 +163,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.Check  = new function() {
-  this.SID	= '3.8';
-  this.sid	= function()    { return('@(#) EnDeCheck.js 3.8 12/01/22 16:14:00 EnDe.Check'); };
+  this.SID	= '3.9';
+  this.sid	= function()    { return('@(#) EnDeCheck.js 3.9 12/06/02 17:22:47 EnDe.Check'); };
 
   // ======================================================================= //
   // public and alias check functions                                        //
@@ -192,9 +192,9 @@ EnDe.Check  = new function() {
   this.iban     = function(src) { return(EnDe.Check.IBAN.is(src)); };
   // just a wrapper, we don't want any GUI functions herein
   // all functions to be called by dipatch() must be added there
-  this.dispatch = function(src) { return(EnDe.User.Check.dispatch( src )); };
-  this.guess    = function(src) { return(EnDe.User.Check.guess( src )); };
- 
+  this.dispatch = function(src) { return(EnDe.User.Check.dispatch(src)); };
+  this.guess    = function(src) { return(EnDe.User.Check.guess(src)); };
+
   // ======================================================================= //
   // global prototypes                                                       //
   // ======================================================================= //
@@ -215,7 +215,7 @@ EnDe.Check  = new function() {
 	 *      http://www.gs1-germany.de/internet/content/e39/e50/e221/e222/e5636
 	 *      http://www.gepir.de/router.asmx?list
 	 *      http://www.gepir.de/router.asmx?wsdl
-	 *      http://en.wikipedia.org/wiki/List_of_Bank_Identification_Numbers // ToDo: 
+	 *      http://en.wikipedia.org/wiki/List_of_Bank_Identification_Numbers // ToDo:
 	 */
   function _GLN() {}; // International Location Numbers
   _GLN.prototype = {
@@ -230,209 +230,209 @@ EnDe.Check  = new function() {
 	 * means that "Deutschland" covers all keys 400 .. 440
 	 * See .code() how to detect these ranges.
 	 */
-	'desc'  : 'from http://de.wikipedia.org/wiki/EAN-L%C3%A4ndernummer',
-	'000'   : 'U.S.A. & Canada (leading 0 for 12-digit UPC)',
-	'09x'   : 'U.S.A. & Canada (leading 0 for 12-digit UPC)',
-	'099'   : 'U.S.A. & Canada (leading 0 for 12-digit UPC)',
-	'100'   : 'U.S.A. & Canada',
-	'10x'   : 'U.S.A. & Canada',
-	'11x'   : 'U.S.A. & Canada',
-	'12x'   : 'U.S.A. & Canada',
-	'13x'   : 'U.S.A. & Canada',
-	'139'   : 'U.S.A. & Canada',
-	'200'   : 'internal numbering',
-	'20x'   : 'internal numbering',
-	'21x'   : 'internal numbering',
-	'22x'   : 'internal numbering',
-	'23x'   : 'internal numbering',
-	'24x'   : 'internal numbering',
-	'25x'   : 'internal numbering',
-	'26x'   : 'internal numbering',
-	'27x'   : 'internal numbering',
-	'28x'   : 'internal numbering',
-	'29x'   : 'internal numbering',
-	'299'   : 'internal numbering',
-	'300'   : 'Frankreich',
-	'30x'   : 'Frankreich',
-	'31x'   : 'Frankreich',
-	'32x'   : 'Frankreich',
-	'33x'   : 'Frankreich',
-	'34x'   : 'Frankreich',
-	'35x'   : 'Frankreich',
-	'36x'   : 'Frankreich',
-	'37x'   : 'Frankreich',
-	'379'   : 'Frankreich',
-	'380'   : 'Bulgarien',
-//	'381'   : '?',
-//	'382'   : '?',
-	'383'   : 'Slowenien',
-//	'384'   : '?',
-	'385'   : 'Kroatien',
-//	'386'   : '?',
-	'387'   : 'Bosnien-Herzegowina',
-//	'388'   : '?',
-//	'389'   : '?',
-	'400'   : 'Deutschland',
-	'40x'   : 'Deutschland',
-	'41x'   : 'Deutschland',
-	'42x'   : 'Deutschland',
-	'43x'   : 'Deutschland',
-	'440'   : 'Deutschland',
-	'450'   : 'Japan',
-	'45x'   : 'Japan',
-	'46x'   : 'Japan',
-	'47x'   : 'Japan',
-	'48x'   : 'Japan',
-	'49x'   : 'Japan',
-	'499'   : 'Japan',
-	'460'   : 'Russland',
-//	'46x'   : 'Russland',   // same as Japan?
-	'469'   : 'Russland',
-	'471'   : 'Taiwan',
-	'474'   : 'Estland',
-	'475'   : 'Lettland',
-	'476'   : 'Aserbeidschan',
-	'477'   : 'Litauen',
-	'478'   : 'Usbekistan',
-	'479'   : 'Sri Lanka',
-	'480'   : 'Philippinen',
-	'481'   : 'Belarus',
-	'482'   : 'Ukraine',
-	'483'   : '?',
-	'484'   : 'Moldawien',
-	'485'   : 'Armenien',
-	'486'   : 'Georgien',
-	'488'   : '?',
-	'487'   : 'Kasachstan',
-	'489'   : 'Hongkong',
-	'500'   : 'Großbritanien',
-	'50x'   : 'Großbritanien',
-	'509'   : 'Großbritanien',
-	'520'   : 'Griechenland',
-	'528'   : 'Libanon',
-	'529'   : 'Zypern',
-	'531'   : 'Mazedonien',
-	'535'   : 'Malta',
-	'539'   : 'Irland',
-	'540'   : 'Belgien & Luxemburg',
-	'54x'   : 'Belgien & Luxemburg',
-	'549'   : 'Belgien & Luxemburg',
-	'560'   : 'portugal',
-	'569'   : 'Island',
-	'570'   : 'Dänemark',
-	'57x'   : 'Dänemark',
-	'579'   : 'Dänemark',
-	'590'   : 'Polen',
-	'594'   : 'Rumänien',
-	'599'   : 'Ungarn',
-	'600'   : 'Südafrika',
-	'601'   : 'Südafrika',
-	'608'   : 'Bahrein',
-	'609'   : 'Mauritius',
-	'611'   : 'Marokko',
-	'613'   : 'Algerien',
-	'616'   : 'Kenia',
-	'619'   : 'Tunesien',
-	'621'   : 'Syrien',
-	'622'   : 'Ägypten',
-	'624'   : 'Libyen',
-	'625'   : 'Jordanien',
-	'626'   : 'Iran',
-	'627'   : 'Kuweit',
-	'628'   : 'Saudi-Arabien',
-	'629'   : 'Vereinigte Arabische Emirate',
-	'640'   : 'Finnland',
-	'64x'   : 'Finnland',
-	'649'   : 'Finnland',
-	'690'   : 'China',
-	'691'   : 'China',
-	'692'   : 'China',
-	'693'   : 'China',
-	'700'   : 'Norwegen',
-	'70x'   : 'Norwegen',
-	'709'   : 'Norwegen',
-	'729'   : 'Israel',
-	'730'   : 'Schweden',
-	'73x'   : 'Schweden',
-	'739'   : 'Schweden',
-	'740'   : 'Guatemala',
-	'741'   : 'El Salvador',
-	'742'   : 'Honduras',
-	'743'   : 'Nicaragua',
-	'744'   : 'Costa Rica',
-	'745'   : 'Panama',
-	'746'   : 'Dominikanische Republik',
-	'750'   : 'Mexiko',
-	'759'   : 'Venezuela',
-	'760'   : 'Schweiz & Liechtenstein',
-	'76x'   : 'Schweiz & Liechtenstein',
-	'769'   : 'Schweiz & Liechtenstein',
-	'770'   : 'Kolumbien',
-	'773'   : 'Uruguay',
-	'775'   : 'Peru',
-	'777'   : 'Bolivien',
-	'779'   : 'Argentinien',
-	'780'   : 'Chile',
-	'784'   : 'Paraguay',
-	'786'   : 'Ecuador',
-	'789'   : 'Brasilien',
-	'830'   : 'Italien',
-	'83x'   : 'Italien',
-	'839'   : 'Italien',
-	'840'   : 'Spanien',
-	'84x'   : 'Spanien',
-	'849'   : 'Spanien',
-	'850'   : 'Kuba',
-	'858'   : 'Slowakei',
-	'859'   : 'Tschechien',
-	'860'   : 'Jugoslawien',
-	'867'   : 'Nord Korea',
-	'869'   : 'Türkei',
-	'870'   : 'Niederlande',
-	'87x'   : 'Niederlande',
-	'879'   : 'Niederlande',
-	'880'   : 'Süd Korea',
-	'885'   : 'Thailand',
-	'888'   : 'Singapur',
-	'890'   : 'Indien',
-	'893'   : 'Vietnam',
-	'899'   : 'Indonesien',
-	'900'   : 'Österreich',
-	'90x'   : 'Österreich',
-	'91x'   : 'Österreich',
-	'919'   : 'Österreich',
-	'930'   : 'Australien',
-	'93x'   : 'Australien',
-	'939'   : 'Australien',
-	'940'   : 'Neuseeland',
-	'94x'   : 'Neuseeland',
-	'949'   : 'Neuseeland',
-	'950'   : 'EAN Headquarter',
-	'955'   : 'Malaysia',
-	'958'   : 'Macao',
-	'977'   : 'Zeitschriften',
-	'978'   : 'Bücher',
-	'979'   : 'Bücher',
-	'980'   : 'refund receipts',
-	'981'   : 'Common Currency Coupons',
-	'982'   : 'Common Currency Coupons',
-	'999'   : 'Coupons',
+	'desc':   'from http://de.wikipedia.org/wiki/EAN-L%C3%A4ndernummer',
+	'000':    'U.S.A. & Canada (leading 0 for 12-digit UPC)',
+	'09x':    'U.S.A. & Canada (leading 0 for 12-digit UPC)',
+	'099':    'U.S.A. & Canada (leading 0 for 12-digit UPC)',
+	'100':    'U.S.A. & Canada',
+	'10x':    'U.S.A. & Canada',
+	'11x':    'U.S.A. & Canada',
+	'12x':    'U.S.A. & Canada',
+	'13x':    'U.S.A. & Canada',
+	'139':    'U.S.A. & Canada',
+	'200':    'internal numbering',
+	'20x':    'internal numbering',
+	'21x':    'internal numbering',
+	'22x':    'internal numbering',
+	'23x':    'internal numbering',
+	'24x':    'internal numbering',
+	'25x':    'internal numbering',
+	'26x':    'internal numbering',
+	'27x':    'internal numbering',
+	'28x':    'internal numbering',
+	'29x':    'internal numbering',
+	'299':    'internal numbering',
+	'300':    'Frankreich',
+	'30x':    'Frankreich',
+	'31x':    'Frankreich',
+	'32x':    'Frankreich',
+	'33x':    'Frankreich',
+	'34x':    'Frankreich',
+	'35x':    'Frankreich',
+	'36x':    'Frankreich',
+	'37x':    'Frankreich',
+	'379':    'Frankreich',
+	'380':    'Bulgarien',
+//	'381':    '?',
+//	'382':    '?',
+	'383':    'Slowenien',
+//	'384':    '?',
+	'385':    'Kroatien',
+//	'386':    '?',
+	'387':    'Bosnien-Herzegowina',
+//	'388':    '?',
+//	'389':    '?',
+	'400':    'Deutschland',
+	'40x':    'Deutschland',
+	'41x':    'Deutschland',
+	'42x':    'Deutschland',
+	'43x':    'Deutschland',
+	'440':    'Deutschland',
+	'450':    'Japan',
+	'45x':    'Japan',
+	'46x':    'Japan',
+	'47x':    'Japan',
+	'48x':    'Japan',
+	'49x':    'Japan',
+	'499':    'Japan',
+	'460':    'Russland',
+//	'46x':    'Russland',   // same as Japan?
+	'469':    'Russland',
+	'471':    'Taiwan',
+	'474':    'Estland',
+	'475':    'Lettland',
+	'476':    'Aserbeidschan',
+	'477':    'Litauen',
+	'478':    'Usbekistan',
+	'479':    'Sri Lanka',
+	'480':    'Philippinen',
+	'481':    'Belarus',
+	'482':    'Ukraine',
+	'483':    '?',
+	'484':    'Moldawien',
+	'485':    'Armenien',
+	'486':    'Georgien',
+	'488':    '?',
+	'487':    'Kasachstan',
+	'489':    'Hongkong',
+	'500':    'Großbritanien',
+	'50x':    'Großbritanien',
+	'509':    'Großbritanien',
+	'520':    'Griechenland',
+	'528':    'Libanon',
+	'529':    'Zypern',
+	'531':    'Mazedonien',
+	'535':    'Malta',
+	'539':    'Irland',
+	'540':    'Belgien & Luxemburg',
+	'54x':    'Belgien & Luxemburg',
+	'549':    'Belgien & Luxemburg',
+	'560':    'portugal',
+	'569':    'Island',
+	'570':    'Dänemark',
+	'57x':    'Dänemark',
+	'579':    'Dänemark',
+	'590':    'Polen',
+	'594':    'Rumänien',
+	'599':    'Ungarn',
+	'600':    'Südafrika',
+	'601':    'Südafrika',
+	'608':    'Bahrein',
+	'609':    'Mauritius',
+	'611':    'Marokko',
+	'613':    'Algerien',
+	'616':    'Kenia',
+	'619':    'Tunesien',
+	'621':    'Syrien',
+	'622':    'Ägypten',
+	'624':    'Libyen',
+	'625':    'Jordanien',
+	'626':    'Iran',
+	'627':    'Kuweit',
+	'628':    'Saudi-Arabien',
+	'629':    'Vereinigte Arabische Emirate',
+	'640':    'Finnland',
+	'64x':    'Finnland',
+	'649':    'Finnland',
+	'690':    'China',
+	'691':    'China',
+	'692':    'China',
+	'693':    'China',
+	'700':    'Norwegen',
+	'70x':    'Norwegen',
+	'709':    'Norwegen',
+	'729':    'Israel',
+	'730':    'Schweden',
+	'73x':    'Schweden',
+	'739':    'Schweden',
+	'740':    'Guatemala',
+	'741':    'El Salvador',
+	'742':    'Honduras',
+	'743':    'Nicaragua',
+	'744':    'Costa Rica',
+	'745':    'Panama',
+	'746':    'Dominikanische Republik',
+	'750':    'Mexiko',
+	'759':    'Venezuela',
+	'760':    'Schweiz & Liechtenstein',
+	'76x':    'Schweiz & Liechtenstein',
+	'769':    'Schweiz & Liechtenstein',
+	'770':    'Kolumbien',
+	'773':    'Uruguay',
+	'775':    'Peru',
+	'777':    'Bolivien',
+	'779':    'Argentinien',
+	'780':    'Chile',
+	'784':    'Paraguay',
+	'786':    'Ecuador',
+	'789':    'Brasilien',
+	'830':    'Italien',
+	'83x':    'Italien',
+	'839':    'Italien',
+	'840':    'Spanien',
+	'84x':    'Spanien',
+	'849':    'Spanien',
+	'850':    'Kuba',
+	'858':    'Slowakei',
+	'859':    'Tschechien',
+	'860':    'Jugoslawien',
+	'867':    'Nord Korea',
+	'869':    'Türkei',
+	'870':    'Niederlande',
+	'87x':    'Niederlande',
+	'879':    'Niederlande',
+	'880':    'Süd Korea',
+	'885':    'Thailand',
+	'888':    'Singapur',
+	'890':    'Indien',
+	'893':    'Vietnam',
+	'899':    'Indonesien',
+	'900':    'Österreich',
+	'90x':    'Österreich',
+	'91x':    'Österreich',
+	'919':    'Österreich',
+	'930':    'Australien',
+	'93x':    'Australien',
+	'939':    'Australien',
+	'940':    'Neuseeland',
+	'94x':    'Neuseeland',
+	'949':    'Neuseeland',
+	'950':    'EAN Headquarter',
+	'955':    'Malaysia',
+	'958':    'Macao',
+	'977':    'Zeitschriften',
+	'978':    'Bücher',
+	'979':    'Bücher',
+	'980':    'refund receipts',
+	'981':    'Common Currency Coupons',
+	'982':    'Common Currency Coupons',
+	'999':    'Coupons',
 	'999999': '--unknown--'  // end of list
   }; // _GLN
 
   function _MII() {}; // list of Major Industry Identifier (1 digit)
   _MII.prototype = {
-	'desc'  : 'from http://www.pruefziffernberechnung.de/K/Kreditkarten.shtml',
-	'0'     : 'ISO/TC 68 industrie',
-	'1'     : 'airlines',
-	'2'     : 'airlines and industrie',
-	'3'     : 'Touristic and advertaisement',
-	'4'     : 'Finance',
-	'5'     : 'Finance',
-	'6'     : 'marketing and finance',
-	'7'     : 'Petro industrie',
-	'8'     : 'Tele-communication and Industrie',
-	'9'     : 'National Applications',
+	'desc':   'from http://www.pruefziffernberechnung.de/K/Kreditkarten.shtml',
+	'0':      'ISO/TC 68 industrie',
+	'1':      'airlines',
+	'2':      'airlines and industrie',
+	'3':      'Touristic and advertaisement',
+	'4':      'Finance',
+	'5':      'Finance',
+	'6':      'marketing and finance',
+	'7':      'Petro industrie',
+	'8':      'Tele-communication and Industrie',
+	'9':      'National Applications',
 	'999999': '--unknown--'  // end of list
   }; // _MII
 
@@ -858,12 +858,12 @@ EnDe.Check  = new function() {
   function _CAP() {}; // Card Reader protocol
   _CAP.prototype = {
 	'desc'  : 'http://www.cl.cam.ac.uk/~sjm217/papers/fc09optimised.pdf',
-	// CAP code         : used by 
+	// CAP code         : used by
 	'0xA0000000048002'  : 'NatWest',
 	'0xA0000000038002'  : 'Barclays',
 	'0xA0000002040000'  : 'HBOS'
   }; // _CAP
- 
+
   // ======================================================================= //
   // global functions                                                        //
   // ======================================================================= //
@@ -877,10 +877,10 @@ EnDe.Check  = new function() {
 
   this.GTIN   = function(src,lng,cpc) { // name could be EAN, IAN, UPC also ..
   //#? general function to compute checksum for EAN, IAN, UPC numbers
-	/* src : number to check
-	 * lng : length of number to be check, starting from right
+	/* src: number to check
+	 * lng: length of number to be check, starting from right
      *       if 0 all digits are used
-     * cpc=true : last digit is CPC and included in calculation
+     * cpc=true:  last digit is CPC and included in calculation
      * cpc=false: CPC digit missing
 	 */
 	/*
@@ -1063,10 +1063,10 @@ EnDe.Check  = new function() {
 	this.code   = function(src) {
 	//#? return issuer country for given number, '--unknown--' if not found
 		var k = '';
-	    var bux = src.replace(/[^0-9]/g,''); // reduce to digits
+		var bux = src.replace(/[^0-9]/g,''); // reduce to digits
 		// as the length is unknown, we can only check for GLN from left
-		bux = bux.substr( 0 ,3); for (k in this.GLN) { if (k == bux) { return(this.GLN[k]); } }
-		bux = bux.substr( 0 ,2); bux += 'x';// search for range [xx0, xx9]
+		bux = bux.substr(0 ,3); for (k in this.GLN) { if (k == bux) { return(this.GLN[k]); } }
+		bux = bux.substr(0 ,2); bux += 'x';// search for range [xx0, xx9]
 		for (k in this.GLN) { if (k == bux) { return(this.GLN[k]); } }
 		return('--unknown--');
 	}; //code()
@@ -1086,7 +1086,7 @@ EnDe.Check  = new function() {
    * digits   UPC Version
    * --------+--------------
    *	10+2	UPC Version A
-   *			An eleventh digit indicates the type of product, and a twelfth digit is a modulo check digit. 
+   *			An eleventh digit indicates the type of product, and a twelfth digit is a modulo check digit.
    *	10+2	UPC Version E (compressed Version A, strip 0)
    *			For example, the code 59300-00066 would be encoded as 593663
    *	10+2,3	EAN-13 see EnDe.Check.EAN below
@@ -1102,8 +1102,8 @@ EnDe.Check  = new function() {
 	this.get    = function(src) {
 	//#? compute checksum for UPC numbers (aka UPC-A, aka UPC-12)
 		var kkk = EnDe.Check.val2num(src);
-		if (kkk.length == 11) { return EnDe.Check.GTIN( kkk,11,false); }// assume UPC without check digit
-		if (kkk.length == 12) { return EnDe.Check.GTIN( kkk,12,true ); }// assume UPC with check digit
+		if (kkk.length == 11) { return EnDe.Check.GTIN(kkk,11,false); } // assume UPC without check digit
+		if (kkk.length == 12) { return EnDe.Check.GTIN(kkk,12,true ); } // assume UPC with check digit
 		return(-1);
 	};
 
@@ -1136,8 +1136,8 @@ EnDe.Check  = new function() {
 	this.get    = function(src) {
 	//#? compute checksum for EAN-13 (aka GTIN, GLN, IAN)
 		var kkk = EnDe.Check.val2num(src);
-		if (kkk.length == 12) { return EnDe.Check.GTIN( kkk,12,false); }// assume EAN without check digit
-		if (kkk.length == 13) { return EnDe.Check.GTIN( kkk,13,true ); }// assume EAN with check digit
+		if (kkk.length == 12) { return EnDe.Check.GTIN(kkk,12,false); } // assume EAN without check digit
+		if (kkk.length == 13) { return EnDe.Check.GTIN(kkk,13,true ); } // assume EAN with check digit
 		return(-1);
 	};
 
@@ -1154,11 +1154,11 @@ EnDe.Check  = new function() {
 	//#? return issuer country for given number, '--unknown--' if not found
 		/* this.EAN contains only first 3 digits */
 		var k = '';
-	    var bux = src.replace(/[^0-9]/g,''); // reduce to digits
+		var bux = src.replace(/[^0-9]/g,''); // reduce to digits
 		var anf = bux.length - 13;
 		if (anf < 0) { anf = 0; } // sanatize
 		bux = bux.substr(anf,3); for (k in this.EAN) { if (k == bux) { return(this.EAN[k]); } }
-		bux = bux.substr( 0 ,2); bux += 'x';// search for range [xx0, xx9]
+		bux = bux.substr(0 ,2); bux += 'x';// search for range [xx0, xx9]
 		for (k in this.EAN) { if (k == bux) { return(this.EAN[k]); } }
 		return('--unknown--');
 	}; //code()
@@ -1211,7 +1211,7 @@ EnDe.Check  = new function() {
 		var kkk = EnDe.Check.val2num(src);
 		if (kkk.length <  9) { return(-1); } // ToDo: bail out with error
 		if (kkk.length > 10) { kkk.length = 9; } // strip off last number
-	    	var ccc = this.get(src);
+		var ccc = this.get(src);
 
 		if (ccc<0) { return(-1); } // ToDo: bail out with error
 		kkk[9] = ccc;
@@ -1255,21 +1255,21 @@ EnDe.Check  = new function() {
 	var I = new Array( 0, 4, 3, 2, 1, 5, 6, 7, 8, 9 );
 
 	function reverse(src) {
-	    var bux = '';
-	    for (var i=src.length-1; i>=0; i-- ) { bux = bux + src.charAt(i); }
+		var bux = '';
+		for (var i=src.length-1; i>=0; i-- ) { bux = bux + src.charAt(i); }
 		return(bux);
 	};
 
 	this.get    = function(src) {
 	//#? compute checksum according Verhoeff Dihedral Group D5 Check
-	    var bux = '';
+		var bux = '';
 		var kkk = EnDe.Check.val2num(src);
-	        kkk = 'x' + reverse(kkk);
-	    var ccc = 0;
-	    for ( var i=1; i<kkk.length; i++ ) {
-			ccc = o[ccc][F[i%8][kkk.charAt( i )]];
+		    kkk = 'x' + reverse(kkk);
+		var ccc = 0;
+		for ( var i=1; i<kkk.length; i++ ) {
+			ccc = o[ccc][F[i%8][kkk.charAt(i)]];
 		}
-	    bux = bux + I[ccc];
+		bux = bux + I[ccc];
 		return(bux);
 	};
 
@@ -1364,7 +1364,7 @@ EnDe.Check  = new function() {
 		var i = '';
 		var bux = '';
 		var ccc = '';
-	    var kkk = src.replace(/[^0-9a-zA-Z]/g,''); // reduce
+		var kkk = src.replace(/[^0-9a-zA-Z]/g,''); // reduce
 		for (i=4; i<kkk.length; i++) {
 			ccc = kkk[i];
 			if (ccc.match(/[0-9]/)!==null) {
@@ -1408,7 +1408,7 @@ EnDe.Check  = new function() {
 
 	this.is     = function(src) {
 	//#? check if given number is SSN (Social Security Number)
-		return((src.match( /(\d{6})[\-\+A](\d{3})[0123456789ABCDEFHJKLMNPRSTUVWXY]/ )==null)?false:true);
+		return((src.match(/(\d{6})[\-\+A](\d{3})[0123456789ABCDEFHJKLMNPRSTUVWXY]/)==null)?false:true);
 	}; // is()
   }; // EnDe.Check.SSN
 
@@ -1422,7 +1422,7 @@ EnDe.Check  = new function() {
 	this.get    = function(src) {
 	//#? compute 1 byte checksum of given string
 		var bux = 0;
-	    	for (var i=0; i<src.length; i++ ) { bux += src.charCodeAt(i); }
+		for (var i=0; i<src.length; i++ ) { bux += src.charCodeAt(i); }
 		return (bux-((bux%256)*256));
 	}; // get()
   }; // EnDe.Check.Byte1

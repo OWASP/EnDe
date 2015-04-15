@@ -66,7 +66,7 @@
 #?      EnDe.Text is not yet part or the librray.
 #?
 #? VERSION
-#?      @(#) EnDeB64.js 3.3 12/11/17 01:16:44
+#?      @(#) EnDeB64.js 3.4 13/07/16 22:17:29
 #?
 #? AUTHOR
 #?      29-mai-10 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -80,7 +80,7 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.B64    = new function() {
-	this.SID    = '3.3';
+	this.SID    = '3.4';
 	this.sid    = function() {       return(EnDe.sid() + '.B64'); };
 
 	this.trace  = false;
@@ -681,7 +681,7 @@ EnDe.B64    = new function() {
 		  case 'base91':
 		  case 'base94':
 		  case 'base95':    return this.b_N(type, src); break;
-		  case 'base64':    return this.b64(      src); break;
+		  case 'base64':    return this.b64(      src); break; // ToDo: needs to be b_N()
 		  case 'base64old': return this.b64(      src); break;
 		  case 'base64u':
 		  case 'url64':     return this.u64(      src); break;

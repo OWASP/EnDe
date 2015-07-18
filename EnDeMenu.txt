@@ -88,7 +88,7 @@
 #?      EnDeGUIx.js, EnDeGUI.js
 #?
 #? VERSION
-#?      @(#) EnDeMenu.txt 3.58 14/12/12 01:35:51
+#?      @(#) EnDeMenu.txt 3.59 15/07/18 18:10:20
 #?
 #? AUTHOR
 #?      09-jun-09 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -1913,6 +1913,7 @@ item3	1147	o	(small o)
 item3	3664	o	(small o, Thai)
 item3	59178	o	small omega, Greek
 item3	59179	O	capital omega, Greek
+item3	927	O	capital omicron, Greek
 item3	937	O	capital omega, Greek
 item3	65327	O	capital O, fullwidth
 item3	1086	O	capital O, Cyrillic

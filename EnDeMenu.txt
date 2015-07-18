@@ -88,7 +88,7 @@
 #?      EnDeGUIx.js, EnDeGUI.js
 #?
 #? VERSION
-#?      @(#) EnDeMenu.txt 3.59 15/07/18 18:10:20
+#?      @(#) EnDeMenu.txt 3.60 15/07/18 18:38:19
 #?
 #? AUTHOR
 #?      09-jun-09 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -1572,6 +1572,7 @@ item3	57677	<	-unknown-
 item3	65124	<	full width left arrow
 item3	65308	<	full width big left arrow
 item3	65513	<-	halfwidth leftwards arrow
+item3	66306	<	old italic letter KE (etruscian)
 
 #------+-------+-------+----------------------------------
 group	UCS.Angle.r	Unicode (right) Angle Brackets		Unicode left/right, pointing, double angel bracket characters
@@ -1820,7 +1821,10 @@ item3	4975	[7]	Ethiopic Cherokee seven
 item3	4976	[8]	Ethiopic Cherokee eight
 item3	4977	[9]	Ethiopic Cherokee nine
 item3	4978	[10]	Ethiopic Cherokee ten
+item3	66319	O	old italic letter 0 (etruscian)
 item3	5102	6	Ethiopic Cherokee "6"
+item3	66311	8	old italic letter HE (etruscian)
+item3	66330	8	old italic letter EF (etruscian)
 item3	5101	9	Ethiopic Cherokee "9"
 # http://www.unicode.org/charts/PDF/U2460.pdf
 item3	9312	o1	circled digit one
@@ -1893,18 +1897,32 @@ group	UCS.Latin-eq	Unicode Latin equivalents		Unicode Latin Character equivalent
 item3	1047	3	capital ZE, Cyrillic
 item3	1040	A	capital A, Cyrillic
 item3	1044	A	capital DE, Cyrillic
+item3	66304	A	old italic letter A (etruscian)
 item3	1072	a	small a, Cyrillic
 item3	1041	b	capital BE, Cyrillic
+item3	66332	b	old italic letter CHE (etruscian)
 item3	1042	B	capital VE, Cyrillic
+item3	66305	B	old italic letter A (etruscian)
 item3	1089	C	capital C, Cyrillic
+item3	66306	C	old italic letter KE (etruscian)
 item3	1073	d	small be, Cyrillic
+item3	66307	D	old italic letter D (etruscian)
 item3	1045	E	capital IE, Cyrillic
 item3	628	E	Cyrillic N
+item3	66308	E	old italic letter E (etruscian)
 item3	1077	e	small e, Cyrillic
 item3	1105	e"	small e with umlaut, Cyrillic
+item3	66309	F	old italic letter VE (etruscian)
+item3	66310	I	old italic letter ZE (etruscian)
+item3	66313	I	old italic letter I (etruscian)
+item3	66336	X	old italic letter ONE (etruscian)
 item3	305	i	small i, ??
 item3	1110	i	small i, Cyrillic
 item3	1112	j	small j, Cyrillic
+item3	66314	K	old italic letter KA (etruscian)
+item3	66321	M	old italic letter SHE (etruscian)
+item3	66316	M	old italic letter EM (etruscian)
+item3	66317	N	old italic letter EN (etruscian)
 item3	186	o	ordinal indicator, masculine
 item3	559	o	small o with dot
 item3	959	o	small omicron, Greek
@@ -1916,6 +1934,7 @@ item3	59179	O	capital omega, Greek
 item3	927	O	capital omicron, Greek
 item3	937	O	capital omega, Greek
 item3	65327	O	capital O, fullwidth
+item3	66319	O	old italic letter 0 (etruscian)
 item3	1086	O	capital O, Cyrillic
 item3	1086	O	capital O, Cyrillic
 item3	65359	o	small o, fullwidth
@@ -1924,17 +1943,22 @@ item3	447	p	(small p)
 item3	961	p	small rho, Greek
 item3	1511	p	(small p)
 item3	1056	P	capital ER, Cyrillic
+item3	66323	P	old italic letter ER (etruscian)
+item3	66331	P	old italic letter ERS (etruscian)
 item3	1088	p	small er, Cyrillic
 item3	59164	p	small rho, Greek
 item3	65328	P	capital P, fullwidth
 item3	65360	p	small p, fullwidth
+item3	66312	Q	old italic letter KU (etruscian)
 item3	640	R	Cyrillic Extended-B
 item3	1000	s	(small S; Greek/Coptic)
 item3	1029	S	capital DSE, Macedonian
+item3	66314	S	old italic letter ES (etruscian)
 item3	1109	s	small dse, Macedonian, Cyrillic
 item3	4285	S	(capital S)
 item3	65331	S	capital S, fullwidth
 item3	65363	S	small s, fullwidth
+item3	66325	T	old italic letter TE (etruscian)
 item3	306	IJ	capital IJ ligature
 item3	307	ij	small ij ligature
 item3	1094	u,	small tse, Cyrillic
@@ -1945,14 +1969,18 @@ item3	8846	u+	big plus sign in union
 item3	8852	u	square union operator
 item3	8899	U	union operator
 item3	8915	UU	doublecup; double union
+item3	66334	V	old italic letter UU (etruscian)
 item3	1096	w	small sha, Cyrillic
 item3	1093	s	small x, Cyrillic
+item3	66327	X	old italic letter EKS (etruscian)
+item3	66338	X	old italic letter TEN (etruscian)
 item3	933	Y	capital Upsilon, Greek
 item3	965	y	small upsilon, Greek
 item3	978	Y	capital Upsilon, Greek
 item3	1091	y	small u, Cyrillic
 item3	59170	y	small upsilon, Greek
 item3	59171	Y	capital Upsilon, Greek
+item3	66326	Y	old italic letter U (etruscian)
 
 #------+-------+-------+----------------------------------
 group	UCS.Typograph	Unicode typographic characters		Unicode typographic characters

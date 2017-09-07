@@ -35,7 +35,7 @@
 #?      EnDeGUI.js
 #?
 #? VERSION
-#?      @(#) EnDeUser.xml 4.3 15/04/16 00:32:48
+#?      @(#) EnDeUser.xml 4.4 17/09/08 00:07:48
 #?
 #? AUTHOR
 #?      10-10-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -275,6 +275,18 @@ EnDe.EN.dispatch(
   $('EnDeDOM.EN.text').value.split('\nEnDe-Separator__do_not_remove_this_line\n')[1],
   "","","").replace(/=/mg,'') + '.' +
   ((is64===false) ? sig : EnDe.EN.dispatch("base64","lazy",$('EnDeDOM.API.uppercase').checked,sig,"","","").replace(/=/mg,''));
+    ]]></code>
+    </attack>
+
+    <attack>
+        <label>Encoding User Functions ..</label>
+        <name>JSON-decoded Base64</name>
+        <desc>remove literal \r and \n then replace any \x by X</desc>
+        <code><![CDATA[
+/* for JSON, BASE64 data contains literal \r \n and \/ 
+ * converts to BASE64 with literal \r \n and \/
+*/
+$('EnDeDOM.EN.text').value.replace(/\//g, '\\/').replace(/\r/g, '\\r').replace(/\n/g, '\\n')
     ]]></code>
     </attack>
 
@@ -595,6 +607,25 @@ decsig +
 '\nEnDe-Separator__do_not_remove_this_line\n' +
 'EnDe-JWT-signature-is-base64=' + (encsig!=decsig);
 /* remember if signature is base64 encoded */
+    ]]></code>
+    </attack>
+
+    <attack>
+        <label>Decoding User Functions ..</label>
+        <name>JSON-encoded Base64</name>
+        <desc>remove literal \r and \n then replace any \x by X</desc>
+        <code><![CDATA[
+/* for JSON, BASE64 data contains literal \r \n and \/ 
+ * converts back to real BASE64
+*/
+EnDe.Text.dispatch(
+    EnDe.Text.dispatch(
+        EnDe.Text.dispatch(
+            EnDe.Text.dispatch($('EnDeDOM.DE.text').value,'txtDELbsn',0),
+            'txtDELbsr',0),
+        'txtREPbsany',0),
+   'txtDELnl',0
+)
     ]]></code>
     </attack>
 

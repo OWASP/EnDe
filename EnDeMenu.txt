@@ -88,7 +88,7 @@
 #?      EnDeGUIx.js, EnDeGUI.js
 #?
 #? VERSION
-#?      @(#) EnDeMenu.txt 3.62 17/09/07 22:56:20
+#?      @(#) EnDeMenu.txt 3.63 17/09/07 23:27:56
 #?
 #? AUTHOR
 #?      09-jun-09 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -254,6 +254,7 @@ item3	txtDELbsr	"\r"			delete all literal \r
 item3	txtDELbssq	"\'"			delete all literal \'
 item3	txtDELbsdq	'\"'			delete all literal \"
 item3	txtDELbssl	"\/"			delete all literal \/
+item3	txtDELbsany	"\x"			delete all literal \(character) anywhere
 item3	txtDELnon7b	non-printable ASCII	delete all non-printable chars anywhere
 item3	txtDELnon7bn	non-printable ASCII\n	delete non-printable chars (except \t, \r, \n) anywhere
 item3	txtDELnon128	non-7-Bit ASCII		delete characters > chr(127) anywhere
@@ -404,6 +405,7 @@ item3	txtREPqqqq	' <-> "			replace ' by " and " by ' anywhere in text, honor \-e
 item3	txtREPbssq	"\'"			replace all literal \' by '
 item3	txtREPbsdq	"\'"			replace all literal \" by "
 item3	txtREPbssl	"\/"			replace all literal \/ by /
+item3	txtREPbsany	"\x"			replace all literal \(character) by (character)
 item3	txtREPstrdq	"+"			concatenate strings (remove " + ")
 item3	txtREPstrsq	'+'			concatenate strings (remove ' + ')
 item3	txtREPalnum	alpha-numeric by space	replace all non-alhpanumeric characters by spaces

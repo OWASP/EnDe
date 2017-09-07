@@ -88,7 +88,7 @@
 #?      EnDeGUIx.js, EnDeGUI.js
 #?
 #? VERSION
-#?      @(#) EnDeMenu.txt 3.60 15/07/18 18:38:19
+#?      @(#) EnDeMenu.txt 3.61 16/11/16 17:03:57
 #?
 #? AUTHOR
 #?      09-jun-09 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -621,6 +621,7 @@ item3	base16		Base16			encode to Base16 ([0-9A-F])
 item3	base26		Base26			encode to Base26 ([a-z])
 item3	base36		Base36			encode to Base36 ([a-z0-9])
 item3	base52		Base52			encode to Base52 ([a-zA-Z])
+item3	base65a		Base65			encode to Base65 ([a-zA-Z0-9.,/])
 item3	base64		Base64 +/		encode to Base64 as in RFC1521, RFC2045, RFC3548, RFC4648
 item3	base64f		Base64 +-		encode to modified Base64 for filenames
 item3	base64p		Base64 _-		encode to modified Base64 for program identifiers (variant 1)
@@ -900,6 +901,7 @@ item3	base16		Base16			decode from Base16 ([0-9A-F])
 item3	base26		Base26			decode from Base26 ([a-z])
 item3	base36		Base36			decode from Base36 ([a-z0-9])
 item3	base52		Base52			decode from Base52 ([a-zA-Z])
+item3	base65a		Base65			decode from Base65 ([a-zA-Z0-9.,/])
 item3	base64		Base64 +/		decode from Base64 as in RFC1521, RFC2045, RFC3548, RFC4648
 item3	base64f		Base64 +-		decode from modified Base64 for filenames
 item3	base64p		Base64 _-		decode from modified Base64 for program identifiers (variant 1)

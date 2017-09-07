@@ -1,10 +1,32 @@
 
 CHANGE HISTORY
-	
+
+1.2rc01 16-nov-16
+    * LIB, API
+	"EnDeB64.js" Base65 implemented
+    * GUI
+	"EnDeMenu.txt" Base65 added
+
+1.1rc01 07-nov-14
+    * LIB, API
+	"EnDeForm.js" simple XMLFormat implemented (uses vkbeautify.js which is buggy)
+	"EnDeGUI.js" 'parsed' function EnDeGUI.data depends on setting of Separator character
+	"EnDe.js" EnDe.join() and EnDe.split() work for | also
+    * GUI
+	"EnDe.man.txt" En-/Decoding options added, some cleanup
+	"EnDeMenu.txt" XMLFormater added; replace | by \n and vice versa
+	"EnDeUser.xml" functions for en-/decoding APEX, DWR, GWT
+	"EnDeGUI.html" XMLFormater added
+	"EnDeGUIx.js" layout in function window improved
+	"EnDeText.js" replace | by \n and vice versa
+	"EnDe.html" include vkbeautify.js
+	"EnDeFile.txt" target for menu changed for better layout
+	"EnDeFile.js" bugfix: extract number of lines and version from XML documents also
 1.0rc14 06-jul-13
     * LIB, API
 	"EnDeMaps.txt" superMap and subMap implemented
 	"EnDeMaps.js" superMap and subMap implemented; initialize EnDe.File.list[] with EnDeMaps.gen.js
+	"EnDe.js" EnDe.join() and EnDe.split() extended
 	"EnDe.js" *.EN.braille() --> *.EN.symbol()
 	"EnDe.js" *.mgd(): Digit3x5-0, Digit3x5-1 added
 	"EnDeMenu.txt" Digit3x5-0, Digit3x5-1 added
@@ -1131,7 +1153,7 @@ CHANGE HISTORY
 
 VERSION
 
-	@# EnDe <!-- @(#) %M% %I% %E% %U% -->
+	@# EnDe <!-- @(#) EnDe.changes.txt 3.15 17/09/07 22:02:15 -->
 
 
 AUTHOR

@@ -85,7 +85,7 @@
 #       -----------------------------------------------------------------------
 #?
 #? VERSION
-#?      @(#) EnDeText.js 3.21 17/09/07 22:55:01
+#?      @(#) EnDeText.js 3.22 17/09/07 23:26:53
 #?
 #? AUTHOR
 #?      08-sep-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -99,8 +99,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.Text   = new function() {
-	this.SID    = '3.21';
-	this.sid    = function() { return('@(#) EnDeText.js 3.21 17/09/07 22:55:01 EnDe.Text'); };
+	this.SID    = '3.22';
+	this.sid    = function() { return('@(#) EnDeText.js 3.22 17/09/07 23:26:53 EnDe.Text'); };
 
 	this.trace  = false;
 
@@ -190,6 +190,7 @@ EnDe.Text   = new function() {
 		  case 'txtDELbssq' : bux = bux.replace(/\\'/g,  '');       break;
 		  case 'txtDELbsdq' : bux = bux.replace(/\\"/g,  '');       break;
 		  case 'txtDELbssl' : bux = bux.replace(/\\\//g, '');       break;
+		  case 'txtDELbsany': bux = bux.replace(/\\./g,  '');       break;
 		  case 'txtDELquote': bux = bux.replace(/'/g, '').replace(/"/g, '');    break;
 		  case 'txtDELnon7bn':bux = bux.replace(/[^\x09\x0a\x0d\x20-\x7e]/g, ''); break;
 		  case 'txtDELnon7b': bux = bux.replace(/[^\x20-\x7e]/g,     '');       break;
@@ -232,6 +233,7 @@ EnDe.Text   = new function() {
 		  case 'txtREPbssq' : bux = bux.replace(/\\'/g,           "'");         break;
 		  case 'txtREPbsdq' : bux = bux.replace(/\\"/g,           '"');         break;
 		  case 'txtREPbssl' : bux = bux.replace(/\\\//g,          '/');         break;
+		  case 'txtREPbsany': bux = bux.replace(/\\(.)/g,        '$1');         break;
 		  case 'txtREPstrdq': bux = bux.replace(/"\s*\+\s*"/g,    ''    );      break;
 		  case 'txtREPstrsq': bux = bux.replace(/'\s*\+\s*'/g,    ''    );      break;
 		  case 'txtREPdqsq' : bux = bux.replace(/"/g,             "'"   );      break;

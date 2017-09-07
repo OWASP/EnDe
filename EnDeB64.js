@@ -66,7 +66,7 @@
 #?      EnDe.Text is not yet part or the librray.
 #?
 #? VERSION
-#?      @(#) EnDeB64.js 3.4 13/07/16 22:17:29
+#?      @(#) EnDeB64.js 3.6 16/11/21 21:30:01
 #?
 #? AUTHOR
 #?      29-mai-10 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -80,7 +80,7 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.B64    = new function() {
-	this.SID    = '3.4';
+	this.SID    = '3.6';
 	this.sid    = function() {       return(EnDe.sid() + '.B64'); };
 
 	this.trace  = false;
@@ -120,6 +120,7 @@ EnDe.B64    = new function() {
 		'base32z':'ybndrfg8ejkmcpqxot1uwisza345h769',   // [A-UW-Z3-9] z-Base32 optimized
 		'base36': this.b26 + this.b10,                  // [a-z0-9]
 		'base52': this.UC  + this.LC,                   // [A-Za-z]
+		'base65a':'.,/' + this.UC + this.b10 + this.LC ,// [.,/A-Z0-9a-z] # customer secial
 		'base64': this.base64 + '+/',                   // RFC1521, RFC2045, RFC3548, RFC4648
 		'base64f':this.base64 + '+-',                   // modified Base64 for filenames, SAP
 		'base64p':this.base64 + '_-',                   // modified Base64 for program identifiers (var. 1)
@@ -164,6 +165,7 @@ EnDe.B64    = new function() {
 		'base64u':  6,
 		'base64x':  6,
 		'base64y':  6,
+		'base65a':  6,
 		'base85':   7,
 		'base91':   7,
 		'base94':   7,
@@ -197,6 +199,9 @@ EnDe.B64    = new function() {
 
 	this.isB62  = function(src) { return this.is('base62',  src); };
 	//#? return true if string consist of base64 characters only
+
+	this.isB65  = function(src) { return this.is('base65a', src); };
+	//#? return true if string consist of base65 characters only
 
 	this.isB32c = function(src) { return this.is('base32c', src); };
 	//#? return true if string consist of Crockford base32 characters only
@@ -242,6 +247,8 @@ EnDe.B64    = new function() {
 		  case 'base52':
 		  case 'base58':
 		  case 'base62':
+			return src.match('[^' + this.map[type]  + this.pad + ']')===null ? true : false;
+			break;
 		  case 'base64':
 		  case 'base64f':
 		  case 'base64p':
@@ -250,6 +257,7 @@ EnDe.B64    = new function() {
 		  case 'base64u':
 		  case 'base64x':
 		  case 'base64y':
+		  case 'base65a':
 		  case 'base85':
 		  case 'base91':
 		  case 'base94':
@@ -274,6 +282,7 @@ EnDe.B64    = new function() {
 	//#type? base34:   Base34
 	//#type? base36:   Base36
 	//#type? base52:   Base52
+	//#type? base65a:  Base65
 	//#type? base64:   Base64 as in RFC1521, RFC2045, RFC3548, RFC4648
 	//#type? base64f:  modified Base64 for filenames, SAP
 	//#type? base64p:  modified Base64 for program identifiers (var. 1)
@@ -316,10 +325,11 @@ EnDe.B64    = new function() {
 		  case 'base64u':
 		  case 'base64x':
 		  case 'base64y':
+		  case 'base65a':
 		  case 'base85':
-	      case 'base91':
-	      case 'base94':
-	      case 'base95':
+		  case 'base91':
+		  case 'base94':
+		  case 'base95':
 			bits = EnDe.B64.bits[type];
 			break;
 		  default:  // ToDo: NOT YET IMPLEMENTED
@@ -367,7 +377,8 @@ EnDe.B64    = new function() {
 		  case 'base64r':
 		  case 'base64u':
 		  case 'base64x':
-		  case 'base64y': while ((bux.length%4)>0) { bux[bux.length] = EnDe.B64.pad; }; break;
+		  case 'base64y':
+		  case 'base65a': while ((bux.length%4)>0) { bux[bux.length] = EnDe.B64.pad; }; break;
 		  default:        break; // nothing to do
 		}
 		if (linewrap > 3) {
@@ -464,6 +475,7 @@ EnDe.B64    = new function() {
 		  case 'base64u':
 		  case 'base64x':
 		  case 'base64y':
+		  case 'base65a':
 		  case 'base85':
 		  case 'base91':
 		  case 'base94':
@@ -537,6 +549,7 @@ EnDe.B64    = new function() {
 	//#type? base32z:  z-Base32
 	//#type? base36:   Base36
 	//#type? base52:   Base52
+	//#type? base65a:  Base65
 	//#type? base64:   Base64 as in RFC1521, RFC2045, RFC3548, RFC4648
 	//#type? base64f:  modified Base64 for filenames, SAP
 	//#type? base64p:  modified Base64 for program identifiers (var. 1)
@@ -575,6 +588,7 @@ EnDe.B64    = new function() {
 		  case 'base64u':
 		  case 'base64x':
 		  case 'base64y':
+		  case 'base65a':
 		  case 'base85':
 		  case 'base91':
 		  case 'base94':
@@ -677,10 +691,12 @@ EnDe.B64    = new function() {
 //		  case 'base64u':
 		  case 'base64x':
 		  case 'base64y':
+//		  case 'base65a':
 		  case 'base85':
 		  case 'base91':
 		  case 'base94':
 		  case 'base95':    return this.b_N(type, src); break;
+		  case 'base65a':   return this.b64(      src); break; // ToDo: needs to be b_N()
 		  case 'base64':    return this.b64(      src); break; // ToDo: needs to be b_N()
 		  case 'base64old': return this.b64(      src); break;
 		  case 'base64u':

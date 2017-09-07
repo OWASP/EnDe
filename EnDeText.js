@@ -85,7 +85,7 @@
 #       -----------------------------------------------------------------------
 #?
 #? VERSION
-#?      @(#) EnDeText.js 3.20 14/11/06 22:12:14
+#?      @(#) EnDeText.js 3.21 17/09/07 22:55:01
 #?
 #? AUTHOR
 #?      08-sep-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -99,8 +99,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.Text   = new function() {
-	this.SID    = '3.20';
-	this.sid    = function() { return('@(#) EnDeText.js 3.20 14/11/06 22:12:14 EnDe.Text'); };
+	this.SID    = '3.21';
+	this.sid    = function() { return('@(#) EnDeText.js 3.21 17/09/07 22:55:01 EnDe.Text'); };
 
 	this.trace  = false;
 
@@ -185,6 +185,11 @@ EnDe.Text   = new function() {
 		  case 'txtDELsp'   : bux = bux.replace(/ /g,    '');       break;
 		  case 'txtDELsq'   : bux = bux.replace(/'/g,    '');       break;
 		  case 'txtDELdq'   : bux = bux.replace(/"/g,    '');       break;
+		  case 'txtDELbsn'  : bux = bux.replace(/\\n/g,  '');       break;
+		  case 'txtDELbsr'  : bux = bux.replace(/\\r/g,  '');       break;
+		  case 'txtDELbssq' : bux = bux.replace(/\\'/g,  '');       break;
+		  case 'txtDELbsdq' : bux = bux.replace(/\\"/g,  '');       break;
+		  case 'txtDELbssl' : bux = bux.replace(/\\\//g, '');       break;
 		  case 'txtDELquote': bux = bux.replace(/'/g, '').replace(/"/g, '');    break;
 		  case 'txtDELnon7bn':bux = bux.replace(/[^\x09\x0a\x0d\x20-\x7e]/g, ''); break;
 		  case 'txtDELnon7b': bux = bux.replace(/[^\x20-\x7e]/g,     '');       break;
@@ -224,6 +229,9 @@ EnDe.Text   = new function() {
 		  case 'txtREPcr'   : bux = bux.replace(/\r/g,            '\\r' );      break;
 		  case 'txtREPht'   : bux = bux.replace(/\t/g,            '\\t' );      break;
 		  case 'txtREPvt'   : bux = bux.replace(/\v/g,            '\\v' );      break;
+		  case 'txtREPbssq' : bux = bux.replace(/\\'/g,           "'");         break;
+		  case 'txtREPbsdq' : bux = bux.replace(/\\"/g,           '"');         break;
+		  case 'txtREPbssl' : bux = bux.replace(/\\\//g,          '/');         break;
 		  case 'txtREPstrdq': bux = bux.replace(/"\s*\+\s*"/g,    ''    );      break;
 		  case 'txtREPstrsq': bux = bux.replace(/'\s*\+\s*'/g,    ''    );      break;
 		  case 'txtREPdqsq' : bux = bux.replace(/"/g,             "'"   );      break;

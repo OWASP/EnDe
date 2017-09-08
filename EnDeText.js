@@ -31,6 +31,15 @@
 #?              txtDELht    : delete  \t  anywhere in text
 #?              txtDELvt    : delete  \v  anywhere in text
 #?              txtDELsp    : delete  space  anywhere in text
+#?              txtDELsq    : delete  '   anywhere in text
+#?              txtDELdq    : delete  "   anywhere in text
+#?              txtDELquote': delete  "  and '  anywhere in text
+#?              txtDELbsn'  : delete all literal \n
+#?              txtDELbsr'  : delete all literal \r
+#?              txtDELbssq' : delete all literal \'
+#?              txtDELbsdq' : delete all literal \"
+#?              txtDELbssl' : delete all literal \/
+#?              txtDELbsany': delete all literal \(character) anywhere
 #?              txtDELnon7b : delete all non-printable chars anywhere in text
 #?              txtDELnon7bn: delete non-printable chars (except \t \n) anywhere in text
 #?              txtDELnon128: delete characters outside range [1..127] anywhere in text
@@ -61,6 +70,16 @@
 #?              txtREPsqdq  : replace all " by '
 #?              txtREPsqbt  : replace all ' by `
 #?              txtREPqqqq  : replace ' by " and " by ' anywhere in text, honor \-escaped quotes
+#?              txtREPbsn   : replace all literal \n by \n
+#?              txtREPbsr   : replace all literal \r by \r
+#?              txtREPbst   : replace all literal \t by \t
+#?              txtREPbssq  : replace all literal \' by '
+#?              txtREPbsdq  : replace all literal \" by "
+#?              txtREPbssl  : replace all literal \/ by /
+#?              txtREPbsany : replace all literal \(character) by (character)
+#?              txtREPbsn   : replace all literal \n by \n
+#?              txtREPbsn   : replace all literal \n by \n
+#?              txtREPbsn   : replace all literal \n by \n
 #?              txtREPstrdq : concatenate strings (remove " + ")
 #?              txtREPascii : replace all non-printable 7-bit ASCII with hex value
 #?              txtREP4ucs  : replace all \uhhhh by corresponding character
@@ -85,7 +104,7 @@
 #       -----------------------------------------------------------------------
 #?
 #? VERSION
-#?      @(#) EnDeText.js 3.22 17/09/07 23:26:53
+#?      @(#) EnDeText.js 3.23 17/09/08 10:42:04
 #?
 #? AUTHOR
 #?      08-sep-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -99,8 +118,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.Text   = new function() {
-	this.SID    = '3.22';
-	this.sid    = function() { return('@(#) EnDeText.js 3.22 17/09/07 23:26:53 EnDe.Text'); };
+	this.SID    = '3.23';
+	this.sid    = function() { return('@(#) EnDeText.js 3.23 17/09/08 10:42:04 EnDe.Text'); };
 
 	this.trace  = false;
 
@@ -230,6 +249,9 @@ EnDe.Text   = new function() {
 		  case 'txtREPcr'   : bux = bux.replace(/\r/g,            '\\r' );      break;
 		  case 'txtREPht'   : bux = bux.replace(/\t/g,            '\\t' );      break;
 		  case 'txtREPvt'   : bux = bux.replace(/\v/g,            '\\v' );      break;
+		  case 'txtREPbsn'  : bux = bux.replace(/\\n/g,           "\n");        break;
+		  case 'txtREPbsr'  : bux = bux.replace(/\\r/g,           "\r");        break;
+		  case 'txtREPbst'  : bux = bux.replace(/\\t/g,           "\t");        break;
 		  case 'txtREPbssq' : bux = bux.replace(/\\'/g,           "'");         break;
 		  case 'txtREPbsdq' : bux = bux.replace(/\\"/g,           '"');         break;
 		  case 'txtREPbssl' : bux = bux.replace(/\\\//g,          '/');         break;

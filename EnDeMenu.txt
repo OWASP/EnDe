@@ -88,7 +88,7 @@
 #?      EnDeGUIx.js, EnDeGUI.js
 #?
 #? VERSION
-#?      @(#) EnDeMenu.txt 3.63 17/09/07 23:27:56
+#?      @(#) EnDeMenu.txt 3.64 17/09/08 10:42:35
 #?
 #? AUTHOR
 #?      09-jun-09 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -402,6 +402,9 @@ item3	txtREPdqsq	" by '			replace all " by '
 item3	txtREPsqdq	' by "			replace all ' by "
 item3	txtREPsqbt	' by `			replace all ' by `
 item3	txtREPqqqq	' <-> "			replace ' by " and " by ' anywhere in text, honor \-escaped quotes
+item3	txtREPbsn	"\n"			replace all literal \n by \n
+item3	txtREPbsr	"\r"			replace all literal \r by \r
+item3	txtREPbst	"\t"			replace all literal \t by \t
 item3	txtREPbssq	"\'"			replace all literal \' by '
 item3	txtREPbsdq	"\'"			replace all literal \" by "
 item3	txtREPbssl	"\/"			replace all literal \/ by /

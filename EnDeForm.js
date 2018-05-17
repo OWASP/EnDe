@@ -26,12 +26,15 @@
 #?          dispatch()- dispatcher function
 #?          format() - formatting function
 #?
+#?      This file also conatins the function Form.image() to display an image
+#?      in the browser using the tag  <img src=...>
+#?
 # HACKER's INFO
 #       For debugging __dbx() function is used. Unfortunately this function
 #       call may become a perfromance bottleneck.
 #?
 #? VERSION
-#?      @(#) EnDeForm.js 3.18 14/11/06 21:03:38
+#?      @(#) EnDeForm.js 3.19 18/05/17 12:48:28
 #?
 #? AUTHOR
 #?      15-nov-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -50,8 +53,8 @@ if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 // ========================================================================= //
 
 EnDe.Form   = new function() {
-	this.SID    = '3.18';
-	this.sid    = function()    { return('@(#) EnDeForm.js 3.18 14/11/06 21:03:38 EnDe.Form'); };
+	this.SID    = '3.19';
+	this.sid    = function()    { return('@(#) EnDeForm.js 3.19 18/05/17 12:48:28 EnDe.Form'); };
 
 	// ===================================================================== //
 	// global EnDe.Form variables                                            //
@@ -455,7 +458,7 @@ EnDe.Form   = new function() {
 					__dbx('EnDe.Form.dispatch: image: base64, ');
 				} else {
 					bbb = EnDe.B64.EN.dispatch('base64','','',src,'','',0);
-					kkk = src
+					kkk = src;
 					__dbx('EnDe.Form.dispatch: image: not base64, ');
 				}
 				kkk = EnDe.User.IMG.guess(kkk);

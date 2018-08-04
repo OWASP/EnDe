@@ -88,7 +88,7 @@
 #?      EnDeGUIx.js, EnDeGUI.js
 #?
 #? VERSION
-#?      @(#) EnDeMenu.txt 3.65 18/08/04 16:44:39
+#?      @(#) EnDeMenu.txt 3.66 18/08/04 17:29:41
 #?
 #? AUTHOR
 #?      09-jun-09 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -1843,6 +1843,7 @@ item3	1047	3	capital ZE, Cyrillic
 item3	1079	3	small ze, Cyrillic
 item3	1248	3	capital DZE, Cyrillic
 item3	1249	3	small dze, Cyrillic
+item3	8192	3	6 (number), Glagolitic
 item3	1172	5	capital GHE, Cyrillic
 item3	1173	5	small ghe, Cyrillic
 item3	1073	6	small be, Cyrillic
@@ -1918,14 +1919,14 @@ item3	10174	->	open-outlined rightwards arrow
 
 #------+-------+-------+----------------------------------
 group	UCS.Latin-eq	Unicode Latin equivalents		Unicode Latin Character equivalents
-item3	1047	3	capital ZE, Cyrillic
-item3	1079	3	small ze, Cyrillic
 item3	1040	A	capital A, Cyrillic
 item3	1044	A	capital DE, Cyrillic
 item3	66304	A	old italic letter A (etruscian)
 item3	1072	a	small a, Cyrillic
 item3	1041	b	capital BE, Cyrillic
 item3	1068	b	capital soft sign, Cyrillic
+item3	8211	b	100 (number), Glagolitic
+item3	11283	P	capital RITSI, Glagolitic
 item3	66332	b	old italic letter CHE (etruscian)
 item3	1042	B	capital VE, Cyrillic
 item3	1074	B	small vem Cyrillic
@@ -1938,6 +1939,8 @@ item3	66307	D	old italic letter D (etruscian)
 item3	1028	E	capital ukrainian IE, Cyrillic
 item3	1045	E	capital IE, Cyrillic
 item3	628	E	Cyrillic N
+item3	11300	E	small yus, Glagolitic
+item3	66308	E	old italic letter E (etruscian)
 item3	66308	E	old italic letter E (etruscian)
 item3	1077	e	small e, Cyrillic
 item3	1105	e"	small e with umlaut, Cyrillic
@@ -1957,6 +1960,8 @@ item3	305	i	small i, ??
 item3	1110	i	small i, Cyrillic
 item3	1111	i"	small yi, Cyrillic
 item3	1112	j	small j, Cyrillic
+item3	11288	J	capital HERU, Glagolitic
+item3	11336	J	small heru, Glagolitic
 item3	66314	K	old italic letter KA (etruscian)
 item3	1050	K	capital KA, Cyrillic
 item3	1082	K	small ka, Cyrillic
@@ -1990,6 +1995,7 @@ item3	65463	O	(capital O)
 item3	447	p	(small p)
 item3	961	p	small rho, Greek
 item3	1511	p	(small p)
+item3	11280	P	capital NASCHI, Glagolitic
 item3	1056	P	capital ER, Cyrillic
 item3	66323	P	old italic letter ER (etruscian)
 item3	66331	P	old italic letter ERS (etruscian)
@@ -2020,9 +2026,11 @@ item3	8846	u+	big plus sign in union
 item3	8852	u	square union operator
 item3	8899	U	union operator
 item3	8915	UU	doublecup; double union
-item3	66334	V	old italic letter UU (etruscian)
-item3	1140	V	capital IZHITSA, Cyrillic
 item3	1141	v	small izhitsa, Cyrillic
+item3	1140	V	capital IZHITSA, Cyrillic
+item3	66334	V	old italic letter UU (etruscian)
+item3	11292	V	capital TSI, Glagolitic
+item3	11340	v	small tsi, Glagolitic
 item3	1064	W	capital SHA, Cyrillic
 item3	1065	W,	capital SHCHA, Cyrillic
 item3	1120	W	capital OMEGA, Cyrillic

@@ -93,7 +93,7 @@
 #?      trace output. This allows to enable tracing for individual objects.
 #?
 #? VERSION
-#?      @(#) EnDeGUIx.js 3.7 14/11/08 00:27:03
+#?      @(#) EnDeGUIx.js 3.8 18/08/04 15:39:16
 #?
 #? AUTHOR
 #?      10-aug-10 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -105,7 +105,7 @@
 // ========================================================================= //
 
 var EnDeGUIx = new function() {
-	this.SID = '3.7';
+	this.SID = '3.8';
 }
 EnDeGUI.__files = {     // hash to hold data for menu from files
 	/* source file          - file where menu is defined (will be read from)
@@ -1216,11 +1216,12 @@ EnDeGUI.makechar= function() {
 	} else {
 		var kkk = this.txt.content.split('\n');
 		//var bux = '<style type="text/css"><link rel="stylesheet" type="text/css" charset="utf-8" href="EnDe.css" media="screen"></style>';  // ToDo: does not work
-		var bux = '<style type="text/css">.ucs{margin-left:0.3em;padding-left:0.3em;padding-right:0.3em;border-radius:2px;box-shadow:1px 1px 3px 3px #e2e2e2;-moz-border-radius:2px;-moz-box-shadow:1px 1px 3px 3px #e2e2e2;}</style>';
+		var bux = '<style type="text/css">.ucs{margin-left:0.3em;padding-left:0.3em;padding-right:0.3em;border-radius:2px;box-shadow:1px 1px 2px 2px #e2e2e2;-moz-border-radius:2px;-moz-box-shadow:1px 1px 2px 2px #e2e2e2;}</style>';
 		var bbb = '';
 		var ccc = [];
 		var idx = 0;
 		var skip= 1;
+		var cnt = 1;
 		/* groups to be parsed:
 		 * UCS.Angle.l UCS.Angle.r UCS.Curly UCS.Square UCS.Round UCS.Quote
 		 * UCS.Slash  UCS.Bar UCS.Dash UCS.Dot UCS.Comma UCS.Semicolon  UCS.Latin-eq 
@@ -1232,7 +1233,7 @@ EnDeGUI.makechar= function() {
 		item3	700	'	rising single quote, right (high)
 		 */
 		while ((bbb = kkk.shift())!==undefined) {   // store data in anonymous objects
-			idx++; if (idx===9999) { break; }       // avoid loops
+			idx++; if (idx===9999) { break; }   // avoid loops
 			ccc = bbb.split(/\t/);
 			switch (ccc[0]) { //
 			  case 'group':
@@ -1245,6 +1246,8 @@ EnDeGUI.makechar= function() {
 				break;
 			  case 'item3':
 				if (skip==0) {
+					cnt++;
+					if (cnt>30) { bux += '<br />'; cnt = 1; }   // more user friendly
 					bux += '<span class="ucs" title="'
 					    +  EnDe.Text.Entity(ccc[1] + ' - 0x' + parseInt(ccc[1], 10).toString(16) + ' : ' + ccc[3])
 					    + '">&#' + ccc[1] + ';</span>';

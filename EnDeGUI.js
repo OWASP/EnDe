@@ -26,7 +26,7 @@
 #?          .setTitle         - set window title
 #?          .selectionGet     - return selection and preserve selection
 #?          .positionGet      - return position of cursor from browser
-#?          .RM.*             - various functions for replace character map
+#?          .MP.*             - various functions for replace character map
 #?          .*.dispatch       - dispatcher for various GUI functions
 #?          .win              - create new browser window
 #?          .help             - show help window
@@ -106,7 +106,7 @@
 #    building the GUI, EnDeGUI.init() will show the "Browser Quirks" window.
 #?
 #? VERSION
-#?      @(#) EnDeGUI.js 3.104 18/08/04 15:01:37
+#?      @(#) EnDeGUI.js 3.103 14/11/09 19:05:19
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -118,8 +118,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '3.104';
-this.sid        = function() {  return('@(#) EnDeGUI.js 3.104 18/08/04 15:01:37 EnDeGUI'); };
+this.SID        = '3.103';
+this.sid        = function() {  return('@(#) EnDeGUI.js 3.103 14/11/09 19:05:19 EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 
@@ -304,13 +304,13 @@ this.dprint     = function(txt,src) {
 					catch(e) { _r += '(**no data**)'; } // DOM objects may have "no data" (seen in Firefox 3.x)
 					break;
 				}
-			}; // for
+			}
 			_r += '\n' + _t + '}';
 			break;
 		  default:
 			_r += '**unknwon**' + src[_c];
 			break;
-		}; // switch typeof src
+		}
 		return _r;
 	}
 	var ccc = '';
@@ -387,40 +387,40 @@ alert(2);
 	// callback functions in "Replace Map" window                            //
 	// ===================================================================== //
 
-  this.RM       = new function() {
+  this.MP       = new function() {
   //#? class for functions used in "Replace Map" window
 	this.sid    = function() { return(this.sid() + '.txt'); };
 	this.charID = 0;    // counter for dynamically generated rows
 	this.newrow = function() {
 	//#? create a new row with input fields for character replacement
-		if ($('EnDeDOM.RM.Characters.s')===null) {
-			EnDeGUI.errors.push('EnDeGUI.RM.newrow: EnDeDOM.RM.Characters.s===null');
+		if ($('EnDeDOM.MP.Characters.s')===null) {
+			EnDeGUI.errors.push('EnDeGUI.MP.newrow: EnDeDOM.MP.Characters.s===null');
 			return null;
 		}
 		this.charID++;
-		$('EnDeDOM.RM.Characters.s').appendChild(EnDeGUI.Obj.create('EnDeDOM.RM.c'+this.charID,['item4','\char'+this.charID,'','','new: replacement character'],'TABLE','group',false));
+		$('EnDeDOM.MP.Characters.s').appendChild(EnDeGUI.Obj.create('EnDeDOM.MP.c'+this.charID,['item4','\char'+this.charID,'','','new: replacement character'],'TABLE','group',false));
 		return false;
-	}; // .RM.newrow
+	}; // .newrow
 
 	this.select = function(src) {
 	//#? toggle border colour for selected input field
-		var obj = $('EnDeDOM.RM.selected');    // where object ID is stored
+		var obj = $('EnDeDOM.MP.selected');    // where object ID is stored
 		if (obj.value != '') {
 			$(obj.value).style.borderColor = $(src).style.borderColor; // save original colour
 		}
 		$(src).style.borderColor = '#ff0000';
 		obj.value = src;
-	}; // .RM.select
+	}; // .select
 
 	this.setChar = function(self,src) {
 	//#? write given character (src) in specified format (typ) to selected input field
 		if (isNaN(src)===true)    { alert('**invalid format NaN: '+src); return false; }
 		if (self.selectedIndex!=undefined) { if (self.selectedIndex<0) { return false; } }
-		var obj = $('EnDeDOM.RM.selected');    // where object ID is stored
+		var obj = $('EnDeDOM.MP.selected');    // where object ID is stored
 		if (obj.value==='') { alert('**please select destination field first'); return false; }
-		$(obj.value).value = this.getFormat($('EnDeDOM.RM.see').value,src);
+		$(obj.value).value = this.getFormat($('EnDeDOM.MP.see').value,src);
 		return false;
-	}; // .RM.setChar
+	}; // .MPsetChar
 
 	this.getUnicode = function(typ,src) {
 	//#? returns given value as Unicode
@@ -437,7 +437,7 @@ alert(2);
 		}
 		return bux.toString(10);
 		return bux;
-	}; // .RM.getUnicode
+	}; // .getUnicode
 
 	this.getFormat  = function(typ,src) {
 	//#? returns given Unicode in specified (typ) format
@@ -455,21 +455,21 @@ alert(2);
 			break;
 		}
 		return src;
-	}; // .RM.getFormat
+	}; // .getFormat
 
 	this.setFormat  = function(self,src) {
-	//#? change all EnDeDOM.RM.new* values to given format
-		_spr('.RM.setFormat: '+ src);
+	//#? change all EnDeDOM.MP.new* values to given format
+		_spr('.MP.setFormat: '+ src);
 		var bux = this.replace(src, null);
-		$('EnDeDOM.RM.see').value = src;
+		$('EnDeDOM.MP.see').value = src;
 		return bux;
-	}; // .RM.setFormat
+	}; // .setFormat
 
 	this.replace= function(typ,src) {
 	//#? replace old with new character
 	//#typ? swap:  swap new and old characters in "Replace Characters Map"; returns false
 	//#typ? user:  replace old with new characters in given src; returns substituted src
-		_spr('.RM.replace: '+ typ);
+		_spr('.MP.replace: '+ typ);
 		var bux = src;
 		var id  = '';
 		var ccc = '';
@@ -479,7 +479,7 @@ alert(2);
 		for (ccc=0; ccc<arr.length; ccc++) {
 			if (arr[ccc]    == undefined) { continue; }
 			if (arr[ccc].id == undefined) { continue; }
-			if (arr[ccc].id.match(/^EnDeDOM\.RM\.new/)===null) { continue; }
+			if (arr[ccc].id.match(/^EnDeDOM\.MP\.new/)===null) { continue; }
 			id  = arr[ccc].id;
 			rep = $(id).value;
 			//if (rep == '') { continue; }
@@ -498,18 +498,18 @@ alert(2);
 				break;
 			  default:
 				id  = arr[ccc].id;
-				bux = this.getUnicode($('EnDeDOM.RM.see').value,rep);
+				bux = this.getUnicode($('EnDeDOM.MP.see').value,rep);
 				if (isNaN(bux)) { continue; }
 				$(id).value = this.getFormat(typ,bux);
 				bux = false;
 			}
 		}
 		return bux;
-	}; // .RM.replace
+	}; // .replace
 
-	this.swap   = function() { return this.replace('swap','EnDeDOM.RM.e','EnDeDOM.RM.d') };
+	this.swap   = function() { return this.replace('swap','EnDeDOM.MP.e','EnDeDOM.MP.d') };
 
-  }; // RM
+  }; // MP
 
 	// ===================================================================== //
 	// window functions                                                      //
@@ -1009,7 +1009,7 @@ this.copy       = function(txt) {
 
 	select.setAttribute('size','45');
 	for (k=0; k<ccc.length; k++) {
-		if (ccc[k].match(/EnDeDOM\.RM/) !==null) { continue; } // don't need that
+		if (ccc[k].match(/EnDeDOM\.MP/) !==null) { continue; } // don't need that
 		if (ccc[k].match(/EnDeDOM\.DBX/)!==null) { continue; } // don't need that
 		var id = '';
 		if (ccc[k].lastIndexOf('.') <= 0) {
@@ -1323,9 +1323,9 @@ this.show       = function(src) {
 		this.display('EnDeDOM.f.QQ');
 		return false; // no more changes
 		break;
-	  case 'EnDeDOM.RM.bq': // close button in window
-	  case 'EnDeDOM.GUI.RM':// Replace Map button
-		this.display('EnDeDOM.f.RM');
+	  case 'EnDeDOM.MP.bq': // close button in window
+	  case 'EnDeDOM.GUI.MP':// Replace Map button
+		this.display('EnDeDOM.f.MP');
 		return false; // no more changes
 		break;
 	  case 'EnDeDOM.FF.bq': // close button in window
@@ -1509,7 +1509,7 @@ alert(' continue');
 		break;
 	  case 'REPLACE_MAP':
 		this.display( 'none', ['EnDeDOM.f.DBX', 'EnDeDOM.f.TST', 'EnDeDOM.f.GUI', 'EnDeDOM.f.API']);
-		EnDeGUI.show($('EnDeDOM.RM.bq'));
+		EnDeGUI.show($('EnDeDOM.MP.bq'));
 		break;
 	  case 0:   // reset fields
 		$('EnDeDOM.EN.text')= '';
@@ -3547,7 +3547,7 @@ this.NN         = new function() {
 	switch (item) {
 	  case 'clear'      : bux.value = '';               break;
 	  case 'sample'     : bux.value = EnDeGUI.sample;   break;
-	  case 'txtREPuser' : bux.value = EnDeGUI.RM.replace('user', bux.value); break;
+	  case 'txtREPuser' : bux.value = EnDeGUI.MP.replace('user', bux.value); break;
 	  default:
 		if (item.match(/^txt/)!==null) { bux.value = EnDe.Text.dispatch( bux.value, item, ccc ); }
 		if (item.match(/^[0-9a-f ]+$/)!==null) {  // Unicode/UTF-8 mismatch; dead beef
@@ -4346,7 +4346,7 @@ this.dispatch = function(obj,src) {
 	// ===================================================================== //
 
 this.toolObjects= {     // keep JavaScript happy for style.display property
-		'EnDeDOM.f.RM':  'none',
+		'EnDeDOM.f.MP':  'none',
 		'EnDeDOM.f.FF':  'none',
 		'EnDeDOM.f.TST': 'none',
 		'EnDeDOM.f.DBX': 'none',
@@ -4507,7 +4507,7 @@ this.init       = function() {
 		}
 	}
 	$('EnDeDOM.f.FF').style.display = 'none';
-	$('EnDeDOM.f.RM').style.display = 'none';
+	$('EnDeDOM.f.MP').style.display = 'none';
 	$('EnDeDOM.f.QQ').style.display = 'none';
 	$('EnDeDOM.SB').style.display   = this.sbar;
 //alert($('EnDeDOM.f.FF').style.display);
@@ -4579,7 +4579,7 @@ this.init       = function() {
 	this.initMenus();   // create menus
 	EnDeRE.init();      // EnDeRE has its own initialization
 	this.initTitle();   // set title= attributes
-	this.RM.newrow();   // add additional character entry in Replace Map
+	this.MP.newrow();   // add additional character entry in Replace Map
 
 	// some object are not visible, just with "experimental" button
 	if (this.joke==='visible') { // set object visible as they are hidden by default
@@ -4634,7 +4634,7 @@ alert(13);
 	EnDeGUI.show($('EnDeDOM.FF.bq')); // off
 	this.demo.run('REPLACE MAP');
 alert(14);
-	EnDeGUI.show($('EnDeDOM.RM.bq')); // off
+	EnDeGUI.show($('EnDeDOM.MP.bq')); // off
 	this.demo.run('_all_');
 */
 

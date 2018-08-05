@@ -106,7 +106,7 @@
 #    building the GUI, EnDeGUI.init() will show the "Browser Quirks" window.
 #?
 #? VERSION
-#?      @(#) EnDeGUI.js 3.104 18/08/05 13:28:12
+#?      @(#) EnDeGUI.js 3.105 18/08/05 15:26:21
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -118,8 +118,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '3.104';
-this.sid        = function() {  return('@(#) EnDeGUI.js 3.104 18/08/05 13:28:12 EnDeGUI'); };
+this.SID        = '3.105';
+this.sid        = function() {  return('@(#) EnDeGUI.js 3.105 18/08/05 15:26:21 EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 
@@ -4509,6 +4509,7 @@ this.init       = function() {
 	$('EnDeDOM.f.FF').style.display = 'none';
 	$('EnDeDOM.f.MP').style.display = 'none';
 	$('EnDeDOM.f.QQ').style.display = 'none';
+	$('EnDeDOM.f.XX').style.display = 'none';
 	$('EnDeDOM.SB').style.display   = this.sbar;
 //alert($('EnDeDOM.f.FF').style.display);
 	// prepare test settings
@@ -4576,7 +4577,21 @@ this.init       = function() {
 	// ToDo: Mozilla 1.7 requires \-escaped / in character class
 	$('EnDeDOM.QQ.lp').value = location.href.replace(/[?&].*$/,'').replace(/\/[^\/]*$/,'/');
 
-	this.initMenus();   // create menus
+
+	// check if we can read our files
+	ccc = 'EnDeMenu.txt';
+	try     { this.txt.read(ccc); }
+	catch(e){ EnDeGUI.errors.push('EnDeGUI.init: check reading' + ccc + ': ' + e); }
+	if (EnDeGUI.txt.content===null) {	
+		  EnDeGUI.errors.push('EnDeGUI.init: cannot read' + ccc);
+	}
+	if (EnDeGUI.errors.length===0) {
+		this.initMenus();   // create menus
+	} else {
+		kkk = "error";      // used to display "Browser Restart" window
+	}
+	ccc = null;
+
 	EnDeRE.init();      // EnDeRE has its own initialization
 	this.initTitle();   // set title= attributes
 	this.MP.newrow();   // add additional character entry in Replace Map
@@ -4640,10 +4655,14 @@ alert(14);
 
 	this.dbxtrace();
 
-	if (EnDeGUI.errors.length!=0) {
-		EnDeGUI.alert('ERROR','detected ' + EnDeGUI.errors.length + ' errors while building GUI');
-		// ToDo: need to display errors, somehow ...
-		this.display('EnDeDOM.f.QQ');
+	if (kkk!==null) {
+		this.display('EnDeDOM.f.XX');
+	} else {
+		if (EnDeGUI.errors.length!=0) {
+			EnDeGUI.alert('ERROR','detected ' + EnDeGUI.errors.length + ' errors while building GUI');
+			// ToDo: need to display errors, somehow ...
+			this.display('EnDeDOM.f.QQ');
+		}
 	}
 
 //EnDeGUI.highlight('EnDeDOM.f.ED');

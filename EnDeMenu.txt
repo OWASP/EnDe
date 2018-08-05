@@ -88,7 +88,7 @@
 #?      EnDeGUIx.js, EnDeGUI.js
 #?
 #? VERSION
-#?      @(#) EnDeMenu.txt 3.66 18/08/04 17:29:41
+#?      @(#) EnDeMenu.txt 3.67 18/08/05 12:35:37
 #?
 #? AUTHOR
 #?      09-jun-09 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -1771,6 +1771,7 @@ item3	8729	.	Bullet Operator
 item3	8901	.	Dot Operator
 item3	9688	.	inverse Bullet
 item3	9702	.	white Bullet
+item3	5867	.	Runic single dot
 item3	12539	.	Katakana Middle Dot (30fb)
 item3	65106	.	Small Full Stop (fe52)
 item3	65294	.	Fullwidth Full Stop (ff0e)
@@ -1791,6 +1792,7 @@ item3	10783	;	Z Notation Schema Composition (2a1f)
 item3	10814	;	Z Notation Relational Composition (2a3e)
 item3	65108	;	Small Semicolon (fe54)
 item3	65307	.	Fullwidth Semicolon (ff1b)
+item3	5868	:	Runic multiple dot
 
 #------+-------+-------+----------------------------------
 group	UCS.Quote	Unicode Quotes		Unicode quotaion marks and comma
@@ -1838,19 +1840,24 @@ item3	4977	[9]	Ethiopic Cherokee nine
 item3	4978	[10]	Ethiopic Cherokee ten
 item3	66319	O	old italic letter 0 (etruscian)
 item3	1054	O	capital O, Cyrillic
+item3	216	O/	capital O slash
+item3	248	o/	small O slash
 item3	1069	3	capital E, Cyrillic
 item3	1047	3	capital ZE, Cyrillic
 item3	1079	3	small ze, Cyrillic
 item3	1248	3	capital DZE, Cyrillic
 item3	1249	3	small dze, Cyrillic
+item3	5922	3	Hanunoo letter u
 item3	8192	3	6 (number), Glagolitic
 item3	1172	5	capital GHE, Cyrillic
 item3	1173	5	small ghe, Cyrillic
 item3	1073	6	small be, Cyrillic
 item3	5102	6	Ethiopic Cherokee "6"
+item3	5930	7	Hanunoo letter ba
 item3	66311	8	old italic letter HE (etruscian)
 item3	66330	8	old italic letter EF (etruscian)
 item3	5101	9	Ethiopic Cherokee "9"
+item3	7233	9	Lepcha digit one
 # http://www.unicode.org/charts/PDF/U2460.pdf
 item3	9312	o1	circled digit one
 item3	9313	o2	circled digit two
@@ -1919,46 +1926,77 @@ item3	10174	->	open-outlined rightwards arrow
 
 #------+-------+-------+----------------------------------
 group	UCS.Latin-eq	Unicode Latin equivalents		Unicode Latin Character equivalents
+# TODO: some letters: carian, coptic, ethiopic, georgian, gothic, kayah li, lycian, lydian
+# TODO: some letters: mormon alphabet, tifinagh
+# see: https://de.wikipedia.org/wiki/Liste_der_Unicodebl%C3%B6cke
+item3	1072	a	small a, Cyrillic
 item3	1040	A	capital A, Cyrillic
 item3	1044	A	capital DE, Cyrillic
 item3	66304	A	old italic letter A (etruscian)
-item3	1072	a	small a, Cyrillic
 item3	1041	b	capital BE, Cyrillic
 item3	1068	b	capital soft sign, Cyrillic
+item3	7683	b.	small b with dot above
 item3	8211	b	100 (number), Glagolitic
 item3	11283	P	capital RITSI, Glagolitic
 item3	66332	b	old italic letter CHE (etruscian)
 item3	1042	B	capital VE, Cyrillic
 item3	1074	B	small vem Cyrillic
+item3	5842	B	Runic letter Berkanan, Beorc
+item3	5844	B	Runic letter dotted P
+item3	7838	B	capital ESZET
 item3	66305	B	old italic letter A (etruscian)
-item3	1057	C	capital ES, Cyrillic
+item3	8573	c	Roman numeral hundred
 item3	1089	C	capital C, Cyrillic
+item3	1057	C	capital ES, Cyrillic
+item3	8557	C	Roman numeral hundred
 item3	66306	C	old italic letter KE (etruscian)
 item3	1073	d	small be, Cyrillic
+item3	7691	d.	small d with dot above
+item3	8574	d	Roman numeral five hundred
+item3	8557	D	Roman numeral five hundred
 item3	66307	D	old italic letter D (etruscian)
-item3	1028	E	capital ukrainian IE, Cyrillic
-item3	1045	E	capital IE, Cyrillic
-item3	628	E	Cyrillic N
-item3	11300	E	small yus, Glagolitic
-item3	66308	E	old italic letter E (etruscian)
-item3	66308	E	old italic letter E (etruscian)
 item3	1077	e	small e, Cyrillic
 item3	1105	e"	small e with umlaut, Cyrillic
 item3	1108	e	small ukraineian e, Cyrillic
+item3	279	e.	small e with dot above
+item3	8494	e	estimated symbol
+item3	8495	e	script small e
+item3	1028	E	capital ukrainian IE, Cyrillic
+item3	1045	E	capital IE, Cyrillic
+item3	8455	E	Euler constant
+item3	8496	e	script capital e
+item3	11300	E	small yus, Glagolitic
+item3	66308	E	old italic letter E (etruscian)
+item3	66308	E	old italic letter E (etruscian)
+item3	7711	f.	small f with dot below
 item3	66309	F	old italic letter VE (etruscian)
+item3	8458	g	script small g
+item3	8462	h	Plank constant
+item3	5873	h	Runic letter K
+item3	5879	h	Runic letter Franks Casket Ac
+item3	1210	h,	capital SHHA, Cyrillic
+item3	1211	h,	small shha, Cyrillic
+item3	1187	H,	small en, Cyrillic
 item3	1053	H	capital EN, Cyrillic
 item3	1085	H	small en, Cyrillic
 item3	1188	H,	capital EN, Cyrillic
-item3	1187	h,	small en, Cyrillic
-item3	1210	h,	capital SHHA, Cyrillic
-item3	1211	h,	small shha, Cyrillic
-item3	66310	I	old italic letter ZE (etruscian)
-item3	66313	I	old italic letter I (etruscian)
-item3	66336	X	old italic letter ONE (etruscian)
-item3	1231	I	small palochka, Cyrillic
-item3	305	i	small i, ??
+item3	5818	H	Runic letter Hagalaz
+item3	5819	H	Runic letter Heagl
+item3	8459	H	script capital H
+item3	305	i	small i without dos
 item3	1110	i	small i, Cyrillic
 item3	1111	i"	small yi, Cyrillic
+item3	7735	i.	small i with dot below
+item3	8560	i	Roman numeral one
+item3	5825	I	Runic letter Isaz, Iss
+item3	8464	I	script capital I
+item3	8544	I	Roman numeral one
+item3	8572	I	Roman numeral fifty
+item3	1231	I	small palochka, Cyrillic
+item3	304	I.	capital I with dot above
+item3	66310	I	old italic letter ZE (etruscian)
+item3	66313	I	old italic letter I (etruscian)
+item3	66336	I	old italic letter ONE (etruscian)
 item3	1112	j	small j, Cyrillic
 item3	11288	J	capital HERU, Glagolitic
 item3	11336	J	small heru, Glagolitic
@@ -1967,13 +2005,23 @@ item3	1050	K	capital KA, Cyrillic
 item3	1082	K	small ka, Cyrillic
 item3	1178	K,	capital KA, Cyrillic
 item3	1179	k,	small ka, Cyrillic
+item3	66314	K	old italic letter ES (etruscian)
+item3	5845	K	Runic letter open P
+item3	5925	K	Hanunoo letter nga
+item3	5929	K	Hanunoo letter pa
+item3	8572	l	Roman numeral fifty
+item3	8556	L	Roman numeral fifty
+item3	7747	m.	small m with dot below
+item3	8575	m	Roman numeral  thousand
+item3	8558	M	Roman numeral  thousand
 item3	66321	M	old italic letter SHE (etruscian)
 item3	66316	M	old italic letter EM (etruscian)
 item3	1052	M	capital EM, Cyrillic
 item3	1084	M	small em, Cyrillic
+item3	5846	M	Runic letter Ehwaz, Eh
+item3	628	N	Cyrillic N
 item3	66317	N	old italic letter EN (etruscian)
 item3	1048	M	capital I, Cyrillic
-item3	1075	N	small i, Cyrillic
 item3	186	o	ordinal indicator, masculine
 item3	559	o	small o with dot
 item3	959	o	small omicron, Greek
@@ -2003,20 +2051,31 @@ item3	1088	p	small er, Cyrillic
 item3	59164	p	small rho, Greek
 item3	65328	P	capital P, fullwidth
 item3	65360	p	small p, fullwidth
+item3	5817	P	Runic letter Wunjo, Wynn
+item3	11605	Q	Tifinagh letter Yarr
 item3	66312	Q	old italic letter KU (etruscian)
+item3	1075	r	small i, Cyrillic
 item3	1075	r	small ghe, Cyrillic
+item3	7769	r.	small r with dot above
+item3	7771	r.	small r with dot below
 item3	640	R	Extended-B, Cyrillic
+item3	5809	R	Runic letter Rad
 item3	1000	s	(small S; Greek/Coptic)
+item3	7777	s.	small s with dot above
+item3	7779	s.	small s with dot below
 item3	1029	S	capital DSE, Macedonian
-item3	66314	S	old italic letter ES (etruscian)
 item3	1109	s	small dse, Macedonian, Cyrillic
 item3	4285	S	(capital S)
 item3	65331	S	capital S, fullwidth
 item3	65363	S	small s, fullwidth
+item3	7787	t.	small t with dot bove
+item3	7789	t.	small t with dot below
+item3	7786	T.	capital T with dot bove
+item3	7788	T.	capital T with dot below
+item3	5761	T	Ogam Beth
+item3	5839	T	Runic letter Tiwaz, Tyr
 item3	66325	T	old italic letter TE (etruscian)
 item3	1090	T	small te, Cyrillic
-item3	1096	T,	capital TE, Cyrillic
-item3	1097	T,	small te, Cyrillic
 item3	1062	u,	capital TSE, Cyrillic
 item3	1094	u,	small tse, Cyrillic
 item3	7796	U	capital Upsilon, Greek
@@ -2027,18 +2086,31 @@ item3	8852	u	square union operator
 item3	8899	U	union operator
 item3	8915	UU	doublecup; double union
 item3	1141	v	small izhitsa, Cyrillic
-item3	1140	V	capital IZHITSA, Cyrillic
+item3	5920	v	Hanunoo letter a
+item3	7807	v	small v with dot below
+item3	8564	v	Roman numeral five
+item3	8548	V	Roman numeral five
+item3	7806	V.	capital V with dot below
+item3	1140	V.	capital IZHITSA, Cyrillic
+item3	5937	V	Hanunoo letter ha
 item3	66334	V	old italic letter UU (etruscian)
 item3	11292	V	capital TSI, Glagolitic
 item3	11340	v	small tsi, Glagolitic
+item3	1096	W,	capital TE, Cyrillic
+item3	1097	W,	small te, Cyrillic
 item3	1064	W	capital SHA, Cyrillic
 item3	1065	W,	capital SHCHA, Cyrillic
+item3	1096	W	small sha, Cyrillic
 item3	1120	W	capital OMEGA, Cyrillic
-item3	1096	w	small sha, Cyrillic
+item3	5926	W	Hanunoo letter ta
 item3	1121	w	small omega, Cyrillic
 item3	1093	x	small ha, Cyrillic
+item3	8569	x	Roman numeral ten
+item3	8553	X	Roman numeral ten
 item3	66327	X	old italic letter EKS (etruscian)
 item3	66338	X	old italic letter TEN (etruscian)
+item3	5815	X	Runic letter Gebo, Gyfo
+item3	5816	X	Runic letter Gar
 item3	1061	X	capital HA, Cyrillic
 item3	1202	X,	capital HA, Cyrillic
 item3	1203	X,	small ha, Cyrillic
@@ -2121,12 +2193,20 @@ item3	852	<		< COMBINING LEFT ARROW
 item3	853	>		> COMBINING RIGHT ARROW
 
 #------+---------------+-----------------------+------------------------------+
-group	UCS.Ligature	insert Unicode Ligature 	UTF-8 Ligature
-item3	1067	bl		capital YERU, Cyrillic
+group	UCS.Ligature	Unicode Ligature 	UTF-8 Ligature
+item3	198	AE	capital AE
+item3	230	ae	small ae
+item3	1067	bl	capital YERU, Cyrillic
 item3	306	IJ	capital IJ ligature
 item3	307	ij	small ij ligature
+item3	338	OE	capital OELIG
+item3	339	oe	small oelig
 item3	1144	Oy	capital uk, Cyrillic
 item3	1145	oy	small uk, Cyrillic
+item3	208	eh	capital ETH, Islandic
+item3	240	eh	small eth, Islandic
+item3	222	TH	capital THORN, Islandic
+item3	254	th	small thorn, Islandic
 
 #------+---------------+-----------------------+------------------------------+
 #head	key		text			description

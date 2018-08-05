@@ -106,7 +106,7 @@
 #    building the GUI, EnDeGUI.init() will show the "Browser Quirks" window.
 #?
 #? VERSION
-#?      @(#) EnDeGUI.js 3.103 14/11/09 19:05:19
+#?      @(#) EnDeGUI.js 3.104 18/08/05 13:28:12
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -118,8 +118,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '3.103';
-this.sid        = function() {  return('@(#) EnDeGUI.js 3.103 14/11/09 19:05:19 EnDeGUI'); };
+this.SID        = '3.104';
+this.sid        = function() {  return('@(#) EnDeGUI.js 3.104 18/08/05 13:28:12 EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 
@@ -946,7 +946,7 @@ this.copy       = function(txt) {
 	bux.textContent  = 'Copy text .. ** experimental **';
 	win.document.body.appendChild(bux);
 	bux  = document.createElement('DIV');
-	bux.textContent  = 'Celect an object in left and right menu, then use one of the buttons to copy text from one object toanother<br>';
+	bux.textContent  = 'Select an object in left and right menu, then use one of the buttons to copy text from one object toanother<br>';
 	win.document.body.appendChild(bux);
 	// create buttons in new window which use above value and pass them to EnDeGUI.copyValue()
 	// Note that EnDeGUI.copyValue() is a function in the calling window !

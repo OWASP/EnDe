@@ -93,7 +93,7 @@
 #?      trace output. This allows to enable tracing for individual objects.
 #?
 #? VERSION
-#?      @(#) EnDeGUIx.js 3.8 18/08/04 15:39:16
+#?      @(#) EnDeGUIx.js 3.9 18/08/05 12:36:19
 #?
 #? AUTHOR
 #?      10-aug-10 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -105,7 +105,7 @@
 // ========================================================================= //
 
 var EnDeGUIx = new function() {
-	this.SID = '3.8';
+	this.SID = '3.9';
 }
 EnDeGUI.__files = {     // hash to hold data for menu from files
 	/* source file          - file where menu is defined (will be read from)
@@ -1237,9 +1237,10 @@ EnDeGUI.makechar= function() {
 			ccc = bbb.split(/\t/);
 			switch (ccc[0]) { //
 			  case 'group':
-				if (ccc[1].match(/^UCS\.(Angle\..|Curly|Square|Round|Quote|Slash|Bar|Dash|Coma|Semicolon|Latin-eq)/)) {
+				if (ccc[1].match(/^UCS\.(Number|Angle\..|Curly|Square|Round|Quote|Slash|Bar|Dash|Coma|Semicolon|Latin-eq|Ligature)/)) {
 					bux += '<h4>' +  EnDe.Text.Entity(ccc[2] + ' - ' + ccc[3]) + '</h4>';
 					skip=0;
+					cnt =1;
 				} else {
 					skip=1;
 				}
@@ -1247,7 +1248,7 @@ EnDeGUI.makechar= function() {
 			  case 'item3':
 				if (skip==0) {
 					cnt++;
-					if (cnt>30) { bux += '<br />'; cnt = 1; }   // more user friendly
+					if (cnt>25) { bux += '<br />'; cnt = 1; }   // more user friendly
 					bux += '<span class="ucs" title="'
 					    +  EnDe.Text.Entity(ccc[1] + ' - 0x' + parseInt(ccc[1], 10).toString(16) + ' : ' + ccc[3])
 					    + '">&#' + ccc[1] + ';</span>';

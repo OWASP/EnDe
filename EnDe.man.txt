@@ -384,8 +384,11 @@ INSTALLATION
 	Less problems are expected ... but see  KNOWN GUI PROBLEMS  also.
 	
 	Following browsers are known to work flawless:
-		Webkit, Mozilla 1.7.x, Firefox 2.x, Firefox 3.x .. 34.x
+		Webkit, Mozilla 1.7.x, Firefox 2.x, Firefox 3.x .. 58.x
 	For anything else the  BROWSER QUIRKS  need to be consulted.
+
+	Most other browsers do not allow access using  file:/// . In that case
+	EnDe  must be provided by a webserver.
 	
 	
 BEFORE DECODING
@@ -1713,6 +1716,7 @@ GUI
 	
 	Currently (04/2011, 1.0rc5) only minor GUI problems are knonw:
 	* Chromium (all versions) - throws error when XHR uses file:///...
+		workaround: commandline option: --allow-file-access-from-files
 	* Google Chrome (all versions) - throws error when XHR uses file:///...
 		workaround: commandline option: --allow-file-access-from-files
 		details see: http://code.google.com/p/chromium/issues/detail?id=47416 
@@ -2833,7 +2837,7 @@ EPILOG
 	
 VERSION
 	
-	@# EnDe <!-- @(#) EnDe.man.txt 3.49 12:23:43 14/11/08 -->
+	@# EnDe <!-- @(#) EnDe.man.txt 3.50 12:00:59 18/08/06 -->
 	
 	
 AUTHOR

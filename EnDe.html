@@ -11,8 +11,8 @@
 	<meta name="DC.language"      content="en" >
 	<meta name="DC.rights"        content="https://github.com/EnDe/EnDe license.txt" >
 	<meta name="DC.license"       content="https://github.com/EnDe/EnDe license.txt" >
-	<meta name="DC.modified"      content="18/08/05" >
-	<meta name="DC.Source"        content="@(#) EnDe.html 3.52 18/08/05 15:28:16"  >
+	<meta name="DC.modified"      content="18/08/06" >
+	<meta name="DC.Source"        content="@(#) EnDe.html 3.53 18/08/06 11:59:48"  >
 	<meta name="DC.Date"          content="07-apr-07" >
 	<meta name="DC.creator"       content="Achim Hoffmann" >
 	<meta name="DC.Author"        content="Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net" >
@@ -963,7 +963,15 @@
 				<li><tt>chromium --allow-file-access-from-files</tt></li>
 				<li><tt>chrome --allow-file-access-from-files</tt></li>
 				<li><tt>open /Applications/Google\ Chrome.app/ --args --allow-file-access-from-files</tt></li>
+				<li><tt>/Applications/Safari.app --disable-web-security</tt>
+					works with older Safari &lt; 6.x, in newer Safari you need to enable
+					the Developer menu and there <tt>Disable Local File Restrictions.</tt>
+					or change the prefs.js file like:
+					<tt>pref("capability.policy.default.checkloaduri.enabled", "allAccess");</tt>
+				</li>
+				<li><tt>IE 11</tt> does not allow it at all.</li>
 				</ul>
+			</span>
 		</div>
 	</fieldset>
 

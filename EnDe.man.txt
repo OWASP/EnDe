@@ -2404,7 +2404,7 @@ GLOSSAR
 	CVC     - sometimes (wrongly?) called Card Verification Code
 	CVC1    - see CVC
 	CVC2    - see CVC
-	CVV     - sometimes called Card Verification Value
+	CVV     - Card Verification Value (Visa's name for CSC)
 	CVV1    - see CVV
 	CVV2    - printed CVV on bankvard (see CVV)
 	D5      - Verhoeff's Dihedral Group D5 Check
@@ -2837,7 +2837,7 @@ EPILOG
 	
 VERSION
 	
-	@# EnDe <!-- @(#) EnDe.man.txt 3.50 12:00:59 18/08/06 -->
+	@# EnDe <!-- @(#) EnDe.man.txt 3.51 13:53:40 19/07/25 -->
 	
 	
 AUTHOR

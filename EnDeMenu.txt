@@ -88,7 +88,7 @@
 #?      EnDeGUIx.js, EnDeGUI.js
 #?
 #? VERSION
-#?      @(#) EnDeMenu.txt 3.67 18/08/05 12:35:37
+#?      @(#) EnDeMenu.txt 3.68 19/08/22 09:10:45
 #?
 #? AUTHOR
 #?      09-jun-09 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -1930,6 +1930,7 @@ group	UCS.Latin-eq	Unicode Latin equivalents		Unicode Latin Character equivalent
 # TODO: some letters: mormon alphabet, tifinagh
 # see: https://de.wikipedia.org/wiki/Liste_der_Unicodebl%C3%B6cke
 item3	1072	a	small a, Cyrillic
+item3	53424	a	??, Hangeul
 item3	1040	A	capital A, Cyrillic
 item3	1044	A	capital DE, Cyrillic
 item3	66304	A	old italic letter A (etruscian)
@@ -1961,6 +1962,7 @@ item3	1108	e	small ukraineian e, Cyrillic
 item3	279	e.	small e with dot above
 item3	8494	e	estimated symbol
 item3	8495	e	script small e
+item3	914	E	capital epsilon, Greek
 item3	1028	E	capital ukrainian IE, Cyrillic
 item3	1045	E	capital IE, Cyrillic
 item3	8455	E	Euler constant
@@ -1968,6 +1970,7 @@ item3	8496	e	script capital e
 item3	11300	E	small yus, Glagolitic
 item3	66308	E	old italic letter E (etruscian)
 item3	66308	E	old italic letter E (etruscian)
+item3	383	f	small letter long s
 item3	7711	f.	small f with dot below
 item3	66309	F	old italic letter VE (etruscian)
 item3	8458	g	script small g
@@ -2013,13 +2016,16 @@ item3	8572	l	Roman numeral fifty
 item3	8556	L	Roman numeral fifty
 item3	7747	m.	small m with dot below
 item3	8575	m	Roman numeral  thousand
+item3	924	M	capital mu, Greek
 item3	8558	M	Roman numeral  thousand
+item3	53404	M	??, Hangeul
 item3	66321	M	old italic letter SHE (etruscian)
 item3	66316	M	old italic letter EM (etruscian)
 item3	1052	M	capital EM, Cyrillic
 item3	1084	M	small em, Cyrillic
 item3	5846	M	Runic letter Ehwaz, Eh
 item3	628	N	Cyrillic N
+item3	925	N	capital nu, Greek
 item3	66317	N	old italic letter EN (etruscian)
 item3	1048	M	capital I, Cyrillic
 item3	186	o	ordinal indicator, masculine
@@ -2068,8 +2074,9 @@ item3	1109	s	small dse, Macedonian, Cyrillic
 item3	4285	S	(capital S)
 item3	65331	S	capital S, fullwidth
 item3	65363	S	small s, fullwidth
-item3	7787	t.	small t with dot bove
+item3	7787	t.	small t with dot above
 item3	7789	t.	small t with dot below
+item3	932	T	capital tau, Greek
 item3	7786	T.	capital T with dot bove
 item3	7788	T.	capital T with dot below
 item3	5761	T	Ogam Beth
@@ -2106,6 +2113,7 @@ item3	5926	W	Hanunoo letter ta
 item3	1121	w	small omega, Cyrillic
 item3	1093	x	small ha, Cyrillic
 item3	8569	x	Roman numeral ten
+item3	935	Y	capital chi, Greek
 item3	8553	X	Roman numeral ten
 item3	66327	X	old italic letter EKS (etruscian)
 item3	66338	X	old italic letter TEN (etruscian)
@@ -2125,6 +2133,7 @@ item3	1199	Y	small u, Cyrillic
 item3	59170	y	small upsilon, Greek
 item3	59171	Y	capital Upsilon, Greek
 item3	66326	Y	old italic letter U (etruscian)
+item3	918	Z	capital zeta, Greek
 
 #------+-------+-------+----------------------------------
 group	UCS.Typograph	Unicode typographic characters		Unicode typographic characters

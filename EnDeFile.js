@@ -1,6 +1,4 @@
 /* ========================================================================= //
-# vi:  ts=4:
-# vim: ts=4:
 #?
 #? NAME
 #?      EnDeFile.js
@@ -29,7 +27,7 @@
 #?          .strip     - true: remove comments (#) and empty lines
 #?
 #? VERSION
-#?      @(#) EnDeFile.js 3.17 18/08/05 16:46:42
+#?      @(#) EnDeFile.js 3.18 19/08/22 09:14:54
 #?
 #? AUTHOR
 #?      07-may-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -43,8 +41,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.File   = new function() {
-	this.SID    = '3.17';
-	this.sid    = function() { return('@(#) EnDeFile.js 3.17 18/08/05 16:46:42 EnDe.File'); };
+	this.SID    = '3.18';
+	this.sid    = function() { return('@(#) EnDeFile.js 3.18 19/08/22 09:14:54 EnDe.File'); };
 
 	this.trace  = false;
 

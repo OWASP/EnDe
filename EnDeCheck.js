@@ -79,7 +79,7 @@
 #       This file contains UTF-8 characters!
 #?
 #? VERSION
-#?      @(#) EnDeCheck.js 3.9 12/06/02 17:22:47
+#?      @(#) EnDeCheck.js 3.10 19/08/22 09:05:23
 #?
 #? AUTHOR
 #?      08-feb-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -88,10 +88,16 @@
 
 // ToDo: more to check ...
 /*
+ * Links 2019:
+ * https://www.kreditkarte.net/ratgeber/kreditkartennummer-pruefen/
+ * https://kreditkarten.im/     generate fake numbers
+ * https://de.wikipedia.org/wiki/Luhn-Algorithmus
+ * https://en.wikipedia.org/wiki/Luhn_mod_N_algorithm
  * http://www.pruefziffernberechnung.de/
+ * -----
+ * Links 2012 and older:
  * http://euro.ecom.cmu.edu/resources/elibrary/everycc.htm Everything You Ever Wanted to Know about Credit Cards
  * -----
- * http://en.wikipedia.org/wiki/Luhn_mod_N_algorithm
  * http://www.gslis.utexas.edu/~ssoy/organizing/l391d2c.htm H.P. Luhn and Automatic Indexing
  * -----
  * http://code.google.com/p/checkdigits/
@@ -163,8 +169,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.Check  = new function() {
-  this.SID	= '3.9';
-  this.sid	= function()    { return('@(#) EnDeCheck.js 3.9 12/06/02 17:22:47 EnDe.Check'); };
+  this.SID	= '3.10';
+  this.sid	= function()    { return('@(#) EnDeCheck.js 3.10 19/08/22 09:05:23 EnDe.Check'); };
 
   // ======================================================================= //
   // public and alias check functions                                        //

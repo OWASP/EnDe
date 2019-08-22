@@ -29,7 +29,7 @@
 #?          .strip     - true: remove comments (#) and empty lines
 #?
 #? VERSION
-#?      @(#) EnDeFile.js 3.16 14/11/09 11:33:14
+#?      @(#) EnDeFile.js 3.17 18/08/05 16:46:42
 #?
 #? AUTHOR
 #?      07-may-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -43,8 +43,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.File   = new function() {
-	this.SID    = '3.16';
-	this.sid    = function() { return('@(#) EnDeFile.js 3.16 14/11/09 11:33:14 EnDe.File'); };
+	this.SID    = '3.17';
+	this.sid    = function() { return('@(#) EnDeFile.js 3.17 18/08/05 16:46:42 EnDe.File'); };
 
 	this.trace  = false;
 
@@ -121,7 +121,11 @@ EnDe.File   = new function() {
 // ToDo: chrome on windows fails here, probably need file:///....
 			try { req = bux.send(null); }
 			catch(e) {
+// 08sep17: catch wenn file:///*.xml beim Starten, klaeren warum, funktioniert trotzdem
+// #dbx glob_e = e;
+// #dbx glob_s = src;
 				//#dbx alert('silently catch failed requests, which may occour in some browsers for file:///');
+// #dbx setTimeout("alert(' EnDe.File __fileread catch2: '+glob_e+' for: '+glob_s);", 3000);
 				bbb = _ME + ' send(file:///) failed:\n' + e;
 				EnDe.File.errors.push( bbb ); /* dummy { */ __dbx( bbb + ' }' );
 				//return false;

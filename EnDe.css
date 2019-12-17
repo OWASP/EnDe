@@ -9,7 +9,7 @@
 #       Makefile
 #?
 #? VERSION
-#?      @(#) EnDe.css 3.22 19/12/17 22:21:09
+#?      @(#) EnDe.css 3.23 19/12/17 23:26:16
 #?
 #? AUTHOR
 #?      30-may-07 Achim Hoffmann
@@ -431,7 +431,7 @@ span.popup                 { float:     none; }
 /* Browser Quirks window */
 .quirks {
 	padding:        0px;
-	height:         28em;
+	height:         30em;
 	width:          45em;
 	min-width:      45em;
 	max-width:      45em;
@@ -456,14 +456,13 @@ span.popup                 { float:     none; }
 }
 .quirks ul li {
 	margin:         0px;
-	padding:        0px;
+	padding:        4px;
 	padding-left:   0.5em;
 	width:          98%; /* Safari hack */
 	list-style:     none;
 	border:         1px solid #ccdfff;
 }
 .quirks ul li div {
-	background:     #ffffcf;
 	display:        none;
 	position:       absolute;
 	margin:         0px;
@@ -482,17 +481,21 @@ span.popup                 { float:     none; }
 	-khtml-border-radius-topright:     5px;
 }
 .quirks ul li:hover {
-	background:     #ffffcf;
 	border:         1px solid #9a9a9a;
+	border-radius:  3px;
+	box-shadow:     2px 2px 5px 5px #121212;
 	-moz-border-radius-bottomleft:     5px;
 	-moz-border-radius-topleft:        5px;
 	-khtml-border-radius-bottomleft:   5px;
 	-khtml-border-radius-topleft:      5px;
 }
 .quirks ul li:hover div {
+	background:     #ccdfff;
 	z-index:        42;
 	display:        inline;
 	border:         1px solid #9a9a9a;
+	border-radius:  3px;
+	box-shadow:     2px 2px 5px 5px #121212;
 }
 
 /* character */

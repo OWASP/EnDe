@@ -9,10 +9,10 @@
 #       Makefile
 #?
 #? VERSION
-#?      @(#) EnDe.css 3.21 13/05/12 19:39:38
+#?      @(#) EnDe.css 3.22 19/12/17 22:21:09
 #?
 #? AUTHOR
-#?      30-may-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
+#?      30-may-07 Achim Hoffmann
 #?
  * ========================================================================= */
 
@@ -431,10 +431,10 @@ span.popup                 { float:     none; }
 /* Browser Quirks window */
 .quirks {
 	padding:        0px;
-	height:         24em;
-	width:          43em;
-	min-width:      43em;
-	max-width:      43em;
+	height:         28em;
+	width:          45em;
+	min-width:      45em;
+	max-width:      45em;
 	font-size:      90%; /* tweak for netbooks */
 }
 .quirks span {

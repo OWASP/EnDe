@@ -88,7 +88,7 @@
 #?      EnDeGUIx.js, EnDeGUI.js
 #?
 #? VERSION
-#?      @(#) EnDeMenu.txt 3.70 20/11/16 23:28:16
+#?      @(#) EnDeMenu.txt 3.71 20/11/16 23:50:57
 #?
 #? AUTHOR
 #?      09-jun-09 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -397,8 +397,6 @@ item3	txtREPcr	\r			replace all \r by literal \r
 item3	txtREPht	\t			replace all \t by literal \t
 item3	txtREPvt	\v			replace all \v by literal \v
 item3	txtREP00	\0			replace all \0 by literal \0
-item3	txtREPplus	+ by space		replace all + by space
-item3	txtREPspace	space by +		replace all space by +
 item3	txtREPbar	| by \n			replace all | by \n
 item3	txtREPrab	\n by |			replace all \n by |
 item3	txtREPdqsq	" by '			replace all " by '
@@ -424,6 +422,11 @@ item3	txtREP4hex	\xhh to character	replace all \xhh by corresponding character
 item3	txtREP4url	%hh or %hh%hh to char	replace all %hh or %hh%hh by corresponding character
 item3	txtREPsgml	angle brackets < >	replace all < > </ /> <! by a single space
 item3	txtREPuser	user			replace all characters in input field according replace map
+
+#------+---------------+-----------------------+------------------------------+
+group	TXT.Spaces	Spaces			text manipulations from/to spaces
+item3	txtREPplus	+ by space		replace all + by space
+item3	txtREPspace	space by +		replace all space by +
 
 #------+---------------+-----------------------+------------------------------+
 group	TXT.Special	Special			special text manipulations
@@ -1406,6 +1409,7 @@ use	TXT.UCS-UTF8
 use	TXT.Append
 use	TXT.Remove
 use	TXT.Replace
+use	TXT.Spaces
 use	TXT.Special
 use	TXT.Recursive
 use	TXT.UCS-diacrit
@@ -1424,6 +1428,7 @@ use	TXT.UCS-UTF
 use	TXT.Append
 use	TXT.Remove
 use	TXT.Replace
+use	TXT.Spaces
 use	TXT.Special
 use	TXT.Recursive
 use	TXT.UCS-diacrit
@@ -1461,6 +1466,7 @@ use	TXT.Insert
 use	TXT.Append
 use	TXT.Remove
 use	TXT.Replace
+use	TXT.Spaces
 use	TXT.Special
 use	TXT.Brackets
 

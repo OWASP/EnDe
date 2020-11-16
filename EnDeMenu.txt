@@ -88,7 +88,7 @@
 #?      EnDeGUIx.js, EnDeGUI.js
 #?
 #? VERSION
-#?      @(#) EnDeMenu.txt 3.72 20/11/17 00:10:42
+#?      @(#) EnDeMenu.txt 3.73 20/11/17 00:39:27
 #?
 #? AUTHOR
 #?      09-jun-09 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -431,6 +431,9 @@ item3	txtREPspace	space by +		replace all space by +
 item3	txtREPspace20	space by %20		replace all space by %20
 item3	txtREP20plus	%20 by +		replace all %20 by +
 item3	txtREP20space	%20 by space		replace all %20 by space
+item3	txtTrimL	trim left spaces	remove all leading spaces per line
+item3	txtTrimR	trim right spaces	remove all trailing spaces per line
+item3	txtTrim		trim spaces		remove all leading and trailing spaces per line
 
 #------+---------------+-----------------------+------------------------------+
 group	TXT.Special	Special			special text manipulations
@@ -441,7 +444,6 @@ item3	txtREPdq	remove enclosing "	remove enclosing "
 item3	txtREPdouble	duplicate \		duplicate all \
 item3	txtREPreduce	reduce \\		reduce all \\ to \
 item3	txtREPpercent	reduce %%		replace all %% by %
-item3	txtTrim		trim spaces		remove all leading and trailing spaces
 item3	txtXesc		convert to \x-escaped	convert all hex values to \x-escaped hex values (in Hex tab only)
 item3	txtReverse	reverse text		reverse text
 #------+---------------+-----------------------+------------------------------+

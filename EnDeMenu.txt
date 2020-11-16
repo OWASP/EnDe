@@ -88,7 +88,7 @@
 #?      EnDeGUIx.js, EnDeGUI.js
 #?
 #? VERSION
-#?      @(#) EnDeMenu.txt 3.71 20/11/16 23:50:57
+#?      @(#) EnDeMenu.txt 3.72 20/11/17 00:10:42
 #?
 #? AUTHOR
 #?      09-jun-09 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -426,7 +426,11 @@ item3	txtREPuser	user			replace all characters in input field according replace 
 #------+---------------+-----------------------+------------------------------+
 group	TXT.Spaces	Spaces			text manipulations from/to spaces
 item3	txtREPplus	+ by space		replace all + by space
+item3	txtREPplus20	+ by %20		replace all + by %20
 item3	txtREPspace	space by +		replace all space by +
+item3	txtREPspace20	space by %20		replace all space by %20
+item3	txtREP20plus	%20 by +		replace all %20 by +
+item3	txtREP20space	%20 by space		replace all %20 by space
 
 #------+---------------+-----------------------+------------------------------+
 group	TXT.Special	Special			special text manipulations

@@ -111,7 +111,7 @@
 #       -----------------------------------------------------------------------
 #?
 #? VERSION
-#?      @(#) EnDeText.js 3.26 20/11/17 00:16:38
+#?      @(#) EnDeText.js 3.27 20/11/17 00:38:05
 #?
 #? AUTHOR
 #?      08-sep-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -125,8 +125,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.Text   = new function() {
-	this.SID    = '3.26';
-	this.sid    = function() { return('@(#) EnDeText.js 3.26 20/11/17 00:16:38 EnDe.Text'); };
+	this.SID    = '3.27';
+	this.sid    = function() { return('@(#) EnDeText.js 3.27 20/11/17 00:38:05 EnDe.Text'); };
 
 	this.trace  = false;
 
@@ -282,8 +282,8 @@ EnDe.Text   = new function() {
 		  case 'txtPAD100'  : bux = EnDe.Text.dispatch(bux, 'txtPAD10'); if (bux<100) { bux = '0' + bux; };   break;
 		  case 'txtEntity'  : bux = bux.replace(/&/g, '&#38;').replace(/</g, '&#60;').replace(/>/g, '&#62;').replace(/"/g, '&#34;'); break;
 		  case 'txtEntity0' : bux = bux.replace(/&/g, '&#38;').replace(/</g, '&#60;').replace(/>/g, '&#62;'); break;
-		  case 'txtTrimR'   : bux = bux.replace(/ *$/g, '');                    break;
-		  case 'txtTrimL'   : bux = bux.replace(/^ */g,  '');                   break;
+		  case 'txtTrimR'   : bux = bux.replace(/ *\n/g, '\n').replace(/ *$/g, ''); break;
+		  case 'txtTrimL'   : bux = bux.replace(/\n */g, '\n');                     break;
 		  case 'txtTrim'    : bux = EnDe.Text.dispatch(EnDe.Text.dispatch(bux,'txtTrimL'),'txtTrimR');  break;
 		  case 'txtXesc'    :
 			bux = bux.replace(/( *\|.*)/g, '').replace(/^ */, ' ').replace(/  /g, ' ').replace(/ /g,'\\x');

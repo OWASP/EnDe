@@ -33,13 +33,15 @@
 #?              txtDELsp    : delete  space  anywhere in text
 #?              txtDELsq    : delete  '   anywhere in text
 #?              txtDELdq    : delete  "   anywhere in text
-#?              txtDELquote': delete  "  and '  anywhere in text
-#?              txtDELbsn'  : delete all literal \n
-#?              txtDELbsr'  : delete all literal \r
-#?              txtDELbssq' : delete all literal \'
-#?              txtDELbsdq' : delete all literal \"
-#?              txtDELbssl' : delete all literal \/
-#?              txtDELbsany': delete all literal \(character) anywhere
+#?              txtDELquote : delete  "  and '  anywhere in text
+#?              txtDELbsnl  : delete all \ followed by \n
+#?              txtDELspbs  : delete all space followed by \
+#?              txtDELbsn   : delete all literal \n
+#?              txtDELbsr   : delete all literal \r
+#?              txtDELbssq  : delete all literal \'
+#?              txtDELbsdq  : delete all literal \"
+#?              txtDELbssl  : delete all literal \/
+#?              txtDELbsany : delete all literal \(character) anywhere
 #?              txtDELnon7b : delete all non-printable chars anywhere in text
 #?              txtDELnon7bn: delete non-printable chars (except \t \n) anywhere in text
 #?              txtDELnon128: delete characters outside range [1..127] anywhere in text
@@ -104,7 +106,7 @@
 #       -----------------------------------------------------------------------
 #?
 #? VERSION
-#?      @(#) EnDeText.js 3.23 17/09/08 10:42:04
+#?      @(#) EnDeText.js 3.24 20/11/16 22:54:13
 #?
 #? AUTHOR
 #?      08-sep-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -118,8 +120,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.Text   = new function() {
-	this.SID    = '3.23';
-	this.sid    = function() { return('@(#) EnDeText.js 3.23 17/09/08 10:42:04 EnDe.Text'); };
+	this.SID    = '3.24';
+	this.sid    = function() { return('@(#) EnDeText.js 3.24 20/11/16 22:54:13 EnDe.Text'); };
 
 	this.trace  = false;
 
@@ -196,20 +198,22 @@ EnDe.Text   = new function() {
 		  case 'txtAPPht'   : bux += '\t';                          break;
 		  case 'txtAPPvt'   : bux += '\v';                          break;
 		  case 'txtAPPsp'   : bux += ' ';                           break;
-		  case 'txtDEL00'   : bux = bux.replace(/\x00/g, '');       break;
-		  case 'txtDELnl'   : bux = bux.replace(/\n/g,   '');       break;
-		  case 'txtDELcr'   : bux = bux.replace(/\r/g,   '');       break;
-		  case 'txtDELht'   : bux = bux.replace(/\t/g,   '');       break;
-		  case 'txtDELvt'   : bux = bux.replace(/\v/g,   '');       break;
-		  case 'txtDELsp'   : bux = bux.replace(/ /g,    '');       break;
-		  case 'txtDELsq'   : bux = bux.replace(/'/g,    '');       break;
-		  case 'txtDELdq'   : bux = bux.replace(/"/g,    '');       break;
-		  case 'txtDELbsn'  : bux = bux.replace(/\\n/g,  '');       break;
-		  case 'txtDELbsr'  : bux = bux.replace(/\\r/g,  '');       break;
-		  case 'txtDELbssq' : bux = bux.replace(/\\'/g,  '');       break;
-		  case 'txtDELbsdq' : bux = bux.replace(/\\"/g,  '');       break;
-		  case 'txtDELbssl' : bux = bux.replace(/\\\//g, '');       break;
-		  case 'txtDELbsany': bux = bux.replace(/\\./g,  '');       break;
+		  case 'txtDEL00'   : bux = bux.replace(/\x00/g,    '');    break;
+		  case 'txtDELnl'   : bux = bux.replace(/\n/g,      '');    break;
+		  case 'txtDELcr'   : bux = bux.replace(/\r/g,      '');    break;
+		  case 'txtDELht'   : bux = bux.replace(/\t/g,      '');    break;
+		  case 'txtDELvt'   : bux = bux.replace(/\v/g,      '');    break;
+		  case 'txtDELsp'   : bux = bux.replace(/ /g,       '');    break;
+		  case 'txtDELsq'   : bux = bux.replace(/'/g,       '');    break;
+		  case 'txtDELdq'   : bux = bux.replace(/"/g,       '');    break;
+		  case 'txtDELbsn'  : bux = bux.replace(/\\n/g,     '');    break;
+		  case 'txtDELbsr'  : bux = bux.replace(/\\r/g,     '');    break;
+		  case 'txtDELbssq' : bux = bux.replace(/\\'/g,     '');    break;
+		  case 'txtDELbsdq' : bux = bux.replace(/\\"/g,     '');    break;
+		  case 'txtDELbssl' : bux = bux.replace(/\\\//g,    '');    break;
+		  case 'txtDELbsnl' : bux = bux.replace(/\\\n/g,    '');    break;
+		  case 'txtDELspbs' : bux = bux.replace(/ \\/g,     '');    break;
+		  case 'txtDELbsany': bux = bux.replace(/\\./g,     '');    break;
 		  case 'txtDELquote': bux = bux.replace(/'/g, '').replace(/"/g, '');    break;
 		  case 'txtDELnon7bn':bux = bux.replace(/[^\x09\x0a\x0d\x20-\x7e]/g, ''); break;
 		  case 'txtDELnon7b': bux = bux.replace(/[^\x20-\x7e]/g,     '');       break;

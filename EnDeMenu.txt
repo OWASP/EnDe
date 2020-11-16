@@ -88,7 +88,7 @@
 #?      EnDeGUIx.js, EnDeGUI.js
 #?
 #? VERSION
-#?      @(#) EnDeMenu.txt 3.68 19/08/22 09:10:45
+#?      @(#) EnDeMenu.txt 3.69 20/11/16 22:57:06
 #?
 #? AUTHOR
 #?      09-jun-09 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -249,12 +249,15 @@ item3	txtDELsp	space			delete all spaces
 item3	txtDELsq	'			delete all '
 item3	txtDELdq	"			delete all "
 item3	txtDELquote	" and '			delete all ' and "
+item3	txtDELbsnl	\\n			delete all \ followed by \n
+item3	txtDELspbs	space\			delete all space followed by \
 item3	txtDELbsn	"\n"			delete all literal \n
 item3	txtDELbsr	"\r"			delete all literal \r
 item3	txtDELbssq	"\'"			delete all literal \'
 item3	txtDELbsdq	'\"'			delete all literal \"
 item3	txtDELbssl	"\/"			delete all literal \/
 item3	txtDELbsany	"\x"			delete all literal \(character) anywhere
+item3	txtDELspbs	space\			delete all literal space\
 item3	txtDELnon7b	non-printable ASCII	delete all non-printable chars anywhere
 item3	txtDELnon7bn	non-printable ASCII\n	delete non-printable chars (except \t, \r, \n) anywhere
 item3	txtDELnon128	non-7-Bit ASCII		delete characters > chr(127) anywhere

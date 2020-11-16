@@ -88,7 +88,7 @@
 #?      EnDeGUIx.js, EnDeGUI.js
 #?
 #? VERSION
-#?      @(#) EnDeMenu.txt 3.69 20/11/16 22:57:06
+#?      @(#) EnDeMenu.txt 3.70 20/11/16 23:28:16
 #?
 #? AUTHOR
 #?      09-jun-09 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -433,6 +433,7 @@ item3	txtREPsq	remove enclosing '	remove enclosing '
 item3	txtREPdq	remove enclosing "	remove enclosing "
 item3	txtREPdouble	duplicate \		duplicate all \
 item3	txtREPreduce	reduce \\		reduce all \\ to \
+item3	txtREPpercent	reduce %%		replace all %% by %
 item3	txtTrim		trim spaces		remove all leading and trailing spaces
 item3	txtXesc		convert to \x-escaped	convert all hex values to \x-escaped hex values (in Hex tab only)
 item3	txtReverse	reverse text		reverse text

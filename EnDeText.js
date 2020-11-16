@@ -82,6 +82,7 @@
 #?              txtREPbsn   : replace all literal \n by \n
 #?              txtREPbsn   : replace all literal \n by \n
 #?              txtREPbsn   : replace all literal \n by \n
+#?              txtREPpercent: replace all %% by %
 #?              txtREPstrdq : concatenate strings (remove " + ")
 #?              txtREPascii : replace all non-printable 7-bit ASCII with hex value
 #?              txtREP4ucs  : replace all \uhhhh by corresponding character
@@ -106,7 +107,7 @@
 #       -----------------------------------------------------------------------
 #?
 #? VERSION
-#?      @(#) EnDeText.js 3.24 20/11/16 22:54:13
+#?      @(#) EnDeText.js 3.25 20/11/16 23:27:07
 #?
 #? AUTHOR
 #?      08-sep-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -120,8 +121,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.Text   = new function() {
-	this.SID    = '3.24';
-	this.sid    = function() { return('@(#) EnDeText.js 3.24 20/11/16 22:54:13 EnDe.Text'); };
+	this.SID    = '3.25';
+	this.sid    = function() { return('@(#) EnDeText.js 3.25 20/11/16 23:27:07 EnDe.Text'); };
 
 	this.trace  = false;
 
@@ -246,27 +247,28 @@ EnDe.Text   = new function() {
 		  case 'txtREP4ucs' : bux = bux.replace(/(\\u[0-9a-f]{4})/ig,      function(c){return EnDe.DE.url('null',0,c,'','','');});          break;
 		  case 'txtREP4url' : bux = bux.replace(/(%[0-9a-f][0-9a-f])/ig,   function(c){return EnDe.DE.ucs('url2',0,c,'','','');});          break;
 // ToDo: above
-		  case 'txtREPsgml' : bux = bux.replace(/(<(\/!)?)|(\/?>)/g, ' ');      break;
-		  case 'txtREPalnum': bux = bux.replace(/([^\w0-9])/g,    ' '   );      break;
-		  case 'txtREP00'   : bux = bux.replace(/\x00/g,          '\\0' );      break;
-		  case 'txtREPnl'   : bux = bux.replace(/\n/g,            '\\n' );      break;
-		  case 'txtREPcr'   : bux = bux.replace(/\r/g,            '\\r' );      break;
-		  case 'txtREPht'   : bux = bux.replace(/\t/g,            '\\t' );      break;
-		  case 'txtREPvt'   : bux = bux.replace(/\v/g,            '\\v' );      break;
-		  case 'txtREPbsn'  : bux = bux.replace(/\\n/g,           "\n");        break;
-		  case 'txtREPbsr'  : bux = bux.replace(/\\r/g,           "\r");        break;
-		  case 'txtREPbst'  : bux = bux.replace(/\\t/g,           "\t");        break;
-		  case 'txtREPbssq' : bux = bux.replace(/\\'/g,           "'");         break;
-		  case 'txtREPbsdq' : bux = bux.replace(/\\"/g,           '"');         break;
-		  case 'txtREPbssl' : bux = bux.replace(/\\\//g,          '/');         break;
-		  case 'txtREPbsany': bux = bux.replace(/\\(.)/g,        '$1');         break;
-		  case 'txtREPstrdq': bux = bux.replace(/"\s*\+\s*"/g,    ''    );      break;
-		  case 'txtREPstrsq': bux = bux.replace(/'\s*\+\s*'/g,    ''    );      break;
-		  case 'txtREPdqsq' : bux = bux.replace(/"/g,             "'"   );      break;
-		  case 'txtREPsqdq' : bux = bux.replace(/'/g,             '"'   );      break;
-		  case 'txtREPsqbt' : bux = bux.replace(/'/g,             '`'   );      break;
-		  case 'txtREPsq'   : bux = bux.replace(/^'/, '').replace(/'$/, '');    break;
-		  case 'txtREPdq'   : bux = bux.replace(/^"/, '').replace(/"$/, '');    break;
+		  case 'txtREPsgml' : bux = bux.replace(/(<(\/!)?)|(\/?>)/g,  ' ');     break;
+		  case 'txtREPalnum': bux = bux.replace(/([^\w0-9])/g,        ' ');     break;
+		  case 'txtREP00'   : bux = bux.replace(/\x00/g,              '\\0');   break;
+		  case 'txtREPnl'   : bux = bux.replace(/\n/g,                '\\n');   break;
+		  case 'txtREPcr'   : bux = bux.replace(/\r/g,                '\\r');   break;
+		  case 'txtREPht'   : bux = bux.replace(/\t/g,                '\\t');   break;
+		  case 'txtREPvt'   : bux = bux.replace(/\v/g,                '\\v');   break;
+		  case 'txtREPbsn'  : bux = bux.replace(/\\n/g,               "\n" );   break;
+		  case 'txtREPbsr'  : bux = bux.replace(/\\r/g,               "\r" );   break;
+		  case 'txtREPbst'  : bux = bux.replace(/\\t/g,               "\t" );   break;
+		  case 'txtREPbssq' : bux = bux.replace(/\\'/g,               "'"  );   break;
+		  case 'txtREPbsdq' : bux = bux.replace(/\\"/g,               '"'  );   break;
+		  case 'txtREPpercent' : bux = bux.replace(/%%/g,             '%'  );   break;
+		  case 'txtREPbssl' : bux = bux.replace(/\\\//g,              '/'  );   break;
+		  case 'txtREPbsany': bux = bux.replace(/\\(.)/g,             '$1' );   break;
+		  case 'txtREPstrdq': bux = bux.replace(/"\s*\+\s*"/g,        ''   );   break;
+		  case 'txtREPstrsq': bux = bux.replace(/'\s*\+\s*'/g,        ''   );   break;
+		  case 'txtREPdqsq' : bux = bux.replace(/"/g,                 "'"  );   break;
+		  case 'txtREPsqdq' : bux = bux.replace(/'/g,                 '"'  );   break;
+		  case 'txtREPsqbt' : bux = bux.replace(/'/g,                 '`'  );   break;
+		  case 'txtREPsq'   : bux = bux.replace(/^'/, '').replace(/'$/, '' );   break;
+		  case 'txtREPdq'   : bux = bux.replace(/^"/, '').replace(/"$/, '' );   break;
 		  case 'txtReverse' : bux = EnDe.reverse(src);                          break;
 		  case 'txtPAD10'   : if (bux<10) { bux = '0' + bux; };                 break;
 		  case 'txtPAD100'  : bux = EnDe.Text.dispatch(bux, 'txtPAD10'); if (bux<100) { bux = '0' + bux; };   break;
@@ -356,6 +358,8 @@ EnDe.Text   = new function() {
 	this.DELht      = function(src) { return EnDe.Text.dispatch(src, 'txtDELht'    ); };
 	this.DELvt      = function(src) { return EnDe.Text.dispatch(src, 'txtDELvt'    ); };
 	this.DELsp      = function(src) { return EnDe.Text.dispatch(src, 'txtDELsp'    ); };
+	this.DELbsnl    = function(src) { return EnDe.Text.dispatch(src, 'txtDELbsnl'  ); };
+	this.DELspbs    = function(src) { return EnDe.Text.dispatch(src, 'txtDELspbs'  ); };
 	this.DELnon7b   = function(src) { return EnDe.Text.dispatch(src, 'txtDELnon7b' ); };
 	this.DELnon7bn  = function(src) { return EnDe.Text.dispatch(src, 'txtDELnon7bn'); };
 	this.DELnon128  = function(src) { return EnDe.Text.dispatch(src, 'txtDELnon128'); };
@@ -370,6 +374,7 @@ EnDe.Text   = new function() {
 	this.REPspace   = function(src) { return EnDe.Text.dispatch(src, 'txtREPspace' ); };
 	this.REPdouble  = function(src) { return EnDe.Text.dispatch(src,' txtREPdouble'); };
 	this.REPreduce  = function(src) { return EnDe.Text.dispatch(src,' txtREPreduce'); };
+	this.REPpercent = function(src) { return EnDe.Text.dispatch(src,' txtREPpercent'); };
 	this.REPascii   = function(src) { return EnDe.Text.dispatch(src, 'txtREPascii' ); };
 	this.REPsgml    = function(src) { return EnDe.Text.dispatch(src, 'txtREPsgml'  ); };
 	this.REPalnum   = function(src) { return EnDe.Text.dispatch(src, 'txtREPalnum' ); };

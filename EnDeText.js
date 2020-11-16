@@ -58,8 +58,12 @@
 #?              txtINSht    : insert  \t  at given position in text
 #?              txtINSvt    : insert  \v  at given position in text
 #?              txtINSUCS*  : insert  special Unicode sequencet at given position in text
-#?              txtREPplus  : replace + by space anywhere in text
-#?              txtREPspace : replace space by + anywhere in text
+#?              txtREPplus    : replace all + by space
+#?              txtREPplus20  : replace all + by %20
+#?              txtREPspace   : replace all space by +
+#?              txtREPspace20 : replace all space by %20
+#?              txtREP20plus  : replace all %20 by +
+#?              txtREP20space : replace all %20 by space
 #?              txtREPdouble: replace (duplicate) \ by \\ anywhere in text
 #?              txtREPreduce: replace (redeuce) \\ by \ anywhere in text
 #?              txtREPalnum : replace all non-alhpanumeric characters by spaces
@@ -107,7 +111,7 @@
 #       -----------------------------------------------------------------------
 #?
 #? VERSION
-#?      @(#) EnDeText.js 3.25 20/11/16 23:27:07
+#?      @(#) EnDeText.js 3.26 20/11/17 00:16:38
 #?
 #? AUTHOR
 #?      08-sep-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -121,8 +125,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.Text   = new function() {
-	this.SID    = '3.25';
-	this.sid    = function() { return('@(#) EnDeText.js 3.25 20/11/16 23:27:07 EnDe.Text'); };
+	this.SID    = '3.26';
+	this.sid    = function() { return('@(#) EnDeText.js 3.26 20/11/17 00:16:38 EnDe.Text'); };
 
 	this.trace  = false;
 
@@ -231,8 +235,12 @@ EnDe.Text   = new function() {
 		  case 'txtINScr'   : bux = bux.slice(0,pos) + '\r' + bux.slice(pos);   break;
 		  case 'txtINSht'   : bux = bux.slice(0,pos) + '\t' + bux.slice(pos);   break;
 		  case 'txtINSvt'   : bux = bux.slice(0,pos) + '\v' + bux.slice(pos);   break;
-		  case 'txtREPplus' : bux = bux.replace(/\+/g,            ' '   );      break;
-		  case 'txtREPspace': bux = bux.replace(/ /g,             '+'   );      break;
+		  case 'txtREPplus'    : bux = bux.replace(/\+/g,         ' '   );      break;
+		  case 'txtREPplus20'  : bux = bux.replace(/\+/g,         '%20' );      break;
+		  case 'txtREPspace'   : bux = bux.replace(/ /g,          '+'   );      break;
+		  case 'txtREPspace20' : bux = bux.replace(/ /g,          '%20' );      break;
+		  case 'txtREP20space' : bux = bux.replace(/%20/g,        ' '   );      break;
+		  case 'txtREP20plus'  : bux = bux.replace(/%20/g,        '+'   );      break;
 		  case 'txtREPbar'  : bux = bux.replace(/\|/g,            '\n'  );      break;
 		  case 'txtREPrab'  : bux = bux.replace(/\n/g,            '|'   );      break;
 		  case 'txtREPdouble':bux = bux.replace(/\\/g,            '\\\\');      break;
@@ -372,9 +380,13 @@ EnDe.Text   = new function() {
 	this.DELfffx    = function(src) { return EnDe.Text.dispatch(src, 'txtDELfffx'  ); };
 	this.REPplus    = function(src) { return EnDe.Text.dispatch(src, 'txtREPplus'  ); };
 	this.REPspace   = function(src) { return EnDe.Text.dispatch(src, 'txtREPspace' ); };
-	this.REPdouble  = function(src) { return EnDe.Text.dispatch(src,' txtREPdouble'); };
-	this.REPreduce  = function(src) { return EnDe.Text.dispatch(src,' txtREPreduce'); };
-	this.REPpercent = function(src) { return EnDe.Text.dispatch(src,' txtREPpercent'); };
+	this.REPplus20  = function(src) { return EnDe.Text.dispatch(src, 'txtREPplus20'  ); };
+	this.REPspace20 = function(src) { return EnDe.Text.dispatch(src, 'txtREPspace20' ); };
+	this.REP20plus  = function(src) { return EnDe.Text.dispatch(src, 'txtREP20plus'  ); };
+	this.REP20space = function(src) { return EnDe.Text.dispatch(src, 'txtREP20space' ); };
+	this.REPdouble  = function(src) { return EnDe.Text.dispatch(src,' txtREPdouble'  ); };
+	this.REPreduce  = function(src) { return EnDe.Text.dispatch(src,' txtREPreduce'  ); };
+	this.REPpercent = function(src) { return EnDe.Text.dispatch(src,' txtREPpercent' ); };
 	this.REPascii   = function(src) { return EnDe.Text.dispatch(src, 'txtREPascii' ); };
 	this.REPsgml    = function(src) { return EnDe.Text.dispatch(src, 'txtREPsgml'  ); };
 	this.REPalnum   = function(src) { return EnDe.Text.dispatch(src, 'txtREPalnum' ); };

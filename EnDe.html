@@ -11,8 +11,8 @@
 	<meta name="DC.language"      content="en" >
 	<meta name="DC.rights"        content="https://github.com/EnDe/EnDe license.txt" >
 	<meta name="DC.license"       content="https://github.com/EnDe/EnDe license.txt" >
-	<meta name="DC.modified"      content="19/12/17" >
-	<meta name="DC.Source"        content="@(#) EnDe.html 3.54 19/12/17 22:29:25"  >
+	<meta name="DC.modified"      content="20/11/18" >
+	<meta name="DC.Source"        content="@(#) EnDe.html 3.55 20/11/18 01:09:22"  >
 	<meta name="DC.Date"          content="07-apr-07" >
 	<meta name="DC.creator"       content="Achim Hoffmann" >
 	<meta name="DC.Author"        content="Achim Hoffmann, mailto: ??" >
@@ -767,33 +767,43 @@
 -->
 				    <td><label for="EnDeDOM.PW.spn">Maximum sequence of special characters</label></td>
 				</tr>
-				<tr><td><input  id="EnDeDOM.PW.scorehor"  value="1" class="em2" size="2" ></td>
-				    <td colspan="2"><input id="EnDeDOM.PW.hor"        class="text" size="50"
-					value="^1234567890&szlig;&acute;qwertzuiop&uuml;+asdfghjkl&ouml;&auml;#<yxcvbnm,.-" >
-					<select id="EnDeDOM.PW.lan" onchange="document.getElementById('EnDeDOM.PW.hor').value=this.value" >
+<!-- // ToDo: distinguish upper and lower case, uk and us, -->
+				<tr><td><input  id="EnDeDOM.PW.scorehor"  value="1" class="em2"  size="2" ></td>
+				    <td colspan="2"><input id="EnDeDOM.PW.key_h"    class="text" size="45" >
+					<select id="EnDeDOM.PW.lan_h" onchange="document.getElementById('EnDeDOM.PW.key_h').value=this.value" >
 						<option value="^1234567890&szlig;&acute;qwertzuiop&uuml;+asdfghjkl&ouml;&auml;#<yxcvbnm,.-">de</option>
+						<option value="§1234567890'^qwertzuiop&uuml;~asdfghjkl&ouml;&auml;$<yxcvbnm,.-">ch</option>
 						<option value="&ordm;1234567890'&iexcl;qwertyuiop&grave;+asdfghjkl&ntilde;&grave;&ccedil;<zxcvbnm,.-">es</option>
 						<option value="&sup2;1234567890&agrave;)qzertyuiop^$qsdfghjklm&ugrave;*<wxcvbn,;:!"        >fr</option>
 						<option value="&grave;1234567890-=qwertyuiop[]asdfghjkl,./\zxcvbnm,./"                     >us</option>
 					</select>
 				    </td>
 				    <td>&#160;</td>
-				    <td colspan="3"><label for="EnDeDOM.PW.hor">horizontal character sequence (keyboard layout)</label></td>
+				    <td colspan="3"><label for="EnDeDOM.PW.key_h">horizontal character sequence (keyboard layout)</label></td>
 				</tr>
-				<tr><td><input id="EnDeDOM.PW.scorever"  value="1" class="em2" size="2" ></td>
-				    <td colspan="2"><input id="EnDeDOM.PW.ver"        class="text" size="50"
-					value="1qaz 2wsx 3edc 4rfv 5tgb 6yhn 7ujm 8ik, 9ol. 0p&ouml;-" ></td>
-<!-- // ToDo: need select option according above -->
+				<tr><td><input id="EnDeDOM.PW.scorever"  value="1"  class="em2"  size="2" ></td>
+				    <td colspan="2"><input id="EnDeDOM.PW.key_v"    class="text" size="45" >
+					<select id="EnDeDOM.PW.lan_v" onchange="document.getElementById('EnDeDOM.PW.key_v').value=this.value" >
+						<option value="^< 1qay 2wsx 3edc 4rfv 5tgb 6yhn 7ujm 8ik, 9ol. 0p&ouml;- &szlig;&uuml;&auml; `+#" >de</option>
+						<option value="§< 1qay 2wsx 3edc 4rfv 5tgb 6yhn 7ujm 8ik, 9ol. 0p&ouml;- '&uuml;&auml; ^~$" >ch</option>
+						<option value="&ordm;> 1qaz 2wsx 3edc 4rfv 5tgb 6yhn 7ujm 8ik, 9ol. 0pñ- '`' i+Ç" >es</option>
+						<option value="²< &amp;aqw ézsx &quot;edc 'rfv (tgb -yhn èuj, _ik; çol: àpm! )^ù =$*" >fr</option>
+						<option value="`\ 1qaz 2wsx 3edc 4rfv 5tgb 6yhn 7ujm 8ik, 9ol. 0p:/ -[' =]\" >us</option>
+					</select>
 				    <td>&#160;</td>
-				    <td colspan="3"><label for="EnDeDOM.PW.ver">vertical character sequence (keyboard layout)</label></td>
+				    <td colspan="3"><label for="EnDeDOM.PW.key_v">vertical character sequence (keyboard layout)</label></td>
 				</tr>
 				<tr><td><input id="EnDeDOM.PW.scorerex"  value="0" class="em2" size="2" ></td>
 				    <td colspan="2"><input id="EnDeDOM.PW.rex" value="" class="text" size="50" ></td>
 				    <td>&#160;</td>
 				    <td colspan="3"><label for="EnDeDOM.PW.rex">user-defined regular expression (JavaScript syntax)</label></td>
 				</tr>
+				<tr><td><input id="EnDeDOM.PW.dumm"      value="Test" class="em2"  size="2" disabled ></td>
+				    <td colspan="2"><input id="EnDeDOM.PW.text" value="" class="text" size="50"></td>
+				    <td>&#160;</td>
+				    <td colspan="3"><label for="EnDeDOM.PW.text">&nbsp;</label></td>
+				</tr>
 			</table>
-			&#160;Test: <input id="EnDeDOM.PW.text"  value="" class="text" size="50">
 			<br><br>
 			<input  id="EnDeDOM.PW.res"   value="Reset"   type="reset">
 			<button id="EnDeDOM.PW.run"   value="Test"    onclick="return EnDe.PW.dispatch(this,'pwd')">test</button>
@@ -1006,6 +1016,7 @@ EnDeGUI.titles  = {
 	'EnDeDOM.IP.bq':    "IP convertion tool (click to expand/fold)",
 	'EnDeDOM.TS.bq':    "IP timestamp convertion tool (click to expand/fold)",
 	'EnDeDOM.RE.bq':    "explain and pretty print regEx tool (click to expand/fold)",
+	'EnDeDOM.PW.bq':    "testing password strength EXPERIMENTAL (click to expand/fold)",
 	'EnDeDOM.TST.bq':   "test tool (click to expand/fold)",
 	'EnDeDOM.DBX.bq':   "trace output and debug tool (click to expand/fold)",
 	'EnDeDOM.f.GUI':    "set options for GUI",
@@ -1018,6 +1029,7 @@ EnDeGUI.titles  = {
 	'EnDeDOM.f.RX':     "explain and pretty print regEx tool",
 	'EnDeDOM.f.TST':    "test tool",
 	'EnDeDOM.f.DBX':    "trace output and debug tool",
+	'EnDeDOM.f.PW':     "testing password strength EXPERIMENTAL",
 	'EnDeDOM.SB.bp':    "top or bottom position",
 	'EnDeDOM.DBX.text': "trace/debug output",
 	'EnDeDOM.DBX.bc':   "clear trace/debug output",
@@ -1267,15 +1279,20 @@ EnDeGUI.titles  = {
 	'EnDeDOM.PW.nsp':   "EnDeDOM.PW.nsp",
 	'EnDeDOM.PW.cnt':   "EnDeDOM.PW.cnt",
 	'EnDeDOM.PW.spn':   "EnDeDOM.PW.spn",
-	'EnDeDOM.PW.hor':   "EnDeDOM.PW.hor",
-	'EnDeDOM.PW.ver':   "EnDeDOM.PW.ver",
-	'EnDeDOM.PW.rex':   "EnDeDOM.PW.rex",
+	'EnDeDOM.PW.lan_h': "select language specific keyboard horizontal",
+	'EnDeDOM.PW.lan_v': "select language specific keyboard vertical",
+	'EnDeDOM.PW.key_h': "language specific keyboard horizontal",
+	'EnDeDOM.PW.key_v': "language specific keyboard vertical",
+	'EnDeDOM.PW.rex':   "RegEx to be used to check given password",
 	'EnDeDOM.home':     "home (" + EnDe.VERSION + ")",
 	'EnDeDOM.icon':     "about " + EnDe.VERSION + " (" + EnDe.VERDATE + ")",
 	'dumm':             ""
 }; // .titles
 EnDeGUI.setTitle();
 EnDeGUI.init();
+// ToDo: following shoid be moved to EnDeGUI.init()
+document.getElementById('EnDeDOM.PW.key_h').value=document.getElementById('EnDeDOM.PW.lan_h').value;
+document.getElementById('EnDeDOM.PW.key_v').value=document.getElementById('EnDeDOM.PW.lan_v').value;
 // ]]>
 </script>
 </body>

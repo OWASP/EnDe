@@ -12,7 +12,7 @@
 	<meta name="DC.rights"        content="https://github.com/EnDe/EnDe license.txt" >
 	<meta name="DC.license"       content="https://github.com/EnDe/EnDe license.txt" >
 	<meta name="DC.modified"      content="20/11/18" >
-	<meta name="DC.Source"        content="@(#) EnDe.html 3.55 20/11/18 01:09:22"  >
+	<meta name="DC.Source"        content="@(#) EnDe.html 3.56 20/11/18 02:12:28"  >
 	<meta name="DC.Date"          content="07-apr-07" >
 	<meta name="DC.creator"       content="Achim Hoffmann" >
 	<meta name="DC.Author"        content="Achim Hoffmann, mailto: ??" >
@@ -70,7 +70,7 @@
 <div id="EnDeDOM.hide">
 	<form id="EnDeDOM" name="EnDeDOM" accept-charset="utf-8" action="#" enctype="multipart/form-data" method="post" >
 	<br>
-	<a id="EnDeDOM.icon" title="about"  href="" onclick="return EnDeGUI.help('ABOUT');"><img src="img/ende-128x128.png" alt="EnDe Icon" width=28 height=28 ></a>
+	<a id="EnDeDOM.icon" title="about"  href="" onClick="return EnDeGUI.help('ABOUT');"><img src="img/ende-128x128.png" alt="EnDe Icon" width=28 height=28 ></a>
 	<a id="EnDeDOM.logo" title="sponsored by sic[!]sec GmbH" href="http://sicsec.de/" target="_sicsec"><img src="img/sicsec-87x26.png" alt="sic[!]sec" ></a>
 	<fieldset   id="EnDeDOM.f.DBX">
 		<div    id="EnDeDOM.DBX.bf" class="head">
@@ -806,7 +806,7 @@
 			</table>
 			<br><br>
 			<input  id="EnDeDOM.PW.res"   value="Reset"   type="reset">
-			<button id="EnDeDOM.PW.run"   value="Test"    onclick="return EnDe.PW.dispatch(this,'pwd')">test</button>
+			<button id="EnDeDOM.PW.run"   value="Test"    onClick="return EnDeGUI.PW.dispatch(this,'pwd')">test</button>
 			<br><br>
 		</div>
 	</fieldset>

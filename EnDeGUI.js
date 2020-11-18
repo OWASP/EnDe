@@ -106,7 +106,7 @@
 #    building the GUI, EnDeGUI.init() will show the "Browser Quirks" window.
 #?
 #? VERSION
-#?      @(#) EnDeGUI.js 3.105 18/08/05 15:26:21
+#?      @(#) EnDeGUI.js 3.106 20/11/18 02:10:53
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -118,8 +118,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '3.105';
-this.sid        = function() {  return('@(#) EnDeGUI.js 3.105 18/08/05 15:26:21 EnDeGUI'); };
+this.SID        = '3.106';
+this.sid        = function() {  return('@(#) EnDeGUI.js 3.106 20/11/18 02:10:53 EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 
@@ -263,9 +263,9 @@ this.dprint     = function(txt,src) {
 		  case 'string':    _r += '\t' + src; if (src==='') { _r += '(**empty**)'; }; break;
 		  case 'object':
 			if (src.length!==undefined) {
-				_r += ' Array (length:' + src.length + ') {';
+				_r += ' Array (length:' + src.length + ') {'; // dumm }
 			} else {
-				_r += ' Object {';
+				_r += ' Object {';      // dumm }
 			}
 			for(_c in src) {
 				_r += '\n' + _t + _c + ':\t';
@@ -436,7 +436,7 @@ alert(2);
 		  case 'chr': bux = src.charCodeAt(0);          break;
 		}
 		return bux.toString(10);
-		return bux;
+		return bux;   // fallback
 	}; // .getUnicode
 
 	this.getFormat  = function(typ,src) {
@@ -4282,7 +4282,7 @@ this.setFT      = function(src) {
 	} else {
 		$('EnDeDOM.GUI.file').value = $('EnDeDOM.QQ.lp').value + src;
 	}
-};
+}; // .setFT
 
 	// ===================================================================== //
 	// general GUI dispatcher                                                //
@@ -4310,7 +4310,7 @@ this.dispatch = function(obj,src) {
 	 * dann muessen die APIs der Funktionen entsprechend parametrisiert
 	 * sein. Wenn nein, dann muessen die Funktionen die obj.id hardcoded
 	 * haben. Z.Zt. haben wir eine Mischung aus beidem.
-	 * Siehe:  if (ccc==='FF') {
+	 * Siehe:  if (ccc==='FF') { ... }
 	 * ---
 	 * Ueberlegung: sollen alle SELECT-Handler EnDeGUI.dispatch() sein?
 	 */

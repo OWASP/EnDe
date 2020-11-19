@@ -12,7 +12,7 @@
 	<meta name="DC.rights"        content="https://github.com/EnDe/EnDe license.txt" >
 	<meta name="DC.license"       content="https://github.com/EnDe/EnDe license.txt" >
 	<meta name="DC.modified"      content="20/11/19" >
-	<meta name="DC.Source"        content="@(#) EnDe.html 3.57 20/11/19 01:05:00"  >
+	<meta name="DC.Source"        content="@(#) EnDe.html 3.58 20/11/19 07:04:05"  >
 	<meta name="DC.Date"          content="07-apr-07" >
 	<meta name="DC.creator"       content="Achim Hoffmann" >
 	<meta name="DC.Author"        content="Achim Hoffmann, mailto: ??" >
@@ -182,7 +182,7 @@
 				<label class="bold">Info:</label>
 				<button id="EnDeDOM.GUI.DBX"    onClick="return EnDeGUI.tool('EnDeDOM.f.DBX');">Trace</button>
 				<button id="EnDeDOM.GUI.TST"    onClick="return EnDeGUI.tool('EnDeDOM.f.TST');">Test</button>
-				<button id="EnDeDOM.GUI.H"      onClick="return EnDeGUI.tour(this);">Tour</button>
+				<button id="EnDeDOM.GUI.H"      onClick="return EnDeGUI.tour(this);" hide="1">Tour</button>
 				<button id="EnDeDOM.GUI.SB"     onClick="return EnDeGUI.show(this);">Status Bar</button>
 				<label for="EnDeDOM.GUI.cmt">Comments <input  id="EnDeDOM.GUI.cmt" type="checkbox" ></label>
 				<br>
@@ -950,7 +950,7 @@
 				If following error message is shown (in developer window)
 				the browser needs to be restarted with proper options.<br>
 				<dt>Firefox:</dt><br>
-				<tt>privacy.file_unique_origin:false</tt> was set:<br>
+				if <tt>privacy.file_unique_origin:false</tt> was set:<br>
 				<i>
 				Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at file:///path/to/EnDeFile.txt. (Reason: CORS request not http).
 				</i>

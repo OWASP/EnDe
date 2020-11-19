@@ -1,8 +1,8 @@
 /*****************************************************************************\
 |                  Copyright (c) 2006 - 2014 Achim Hoffmann
-|------------------------------------------------------------------------------
+|=============================================================================
 | You may obtain a copy of the license at  https://github.com/EnDe/EnDe
-|------------------------------------------------------------------------------
+|=============================================================================
 | This software is provided "as is", without warranty of any kind, express or
 | implied,  including  but not limited to  the warranties of merchantability,
 | fitness for a particular purpose and noninfringement. In no event shall the
@@ -23,7 +23,7 @@
 | the original  source or any  software  utilizing a GPL  component, such  as
 | this, is also licensed under the same GPL license.
 |
-|------------------------------------------------------------------------------
+|=============================================================================
 | For licenses of some used files see the files itself:
 |    aes.js     - see http://www.movable-type.co.uk/scripts/aes.html (this file
 |                 did not contain license information as copied on 20-jul-2007)
@@ -41,7 +41,7 @@
 |    jsmin.c    - see http://crockford.com/javascript/jsmin
 |    JsDecoder.js   - see http://code.gosu.pl/dl/JsDecoder/demo/JsDecoder.js
 |    vkbeautify.js  - see https://code.google.com/p/vkbeautify/downloads/list
-|------------------------------------------------------------------------------
+|=============================================================================
 |    JsColorizer.js - see http://code.gosu.pl/dl/JsDecoder/demo/JsColorizer.js
 |    JSReq.js       - see http://www.businessinfo.co.uk/labs/jsreg/JSReg.js
 |    CoreRules2Html.jar - see http://www.jwall.org/core-rules/index.jsp

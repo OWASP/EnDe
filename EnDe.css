@@ -9,7 +9,7 @@
 #       Makefile
 #?
 #? VERSION
-#?      @(#) EnDe.css 3.23 19/12/17 23:26:16
+#?      @(#) EnDe.css 3.24 20/11/19 01:01:44
 #?
 #? AUTHOR
 #?      30-may-07 Achim Hoffmann
@@ -431,10 +431,10 @@ span.popup                 { float:     none; }
 /* Browser Quirks window */
 .quirks {
 	padding:        0px;
-	height:         30em;
+	height:         45em;
 	width:          45em;
-	min-width:      45em;
-	max-width:      45em;
+	min-width:      50em;
+	max-width:      55em;
 	font-size:      90%; /* tweak for netbooks */
 }
 .quirks span {
@@ -444,7 +444,7 @@ span.popup                 { float:     none; }
 	padding-left:   0.5em;
 	padding-right:  0.5em;
 	border-left:    1px solid #000000;
-	width:          33em; /* Mozilla 1.7 hack */
+	width:          55em; /* Mozilla 1.7 hack */
 }
 .quirks input { /* tweak for netbooks */
 	font-size:      98%;
@@ -552,6 +552,8 @@ span.popup                 { float:     none; }
 	background:     #e0e0e0;
 	float:          left;
 }
+/* need a wider window for "Browser restart" (is class=funtion too) */
+fieldset[id="EnDeDOM.f.XX"] { width:55em; }
 /* following buttons are special */
 .function fieldset input[id="EnDeDOM.FF.Actions.s.enc"] { background:#00dfff; }
 .function fieldset input[id="EnDeDOM.FF.Actions.s.dec"] { background:#00dfff; }

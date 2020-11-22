@@ -106,7 +106,7 @@
 #    building the GUI, EnDeGUI.init() will show the "Browser Quirks" window.
 #?
 #? VERSION
-#?      @(#) EnDeGUI.js 3.106 20/11/18 02:10:53
+#?      @(#) EnDeGUI.js 3.107 20/11/22 01:01:26
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -118,8 +118,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '3.106';
-this.sid        = function() {  return('@(#) EnDeGUI.js 3.106 20/11/18 02:10:53 EnDeGUI'); };
+this.SID        = '3.107';
+this.sid        = function() {  return('@(#) EnDeGUI.js 3.107 20/11/22 01:01:26 EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 
@@ -3826,7 +3826,7 @@ this.pimp       = function() {
 //#? set some sexy styles
 	_spr('EnDeGUI.pimp(): '+this.pimped);
 
-	function _toggleButtonImg (obj,src,cls,img) {
+	function _toggleInputImg (obj,src,cls,img) {
 	/* toggle backgroundImage for button tags */
 		if (EnDeGUI.pimped===false) {
 			if (obj.getAttribute('value').match(new RegExp('^\\s*'+src+'\\s*$'))!==null) {
@@ -3851,9 +3851,9 @@ this.pimp       = function() {
 				obj.setAttribute('class', obj.oldcls);
 			}
 		}
-	}; // _toggleButtonImg
+	}; // _toggleInputImg
 
-	function _toggleInputImg (obj,attr,src,cls) {
+	function _toggleButtonImg (obj,src,cls,attr) {
 	/* toggle backgroundImage for input tags */
 		if (EnDeGUI.pimped===false) {
 			if (obj.getAttribute(attr)===null) { return; }
@@ -3872,8 +3872,11 @@ this.pimp       = function() {
 						obj.setAttribute('className', cls);
 					}
 				}
+				/* TODO: does not show image in modern browsers, reason yet unknown
+				obj.style.backgroundColor = 'transparent';
+				*/
 				obj.innerHTML = '';
-				EnDeGUI.dpr('  _toggle CSS old: ' + obj.oldcls);
+				EnDeGUI.dpr('  _toggle CSS old: ' + obj.oldcls + ' > ' + cls);
 				//EnDeGUI.dpr('  CSS Old: ' + obj.className);
 			}
 		} else {
@@ -3883,7 +3886,7 @@ this.pimp       = function() {
 				EnDeGUI.dpr('  CSS new: ' + obj.oldcls);
 			}
 		}
-	}; // _toggleInputImg
+	}; // _toggleButtonImg
 
 	/*
 	 * document.styleSheets[0] has following attributes:
@@ -3917,11 +3920,12 @@ this.pimp       = function() {
 		if (bbb[ccc].getAttribute('onclick')===null) { continue; }
 		if (bbb[ccc].id.match(/\.b[hqsw]$/) ===null) { continue; }
 		this.dpr('  button: ' + bbb[ccc].id);
-		_toggleInputImg(bbb[ccc], 'onclick', 'EnDeGUI.help' ,'help');
-		_toggleInputImg(bbb[ccc], 'onclick', 'EnDeGUI.show' ,'fold');
-		_toggleInputImg(bbb[ccc], 'name',    'window' , 'code'   );
-		_toggleInputImg(bbb[ccc], 'name',    'scratch', 'scratch');
-		_toggleInputImg(bbb[ccc], 'name',    'guess',   'guess'  );
+//    	_toggleButtonImg (obj,src,cls,attr) {
+		_toggleButtonImg(bbb[ccc], 'EnDeGUI.help', 'help', 'onclick');
+		_toggleButtonImg(bbb[ccc], 'EnDeGUI.show', 'fold', 'onclick');
+		_toggleButtonImg(bbb[ccc], 'window',       'code'   , 'name');
+		_toggleButtonImg(bbb[ccc], 'scratch',      'scratch', 'name');
+		_toggleButtonImg(bbb[ccc], 'guess',        'guess',   'name');
 	}
 	bbb = null;
 	bbb = document.getElementsByTagName('input');
@@ -3932,10 +3936,10 @@ this.pimp       = function() {
 		this.dpr('  input: ' + bbb[ccc].id);
 // ToDo: Konquereor 3.5.5 fails with next check
 // ToDo: ugly hack for buttons inside table: need img path
-		_toggleButtonImg (bbb[ccc], ' < ',  'larr', 'img/22x22/larr.png');
-		_toggleButtonImg (bbb[ccc], ' > ',  'rarr', 'img/22x22/rarr.png');
-		_toggleButtonImg (bbb[ccc], ' <> ', 'swap', 'img/22x22/swap.png');
-		_toggleButtonImg (bbb[ccc], 'now',  'time', '');
+		_toggleInputImg( bbb[ccc], ' < ',  'larr',  'img/22x22/larr.png');
+		_toggleInputImg( bbb[ccc], ' > ',  'rarr',  'img/22x22/rarr.png');
+		_toggleInputImg( bbb[ccc], ' <> ', 'swap',  'img/22x22/swap.png');
+		_toggleInputImg( bbb[ccc], 'now',  'time',  '');
 	}
 	this.pimped = !this.pimped;
 	bbb = null;

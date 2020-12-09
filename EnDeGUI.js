@@ -106,7 +106,7 @@
 #    building the GUI, EnDeGUI.init() will show the "Browser Quirks" window.
 #?
 #? VERSION
-#?      @(#) EnDeGUI.js 3.108 20/12/09 22:01:00
+#?      @(#) EnDeGUI.js 3.109 20/12/09 22:54:12
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -118,8 +118,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '3.108';
-this.sid        = function() {  return('@(#) EnDeGUI.js 3.108 20/12/09 22:01:00 EnDeGUI'); };
+this.SID        = '3.109';
+this.sid        = function() {  return('@(#) EnDeGUI.js 3.109 20/12/09 22:54:12 EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 
@@ -819,6 +819,7 @@ this.guess      = function(type,mode,uppercase,src,prefix,suffix,delimiter) {
 // type is 'EN\tguess:\ta description' followed by tab seperated list of items
 //#type? EN:  call encoding functions given in item
 //#type? DE:  call decoding functions given in item
+// the items are the types of en-/decoding functions used for EN.*.dispatch()
 	_dpr('EnDeGUI.guess(' + type + ')');
 	var bux ='';
 	var bbb ='';
@@ -857,16 +858,25 @@ this.guess      = function(type,mode,uppercase,src,prefix,suffix,delimiter) {
 	while ((bbb = kkk.shift())!==undefined) {   // loop over given items
 		if (bbb.match(/(md|sha).*raw$/)!==null) { continue; } // ToDo: ignore raw data for now
 		if (bbb.match(/(_serial|JChar|ASCIIBr|dotBr|DadaUrka)$/)!==null) { continue; } // ToDo: produces alert (7/2009)
-		bux += '<tr><th>' + EnDe.EN.ncr('dez','strict',true,bbb,'',';','') + ':</th><td>';
-		// ToDo: we only get the internal items (from kkk), no human readable label or description
+		// compute human readable text for the label
+		txt  = ["'"+bbb+"'","'"+mode+"'",uppercase,"'"+src+"'","'"+prefix+"'","'"+suffix+"'","'"+delimiter+"'"].join(','); // quote parameters
+		txt  = ['EnDe.', ccc, '.dispatch(', txt, ')'].join('');
+		// generate table line
+		bux += '<tr><th title="' + txt + '">' + EnDe.EN.ncr('dez','strict',true,bbb,'',';','') + ':</th><td>';
 		try {
 		switch (ccc) {
-		  case 'EN': bux += EnDe.EN.ncr('dez','strict',true,
+		  case 'EN':
+					bux += EnDe.EN.ncr(
+								'dez','strict',true,
 								EnDe.EN.dispatch(bbb,mode,uppercase,src,prefix,suffix,delimiter),
-								'',';',''); break;
-		  case 'DE': bux += EnDe.EN.ncr('dez','strict',true,
+								'',';','');
+					break;
+		  case 'DE':
+					bux += EnDe.EN.ncr(
+								'dez','strict',true,
 								EnDe.DE.dispatch(bbb,mode,uppercase,src,prefix,suffix,delimiter),
-								'',';',''); break;
+								'',';','');
+					break;
 		}
 		} catch(e) { EnDeGUI.alert('EnDeGUI.guess('+bbb+')',e); }
 		bux += '</td></tr>';

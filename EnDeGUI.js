@@ -106,7 +106,7 @@
 #    building the GUI, EnDeGUI.init() will show the "Browser Quirks" window.
 #?
 #? VERSION
-#?      @(#) EnDeGUI.js 3.107 20/11/22 01:01:26
+#?      @(#) EnDeGUI.js 3.108 20/12/09 22:01:00
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -118,8 +118,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '3.107';
-this.sid        = function() {  return('@(#) EnDeGUI.js 3.107 20/11/22 01:01:26 EnDeGUI'); };
+this.SID        = '3.108';
+this.sid        = function() {  return('@(#) EnDeGUI.js 3.108 20/12/09 22:01:00 EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 
@@ -851,7 +851,7 @@ this.guess      = function(type,mode,uppercase,src,prefix,suffix,delimiter) {
 		+ '<button id="EnDeDOM.guess.gen.do" onclick="tds=document.getElementsByTagName(String.fromCharCode(116,100));b=String.fromCharCode(32);for(k=0;k<tds.length;k++){b+=tds[k].innerHTML+String.fromCharCode(10);};alert(b);">show payloads only</button>'
 		+ '<table class="labeled" id="EnDeDOM.guess.gen">'
 		+ '<caption title="' +dsc+ '">#----------  '  + EnDe.EN.ncr('dez','strict',true,lbl,'',';','') + '  ----------#</caption>'
-		+ '<tr><th>&#160;</th><td class="src">'       + EnDe.EN.ncr('dez','strict',true,src,'',';','') + '</td></tr>'
+		+ '<tr><th>input:</th><td class="src">'       + EnDe.EN.ncr('dez','strict',true,src,'',';','') + '</td></tr>'
 		+ '<tr><th>&#160;</th><td><hr></td></tr>'
 		;
 	while ((bbb = kkk.shift())!==undefined) {   // loop over given items
@@ -871,8 +871,10 @@ this.guess      = function(type,mode,uppercase,src,prefix,suffix,delimiter) {
 		} catch(e) { EnDeGUI.alert('EnDeGUI.guess('+bbb+')',e); }
 		bux += '</td></tr>';
 	}
-	if ((type.split('@')[2]==='ALL') || (type.match(/base64/)!==null)) {  // following ugly code but result looks nice ;-)
-		// base64 guesses // ToDo: implement other Base64 decodings
+	bux += '<tr><th>&#160;</th><td><hr></td></tr>'
+	if ((type.match(/base64/)!==null) && (type.split('@')[0]==='DE')) {
+		// base64 guesses (starting at several positions)
+		// ToDo: implement other Base64 decodings
 		if (type.split('@')[0]==='DE') {
 			ccc = 0;
 			for (ccc=0; ccc<=8; ccc++) {
@@ -882,6 +884,8 @@ this.guess      = function(type,mode,uppercase,src,prefix,suffix,delimiter) {
 					+  '</td></tr>';
 			}
 		} // DEcoding only
+	}
+	if (type.split('@')[2]==='ALL') {  // following ugly code but result looks nice ;-)
 		// UCS BOM checks
 		var box = '';
 		bux += '<tr><th>check BOM:</th><td><table border="1">';
@@ -914,6 +918,7 @@ this.guess      = function(type,mode,uppercase,src,prefix,suffix,delimiter) {
 			+  '</td></tr>';
 		bux += '<tr><th>Checksums:</th><td>' + EnDe.User.Check.guess(src) + '</td></tr>';
 	} // ALL only
+	bux += '<tr><th>&#160;</th><td><hr></td></tr>'
 	bux += '</table>';
 	EnDeGUI.info( 'guess: ' + lbl, bux );
 	bux = null; bbb = null; ccc = null; kkk = null;

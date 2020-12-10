@@ -66,7 +66,7 @@
 #?      EnDe.Text is not yet part or the librray.
 #?
 #? VERSION
-#?      @(#) EnDeB64.js 3.6 16/11/21 21:30:01
+#?      @(#) EnDeB64.js 3.7 20/12/10 14:31:43
 #?
 #? AUTHOR
 #?      29-mai-10 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -80,7 +80,7 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.B64    = new function() {
-	this.SID    = '3.6';
+	this.SID    = '3.7';
 	this.sid    = function() {       return(EnDe.sid() + '.B64'); };
 
 	this.trace  = false;
@@ -101,8 +101,8 @@ EnDe.B64    = new function() {
 	this.UC     = EnDe.CONST.CHR.UC;                    // [A-Z]
 	this.b10    = EnDe.CONST.CHR.DIGITS;                // [0-9]
 	this.b26    = this.LC  + this.b10;                  // [a-z0-9]
-	this.base64 = this.UC  + this.LC  + this.b10;       // [A-Za-z0-9] temporary, for useage below
-	/* Note that for Base64 sequence *must* be A-Za-z0-9 !  */
+	this.base64 = this.UC  + this.LC  + this.b10;       // [A-Za-z0-9] temporary, for usage below
+	/* Note that for Base64 sequence *must* be A-Za-z0-9  */
 	// no ToDo: above 4 assignments most likely fail in IE8
 	// Base-XX constants
 	this.line   = 76;                                   // max line size according RFC1521
@@ -122,6 +122,12 @@ EnDe.B64    = new function() {
 		'base52': this.UC  + this.LC,                   // [A-Za-z]
 		'base65a':'.,/' + this.UC + this.b10 + this.LC ,// [.,/A-Z0-9a-z] # customer secial
 		'base64': this.base64 + '+/',                   // RFC1521, RFC2045, RFC3548, RFC4648
+		'base64b':'./' + this.base64,                   // modified Base64 for bcrypt
+		'base64c':'./' + this.b10 + this.UC  + this.LC ,// modified Base64 for crypt
+		'base64d':'+.' + this.b10 + this.UC  + this.LC ,// modified Base64 for Xxencoding
+		'base64g':'./' + this.b10 + this.UC  + this.LC ,// modified Base64 for GEDCOM 5.5
+		'base64h':this.b10 + this.LC + this.UC + '@_'  ,// modified Base64 for bash
+		'base64i':this.base64 + '+,',                   // modified Base64 for IMAP, RFC3501
 		'base64f':this.base64 + '+-',                   // modified Base64 for filenames, SAP
 		'base64p':this.base64 + '_-',                   // modified Base64 for program identifiers (var. 1)
 		'base64q':this.base64 + '._',                   // modified Base64 for program identifiers (var. 2)
@@ -158,7 +164,13 @@ EnDe.B64    = new function() {
 		'base58':   6,
 		'base62':   6,
 		'base64':   6,
+		'base64b':  6,
+		'base64c':  6,
+		'base64d':  6,
 		'base64f':  6,
+		'base64g':  6,
+		'base64h':  6,
+		'base64i':  6,
 		'base64p':  6,
 		'base64q':  6,
 		'base64r':  6,
@@ -183,22 +195,22 @@ EnDe.B64    = new function() {
 	//#? return true if string consist of base16 characters only
 
 	this.isB26  = function(src) { return this.is('base26',  src); };
-	//#? return true if string consist of base64 characters only
+	//#? return true if string consist of base26 characters only
 
 	this.isB34  = function(src) { return this.is('base34',  src); };
 	//#? return true if string consist of base34 characters only
 
 	this.isB36  = function(src) { return this.is('base36',  src); };
-	//#? return true if string consist of base64 characters only
+	//#? return true if string consist of base36 characters only
 
 	this.isB52  = function(src) { return this.is('base52',  src); };
-	//#? return true if string consist of base64 characters only
+	//#? return true if string consist of base52 characters only
 
 	this.isB58  = function(src) { return this.is('base58',  src); };
-	//#? return true if string consist of base64 characters only
+	//#? return true if string consist of base58 characters only
 
 	this.isB62  = function(src) { return this.is('base62',  src); };
-	//#? return true if string consist of base64 characters only
+	//#? return true if string consist of base62 characters only
 
 	this.isB65  = function(src) { return this.is('base65a', src); };
 	//#? return true if string consist of base65 characters only
@@ -284,6 +296,12 @@ EnDe.B64    = new function() {
 	//#type? base52:   Base52
 	//#type? base65a:  Base65
 	//#type? base64:   Base64 as in RFC1521, RFC2045, RFC3548, RFC4648
+	//#type? base64b:  modified Base64 for bcrypt
+	//#type? base64c:  modified Base64 for crypt
+	//#type? base64d:  modified Base64 for Xxencoding
+	//#type? base64g:  modified Base64 for GEDCOM 5.5
+	//#type? base64h:  modified Base64 for bash
+	//#type? base64i:  modified Base64 for IMAP, RFC3501
 	//#type? base64f:  modified Base64 for filenames, SAP
 	//#type? base64p:  modified Base64 for program identifiers (var. 1)
 	//#type? base64q:  modified Base64 for program identifiers (var. 2)
@@ -318,6 +336,12 @@ EnDe.B64    = new function() {
 		  case 'base52':
 		  case 'base58':
 		  case 'base64':
+		  case 'base64b':
+		  case 'base64c':
+		  case 'base64d':
+		  case 'base64g':
+		  case 'base64h':
+		  case 'base64i':
 		  case 'base64f':
 		  case 'base64p':
 		  case 'base64q':
@@ -364,6 +388,7 @@ EnDe.B64    = new function() {
 		}
 	
 		// finalize padding
+		// ToDo some encodings use different padding, or padding is omitted
 		switch (type) {
 		  case 'base16':  break; // not necessary
 		  case 'base32':
@@ -371,6 +396,12 @@ EnDe.B64    = new function() {
 		  case 'base32h':
 		  case 'base32z': while ((bux.length%8)>0) { bux[bux.length] = EnDe.B64.pad; }; break;
 		  case 'base64':
+		  case 'base64b':
+		  case 'base64c':
+		  case 'base64d':
+		  case 'base64g':
+		  case 'base64h':
+		  case 'base64i':
 		  case 'base64f':
 		  case 'base64p':
 		  case 'base64q':
@@ -468,6 +499,12 @@ EnDe.B64    = new function() {
 		  case 'base36':
 		  case 'base52':
 		  case 'base64':
+		  case 'base64b':
+		  case 'base64c':
+		  case 'base64d':
+		  case 'base64g':
+		  case 'base64h':
+		  case 'base64i':
 		  case 'base64f':
 		  case 'base64p':
 		  case 'base64q':
@@ -551,6 +588,12 @@ EnDe.B64    = new function() {
 	//#type? base52:   Base52
 	//#type? base65a:  Base65
 	//#type? base64:   Base64 as in RFC1521, RFC2045, RFC3548, RFC4648
+	//#type? base64b:  modified Base64 for bcrypt
+	//#type? base64c:  modified Base64 for crypt
+	//#type? base64d:  modified Base64 for Xxencoding
+	//#type? base64g:  modified Base64 for GEDCOM 5.5
+	//#type? base64h:  modified Base64 for bash
+	//#type? base64i:  modified Base64 for IMAP, RFC3501
 	//#type? base64f:  modified Base64 for filenames, SAP
 	//#type? base64p:  modified Base64 for program identifiers (var. 1)
 	//#type? base64q:  modified Base64 for program identifiers (var. 2)
@@ -581,6 +624,12 @@ EnDe.B64    = new function() {
 		  case 'base58':
 		  case 'base62':
 		  case 'base64':
+		  case 'base64b':
+		  case 'base64c':
+		  case 'base64d':
+		  case 'base64g':
+		  case 'base64h':
+		  case 'base64i':
 		  case 'base64f':
 		  case 'base64p':
 		  case 'base64q':
@@ -684,6 +733,12 @@ EnDe.B64    = new function() {
 		  case 'base32':
 		  case 'base36':
 		  case 'base52':
+		  case 'base64b':
+		  case 'base64c':
+		  case 'base64d':
+		  case 'base64g':
+		  case 'base64h':
+		  case 'base64i':
 		  case 'base64f':
 		  case 'base64p':
 		  case 'base64q':

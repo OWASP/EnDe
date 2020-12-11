@@ -1,6 +1,4 @@
 /* ========================================================================= //
-# vi:  ts=4:
-# vim: ts=4:
 #?
 #? NAME
 #?      EnDeGUI.js
@@ -106,7 +104,7 @@
 #    building the GUI, EnDeGUI.init() will show the "Browser Quirks" window.
 #?
 #? VERSION
-#?      @(#) EnDeGUI.js 3.110 20/12/11 12:17:37
+#?      @(#) EnDeGUI.js 3.111 20/12/11 12:53:28
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -118,8 +116,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '3.110';
-this.sid        = function() {  return('@(#) EnDeGUI.js 3.110 20/12/11 12:17:37 EnDeGUI'); };
+this.SID        = '3.111';
+this.sid        = function() {  return('@(#) EnDeGUI.js 3.111 20/12/11 12:53:28 EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 
@@ -1920,10 +1918,16 @@ try {
 		txt += '<tr><td><button id="c_' + bbb + '" onClick="EnDe.CONST.CST['+bbb+']=this.value;" title="set value">' + kkk + bbb + '</button></td>';
 		txt += '<td><input name="' + bbb +'" value="' + EnDe.CONST.CST[bbb] + '"></td></tr>';
 	}
+	txt += '</table><br>';
+
 	/*
 	 * EnDe.B64
 	 */
-	var _b64 = ['line', 'crnl', 'pad' ];
+	txt += '<button onClick="return _show(\'_table_B64\');">EnDe.B64</button><br>';	
+ 	txt += '<table cellpadding="2" cellspacing="0" style="display:none; border:0" id="_table_B64" ><caption>EnDe.B64</caption>';
+	txt += '<tr><th>   name   </th><th> value </th><tr>';
+
+	var _b64 = ['line', 'crnl', 'pad', 'LC', 'UC', 'b10', 'b26', 'base64' ];
 	for (bbb in _b64) {
 		txt += '<tr><td><button id="I_' + _b64[bbb] + '" onClick="EnDe.B64['+_b64[bbb]+']=this.value;" title="set value">EnDe.B64.' + _b64[bbb] + '</button></td>';
 		txt += '<td><input name="' + _b64[bbb] +'" value="' + EnDe.B64[_b64[bbb]] + '"></td></tr>';
@@ -1942,7 +1946,7 @@ try {
 	 * EnDe.b64Char
 	 */
 	txt += '<button onClick="return _show(\'_table_b64\');">EnDe.b64</button><br>';	
-	txt += ccc + 'id="_table_b64"><caption>EnDe.b64Char[]</caption>';
+	txt += ccc + 'id="_table_b64"><caption>EnDe.b64Char[], EnDe.b64Code[]</caption>';
 	txt += '<tr><th>   index   </th><th> b64Char[i] </th><th>&#160;</th><th> b64Code[i] </th><tr>';
 	for (i=0; i<EnDe.b64Char.length; i++) {
 		txt += '<tr><td>[' + i + ']</td><td>' + EnDe.b64Char[i] + '</td><td>&#160;</td><td>' + EnDe.b64Code[EnDe.b64Char[i]] + '</td><tr>';

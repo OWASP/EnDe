@@ -106,7 +106,7 @@
 #    building the GUI, EnDeGUI.init() will show the "Browser Quirks" window.
 #?
 #? VERSION
-#?      @(#) EnDeGUI.js 3.109 20/12/09 22:54:12
+#?      @(#) EnDeGUI.js 3.110 20/12/11 12:17:37
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -118,8 +118,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '3.109';
-this.sid        = function() {  return('@(#) EnDeGUI.js 3.109 20/12/09 22:54:12 EnDeGUI'); };
+this.SID        = '3.110';
+this.sid        = function() {  return('@(#) EnDeGUI.js 3.110 20/12/11 12:17:37 EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 
@@ -2500,7 +2500,7 @@ this.EN         = new function() {
 		$('EnDeDOM.FF.text').value  = EnDeGUI.FF.update(item,mode,uppercase,src,prefix,suffix,delimiter,'EnDe.EN.dispatch');
 	} else {
 		try {   // this try-catch is just to handle some missing browser functionality
-			_spr('EnDeGUI.EN.dispatch: EnDe.EN.dispatch(item="' + item + '", mode=' + mode + ', case="' + uppercase + '", prefix="' + prefix + '", suffix="' + suffix + '", delimiter=' + delimiter + '")');
+			_spr('EnDeGUI.EN.dispatch: EnDe.EN.dispatch(item="' + item + '", mode=' + mode + ', case="' + uppercase + '", prefix="' + prefix + '", suffix="' + suffix + '", delimiter="' + delimiter + '")');
 			bux = EnDe.EN.dispatch(item,mode,uppercase,src,prefix,suffix,delimiter);
 			if ($('EnDeDOM.ED.uri').checked===true) { bux = encodeURIComponent(bux.replace(/\n/g,'')); }
 		} catch (e) {
@@ -2668,7 +2668,7 @@ this.DE         = new function() {
 		$('EnDeDOM.FF.text').value  = EnDeGUI.FF.update(item,mode,uppercase,src,prefix,suffix,delimiter,'EnDe.DE.dispatch');
 	} else {
 		try {   // this try-catch is just to handle some missing browser functionality
-			_spr('EnDeGUI.DE.dispatch: EnDe.DE.dispatch(item="' + item + '", mode=' + mode + ', prefix="' + prefix + '", suffix="' + suffix + '", delimiter=' + delimiter + '")');
+			_spr('EnDeGUI.DE.dispatch: EnDe.DE.dispatch(item="' + item + '", mode=' + mode + ', prefix="' + prefix + '", suffix="' + suffix + '", delimiter="' + delimiter + '")');
 			bux = EnDe.DE.dispatch(item,mode,uppercase,src,prefix,suffix,delimiter);
 		} catch (e) {
 			bux = '**ERROR: ' + this.sid() + '.dispatch(*) failed with:\n' + e;

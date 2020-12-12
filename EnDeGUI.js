@@ -104,7 +104,7 @@
 #    building the GUI, EnDeGUI.init() will show the "Browser Quirks" window.
 #?
 #? VERSION
-#?      @(#) EnDeGUI.js 3.111 20/12/11 12:53:28
+#?      @(#) EnDeGUI.js 3.112 20/12/12 10:28:24
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -116,8 +116,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '3.111';
-this.sid        = function() {  return('@(#) EnDeGUI.js 3.111 20/12/11 12:53:28 EnDeGUI'); };
+this.SID        = '3.112';
+this.sid        = function() {  return('@(#) EnDeGUI.js 3.112 20/12/12 10:28:24 EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 
@@ -1826,7 +1826,13 @@ this.showMap    = function() {
 //#? show window with various trace/debug information
 // ToDo: very ugly code, needs to be more generic
 	_spr('EnDeGUI.showMap');
+	var x   = EnDeGUI.winX;
+	var y   = EnDeGUI.winY;
+	EnDeGUI.winX = '1020';
+	EnDeGUI.winY = '800';
 	var win = this.win.help('','trace', '');
+	EnDeGUI.winX = x;
+	EnDeGUI.winY = y;
 	var txt = '';
 	var div = document.createElement('SCRIPT');
 	var i   = 0;
@@ -1841,8 +1847,8 @@ this.showMap    = function() {
 	win.document.body.appendChild(div);
 	div = document.createElement('DIV');
 	div.innerHTML  = EnDe.sid()     + '<br />';
-	div.innerHTML += '--DEBUG--';
-	div.innerHTML += '<br><sup>Note that some values may contain non-printable characters!</sup>';
+	div.innerHTML += '--DEBUG-- (internal settings)';
+	div.innerHTML += '<br><sup>Note that some values may contain non-printable characters!</sup><br>';
 	win.document.body.appendChild(div);
 	div = document.createElement('DIV');
 	div.id         = 'dbxmap';
@@ -1850,9 +1856,9 @@ this.showMap    = function() {
 
 	var bbb = null;
 	// quick&dirty as styles are not supported in all browsers
-	var ccc = '<style>input {width:37em;}</style>';
+	var ccc = '<style>button {width:20em;} input {width:47em;} table {border:1px solid black;border-collapse:collapse;}</style>';
 	// quick&dirty as tables in the DOM are a nightmare ...
-	ccc += '<table ; border="1" cellpadding="0" cellspacing="0" style="display:none" ';
+	ccc += '<table ; border="1" cellpadding="2" cellspacing="0" style="display:none" ';
 
 	/*
 	 * EnDe constants
@@ -1929,7 +1935,7 @@ try {
 
 	var _b64 = ['line', 'crnl', 'pad', 'LC', 'UC', 'b10', 'b26', 'base64' ];
 	for (bbb in _b64) {
-		txt += '<tr><td><button id="I_' + _b64[bbb] + '" onClick="EnDe.B64['+_b64[bbb]+']=this.value;" title="set value">EnDe.B64.' + _b64[bbb] + '</button></td>';
+		txt += '<tr><td><button id="I_' + _b64[bbb] + '" onClick="EnDe.B64['+_b64[bbb]+']=$(' + _b64[bbb] + ').value;" title="set value">EnDe.B64.' + _b64[bbb] + '</button></td>';
 		txt += '<td><input name="' + _b64[bbb] +'" value="' + EnDe.B64[_b64[bbb]] + '"></td></tr>';
 	}
 	kkk  = 'EnDe.B64.map.';

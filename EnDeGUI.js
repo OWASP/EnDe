@@ -104,7 +104,7 @@
 #    building the GUI, EnDeGUI.init() will show the "Browser Quirks" window.
 #?
 #? VERSION
-#?      @(#) EnDeGUI.js 3.112 20/12/12 10:28:24
+#?      @(#) EnDeGUI.js 3.113 20/12/12 20:27:56
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -116,8 +116,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '3.112';
-this.sid        = function() {  return('@(#) EnDeGUI.js 3.112 20/12/12 10:28:24 EnDeGUI'); };
+this.SID        = '3.113';
+this.sid        = function() {  return('@(#) EnDeGUI.js 3.113 20/12/12 20:27:56 EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 
@@ -705,7 +705,7 @@ this.info       = function(title,txt) {
 	var win = this.win.help('', title, txt);
 	win.focus();
 	return false;
-}; // cont
+}; // info
 
 this.help       = function(type) {
 //#? Create new browser window with help text, uses given type as anchor
@@ -1825,6 +1825,45 @@ try {
 this.showMap    = function() {
 //#? show window with various trace/debug information
 // ToDo: very ugly code, needs to be more generic
+
+	this.showButton = function (id,txt) {
+	//# return a button which toggle display of group of variables
+		// for example: this.showButton('CST', 'EnDe.CONST');
+		// create a button which toggles display of the tag with id=_table_CST
+		// _show() defined in div.innerHTML below
+		var ccc = "_show('_table_" + id + "');";
+		return '<button onClick="return ' + ccc + '">' + txt + '</button><br>';	
+	}; // showButton
+
+	this.showTableR = function (tag) { // ...args
+	//# return a table row with as many columns as specified
+		var bux = '';
+		for (var i=1; i<arguments.length; i++) {
+			bux += ['<', tag, '>&#160;', arguments[i], '</', tag, '>'].join(''); 
+		}
+		bux = ['<tr>', bux, '</tr>'].join('');
+		return bux;
+	}; // showTableR
+
+	this.showTable  = function (id,txt,border) { // ...args
+	//# return a table with caption and first row with nr-of-args columns
+		// for example:  this.showTable('eut', 'EnDe.ebcdicUTF', 1);
+		// creates a table with id=_table_eut
+		var bux = '';
+		for (var i=3; i<arguments.length; i++) {
+			bux += ['<th>&#160;', arguments[i], '</th>'].join('');
+		}
+		return '<table id="_table_' + id + '"'
+			+ '  border="' + border + '" cellpadding="0" cellspacing="0" style="display:none" >'
+			+ '<caption>' + txt + '</caption>'
+			+ ['<tr>', bux, '</tr>'].join('');
+			// ToDo + this.showTableR('th', bux);
+	}; // showTable
+
+	this.setValue   = function (id,txt) {
+	//# create a button which sets value of correspnding EnDe.* variable
+	}; // setValue
+
 	_spr('EnDeGUI.showMap');
 	var x   = EnDeGUI.winX;
 	var y   = EnDeGUI.winY;
@@ -1856,7 +1895,7 @@ this.showMap    = function() {
 
 	var bbb = null;
 	// quick&dirty as styles are not supported in all browsers
-	var ccc = '<style>button {width:20em;} input {width:47em;} table {border:1px solid black;border-collapse:collapse;}</style>';
+	var ccc = '<style>button {width:20em;} input {width:47em;font-family:monospace;} table {border:1px solid black;border-collapse:collapse;} td:nth-child(2){white-space:pre;font-family:monospace;}</style>';
 	// quick&dirty as tables in the DOM are a nightmare ...
 	ccc += '<table ; border="1" cellpadding="2" cellspacing="0" style="display:none" ';
 
@@ -1864,9 +1903,8 @@ this.showMap    = function() {
 	 * EnDe constants
 	 */
 	kkk  = 'EnDe.';
-	txt += '<button onClick="return _show(\'_table_EnDe\');">EnDe.</button><br>';	
+	txt += this.showButton('EnDe', 'EnDe.');
 	txt += ccc + 'id="_table_EnDe"><caption>EnDe.[]</caption>';
-	txt += '<tr><th>   name   </th><th> value </th><tr>';
 	for (bbb in EnDe) {
 		_dpr('# ' + typeof EnDe[bbb] + '\tEnDe.' + bbb + ' #');
 		if (bbb == 'pairs')             { continue; }
@@ -1890,14 +1928,13 @@ try {
 		txt += '<tr><td><button id="c_' + bbb + '" onClick="EnDe.pairs['+bbb+']=this.value;" title="set value">' + kkk + bbb + ' ]</button></td>';
 		txt += '<td><input name="' + bbb +'" value="' + EnDe.pairs[bbb] + '"></td></tr>';
 	}
-	txt += '</table><br>';
+	txt += '</table>';
 
 	/*
 	 * some constants (character classes, integer, ...)
 	 */
-	txt += '<button onClick="return _show(\'_table_CST\');">EnDe.CONST</button><br>';	
- 	txt += '<table cellpadding="2" cellspacing="0" style="display:none; border:0" id="_table_CST" ><caption>EnDe.CONST</caption>';
-	txt += '<tr><th>   name   </th><th> value </th><tr>';
+	txt += this.showButton('CST', 'EnDe.CONST.');
+	txt += this.showTable ('CST', 'EnDe.CONST', 1, 'name', 'value');
 	kkk  = 'EnDe.CONST.CHR.';
 	for (bbb in EnDe.CONST.CHR) {
 	// ToDo: bug: parent.EnDe.CONST.CHR[bbb]=this.value not working, inspect DOM
@@ -1924,12 +1961,12 @@ try {
 		txt += '<tr><td><button id="c_' + bbb + '" onClick="EnDe.CONST.CST['+bbb+']=this.value;" title="set value">' + kkk + bbb + '</button></td>';
 		txt += '<td><input name="' + bbb +'" value="' + EnDe.CONST.CST[bbb] + '"></td></tr>';
 	}
-	txt += '</table><br>';
+	txt += '</table>';
 
 	/*
 	 * EnDe.B64
 	 */
-	txt += '<button onClick="return _show(\'_table_B64\');">EnDe.B64</button><br>';	
+	txt += this.showButton('B64', 'EnDe.B64.');
  	txt += '<table cellpadding="2" cellspacing="0" style="display:none; border:0" id="_table_B64" ><caption>EnDe.B64</caption>';
 	txt += '<tr><th>   name   </th><th> value </th><tr>';
 
@@ -1951,111 +1988,102 @@ try {
 	/*
 	 * EnDe.b64Char
 	 */
-	txt += '<button onClick="return _show(\'_table_b64\');">EnDe.b64</button><br>';	
-	txt += ccc + 'id="_table_b64"><caption>EnDe.b64Char[], EnDe.b64Code[]</caption>';
-	txt += '<tr><th>   index   </th><th> b64Char[i] </th><th>&#160;</th><th> b64Code[i] </th><tr>';
+	txt += this.showButton('b64', 'EnDe.b64');
+	txt += this.showTable ('b64', 'EnDe.b64Char[], EnDe.b64Code[]', 1, 'index', 'b64Char[i]', 'b64Code[i]');
 	for (i=0; i<EnDe.b64Char.length; i++) {
-		txt += '<tr><td>[' + i + ']</td><td>' + EnDe.b64Char[i] + '</td><td>&#160;</td><td>' + EnDe.b64Code[EnDe.b64Char[i]] + '</td><tr>';
+		txt += this.showTableR('td', i, EnDe.b64Char[i], EnDe.b64Code[EnDe.b64Char[i]]);
 	}
 	txt += '</table>';
 
 	/*
 	 * EnDe.xmlMap
 	 */
-	txt += '<button onClick="return _show(\'_table_xml\');">EnDe.xmlMap</button><br>';	
-	txt += ccc + 'id="_table_xml"><caption>EnDe.xmlMap[]</caption>';
-	txt += '<tr><th>   index   </th><th> xmlMap[i] </th><tr>';
+	txt += this.showButton('xml', 'EnDe.xmlMap');
+	txt += this.showTable ('xml', 'EnDe.xmlMap[ ]', 1, 'index', 'xmlMap[i]');
 	for (i in EnDe.xmlMap) {
-		txt += '<tr><td>[' + i + ']</td><td>' + EnDe.xmlMap[i] + '</td><tr>';
+		txt += this.showTableR('td', i, EnDe.xmlMap[i]);
 	}
 	txt += '</table>';
 
 	/*
 	 * EnDe.spaceMap
 	 */
-	txt += '<button onClick="return _show(\'_table_space\');" title="Unicode Spaces">EnDe.spaceMap</button><br>';	
+	txt += this.showButton('space', 'EnDe.spaceMap'); // Unicode Spaces
 	txt += ccc + 'id="_table_space"><caption>EnDe.spaceMap[]</caption>';
 	txt += '<tr><th>Code<br><sup>not part of map</sup></th><th>   index   </th><th> spaceMap[i] </th><tr>';
 	for (i in EnDe.spaceMap) {
 		h    = EnDe.i2h('hex4',i);
-		txt += '<tr><td>U+' + h + '</td><td>[' + i + ']</td><td>' + EnDe.spaceMap[i] + '</td><tr>';
+		txt += this.showTableR('td', 'U+' + h, '[' + i + ']', EnDe.spaceMap[i]);
 	}
 	txt += '</table>';
 
 	/*
 	 * EnDe.asciiMap
 	 */
-	txt += '<button onClick="return _show(\'_table_asc\');">EnDe.asciiMap</button><br>';
-	txt += '<table id="_table_asc" border="1" cellpadding="0" cellspacing="0" style="display:none" ><caption>EnDe.asciiMap[]</caption>';
-	txt += '<tr><th>   index   </th><th> asciiMap[mapChr] </th><th> asciiMap[mapDsc] </th><tr>';
+	txt += this.showButton('asc', 'EnDe.asciiMap');
+	txt += this.showTable ('asc', 'EnDe.asciiMap[ ]', 1, 'index', 'asciiMap[mapChr]', 'asciiMap[mapDsc]');
 	for (i in EnDe.asciiMap) {
-		txt += '<tr><td>[' + i + ']</td><td>' + EnDe.asciiMap[i][EnDe.mapChr] + '</td><td>' + EnDe.asciiMap[i][EnDe.mapDsc] + '</td><tr>';
+		txt += this.showTableR('td', i, EnDe.asciiMap[i][EnDe.mapChr], EnDe.asciiMap[i][EnDe.mapDsc]);
 	}
 	txt += '</table>';
 
 	/*
 	 * EnDe.DIN66003Map
 	 */
-	txt += '<button onClick="return _show(\'_table_din\');">EnDe.DIN66003Map</button><br>';
-	txt += '<table id="_table_din" border="1" cellpadding="0" cellspacing="0" style="display:none" ><caption>EnDe.DIN66003Map[]</caption>';
-	txt += '<tr><th>   index   </th><th> DIN66003Map[mapChr] </th><th> DIN66003Map[mapDsc] </th><tr>';
+	txt += this.showButton('din', 'EnDe.DIN66003Map');
+	txt += this.showTable ('din', 'EnDe.DIN66003Map[ ]', 1, 'index', 'DIN66003Map[mapChr]', 'DIN66003Map[mapDsc]');
 	for (i in EnDe.DIN66003Map) {
-		txt += '<tr><td>[' + i + ']</td><td>' + EnDe.DIN66003Map[i][EnDe.mapChr] + '</td><td>' + EnDe.DIN66003Map[i][EnDe.mapDsc] + '</td><tr>';
+		txt += this.showTableR('td', i, EnDe.DIN66003Map[i][EnDe.mapChr], EnDe.DIN66003Map[i][EnDe.mapDsc]);
 	}
 	txt += '</table>';
 
 	/*
 	 * EnDe.DIN66003fMap
 	 */
-	txt += '<button onClick="return _show(\'_table_dinf\');">EnDe.DIN66003fMap</button><br>';
-	txt += '<table id="_table_dinf" border="1" cellpadding="0" cellspacing="0" style="display:none" ><caption>EnDe.DIN66003fMap[]</caption>';
-	txt += '<tr><th>   index   </th><th> &#160; </th><th> DIN66003fMap[mapChr] </th><tr>';
+	txt += this.showButton('dinf', 'EnDe.DIN66003fMap');
+	txt += this.showTable ('dinf', 'EnDe.DIN66003fMap[ ]', 1, 'index', 'DIN66003fMap[mapChr]', ''); // ToDo mapDsc
 	for (i in EnDe.DIN66003fMap) {
-		txt += '<tr><td>[' + i + ']</td><td>&#160;</td><td>' + EnDe.DIN66003fMap[i] + '</td><tr>';
+		txt += this.showTableR('td', i, EnDe.DIN66003fMap[i], '');
 	}
 	txt += '</table>';
 
 	/*
 	 * EnDe.ebcdicMap
 	 */
-	txt += '<button onClick="return _show(\'_table_ebs\');">EnDe.ebcdicMap</button><br>';
-	txt += '<table id="_table_ebs" border="1" cellpadding="0" cellspacing="0" style="display:none" ><caption>EnDe.ebcdicMap[]</caption>';
-	txt += '<tr><th>   index   </th><th> ebcdicMap[mapChr] </th><th> ebcdicMap[mapDsc] </th><tr>';
+	txt += this.showButton('ebc', 'EnDe.ebcdicMap');
+	txt += this.showTable ('ebc', 'EnDe.ebcdicMap', 1, 'index', 'ebcdicMap[mapChr]', 'ebcdicMap[mapDsc]');
 	for (i in EnDe.ebcdicMap) {
-		txt += '<tr><td>[' + i + ']</td><td>' + EnDe.ebcdicMap[i][EnDe.mapChr] + '</td><td>' + EnDe.ebcdicMap[i][EnDe.mapDsc] + '</td><tr>';
+		txt += this.showTableR('td', i, EnDe.ebcdicMap[i][EnDe.mapChr], EnDe.ebcdicMap[i][EnDe.mapDsc]);
 	}
 	txt += '</table>';
 
 	/*
 	 * EnDe.romanMap
 	 */
-	txt += '<button onClick="return _show(\'_table_rom\');">EnDe.romanMap</button><br>';
-	txt += '<table id="_table_rom" border="1" cellpadding="0" cellspacing="0" style="display:none" ><caption>EnDe.romanMap[]</caption>';
-	txt += '<tr><th>   index   </th><th> romanMap[mapChr] </th><th> romanMap[mapDsc] </th><tr>';
+	txt += this.showButton('rom', 'EnDe.romanMap');
+	txt += this.showTable ('rom', 'EnDe.romanMap[ ]', 1, 'index', 'romanMap[mapChr]', 'romanMap[mapDsc]');
 	for (i in EnDe.romanMap) {
-		txt += '<tr><td>[' + i + ']</td><td>' + EnDe.romanMap[i][EnDe.mapChr] + '</td><td>' + EnDe.romanMap[i][EnDe.mapDsc] + '</td><tr>';
+		txt += this.showTableR('td', i, EnDe.romanMap[i][EnDe.mapChr], EnDe.romanMap[i][EnDe.mapDsc]);
 	}
 	txt += '</table>';
 
 	/*
 	 * EnDe.u2superMap
 	 */
-	txt += '<button onClick="return _show(\'_table_range\');" title="Unicode superscript characters">EnDe.u2superMap</button><br>';	
-	txt += ccc + 'id="_table_range"><caption>EnDe.u2superMap[]</caption>';
-	txt += '<tr><th>   index   </th><th> u2superMap[i] </th><tr>';
+	txt += this.showButton('usup', 'EnDe.u2superMap'); // Unicode superscript characters
+	txt += this.showTable ('usup', 'EnDe.u2superMap[ ]', 1, 'index', 'u2superMap[i]');
 	for (i in EnDe.u2superMap) {
-		txt += '<tr><td>[' + i + ']</td><td>' + EnDe.u2superMap[i] + '</td><tr>';
+		txt += this.showTableR('td', i, EnDe.u2superMap[i]);
 	}
 	txt += '</table>';
 
 	/*
 	 * EnDe.u2subMap
 	 */
-	txt += '<button onClick="return _show(\'_table_range\');" title="Unicode subscript characters">EnDe.u2subMap</button><br>';	
-	txt += ccc + 'id="_table_range"><caption>EnDe.u2subMap[]</caption>';
-	txt += '<tr><th>   index   </th><th> u2subMap[i] </th><tr>';
+	txt += this.showButton('usub', 'EnDe.u2subMap'); // Unicode subscript characters
+	txt += this.showTable ('usub', 'EnDe.u2subMap[ ]', 1, 'index', 'u2subMap[i]');
 	for (i in EnDe.u2subMap) {
-		txt += '<tr><td>[' + i + ']</td><td>' + EnDe.u2subMap[i] + '</td><tr>';
+		txt += this.showTableR('td', i, EnDe.u2subMap[i]);
 	}
 	txt += '</table>';
 
@@ -2064,31 +2092,31 @@ try {
 	/*
 	 * EnDe.ebcdicUTF
 	 */
-	txt += '<button onClick="return _show(\'_table_eut\');">EnDe.ebcdicUTF</button><br>';
-	txt += '<table id="_table_eut" border="1" cellpadding="0" cellspacing="0" style="display:none" ><caption>EnDe.ebcdicUTF[]</caption>';
-	txt += '<tr><th>   index   </th><th> ebcdicUTF[mapChr] </th><th> ebcdicUTF[mapDsc] </th><tr>';
+	txt += this.showButton('eut', 'EnDe.ebcdicUTF');
+	txt += this.showTable ('eut', 'EnDe.ebcdicUTF', 1, 'index', 'ebcdicUTF[mapChr]', 'ebcdicUTF[mapDsc]');
 	for (i in EnDe.ebcdicUTF) {
-		txt += '<tr><td>[' + i + ']</td><td>' + EnDe.ebcdicUTF[i][EnDe.mapChr] + '</td><td>' + EnDe.ebcdicUTF[i][EnDe.mapDsc] + '</td><tr>';
+		txt += this.showTableR('td', i, EnDe.ebcdicUTF[i][EnDe.mapChr], EnDe.ebcdicUTF[i][EnDe.mapDsc]);
 	}
 	txt += '</table>';
 
 	/*
-	 * EnDe.dupMap and EnDe.ncrMap ar not displayed as HTML table 'cause of
+	 * EnDe.dupMap and EnDe.ncrMap are not displayed as HTML table 'cause of
 	 * huge memory consumption and rendering overhead -> performance penulty
 	 * instead they are written as tab-seperated text inside a div tag with
 	 * white-space:pre (looks like a table, but no borders)
+	 *------------------------ up to 12/2020 when this is no longer an issue
+     *------------------------ latest version with div tag: EnDeGUI.js 3.112
 	 */
 	/*
 	 * EnDe.dupMap
 	 */
-	txt += '<button onClick="return _show(\'_table_dup\');" title="duplicate entries">EnDe.dupMap</button><br>';
-	txt += '<div id="_table_dup" style="display:none" border="1"><center>EnDe.dupMap</center>';
-	txt += '<div style="font-family:courier new;font-size:12px;white-space:pre">';
-	txt += '<hr>index' + ':' + '\t| no' + '\t|stand.' + '\t|entity' + '\t| class' + '\t| description' + '\n<hr>';
+	ccc  = '| no' + '\t|stand.' + '\t|entity' + '\t| class' + '\t| description';
+	txt += this.showButton('dup', 'EnDe.dupMap'); // duplicate entries
+	txt += this.showTable ('dup', 'EnDe.dupMap[ ]', 1, 'index', ccc);
 	for (i in EnDe.dupMap) {
-		txt += i + ':' + '\t' + EnDe.dupMap[i].toString().replace(/,/g, '\t') + '\n';
+		txt += this.showTableR('td', i, EnDe.dupMap[i].toString().replace(/,/g, '\t'));
 	}
-	txt += '</div></div>';
+	txt += '</table>';
 	/* EnDe.dupMap   ** not yet shown, too big
 	txt += '<table id="_table_dup" border="1" cellpadding="0" cellspacing="0" style="display:none" ><caption>EnDe.dupMap[]</caption>';
 	txt += '<tr><th>   index   </th><th> dupMap[mapChr] </th><th> dupMap[mapDsc] </th><tr>';
@@ -2101,20 +2129,17 @@ try {
 	/*
 	 * EnDe.ncrMap
 	 */
-	txt += '<button onClick="return _show(\'_table_ncr\');" title="named charactere references">EnDe.ncrMap</button><br>';
-	txt += '<div id="_table_ncr" style="display:none" border="1"><center>EnDe.ncrMap</center>';
-	txt += '<div style="font-family:courier new;font-size:12px;white-space:pre">';
-	txt += '<hr> no' + '\t| entity (is index in table)' + '\n<hr>';
+	txt += this.showButton('ncr', 'EnDe.ncrMap'); // named charactere references
+	txt += this.showTable ('ncr', 'EnDe.ncrMap[ ]', 1, 'index', 'ncrMap[i]');
 	for (i in EnDe.ncrMap) {
-		txt += EnDe.ncrMap[i].toString() + '\t' + i + '\n';
+		txt += this.showTableR('td', i, EnDe.ncrMap[i].toString());
 	}
-	txt += '</div></div>';
+	txt += '</table>';
 	/* EnDe.ncrMap   ** not yet shown, too big
-	txt += '<button onClick="return _show(\'_table_ncr\');">EnDe.ncrMap</button><br>';
-	txt += '<table id="_table_ncr" border="1" cellpadding="0" cellspacing="0" style="display:none" ><caption>EnDe.ncrMap[]</caption>';
-	txt += '<tr><th>   index   </th><th> ncrMap[mapChr] </th><th> ncrMap[mapDsc] </th><tr>';
+	txt += this.showButton('ncr', 'EnDe.ncrMap'); // named charactere references
+	txt += this.showTable ('ncr', 'EnDe.ncrMap[ ]', 1, 'index', 'ncrMap[mapChr]', 'ncrMap[mapDsc]');
 	for (i in EnDe.ncrMap) {
-		txt += '<tr><td>[' + i + ']</td><td>' + EnDe.ncrMap[i][EnDe.mapChr] + '</td><td>' + EnDe.ncrMap[i][EnDe.mapDsc] + '</td><tr>';
+		txt += this.showTableR('td', i, EnDe.ncrMap[i][EnDe.mapChr]. EnDe.ncrMap[i][EnDe.mapDsc]);
 	}
 	txt += '</table>';
 	 */
@@ -2122,23 +2147,21 @@ try {
 	/*
 	 * EnDe.winMap
 	 */
-	txt += '<button onClick="return _show(\'_table_win\');">EnDe.winMap</button><br>';
-	txt += '<table id="_table_win" border="1" cellpadding="0" cellspacing="0" style="display:none" ><caption>EnDe.winMap[]</caption>';
-	txt += '<tr><th>   index   </th><th> winMap[mapChr] </th><th> winMap[mapDsc] </th><tr>';
+	txt += this.showButton('win', 'EnDe.winMap');
+	txt += this.showTable ('win', 'EnDe.winMap[ ]', 1, 'index', 'winMap[mapChr]', 'winMap[mapDsc]');
 	for (i in EnDe.winMap) {
 		if (EnDe.winMap[i][EnDe.mapChr] == undefined) { continue; } // defensive programming
-		txt += '<tr><td>[' + i + ']</td><td>' + EnDe.winMap[i][EnDe.mapChr] + '</td><td>' + EnDe.winMap[i][EnDe.mapDsc] + '</td><tr>';
+		txt += this.showTableR('td', i, EnDe.winMap[i][EnDe.mapChr], EnDe.winMap[i][EnDe.mapDsc]);
 	}
 	txt += '</table>';
 
 	/*
 	 * EnDe.rangeMap
 	 */
-	txt += '<button onClick="return _show(\'_table_range\');" title="Unicode Code Ranges">EnDe.rangeMap</button><br>';	
-	txt += ccc + 'id="_table_range"><caption>EnDe.rangeMap[]</caption>';
-	txt += '<tr><th>   index   </th><th> rangeMap[i] </th><tr>';
+	txt += this.showButton('range', 'EnDe.rangeMap'); // Unicode Code Ranges
+	txt += this.showTable ('range', 'EnDe.rangeMap[ ]', 1, 'index', 'rangeMap[i]');
 	for (i in EnDe.rangeMap) {
-		txt += '<tr><td>[' + i + ']</td><td>' + EnDe.rangeMap[i] + '</td><tr>';
+		txt += this.showTableR('td', i, EnDe.rangeMap[i]);
 	}
 	txt += '</table>';
 

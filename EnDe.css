@@ -9,7 +9,7 @@
 #       Makefile
 #?
 #? VERSION
-#?      @(#) EnDe.css 3.26 20/12/09 20:15:38
+#?      @(#) EnDe.css 3.27 20/12/13 00:25:36
 #?
 #? AUTHOR
 #?      30-may-04 Achim Hoffmann
@@ -560,7 +560,7 @@ fieldset[id="EnDeDOM.f.XX"] span[id="EnDeDOM.XX"] { width:55em; }
 .test table td:first-child { text-align: right; }
 .test table td.data { text-align:left; padding-left:1em; border-top:var(--border-1);    background-color:var(--bg-input); font-size:10pt; }
 .test table td.parm { text-align:left; padding-left:1em; border-top:var(--border-0);    background-color:#ffffaf; font-size:8pt; }
-.test table td.error{ text-align:left; padding-left:1em; border-top:var(border-dotted); background-color:#ffcfcf; font-size:8pt; }
+.test table td.error{ text-align:left; padding-left:1em; border-top:var(--border-dotted); background-color:#ffcfcf; font-size:8pt; }
 .test table td pre  { display: inline; overflow: auto; }
 .test table td span {             background-color:#ffcfcf; max-width:99%; overflow: auto; }
 .test table td span:first-child { background-color:#cfffcf; }

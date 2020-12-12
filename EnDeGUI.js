@@ -104,7 +104,7 @@
 #    building the GUI, EnDeGUI.init() will show the "Browser Quirks" window.
 #?
 #? VERSION
-#?      @(#) EnDeGUI.js 3.113 20/12/12 20:27:56
+#?      @(#) EnDeGUI.js 3.114 20/12/12 21:52:01
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -116,8 +116,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '3.113';
-this.sid        = function() {  return('@(#) EnDeGUI.js 3.113 20/12/12 20:27:56 EnDeGUI'); };
+this.SID        = '3.114';
+this.sid        = function() {  return('@(#) EnDeGUI.js 3.114 20/12/12 21:52:01 EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 
@@ -1848,14 +1848,14 @@ this.showMap    = function() {
 	this.showTable  = function (id,txt,border) { // ...args
 	//# return a table with caption and first row with nr-of-args columns
 		// for example:  this.showTable('eut', 'EnDe.ebcdicUTF', 1);
-		// creates a table with id=_table_eut
+		// creates a table with a tbody id=_table_eut
 		var bux = '';
 		for (var i=3; i<arguments.length; i++) {
 			bux += ['<th>&#160;', arguments[i], '</th>'].join('');
 		}
-		return '<table id="_table_' + id + '"'
-			+ '  border="' + border + '" cellpadding="0" cellspacing="0" style="display:none" >'
-			+ '<caption>' + txt + '</caption>'
+		return '<table border="' + border + '" cellpadding="0" cellspacing="0" >'
+			+ '<caption>' + this.showButton(id, txt) + '</caption>'
+			+ '<tbody id="_table_' + id + '" style="display:none">'
 			+ ['<tr>', bux, '</tr>'].join('');
 			// ToDo + this.showTableR('th', bux);
 	}; // showTable
@@ -1895,16 +1895,18 @@ this.showMap    = function() {
 
 	var bbb = null;
 	// quick&dirty as styles are not supported in all browsers
-	var ccc = '<style>button {width:20em;} input {width:47em;font-family:monospace;} table {border:1px solid black;border-collapse:collapse;} td:nth-child(2){white-space:pre;font-family:monospace;}</style>';
-	// quick&dirty as tables in the DOM are a nightmare ...
-	ccc += '<table ; border="1" cellpadding="2" cellspacing="0" style="display:none" ';
+	txt = '<style type="text/css">'
+	    + ' button {width:20em;}'
+	    + ' input  {width:47em;font-family:monospace;}'
+	    + ' table  {border:1px solid black;border-collapse:collapse;}'
+	    + ' td:nth-child(2){white-space:pre;font-family:monospace;}'
+	    + '</style>';
 
 	/*
 	 * EnDe constants
 	 */
 	kkk  = 'EnDe.';
-	txt += this.showButton('EnDe', 'EnDe.');
-	txt += ccc + 'id="_table_EnDe"><caption>EnDe.[]</caption>';
+	txt += this.showTable('EnDe',  'EnDe',           1, 'name', 'value');
 	for (bbb in EnDe) {
 		_dpr('# ' + typeof EnDe[bbb] + '\tEnDe.' + bbb + ' #');
 		if (bbb == 'pairs')             { continue; }
@@ -1933,7 +1935,6 @@ try {
 	/*
 	 * some constants (character classes, integer, ...)
 	 */
-	txt += this.showButton('CST', 'EnDe.CONST.');
 	txt += this.showTable ('CST', 'EnDe.CONST', 1, 'name', 'value');
 	kkk  = 'EnDe.CONST.CHR.';
 	for (bbb in EnDe.CONST.CHR) {
@@ -1964,12 +1965,12 @@ try {
 	txt += '</table>';
 
 	/*
-	 * EnDe.B64
+	 * build a button to toggle visibility of table with variables
+	 * build table with variables
+	 *          showTable(tag-ID    variable   border  1st col   2nd col   3rd col)
+	 *                  #---------+-----------+-------+---------+---------+-------+
 	 */
-	txt += this.showButton('B64', 'EnDe.B64.');
- 	txt += '<table cellpadding="2" cellspacing="0" style="display:none; border:0" id="_table_B64" ><caption>EnDe.B64</caption>';
-	txt += '<tr><th>   name   </th><th> value </th><tr>';
-
+	txt += this.showTable('B64',   'EnDe.B64',       1, 'name', 'value');
 	var _b64 = ['line', 'crnl', 'pad', 'LC', 'UC', 'b10', 'b26', 'base64' ];
 	for (bbb in _b64) {
 		txt += '<tr><td><button id="I_' + _b64[bbb] + '" onClick="EnDe.B64['+_b64[bbb]+']=$(' + _b64[bbb] + ').value;" title="set value">EnDe.B64.' + _b64[bbb] + '</button></td>';
@@ -1982,106 +1983,64 @@ try {
 		txt += '<tr><td><button id="I_' + bbb + '" onClick="EnDe.B64.map['+bbb+']=this.value;" title="set value">' + kkk + bbb + '</button></td>';
 		txt += '<td><input name="' + bbb +'" value="' + EnDe.B64.map[bbb] + '"></td></tr>';
 	}
-	txt += '</table><br>';
+	txt += '</table>';
 
-
-	/*
-	 * EnDe.b64Char
-	 */
-	txt += this.showButton('b64', 'EnDe.b64');
-	txt += this.showTable ('b64', 'EnDe.b64Char[], EnDe.b64Code[]', 1, 'index', 'b64Char[i]', 'b64Code[i]');
+	txt += this.showTable('b64',   'EnDe.b64Char, EnDe.b64Code[]', 1, 'index', 'b64Char[i]', 'b64Code[i]');
 	for (i=0; i<EnDe.b64Char.length; i++) {
 		txt += this.showTableR('td', i, EnDe.b64Char[i], EnDe.b64Code[EnDe.b64Char[i]]);
 	}
 	txt += '</table>';
 
-	/*
-	 * EnDe.xmlMap
-	 */
-	txt += this.showButton('xml', 'EnDe.xmlMap');
-	txt += this.showTable ('xml', 'EnDe.xmlMap[ ]', 1, 'index', 'xmlMap[i]');
+	txt += this.showTable('xml',   'EnDe.xmlMap',    1, 'index', 'xmlMap[i]');
 	for (i in EnDe.xmlMap) {
 		txt += this.showTableR('td', i, EnDe.xmlMap[i]);
 	}
 	txt += '</table>';
 
-	/*
-	 * EnDe.spaceMap
-	 */
-	txt += this.showButton('space', 'EnDe.spaceMap'); // Unicode Spaces
-	txt += ccc + 'id="_table_space"><caption>EnDe.spaceMap[]</caption>';
-	txt += '<tr><th>Code<br><sup>not part of map</sup></th><th>   index   </th><th> spaceMap[i] </th><tr>';
+	txt += this.showTable('space', 'EnDe.spaceMap',  1, 'Code<br><sup>not part of map</sup>', 'index', 'spaceMap[i]'); // Unicode Spaces
 	for (i in EnDe.spaceMap) {
 		h    = EnDe.i2h('hex4',i);
 		txt += this.showTableR('td', 'U+' + h, '[' + i + ']', EnDe.spaceMap[i]);
 	}
 	txt += '</table>';
 
-	/*
-	 * EnDe.asciiMap
-	 */
-	txt += this.showButton('asc', 'EnDe.asciiMap');
-	txt += this.showTable ('asc', 'EnDe.asciiMap[ ]', 1, 'index', 'asciiMap[mapChr]', 'asciiMap[mapDsc]');
+	txt += this.showTable('asc',   'EnDe.asciiMap',  1, 'index', 'asciiMap[mapChr]', 'asciiMap[mapDsc]');
 	for (i in EnDe.asciiMap) {
 		txt += this.showTableR('td', i, EnDe.asciiMap[i][EnDe.mapChr], EnDe.asciiMap[i][EnDe.mapDsc]);
 	}
 	txt += '</table>';
 
-	/*
-	 * EnDe.DIN66003Map
-	 */
-	txt += this.showButton('din', 'EnDe.DIN66003Map');
-	txt += this.showTable ('din', 'EnDe.DIN66003Map[ ]', 1, 'index', 'DIN66003Map[mapChr]', 'DIN66003Map[mapDsc]');
+	txt += this.showTable('din',   'EnDe.DIN66003Map',  1, 'index', 'DIN66003Map[mapChr]', 'DIN66003Map[mapDsc]');
 	for (i in EnDe.DIN66003Map) {
 		txt += this.showTableR('td', i, EnDe.DIN66003Map[i][EnDe.mapChr], EnDe.DIN66003Map[i][EnDe.mapDsc]);
 	}
 	txt += '</table>';
 
-	/*
-	 * EnDe.DIN66003fMap
-	 */
-	txt += this.showButton('dinf', 'EnDe.DIN66003fMap');
-	txt += this.showTable ('dinf', 'EnDe.DIN66003fMap[ ]', 1, 'index', 'DIN66003fMap[mapChr]', ''); // ToDo mapDsc
+	txt += this.showTable('dinf',  'EnDe.DIN66003fMap', 1, 'index', 'DIN66003fMap[mapChr]', ''); // ToDo mapDsc
 	for (i in EnDe.DIN66003fMap) {
 		txt += this.showTableR('td', i, EnDe.DIN66003fMap[i], '');
 	}
 	txt += '</table>';
 
-	/*
-	 * EnDe.ebcdicMap
-	 */
-	txt += this.showButton('ebc', 'EnDe.ebcdicMap');
-	txt += this.showTable ('ebc', 'EnDe.ebcdicMap', 1, 'index', 'ebcdicMap[mapChr]', 'ebcdicMap[mapDsc]');
+	txt += this.showTable('ebc',   'EnDe.ebcdicMap', 1, 'index', 'ebcdicMap[mapChr]', 'ebcdicMap[mapDsc]');
 	for (i in EnDe.ebcdicMap) {
 		txt += this.showTableR('td', i, EnDe.ebcdicMap[i][EnDe.mapChr], EnDe.ebcdicMap[i][EnDe.mapDsc]);
 	}
 	txt += '</table>';
 
-	/*
-	 * EnDe.romanMap
-	 */
-	txt += this.showButton('rom', 'EnDe.romanMap');
-	txt += this.showTable ('rom', 'EnDe.romanMap[ ]', 1, 'index', 'romanMap[mapChr]', 'romanMap[mapDsc]');
+	txt += this.showTable('rom',   'EnDe.romanMap',  1, 'index', 'romanMap[mapChr]', 'romanMap[mapDsc]');
 	for (i in EnDe.romanMap) {
 		txt += this.showTableR('td', i, EnDe.romanMap[i][EnDe.mapChr], EnDe.romanMap[i][EnDe.mapDsc]);
 	}
 	txt += '</table>';
 
-	/*
-	 * EnDe.u2superMap
-	 */
-	txt += this.showButton('usup', 'EnDe.u2superMap'); // Unicode superscript characters
-	txt += this.showTable ('usup', 'EnDe.u2superMap[ ]', 1, 'index', 'u2superMap[i]');
+	txt += this.showTable('usup',  'EnDe.u2superMap',1, 'index', 'u2superMap[i]');  // Unicode superscript characters
 	for (i in EnDe.u2superMap) {
 		txt += this.showTableR('td', i, EnDe.u2superMap[i]);
 	}
 	txt += '</table>';
 
-	/*
-	 * EnDe.u2subMap
-	 */
-	txt += this.showButton('usub', 'EnDe.u2subMap'); // Unicode subscript characters
-	txt += this.showTable ('usub', 'EnDe.u2subMap[ ]', 1, 'index', 'u2subMap[i]');
+	txt += this.showTable('usub',  'EnDe.u2subMap',  1, 'index', 'u2subMap[i]'); // Unicode subscript characters
 	for (i in EnDe.u2subMap) {
 		txt += this.showTableR('td', i, EnDe.u2subMap[i]);
 	}
@@ -2089,11 +2048,7 @@ try {
 
 	// ToDo: EnDe.super2uMap EnDe.sub2uMap
 
-	/*
-	 * EnDe.ebcdicUTF
-	 */
-	txt += this.showButton('eut', 'EnDe.ebcdicUTF');
-	txt += this.showTable ('eut', 'EnDe.ebcdicUTF', 1, 'index', 'ebcdicUTF[mapChr]', 'ebcdicUTF[mapDsc]');
+	txt += this.showTable('eut',   'EnDe.ebcdicUTF', 1, 'index', 'ebcdicUTF[mapChr]', 'ebcdicUTF[mapDsc]');
 	for (i in EnDe.ebcdicUTF) {
 		txt += this.showTableR('td', i, EnDe.ebcdicUTF[i][EnDe.mapChr], EnDe.ebcdicUTF[i][EnDe.mapDsc]);
 	}
@@ -2107,59 +2062,27 @@ try {
 	 *------------------------ up to 12/2020 when this is no longer an issue
      *------------------------ latest version with div tag: EnDeGUI.js 3.112
 	 */
-	/*
-	 * EnDe.dupMap
-	 */
 	ccc  = '| no' + '\t|stand.' + '\t|entity' + '\t| class' + '\t| description';
-	txt += this.showButton('dup', 'EnDe.dupMap'); // duplicate entries
-	txt += this.showTable ('dup', 'EnDe.dupMap[ ]', 1, 'index', ccc);
+	txt += this.showTable('dup',   'EnDe.dupMap[ ]', 1, 'index', ccc); // duplicate entries
 	for (i in EnDe.dupMap) {
 		txt += this.showTableR('td', i, EnDe.dupMap[i].toString().replace(/,/g, '\t'));
 	}
 	txt += '</table>';
-	/* EnDe.dupMap   ** not yet shown, too big
-	txt += '<table id="_table_dup" border="1" cellpadding="0" cellspacing="0" style="display:none" ><caption>EnDe.dupMap[]</caption>';
-	txt += '<tr><th>   index   </th><th> dupMap[mapChr] </th><th> dupMap[mapDsc] </th><tr>';
-	for (i in EnDe.dupMap) {
-		txt += '<tr><td>[' + i + ']</td><td>' + EnDe.dupMap[i][EnDe.mapChr] + '</td><td>' + EnDe.dupMap[i][EnDe.mapDsc] + '</td><tr>';
-	}
-	txt += '</table>';
-	 */
 
-	/*
-	 * EnDe.ncrMap
-	 */
-	txt += this.showButton('ncr', 'EnDe.ncrMap'); // named charactere references
-	txt += this.showTable ('ncr', 'EnDe.ncrMap[ ]', 1, 'index', 'ncrMap[i]');
+	txt += this.showTable('ncr',  'EnDe.ncrMap',     1, 'index', 'ncrMap[i]'); // named charactere references
 	for (i in EnDe.ncrMap) {
 		txt += this.showTableR('td', i, EnDe.ncrMap[i].toString());
 	}
 	txt += '</table>';
-	/* EnDe.ncrMap   ** not yet shown, too big
-	txt += this.showButton('ncr', 'EnDe.ncrMap'); // named charactere references
-	txt += this.showTable ('ncr', 'EnDe.ncrMap[ ]', 1, 'index', 'ncrMap[mapChr]', 'ncrMap[mapDsc]');
-	for (i in EnDe.ncrMap) {
-		txt += this.showTableR('td', i, EnDe.ncrMap[i][EnDe.mapChr]. EnDe.ncrMap[i][EnDe.mapDsc]);
-	}
-	txt += '</table>';
-	 */
 
-	/*
-	 * EnDe.winMap
-	 */
-	txt += this.showButton('win', 'EnDe.winMap');
-	txt += this.showTable ('win', 'EnDe.winMap[ ]', 1, 'index', 'winMap[mapChr]', 'winMap[mapDsc]');
+	txt += this.showTable('win',  'EnDe.winMap',     1, 'index', 'winMap[mapChr]', 'winMap[mapDsc]');
 	for (i in EnDe.winMap) {
 		if (EnDe.winMap[i][EnDe.mapChr] == undefined) { continue; } // defensive programming
 		txt += this.showTableR('td', i, EnDe.winMap[i][EnDe.mapChr], EnDe.winMap[i][EnDe.mapDsc]);
 	}
 	txt += '</table>';
 
-	/*
-	 * EnDe.rangeMap
-	 */
-	txt += this.showButton('range', 'EnDe.rangeMap'); // Unicode Code Ranges
-	txt += this.showTable ('range', 'EnDe.rangeMap[ ]', 1, 'index', 'rangeMap[i]');
+	txt += this.showTable('range', 'EnDe.rangeMap',  1, 'index', 'rangeMap[i]'); // Unicode Code Ranges
 	for (i in EnDe.rangeMap) {
 		txt += this.showTableR('td', i, EnDe.rangeMap[i]);
 	}

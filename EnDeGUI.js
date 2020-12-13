@@ -104,7 +104,7 @@
 #    building the GUI, EnDeGUI.init() will show the "Browser Quirks" window.
 #?
 #? VERSION
-#?      @(#) EnDeGUI.js 3.114 20/12/12 21:52:01
+#?      @(#) EnDeGUI.js 3.115 20/12/13 16:08:17
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -116,8 +116,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '3.114';
-this.sid        = function() {  return('@(#) EnDeGUI.js 3.114 20/12/12 21:52:01 EnDeGUI'); };
+this.SID        = '3.115';
+this.sid        = function() {  return('@(#) EnDeGUI.js 3.115 20/12/13 16:08:17 EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 
@@ -418,7 +418,7 @@ alert(2);
 		if (obj.value==='') { alert('**please select destination field first'); return false; }
 		$(obj.value).value = this.getFormat($('EnDeDOM.MP.see').value,src);
 		return false;
-	}; // .MPsetChar
+	}; // MPsetChar
 
 	this.getUnicode = function(typ,src) {
 	//#? returns given value as Unicode
@@ -434,8 +434,8 @@ alert(2);
 		  case 'chr': bux = src.charCodeAt(0);          break;
 		}
 		return bux.toString(10);
-		return bux;   // fallback
-	}; // .getUnicode
+		//return bux;   // fallback
+	}; // getUnicode
 
 	this.getFormat  = function(typ,src) {
 	//#? returns given Unicode in specified (typ) format
@@ -453,7 +453,7 @@ alert(2);
 			break;
 		}
 		return src;
-	}; // .getFormat
+	}; // getFormat
 
 	this.setFormat  = function(self,src) {
 	//#? change all EnDeDOM.MP.new* values to given format
@@ -674,7 +674,6 @@ this.dau        = function(src) {
 		+'So, please make your decission first.'
 		);
 }; // .dau
-
 
 this.stat       = function(txt) {
 //#? show alert box with statistic about text
@@ -1319,7 +1318,6 @@ this.checked    = function(id) {
 	return false;
 }; // checked
 
-
 this.stackmode  = false;
 this.show       = function(src) {
 //#? dispatcher to toggle visibility of tools
@@ -1790,7 +1788,7 @@ this.checkupdate= function() {
 	_dpr( '#--------------+--------+-------+---------------' );
 	_dpr( '\nHint: newer files can be dowloaded from https://github.com/EnDe/EnDe' );
 	return false;
-}; // .checkupdate
+}; // checkupdate
 
 this.showArr    = function() {
 	var bux = '';
@@ -1832,7 +1830,9 @@ this.showMap    = function() {
 		// create a button which toggles display of the tag with id=_table_CST
 		// _show() defined in div.innerHTML below
 		var ccc = "_show('_table_" + id + "');";
-		return '<button onClick="return ' + ccc + '">' + txt + '</button><br>';	
+		return '<button onClick="'
+		    + "return _show('_table_" + id + "');" + '">'
+		    + txt + '</button><br>';	
 	}; // showButton
 
 	this.showTableR = function (tag) { // ...args
@@ -1860,10 +1860,6 @@ this.showMap    = function() {
 			// ToDo + this.showTableR('th', bux);
 	}; // showTable
 
-	this.setValue   = function (id,txt) {
-	//# create a button which sets value of correspnding EnDe.* variable
-	}; // setValue
-
 	_spr('EnDeGUI.showMap');
 	var x   = EnDeGUI.winX;
 	var y   = EnDeGUI.winY;
@@ -1878,7 +1874,13 @@ this.showMap    = function() {
 	win.EnDe= EnDe; // handover functions and object to new window
 	div.type= 'text/javascript';
 // ToDo: fails for WebKit (<=47905) with: can't find variable _show
-	div.innerHTML = 'function _show(id) {var obj=document.getElementById(id);if(obj.style.display==""){obj.style.display="none";}obj.style.display=(obj.style.display=="block")?"none":"block";return false;}';
+	div.innerHTML  = '';
+	div.innerHTML += 'function _$(id) { return document.getElementById(id);}';
+	div.innerHTML += 'function _show(id) {var obj=document.getElementById(id);if(obj.style.display==""){obj.style.display="none";}obj.style.display=(obj.style.display=="block")?"none":"block";return false;}';
+
+//# sets value of correspnding EnDe.* variable
+	// onClick: "arr[idx]+']=$(idx).value;
+	div.innerHTML += 'function _setJSvalue(arr,idx,val) { alert(arr + "[" + idx + "] = " + val); arr[idx]=_$(idx).value; return false; }';
 	win.document.body.appendChild(div);
 	//div = document.createElement('STYLE');
 	//div.innerText  = 'input { width:60em;}';
@@ -1917,9 +1919,8 @@ this.showMap    = function() {
 		if (bbb.match(/Map/) !==null)   { continue; }
 		if (EnDe[bbb].toString().match(/function/)!==null) { continue; }
 		if (EnDe[bbb].toString().match(/object/)  !==null) { continue; }
-try {
-} catch(e) {}
-		txt += '<tr><td><button id="c_' + bbb + '" onClick="EnDe.'+bbb+'=this.value;" title="set value">' + kkk + bbb + '</button></td>';
+		_js = "_setJSvalue('EnDe','" + bbb + "','" + EnDe[bbb] + "');";
+		txt += '<tr><td><button id="c_' + bbb + '" onClick="'+ _js +'" title="set value">' + kkk + bbb + '</button></td>';
 		txt += '<td><input name="' + bbb +'" value="' + EnDe[bbb] + '" '
 			+ ((bbb.match(/^map/)===null) ? '' : 'disabled')
 			+ '></td></tr>';
@@ -1927,7 +1928,8 @@ try {
 	kkk  = 'EnDe.pairs[ ';
 	for (bbb in EnDe.pairs) {
 		if (bbb==='indexOf') { continue; }
-		txt += '<tr><td><button id="c_' + bbb + '" onClick="EnDe.pairs['+bbb+']=this.value;" title="set value">' + kkk + bbb + ' ]</button></td>';
+		_js = "_setJSvalue('EnDe.pairs','" + bbb + "','" + EnDe.pairs[bbb] + "');";
+		txt += '<tr><td><button id="c_' + bbb + '" onClick="'+ _js +'" title="set value">' + kkk + bbb + ' ]</button></td>';
 		txt += '<td><input name="' + bbb +'" value="' + EnDe.pairs[bbb] + '"></td></tr>';
 	}
 	txt += '</table>';
@@ -1938,12 +1940,15 @@ try {
 	txt += this.showTable ('CST', 'EnDe.CONST', 1, 'name', 'value');
 	kkk  = 'EnDe.CONST.CHR.';
 	for (bbb in EnDe.CONST.CHR) {
-	// ToDo: bug: parent.EnDe.CONST.CHR[bbb]=this.value not working, inspect DOM
+	// ToDo: _setJSvalue() not yet implemented
+	// ToDo: some values from EnDe.CONST.* need to be encoded (contain " or ')
+	//       known variables: .binhex .dq .uuAnf .uuEnd .uuEndH
 		if (bbb==='prototype') { continue; }
 		if (bbb==='sid')       { continue; }
 		if (bbb==='SID')       { continue; }
 		if (bbb==='meta')      { continue; } // ToDo: bug: fails to display proper without HTML entities, need to substitute first
-		txt += '<tr><td><button id="C_' + bbb + '" onClick="EnDe.CONST.CHR['+bbb+']=this.value;" title="set value">' + kkk + bbb + '</button></td>';
+		_js = "_setJSvalue('EnDe.CONST.CHR','" + bbb + "','" + EnDe.CONST.CHR[bbb] + "');";
+		txt += '<tr><td><button id="C_' + bbb + '" onClick="'+ _js +'" title="set value">' + kkk + bbb + '</button></td>';
 		txt +=     '<td><input name="'  + bbb + '" value="' + EnDe.CONST.CHR[bbb] + '"></td></tr>';
 	}
 	kkk  = 'EnDe.CONST.INT.';
@@ -1951,7 +1956,8 @@ try {
 		if (bbb==='prototype') { continue; }
 		if (bbb==='sid')       { continue; }
 		if (bbb==='SID')       { continue; }
-		txt += '<tr><td><button id="I_' + bbb + '" onClick="EnDe.CONST.INT['+bbb+']=this.value;" title="set value">' + kkk + bbb + '</button></td>';
+		_js = "_setJSvalue('EnDe.CONST.INT','" + bbb + "','" + EnDe.CONST.INT[bbb] + "');";
+		txt += '<tr><td><button id="I_' + bbb + '" onClick="'+ _js +'" title="set value">' + kkk + bbb + '</button></td>';
 		txt += '<td><input name="' + bbb +'" value="' + EnDe.CONST.INT[bbb] + '"></td></tr>';
 	}
 	kkk  = 'EnDe.CONST.CST.';
@@ -1959,7 +1965,8 @@ try {
 		if (bbb==='prototype') { continue; }
 		if (bbb==='sid')       { continue; }
 		if (bbb==='SID')       { continue; }
-		txt += '<tr><td><button id="c_' + bbb + '" onClick="EnDe.CONST.CST['+bbb+']=this.value;" title="set value">' + kkk + bbb + '</button></td>';
+		_js = "_setJSvalue('EnDe.CONST.CST','" + bbb + "','" + EnDe.CONST.CST[bbb] + "');";
+		txt += '<tr><td><button id="c_' + bbb + '" onClick="'+ _js +'" title="set value">' + kkk + bbb + '</button></td>';
 		txt += '<td><input name="' + bbb +'" value="' + EnDe.CONST.CST[bbb] + '"></td></tr>';
 	}
 	txt += '</table>';
@@ -1970,17 +1977,21 @@ try {
 	 *          showTable(tag-ID    variable   border  1st col   2nd col   3rd col)
 	 *                  #---------+-----------+-------+---------+---------+-------+
 	 */
+	// ToDo: some values from EnDe.B64.* need to be encoded (contain " or ')
+	//       known variables: .crnl
 	txt += this.showTable('B64',   'EnDe.B64',       1, 'name', 'value');
 	var _b64 = ['line', 'crnl', 'pad', 'LC', 'UC', 'b10', 'b26', 'base64' ];
 	for (bbb in _b64) {
-		txt += '<tr><td><button id="I_' + _b64[bbb] + '" onClick="EnDe.B64['+_b64[bbb]+']=$(' + _b64[bbb] + ').value;" title="set value">EnDe.B64.' + _b64[bbb] + '</button></td>';
+		_js = "_setJSvalue('EnDe.B64','" + _b64[bbb] + "','" + EnDe.B64[_b64[bbb]] + "');";
+		txt += '<tr><td><button id="I_' + _b64[bbb] + '" onClick="'+ _js +'" title="set value">EnDe.B64.' + _b64[bbb] + '</button></td>';
 		txt += '<td><input name="' + _b64[bbb] +'" value="' + EnDe.B64[_b64[bbb]] + '"></td></tr>';
 	}
 	kkk  = 'EnDe.B64.map.';
 	for (bbb in EnDe.B64.map) {
 		if (bbb==='prototype') { continue; }
 		if (bbb==='dumm')      { continue; }
-		txt += '<tr><td><button id="I_' + bbb + '" onClick="EnDe.B64.map['+bbb+']=this.value;" title="set value">' + kkk + bbb + '</button></td>';
+		_js = "_setJSvalue('EnDe.B64.map','" + bbb + "','" + EnDe.B64.map[bbb] + "');";
+		txt += '<tr><td><button id="I_' + bbb + '" onClick="'+ _js +'" title="set value">' + kkk + bbb + '</button></td>';
 		txt += '<td><input name="' + bbb +'" value="' + EnDe.B64.map[bbb] + '"></td></tr>';
 	}
 	txt += '</table>';
@@ -2408,17 +2419,17 @@ this.EN         = new function() {
 	  case 'JSFormat'   :
 		// EnDeGUI.colour = true;
 		return EnDeGUI.code( EnDe.Form.dispatch(item,'lazy',src,true,5) );
-		return false;   // fallback
+		//return false;   // fallback
 		break;
 	  case 'JSDecode'   :
 		// EnDeGUI.colour = true;
 		return EnDeGUI.code( EnDe.Form.dispatch(item,'lazy',src,true,5) );
-		return false;   // fallback
+		//return false;   // fallback
 		break;
 	  case 'XMLFormat'  :
 		// EnDeGUI.colour = true;
 		return EnDeGUI.code( EnDe.Form.dispatch(item,'lazy',src,true,5) );
-		return false;   // fallback
+		//return false;   // fallback
 		break;
 	  case 'JSReg'      :
 		add = [];       // pass checks to JSReg
@@ -2427,11 +2438,11 @@ this.EN         = new function() {
 		add.push($('EnDeDOM.API.JSRmain' ).checked);
 		add.push($('EnDeDOM.API.JSRcheck').checked);
 		return EnDeGUI.code( EnDe.Form.dispatch(item,'lazy',src,add,0) );
-		return false;   // fallback
+		//return false;   // fallback
 		break;
 	  case 'toSource'   :
 		return EnDeGUI.code( EnDe.Form.dispatch(item,'lazy',src,true,5) );
-		return false;   // fallback
+		//return false;   // fallback
 		break;
 	  case 'test'       :
 		EnDeGUI.alert('EnDeGUI.EN.dispatch','just a TEST');
@@ -2588,17 +2599,17 @@ this.DE         = new function() {
 	  case 'JSFormat'   :
 		// EnDeGUI.colour = true;
 		return EnDeGUI.code( EnDe.Form.dispatch(item,'lazy',src,true,5) );
-		return false;   // fallback
+		//return false;   // fallback
 		break;
 	  case 'JSDecode'   :
 		// EnDeGUI.colour = true;
 		return EnDeGUI.code( EnDe.Form.dispatch(item,'lazy',src,true,5) );
-		return false;   // fallback
+		//return false;   // fallback
 		break;
 	  case 'XMLFormat'  :
 		// EnDeGUI.colour = true;
 		return EnDeGUI.code( EnDe.Form.dispatch(item,'lazy',src,true,5) );
-		return false;   // fallback
+		//return false;   // fallback
 		break;
 	  case 'JSReg'      :
 		add = [];       // pass checks to JSReg
@@ -2607,11 +2618,11 @@ this.DE         = new function() {
 		add.push($('EnDeDOM.API.JSRmain' ).checked);
 		add.push($('EnDeDOM.API.JSRcheck').checked);
 		return EnDeGUI.code( EnDe.Form.dispatch(item,'lazy',src,add,0) );
-		return false;   // fallback
+		//return false;   // fallback
 		break;
 	  case 'toSource'   :
 		return EnDeGUI.code( EnDe.Form.dispatch(item,'lazy',src,true,5) );
-		return false;   // fallback
+		//return false;   // fallback
 		break;
 	  case 'guess'      :
 	  default           :
@@ -3891,7 +3902,7 @@ this.pimp       = function() {
 		if (bbb[ccc].getAttribute('onclick')===null) { continue; }
 		if (bbb[ccc].id.match(/\.b[hqsw]$/) ===null) { continue; }
 		this.dpr('  button: ' + bbb[ccc].id);
-//    	_toggleButtonImg (obj,src,cls,attr) {
+//    	_toggleButtonImg(obj,       src,            cls,       attr ) 
 		_toggleButtonImg(bbb[ccc], 'EnDeGUI.help', 'help', 'onclick');
 		_toggleButtonImg(bbb[ccc], 'EnDeGUI.show', 'fold', 'onclick');
 		_toggleButtonImg(bbb[ccc], 'window',       'code'   , 'name');
@@ -4126,7 +4137,7 @@ this.setfile    = function(obj,dst) {
 	$(dst).value = this.pathhack(obj,obj.value);
 	//$('EnDeDOM.GUI.local').checked = true;
 	return true;
-}; // .setfile
+}; // setfile
 
 this.setVal     = function(obj,src,cmt) {
 //#? write given value to specified textarea, prepend with comment if any
@@ -4149,8 +4160,7 @@ this.setVal     = function(obj,src,cmt) {
 		$(obj).value  = ccc + src;
 	}
 	ccc = null;
-}; // .setVal
-
+}; // setVal
 
 this.setObj     = function(obj,src,cmt) {
 //#? write selected value to specified textarea; **for internal use only**
@@ -4245,7 +4255,7 @@ this.setObj     = function(obj,src,cmt) {
 	txt = EnDeGUI.FF.update(item,mode,uppercase,bux,prefix,suffix,delimiter,func);
 	obj.value  = cmt + txt;
 	ccc = null;
-}; // .setObj
+}; // setObj
 
 
 this.setFT      = function(src) {
@@ -4257,7 +4267,7 @@ this.setFT      = function(src) {
 	} else {
 		$('EnDeDOM.GUI.file').value = $('EnDeDOM.QQ.lp').value + src;
 	}
-}; // .setFT
+}; // setFT
 
 	// ===================================================================== //
 	// general GUI dispatcher                                                //

@@ -254,6 +254,8 @@ ARCHITECTURE
 	The  API, or EnDe library, consist of all en- and decoding functions.
 	These functions can be used independent of the GUI.
 
+	API objects in the DOM use the prefix 'EnDe.' , see "EnDe*.js".
+
 	As general rule, all functions are `functions',  means that they return
 	something and never (hopefully) generate data on side channels or throw
 	exceptions. This allows to use them nested,  or can be piped  (thinking
@@ -297,6 +299,8 @@ ARCHITECTURE
 	    and build DOM objects from it. These files contain references  like
 	    DOM object IDs and such.
 
+	GUI objects in the DOM use the prefix 'EnDeDOM.' , see "EnDe.html".
+
 	DOM Objects
 	    There is no clean concept for dealing with DOM objects. They are
 	    created at various code places and in different ways.
@@ -316,9 +320,18 @@ ARCHITECTURE
 	to use the build-in trace/debug functionality from the GUI first.  This
 	will at least give texts to search for and give hints where to search.
 
-	More documentation to be here ...
+	Layout
+	    The GUI consist of grouped tools.  Each tool has its own section in
+	    in the GUI. Each sections can be expanded and folded. Some sections
+	    are visible when requested only, see some buttons in "GUI Options".
+	    Some sections look like inset windows and are positioned absolute.
+	    I.g. each sections is build with the '<fieldset>' tag  and has some
+	    kind of tiles. To get an overview, use:
++-
+|           egrep -i '(<fieldset|<h2><label)' EnDe.html
++-
 
 	
 VERSION
-	@(#) EnDe.code.txt 3.5 <!-- 20/12/13 14:01:57 -->
+	@(#) EnDe.code.txt 3.6 <!-- 20/12/13 14:14:47 -->
 

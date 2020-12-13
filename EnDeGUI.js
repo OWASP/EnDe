@@ -43,7 +43,7 @@
 #?          .show             - dispatcher to toggle visibility of some fieldsets
 #?          .setPriv          - set browser privileges
 #?          .tour             - dispatcher for demo tour through EnDe
-#?          .showMap          - show window with various trace/debug information
+#?          .showMap          - show section with various internal constant and variable settings
 #?          .showSID          - show defined SIDs of various files
 #?          .showIds          - check for duplicate tag id attributes
 #?          .showFiles        - show list of loaded files
@@ -104,7 +104,7 @@
 #    building the GUI, EnDeGUI.init() will show the "Browser Quirks" window.
 #?
 #? VERSION
-#?      @(#) EnDeGUI.js 3.116 20/12/13 19:57:57
+#?      @(#) EnDeGUI.js 3.117 20/12/13 23:02:20
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -116,8 +116,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '3.116';
-this.sid        = function() {  return('@(#) EnDeGUI.js 3.116 20/12/13 19:57:57 EnDeGUI'); };
+this.SID        = '3.117';
+this.sid        = function() {  return('@(#) EnDeGUI.js 3.117 20/12/13 23:02:20 EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 
@@ -730,6 +730,7 @@ this.help       = function(type) {
 		'RE'    : 'DETAILS_RegEx',
 		'DBX'   : 'DETAILS_Trace',
 		'TST'   : 'DETAILS_Test',
+		'VAR'   : 'DETAILS_Internal_Settings',
 		'GUI'   : 'GUI_OPTIONS',
 		'QPT'   : 'QUICK_GUI_BAR',
 		'API'   : 'API_OPTIONS',
@@ -753,7 +754,7 @@ this.help       = function(type) {
 		break;
 	  case 'EnDe.man.txt':
 	  default   :
-		EnDeGUI.winX = '666';
+		EnDeGUI.winX = '710';
 		EnDeGUI.winY = '800';
 		win = this.win.help('EnDe.man.html#'+bux[type], 'Help: '+bux[type], '');
 		EnDeGUI.winX = x;
@@ -1820,18 +1821,18 @@ try {
 	return false;
 }; // showArr
 
+this.showMapdone= false;
 this.showMap    = function() {
 //#? show window with various trace/debug information
-// ToDo: very ugly code, needs to be more generic
+
+	// ToDo: bug 12/2020: destroys functions for example Ende.$(), reason yet unknown
 
 	this.showButton = function (id,txt) {
 	//# return a button which toggle display of group of variables
 		// for example: this.showButton('CST', 'EnDe.CONST');
 		// create a button which toggles display of the tag with id=_table_CST
-		// _show() defined in div.innerHTML below
-		var ccc = "_show('_table_" + id + "');";
 		return '<button onClick="'
-		    + "return _show('_table_" + id + "');" + '">'
+		    + "EnDeGUI.display('_table_" + id + "');return false;" + '">'
 		    + txt + '</button><br>';	
 	}; // showButton
 
@@ -1860,56 +1861,31 @@ this.showMap    = function() {
 			// ToDo + this.showTableR('th', bux);
 	}; // showTable
 
-	_spr('EnDeGUI.showMap');
-/*
-	var x   = EnDeGUI.winX;
-	var y   = EnDeGUI.winY;
-	EnDeGUI.winX = '1020';
-	EnDeGUI.winY = '800';
-	var win = this.win.help('','trace', '');
-	EnDeGUI.winX = x;
-	EnDeGUI.winY = y;
-	win.EnDe= EnDe; // handover functions and object to new window
-*/
-
-	var div = $('EnDeDOM.DBX.var');// get tag
-	this.display(div); // first call may set display=none
-	if ('none'===div.style.display) {
+	// ToDo: bug 12/2020: this.setJSvalue() not yet implemented
+	this.setJSvalue = function (arr,idx,val) {
+	//# sets value of correspnding EnDe.* variable
+		// onClick: "arr[idx]+']=$(idx).value;
+		alert(arr + "[" + idx + "] = " + val);
+		//arr[idx]=$(idx).value;
 		return false;
-    }
-	var txt = '';
+	}; // setJSvalue
+
+	_spr('EnDeGUI.showMap');
+	if (true===this.showMapdone)    { return false; }
+	this.showMapdone = true;
+
+	var div = $('EnDeDOM.f.VAR');  // section may be invisible
+	if ('none'===div.style.display) { this.display(div); }
+	    div = $('EnDeDOM.VAR');    // get tag
 	var i   = 0;
-	var ccc = document.createElement('SCRIPT');
-	ccc.type= 'text/javascript';
-	ccc.innerHTML  = '';
-	//ccc.innerHTML += 'function _$(id) { return document.getElementById(id);}';
-	ccc.innerHTML += 'function _show(id) {var obj=document.getElementById(id);if(obj.style.display==""){obj.style.display="none";}obj.style.display=(obj.style.display=="block")?"none":"block";return false;}';
-
-//# sets value of correspnding EnDe.* variable
-	// onClick: "arr[idx]+']=$(idx).value;
-	ccc.innerHTML += 'function _setJSvalue(arr,idx,val) { alert(arr + "[" + idx + "] = " + val); arr[idx]=$(idx).value; return false; }';
-	div.appendChild(ccc);
-
-	ccc = document.createElement('DIV');
-	ccc.id         = 'dbxmap';
-	ccc.style.border = '1px solid black';
-	ccc.innerHTML += '--DEBUG-- (internal settings)';
-	ccc.innerHTML += '<br><sup>Note that some values may contain non-printable characters!</sup><br>';
-
 	var bbb = null;
-	// quick&dirty as styles are not supported in all browsers
-	txt = '<style type="text/css">'
-	    + ' div[id="EnDeDOM.DBX.var"] button {width:20em;}'
-	    + ' div[id="EnDeDOM.DBX.var"] input  {width:47em;font-family:monospace;}'
-	    + ' div[id="EnDeDOM.DBX.var"] table  {border:1px solid black;border-collapse:collapse;}'
-	    + ' div[id="EnDeDOM.DBX.var"] td:nth-child(2){white-space:pre;font-family:monospace;}'
-	    + '</style>';
+	var bux = '<br><sup>Note that some values may contain non-printable characters!</sup><br>';
 
 	/*
 	 * EnDe constants
 	 */
 	kkk  = 'EnDe.';
-	txt += this.showTable('EnDe',  'EnDe',           1, 'name', 'value');
+	bux += this.showTable('EnDe',  'EnDe',           1, 'name', 'value');
 	for (bbb in EnDe) {
 		// _dpr('# ' + typeof EnDe[bbb] + '\tEnDe.' + bbb + ' #');
 		if (bbb == 'pairs')             { continue; }
@@ -1920,57 +1896,56 @@ this.showMap    = function() {
 		if (bbb.match(/Map/) !==null)   { continue; }
 		if (EnDe[bbb].toString().match(/function/)!==null) { continue; }
 		if (EnDe[bbb].toString().match(/object/)  !==null) { continue; }
-		_js = "_setJSvalue('EnDe','" + bbb + "','" + EnDe[bbb] + "');";
-		txt += '<tr><td><button id="c_' + bbb + '" onClick="'+ _js +'" title="set value">' + kkk + bbb + '</button></td>';
-		txt += '<td><input name="' + bbb +'" value="' + EnDe[bbb] + '" '
+		_js = "EnDeGUI.setJSvalue('EnDe','" + bbb + "','" + EnDe[bbb] + "');";
+		bux += '<tr><td><button id="c_' + bbb + '" onClick="'+ _js +'" title="set value">' + kkk + bbb + '</button></td>';
+		bux += '<td><input name="' + bbb +'" value="' + EnDe[bbb] + '" '
 			+ ((bbb.match(/^map/)===null) ? '' : 'disabled')
 			+ '></td></tr>';
 	}
 	kkk  = 'EnDe.pairs[ ';
 	for (bbb in EnDe.pairs) {
 		if (bbb==='indexOf') { continue; }
-		_js = "_setJSvalue('EnDe.pairs','" + bbb + "','" + EnDe.pairs[bbb] + "');";
-		txt += '<tr><td><button id="c_' + bbb + '" onClick="'+ _js +'" title="set value">' + kkk + bbb + ' ]</button></td>';
-		txt += '<td><input name="' + bbb +'" value="' + EnDe.pairs[bbb] + '"></td></tr>';
+		_js = "EnDeGUI.setJSvalue('EnDe.pairs','" + bbb + "','" + EnDe.pairs[bbb] + "');";
+		bux += '<tr><td><button id="c_' + bbb + '" onClick="'+ _js +'" title="set value">' + kkk + bbb + ' ]</button></td>';
+		bux += '<td><input name="' + bbb +'" value="' + EnDe.pairs[bbb] + '"></td></tr>';
 	}
-	txt += '</table>';
+	bux += '</table>';
 
 	/*
 	 * some constants (character classes, integer, ...)
 	 */
-	txt += this.showTable ('CST', 'EnDe.CONST', 1, 'name', 'value');
+	bux += this.showTable ('CST', 'EnDe.CONST', 1, 'name', 'value');
 	kkk  = 'EnDe.CONST.CHR.';
 	for (bbb in EnDe.CONST.CHR) {
-	// ToDo: _setJSvalue() not yet implemented
 	// ToDo: some values from EnDe.CONST.* need to be encoded (contain " or ')
 	//       known variables: .binhex .dq .uuAnf .uuEnd .uuEndH
 		if (bbb==='prototype') { continue; }
 		if (bbb==='sid')       { continue; }
 		if (bbb==='SID')       { continue; }
 		if (bbb==='meta')      { continue; } // ToDo: bug: fails to display proper without HTML entities, need to substitute first
-		_js = "_setJSvalue('EnDe.CONST.CHR','" + bbb + "','" + EnDe.CONST.CHR[bbb] + "');";
-		txt += '<tr><td><button id="C_' + bbb + '" onClick="'+ _js +'" title="set value">' + kkk + bbb + '</button></td>';
-		txt +=     '<td><input name="'  + bbb + '" value="' + EnDe.CONST.CHR[bbb] + '"></td></tr>';
+		_js = "EnDeGUI.setJSvalue('EnDe.CONST.CHR','" + bbb + "','" + EnDe.CONST.CHR[bbb] + "');";
+		bux += '<tr><td><button id="C_' + bbb + '" onClick="'+ _js +'" title="set value">' + kkk + bbb + '</button></td>';
+		bux +=     '<td><input name="'  + bbb + '" value="' + EnDe.CONST.CHR[bbb] + '"></td></tr>';
 	}
 	kkk  = 'EnDe.CONST.INT.';
 	for (bbb in EnDe.CONST.INT) {
 		if (bbb==='prototype') { continue; }
 		if (bbb==='sid')       { continue; }
 		if (bbb==='SID')       { continue; }
-		_js = "_setJSvalue('EnDe.CONST.INT','" + bbb + "','" + EnDe.CONST.INT[bbb] + "');";
-		txt += '<tr><td><button id="I_' + bbb + '" onClick="'+ _js +'" title="set value">' + kkk + bbb + '</button></td>';
-		txt += '<td><input name="' + bbb +'" value="' + EnDe.CONST.INT[bbb] + '"></td></tr>';
+		_js = "EnDeGUI.setJSvalue('EnDe.CONST.INT','" + bbb + "','" + EnDe.CONST.INT[bbb] + "');";
+		bux += '<tr><td><button id="I_' + bbb + '" onClick="'+ _js +'" title="set value">' + kkk + bbb + '</button></td>';
+		bux += '<td><input name="' + bbb +'" value="' + EnDe.CONST.INT[bbb] + '"></td></tr>';
 	}
 	kkk  = 'EnDe.CONST.CST.';
 	for (bbb in EnDe.CONST.CST) {
 		if (bbb==='prototype') { continue; }
 		if (bbb==='sid')       { continue; }
 		if (bbb==='SID')       { continue; }
-		_js = "_setJSvalue('EnDe.CONST.CST','" + bbb + "','" + EnDe.CONST.CST[bbb] + "');";
-		txt += '<tr><td><button id="c_' + bbb + '" onClick="'+ _js +'" title="set value">' + kkk + bbb + '</button></td>';
-		txt += '<td><input name="' + bbb +'" value="' + EnDe.CONST.CST[bbb] + '"></td></tr>';
+		_js = "EnDeGUI.setJSvalue('EnDe.CONST.CST','" + bbb + "','" + EnDe.CONST.CST[bbb] + "');";
+		bux += '<tr><td><button id="c_' + bbb + '" onClick="'+ _js +'" title="set value">' + kkk + bbb + '</button></td>';
+		bux += '<td><input name="' + bbb +'" value="' + EnDe.CONST.CST[bbb] + '"></td></tr>';
 	}
-	txt += '</table>';
+	bux += '</table>';
 
 	/*
 	 * build a button to toggle visibility of table with variables
@@ -1980,91 +1955,91 @@ this.showMap    = function() {
 	 */
 	// ToDo: some values from EnDe.B64.* need to be encoded (contain " or ')
 	//       known variables: .crnl
-	txt += this.showTable('B64',   'EnDe.B64',       1, 'name', 'value');
+	bux += this.showTable('B64',   'EnDe.B64',       1, 'name', 'value');
 	var _b64 = ['line', 'crnl', 'pad', 'LC', 'UC', 'b10', 'b26', 'base64' ];
 	for (bbb in _b64) {
-		_js = "_setJSvalue('EnDe.B64','" + _b64[bbb] + "','" + EnDe.B64[_b64[bbb]] + "');";
-		txt += '<tr><td><button id="I_' + _b64[bbb] + '" onClick="'+ _js +'" title="set value">EnDe.B64.' + _b64[bbb] + '</button></td>';
-		txt += '<td><input name="' + _b64[bbb] +'" value="' + EnDe.B64[_b64[bbb]] + '"></td></tr>';
+		_js = "EnDeGUI.setJSvalue('EnDe.B64','" + _b64[bbb] + "','" + EnDe.B64[_b64[bbb]] + "');";
+		bux += '<tr><td><button id="I_' + _b64[bbb] + '" onClick="'+ _js +'" title="set value">EnDe.B64.' + _b64[bbb] + '</button></td>';
+		bux += '<td><input name="' + _b64[bbb] +'" value="' + EnDe.B64[_b64[bbb]] + '"></td></tr>';
 	}
 	kkk  = 'EnDe.B64.map.';
 	for (bbb in EnDe.B64.map) {
 		if (bbb==='prototype') { continue; }
 		if (bbb==='dumm')      { continue; }
-		_js = "_setJSvalue('EnDe.B64.map','" + bbb + "','" + EnDe.B64.map[bbb] + "');";
-		txt += '<tr><td><button id="I_' + bbb + '" onClick="'+ _js +'" title="set value">' + kkk + bbb + '</button></td>';
-		txt += '<td><input name="' + bbb +'" value="' + EnDe.B64.map[bbb] + '"></td></tr>';
+		_js = "EnDeGUI.setJSvalue('EnDe.B64.map','" + bbb + "','" + EnDe.B64.map[bbb] + "');";
+		bux += '<tr><td><button id="I_' + bbb + '" onClick="'+ _js +'" title="set value">' + kkk + bbb + '</button></td>';
+		bux += '<td><input name="' + bbb +'" value="' + EnDe.B64.map[bbb] + '"></td></tr>';
 	}
-	txt += '</table>';
+	bux += '</table>';
 
-	txt += this.showTable('b64',   'EnDe.b64Char, EnDe.b64Code[]', 1, 'index', 'b64Char[i]', 'b64Code[i]');
+	bux += this.showTable('b64',   'EnDe.b64Char, EnDe.b64Code[]', 1, 'index', 'b64Char[i]', 'b64Code[i]');
 	for (i=0; i<EnDe.b64Char.length; i++) {
-		txt += this.showTableR('td', i, EnDe.b64Char[i], EnDe.b64Code[EnDe.b64Char[i]]);
+		bux += this.showTableR('td', i, EnDe.b64Char[i], EnDe.b64Code[EnDe.b64Char[i]]);
 	}
-	txt += '</table>';
+	bux += '</table>';
 
-	txt += this.showTable('xml',   'EnDe.xmlMap',    1, 'index', 'xmlMap[i]');
+	bux += this.showTable('xml',   'EnDe.xmlMap',    1, 'index', 'xmlMap[i]');
 	for (i in EnDe.xmlMap) {
-		txt += this.showTableR('td', i, EnDe.xmlMap[i]);
+		bux += this.showTableR('td', i, EnDe.xmlMap[i]);
 	}
-	txt += '</table>';
+	bux += '</table>';
 
-	txt += this.showTable('space', 'EnDe.spaceMap',  1, 'Code<br><sup>not part of map</sup>', 'index', 'spaceMap[i]'); // Unicode Spaces
+	bux += this.showTable('space', 'EnDe.spaceMap',  1, 'Code<br><sup>not part of map</sup>', 'index', 'spaceMap[i]'); // Unicode Spaces
 	for (i in EnDe.spaceMap) {
 		h    = EnDe.i2h('hex4',i);
-		txt += this.showTableR('td', 'U+' + h, '[' + i + ']', EnDe.spaceMap[i]);
+		bux += this.showTableR('td', 'U+' + h, '[' + i + ']', EnDe.spaceMap[i]);
 	}
-	txt += '</table>';
+	bux += '</table>';
 
-	txt += this.showTable('asc',   'EnDe.asciiMap',  1, 'index', 'asciiMap[mapChr]', 'asciiMap[mapDsc]');
+	bux += this.showTable('asc',   'EnDe.asciiMap',  1, 'index', 'asciiMap[mapChr]', 'asciiMap[mapDsc]');
 	for (i in EnDe.asciiMap) {
-		txt += this.showTableR('td', i, EnDe.asciiMap[i][EnDe.mapChr], EnDe.asciiMap[i][EnDe.mapDsc]);
+		bux += this.showTableR('td', i, EnDe.asciiMap[i][EnDe.mapChr], EnDe.asciiMap[i][EnDe.mapDsc]);
 	}
-	txt += '</table>';
+	bux += '</table>';
 
-	txt += this.showTable('din',   'EnDe.DIN66003Map',  1, 'index', 'DIN66003Map[mapChr]', 'DIN66003Map[mapDsc]');
+	bux += this.showTable('din',   'EnDe.DIN66003Map',  1, 'index', 'DIN66003Map[mapChr]', 'DIN66003Map[mapDsc]');
 	for (i in EnDe.DIN66003Map) {
-		txt += this.showTableR('td', i, EnDe.DIN66003Map[i][EnDe.mapChr], EnDe.DIN66003Map[i][EnDe.mapDsc]);
+		bux += this.showTableR('td', i, EnDe.DIN66003Map[i][EnDe.mapChr], EnDe.DIN66003Map[i][EnDe.mapDsc]);
 	}
-	txt += '</table>';
+	bux += '</table>';
 
-	txt += this.showTable('dinf',  'EnDe.DIN66003fMap', 1, 'index', 'DIN66003fMap[mapChr]', ''); // ToDo mapDsc
+	bux += this.showTable('dinf',  'EnDe.DIN66003fMap', 1, 'index', 'DIN66003fMap[mapChr]', ''); // ToDo mapDsc
 	for (i in EnDe.DIN66003fMap) {
-		txt += this.showTableR('td', i, EnDe.DIN66003fMap[i], '');
+		bux += this.showTableR('td', i, EnDe.DIN66003fMap[i], '');
 	}
-	txt += '</table>';
+	bux += '</table>';
 
-	txt += this.showTable('ebc',   'EnDe.ebcdicMap', 1, 'index', 'ebcdicMap[mapChr]', 'ebcdicMap[mapDsc]');
+	bux += this.showTable('ebc',   'EnDe.ebcdicMap', 1, 'index', 'ebcdicMap[mapChr]', 'ebcdicMap[mapDsc]');
 	for (i in EnDe.ebcdicMap) {
-		txt += this.showTableR('td', i, EnDe.ebcdicMap[i][EnDe.mapChr], EnDe.ebcdicMap[i][EnDe.mapDsc]);
+		bux += this.showTableR('td', i, EnDe.ebcdicMap[i][EnDe.mapChr], EnDe.ebcdicMap[i][EnDe.mapDsc]);
 	}
-	txt += '</table>';
+	bux += '</table>';
 
-	txt += this.showTable('rom',   'EnDe.romanMap',  1, 'index', 'romanMap[mapChr]', 'romanMap[mapDsc]');
+	bux += this.showTable('rom',   'EnDe.romanMap',  1, 'index', 'romanMap[mapChr]', 'romanMap[mapDsc]');
 	for (i in EnDe.romanMap) {
-		txt += this.showTableR('td', i, EnDe.romanMap[i][EnDe.mapChr], EnDe.romanMap[i][EnDe.mapDsc]);
+		bux += this.showTableR('td', i, EnDe.romanMap[i][EnDe.mapChr], EnDe.romanMap[i][EnDe.mapDsc]);
 	}
-	txt += '</table>';
+	bux += '</table>';
 
-	txt += this.showTable('usup',  'EnDe.u2superMap',1, 'index', 'u2superMap[i]');  // Unicode superscript characters
+	bux += this.showTable('usup',  'EnDe.u2superMap',1, 'index', 'u2superMap[i]');  // Unicode superscript characters
 	for (i in EnDe.u2superMap) {
-		txt += this.showTableR('td', i, EnDe.u2superMap[i]);
+		bux += this.showTableR('td', i, EnDe.u2superMap[i]);
 	}
-	txt += '</table>';
+	bux += '</table>';
 
-	txt += this.showTable('usub',  'EnDe.u2subMap',  1, 'index', 'u2subMap[i]'); // Unicode subscript characters
+	bux += this.showTable('usub',  'EnDe.u2subMap',  1, 'index', 'u2subMap[i]'); // Unicode subscript characters
 	for (i in EnDe.u2subMap) {
-		txt += this.showTableR('td', i, EnDe.u2subMap[i]);
+		bux += this.showTableR('td', i, EnDe.u2subMap[i]);
 	}
-	txt += '</table>';
+	bux += '</table>';
 
 	// ToDo: EnDe.super2uMap EnDe.sub2uMap
 
-	txt += this.showTable('eut',   'EnDe.ebcdicUTF', 1, 'index', 'ebcdicUTF[mapChr]', 'ebcdicUTF[mapDsc]');
+	bux += this.showTable('eut',   'EnDe.ebcdicUTF', 1, 'index', 'ebcdicUTF[mapChr]', 'ebcdicUTF[mapDsc]');
 	for (i in EnDe.ebcdicUTF) {
-		txt += this.showTableR('td', i, EnDe.ebcdicUTF[i][EnDe.mapChr], EnDe.ebcdicUTF[i][EnDe.mapDsc]);
+		bux += this.showTableR('td', i, EnDe.ebcdicUTF[i][EnDe.mapChr], EnDe.ebcdicUTF[i][EnDe.mapDsc]);
 	}
-	txt += '</table>';
+	bux += '</table>';
 
 	/*
 	 * EnDe.dupMap and EnDe.ncrMap are not displayed as HTML table 'cause of
@@ -2074,37 +2049,33 @@ this.showMap    = function() {
 	 *------------------------ up to 12/2020 when this is no longer an issue
      *------------------------ latest version with div tag: EnDeGUI.js 3.112
 	 */
-	ttt  = '| no' + '\t|stand.' + '\t|entity' + '\t| class' + '\t| description';
-	txt += this.showTable('dup',   'EnDe.dupMap[ ]', 1, 'index', ttt); // duplicate entries
+	var txt  = '| no' + '\t|stand.' + '\t|entity' + '\t| class' + '\t| description';
+	bux += this.showTable('dup',   'EnDe.dupMap[ ]', 1, 'index', txt); // duplicate entries
 	for (i in EnDe.dupMap) {
-		txt += this.showTableR('td', i, EnDe.dupMap[i].toString().replace(/,/g, '\t'));
+		bux += this.showTableR('td', i, EnDe.dupMap[i].toString().replace(/,/g, '\t'));
 	}
-	txt += '</table>';
+	bux += '</table>';
 
-	txt += this.showTable('ncr',  'EnDe.ncrMap',     1, 'index', 'ncrMap[i]'); // named charactere references
+	bux += this.showTable('ncr',  'EnDe.ncrMap',     1, 'index', 'ncrMap[i]'); // named charactere references
 	for (i in EnDe.ncrMap) {
-		txt += this.showTableR('td', i, EnDe.ncrMap[i].toString());
+		bux += this.showTableR('td', i, EnDe.ncrMap[i].toString());
 	}
-	txt += '</table>';
+	bux += '</table>';
 
-	txt += this.showTable('win',  'EnDe.winMap',     1, 'index', 'winMap[mapChr]', 'winMap[mapDsc]');
+	bux += this.showTable('win',  'EnDe.winMap',     1, 'index', 'winMap[mapChr]', 'winMap[mapDsc]');
 	for (i in EnDe.winMap) {
 		if (EnDe.winMap[i][EnDe.mapChr] == undefined) { continue; } // defensive programming
-		txt += this.showTableR('td', i, EnDe.winMap[i][EnDe.mapChr], EnDe.winMap[i][EnDe.mapDsc]);
+		bux += this.showTableR('td', i, EnDe.winMap[i][EnDe.mapChr], EnDe.winMap[i][EnDe.mapDsc]);
 	}
-	txt += '</table>';
+	bux += '</table>';
 
-	txt += this.showTable('range', 'EnDe.rangeMap',  1, 'index', 'rangeMap[i]'); // Unicode Code Ranges
+	bux += this.showTable('range', 'EnDe.rangeMap',  1, 'index', 'rangeMap[i]'); // Unicode Code Ranges
 	for (i in EnDe.rangeMap) {
-		txt += this.showTableR('td', i, EnDe.rangeMap[i]);
+		bux += this.showTableR('td', i, EnDe.rangeMap[i]);
 	}
-	txt += '</table>';
+	bux += '</table>';
 
-	ccc.innerHTML += txt;
-	div.appendChild(ccc);
-	ccc = null;
-	//win.document.body.appendChild(div);
-	//win.focus();
+	div.innerHTML += bux;
 	return false;
 }; // showMap
 
@@ -4338,6 +4309,8 @@ this.toolObjects= {     // keep JavaScript happy for style.display property
 		'EnDeDOM.f.FF':  'none',
 		'EnDeDOM.f.TST': 'none',
 		'EnDeDOM.f.DBX': 'none',
+		'EnDeDOM.f.VAR': 'none',
+		'EnDeDOM.VAR':   'none',
 		'EnDeDOM.GUI.QB':'none',
 		'EnDeDOM.f.GUI': 'block',
 		'EnDeDOM.f.API': 'block',
@@ -4350,7 +4323,7 @@ this.toolObjects= {     // keep JavaScript happy for style.display property
 		'EnDeDOM.f.TS':  'block',
 		'EnDeDOM.f.RX':  'block',
 		'EnDeDOM.f.PW':  'block'
-}; // fsetObjects
+}; // toolObjects
 
 this.showQS     = function(src) {
 //#? write query string values at bottom of page
@@ -4500,7 +4473,7 @@ this.init       = function() {
 	$('EnDeDOM.f.XX').style.display = 'none';
 	$('EnDeDOM.SB').style.display   = this.sbar;
 //alert($('EnDeDOM.f.FF').style.display);
-	$('EnDeDOM.DBX.var').style.display = 'none';
+	$('EnDeDOM.f.VAR').style.display= 'none';
 	// prepare test settings
 	kkk = location.search.match(/(test)/i);
 	if (kkk!==null) { this.tool('EnDeDOM.f.TST'); this.showQS('TST'); kkk.length = 0; }
@@ -4516,6 +4489,7 @@ this.init       = function() {
 	// prepare trace/debug settings
 	if (EnDeGUI.trace===true) {
 		$('EnDeDOM.f.DBX').style.display  = 'block';
+		$('EnDeDOM.f.VAR').style.display  = 'block';
 		this.showQS('trace');
 	}
 
@@ -4620,6 +4594,7 @@ this.init       = function() {
 	$('EnDeDOM.GUI').style.display= 'block';
 	$('EnDeDOM.GUI.file').value   = 'default_filter.xml';
 	$('EnDeDOM.API').style.display= 'none';
+	$('EnDeDOM.VAR').style.display= 'none';
 	$('EnDeDOM.CH').style.display = 'none';
 	$('EnDeDOM.EN').style.display = 'none';
 	$('EnDeDOM.DE').style.display = 'none';

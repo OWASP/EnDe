@@ -94,7 +94,7 @@ FORCED SYNTAX RULES
 	not change leading TABs to spaces (even TABs are not used for anything).
 	**The initial TABs will be replaced by spaces in future ...**
 	
-	NOTE that TABS in other -- mainly .txt -- files are used different, see
+	NOTE that TABs in other -- mainly .txt -- files are used different, see
 	documentation there.
 	
     Spaces
@@ -191,7 +191,7 @@ RULES for GENERATORS
 +-
 |		this.OBJECT = new function () {
 |		   // any code here
-|		}; // .OBJECT
+|		}; // OBJECT
 +-
 	Generation, i.e. for "EnDeFunc.txt", fails if the comment 'OBJECT' does
 	not match the object name for the 'new function ()' definition before.
@@ -241,7 +241,7 @@ INCLUDES
 |           if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 |           EnDe.THIRD = new function() {
 |              // .. original code goes here ..
-|           }; //THIRD
+|           }; // THIRD
 +-
 	For examples see  "md5.js", "rmd.js", "aes.js".
 
@@ -309,16 +309,16 @@ ARCHITECTURE
 	    Various configurations, mainly all menus available in the  GUI, are
 	    defined in text files, for example  "EnDeMenu.txt",  "EnDeFile.txt"
 	    and "EnDeOpts.txt". All these files use a TAB-separated format.
-	    If more sophisticated data is needed, XML is used instead of somple
+	    If more sophisticated data is needed, XML is used instead of simple
 	    TAB-separated text, for example "EnDeUser.xml".
 
 	Said this, it's difficult to hunt bugs just by reading code.  It's best
-	to use the build-in trace / debug functionality from the GUI frst. This
+	to use the build-in trace/debug functionality from the GUI first.  This
 	will at least give texts to search for and give hints where to search.
 
 	More documentation to be here ...
 
 	
 VERSION
-	@(#) EnDe.code.txt 3.4 <!-- 14/11/09 21:28:12 -->
+	@(#) EnDe.code.txt 3.5 <!-- 20/12/13 14:01:57 -->
 

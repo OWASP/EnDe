@@ -9,7 +9,7 @@
 #       Makefile
 #?
 #? VERSION
-#?      @(#) EnDe.css 3.27 20/12/13 00:25:36
+#?      @(#) EnDe.css 3.28 20/12/13 23:00:47
 #?
 #? AUTHOR
 #?      30-may-04 Achim Hoffmann
@@ -115,6 +115,12 @@ span.quick  {
 	height:         1.5em;
 	border-radius:  6px;
 }
+
+/* debug internal settings  */
+div[id="EnDeDOM.VAR"] button { width:20em; }
+div[id="EnDeDOM.VAR"] input  { width:49em; font-family:monospace; text-align:left; }
+div[id="EnDeDOM.VAR"] table  { border:1px solid black; border-collapse:collapse;   }
+div[id="EnDeDOM.VAR"] td:nth-child(2)   {  font-family:monospace; white-space:pre; }
 
 /* all textareas */
 textarea {
@@ -327,7 +333,7 @@ input.button {
 
 /* tables in Timestamp area */
 /* font-size is contribution to Firefox 3.x */
-table.tstable       { border-spacing: 0px; border-collapse:collapse; font-size:10pt; } 
+table.tstable       { border-spacing:0px; border-collapse:collapse; font-size:10pt; } 
 table.tstable td    { border-right:var(--border-0); min-width:2em;  width:auto; }
 table.tstable td    { margin:0px; padding:0px; }
 table.tstable th    { margin:0px; padding:0px; }

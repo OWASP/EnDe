@@ -104,7 +104,7 @@
 #    building the GUI, EnDeGUI.init() will show the "Browser Quirks" window.
 #?
 #? VERSION
-#?      @(#) EnDeGUI.js 3.115 20/12/13 16:08:17
+#?      @(#) EnDeGUI.js 3.116 20/12/13 19:57:57
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -116,8 +116,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '3.115';
-this.sid        = function() {  return('@(#) EnDeGUI.js 3.115 20/12/13 16:08:17 EnDeGUI'); };
+this.SID        = '3.116';
+this.sid        = function() {  return('@(#) EnDeGUI.js 3.116 20/12/13 19:57:57 EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 
@@ -1861,6 +1861,7 @@ this.showMap    = function() {
 	}; // showTable
 
 	_spr('EnDeGUI.showMap');
+/*
 	var x   = EnDeGUI.winX;
 	var y   = EnDeGUI.winY;
 	EnDeGUI.winX = '1020';
@@ -1868,40 +1869,40 @@ this.showMap    = function() {
 	var win = this.win.help('','trace', '');
 	EnDeGUI.winX = x;
 	EnDeGUI.winY = y;
-	var txt = '';
-	var div = document.createElement('SCRIPT');
-	var i   = 0;
 	win.EnDe= EnDe; // handover functions and object to new window
-	div.type= 'text/javascript';
-// ToDo: fails for WebKit (<=47905) with: can't find variable _show
-	div.innerHTML  = '';
-	div.innerHTML += 'function _$(id) { return document.getElementById(id);}';
-	div.innerHTML += 'function _show(id) {var obj=document.getElementById(id);if(obj.style.display==""){obj.style.display="none";}obj.style.display=(obj.style.display=="block")?"none":"block";return false;}';
+*/
+
+	var div = $('EnDeDOM.DBX.var');// get tag
+	this.display(div); // first call may set display=none
+	if ('none'===div.style.display) {
+		return false;
+    }
+	var txt = '';
+	var i   = 0;
+	var ccc = document.createElement('SCRIPT');
+	ccc.type= 'text/javascript';
+	ccc.innerHTML  = '';
+	//ccc.innerHTML += 'function _$(id) { return document.getElementById(id);}';
+	ccc.innerHTML += 'function _show(id) {var obj=document.getElementById(id);if(obj.style.display==""){obj.style.display="none";}obj.style.display=(obj.style.display=="block")?"none":"block";return false;}';
 
 //# sets value of correspnding EnDe.* variable
 	// onClick: "arr[idx]+']=$(idx).value;
-	div.innerHTML += 'function _setJSvalue(arr,idx,val) { alert(arr + "[" + idx + "] = " + val); arr[idx]=_$(idx).value; return false; }';
-	win.document.body.appendChild(div);
-	//div = document.createElement('STYLE');
-	//div.innerText  = 'input { width:60em;}';
-	//div.innerHTML  = 'input { width:40em;}';
-	win.document.body.appendChild(div);
-	div = document.createElement('DIV');
-	div.innerHTML  = EnDe.sid()     + '<br />';
-	div.innerHTML += '--DEBUG-- (internal settings)';
-	div.innerHTML += '<br><sup>Note that some values may contain non-printable characters!</sup><br>';
-	win.document.body.appendChild(div);
-	div = document.createElement('DIV');
-	div.id         = 'dbxmap';
-	div.style.border = '1px solid black';
+	ccc.innerHTML += 'function _setJSvalue(arr,idx,val) { alert(arr + "[" + idx + "] = " + val); arr[idx]=$(idx).value; return false; }';
+	div.appendChild(ccc);
+
+	ccc = document.createElement('DIV');
+	ccc.id         = 'dbxmap';
+	ccc.style.border = '1px solid black';
+	ccc.innerHTML += '--DEBUG-- (internal settings)';
+	ccc.innerHTML += '<br><sup>Note that some values may contain non-printable characters!</sup><br>';
 
 	var bbb = null;
 	// quick&dirty as styles are not supported in all browsers
 	txt = '<style type="text/css">'
-	    + ' button {width:20em;}'
-	    + ' input  {width:47em;font-family:monospace;}'
-	    + ' table  {border:1px solid black;border-collapse:collapse;}'
-	    + ' td:nth-child(2){white-space:pre;font-family:monospace;}'
+	    + ' div[id="EnDeDOM.DBX.var"] button {width:20em;}'
+	    + ' div[id="EnDeDOM.DBX.var"] input  {width:47em;font-family:monospace;}'
+	    + ' div[id="EnDeDOM.DBX.var"] table  {border:1px solid black;border-collapse:collapse;}'
+	    + ' div[id="EnDeDOM.DBX.var"] td:nth-child(2){white-space:pre;font-family:monospace;}'
 	    + '</style>';
 
 	/*
@@ -1910,7 +1911,7 @@ this.showMap    = function() {
 	kkk  = 'EnDe.';
 	txt += this.showTable('EnDe',  'EnDe',           1, 'name', 'value');
 	for (bbb in EnDe) {
-		_dpr('# ' + typeof EnDe[bbb] + '\tEnDe.' + bbb + ' #');
+		// _dpr('# ' + typeof EnDe[bbb] + '\tEnDe.' + bbb + ' #');
 		if (bbb == 'pairs')             { continue; }
 		if (bbb == 'prototype')         { continue; }
 		if (bbb == 'sid')               { continue; }
@@ -2073,8 +2074,8 @@ this.showMap    = function() {
 	 *------------------------ up to 12/2020 when this is no longer an issue
      *------------------------ latest version with div tag: EnDeGUI.js 3.112
 	 */
-	ccc  = '| no' + '\t|stand.' + '\t|entity' + '\t| class' + '\t| description';
-	txt += this.showTable('dup',   'EnDe.dupMap[ ]', 1, 'index', ccc); // duplicate entries
+	ttt  = '| no' + '\t|stand.' + '\t|entity' + '\t| class' + '\t| description';
+	txt += this.showTable('dup',   'EnDe.dupMap[ ]', 1, 'index', ttt); // duplicate entries
 	for (i in EnDe.dupMap) {
 		txt += this.showTableR('td', i, EnDe.dupMap[i].toString().replace(/,/g, '\t'));
 	}
@@ -2099,9 +2100,11 @@ this.showMap    = function() {
 	}
 	txt += '</table>';
 
-	div.innerHTML += txt;
-	win.document.body.appendChild(div);
-	win.focus();
+	ccc.innerHTML += txt;
+	div.appendChild(ccc);
+	ccc = null;
+	//win.document.body.appendChild(div);
+	//win.focus();
 	return false;
 }; // showMap
 
@@ -4497,6 +4500,7 @@ this.init       = function() {
 	$('EnDeDOM.f.XX').style.display = 'none';
 	$('EnDeDOM.SB').style.display   = this.sbar;
 //alert($('EnDeDOM.f.FF').style.display);
+	$('EnDeDOM.DBX.var').style.display = 'none';
 	// prepare test settings
 	kkk = location.search.match(/(test)/i);
 	if (kkk!==null) { this.tool('EnDeDOM.f.TST'); this.showQS('TST'); kkk.length = 0; }

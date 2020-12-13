@@ -1004,6 +1004,12 @@ GUI
 	This section is for interanl use and debugging purpose.
 	Use the [trace] button or the '?trace' option to display this section.
 	
+    DETAILS Internal Settings
+	
+	This section is for interanl use and debugging purpose.
+	Use the  [Internal Settings] button or the  '?trace' option to display
+	this section.
+	
     GUI OPTIONS
 	
 	Following options and settings are used in/for the GUI only.
@@ -2837,7 +2843,7 @@ EPILOG
 	
 VERSION
 	
-	@# EnDe <!-- @(#) EnDe.man.txt 3.51 13:53:40 19/07/25 -->
+	@# EnDe <!-- @(#) EnDe.man.txt 3.52 23:10:07 20/12/13 -->
 	
 	
 AUTHOR

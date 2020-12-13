@@ -11,8 +11,8 @@
 	<meta name="DC.language"      content="en" >
 	<meta name="DC.rights"        content="https://github.com/EnDe/EnDe license.txt" >
 	<meta name="DC.license"       content="https://github.com/EnDe/EnDe license.txt" >
-	<meta name="DC.modified"      content="20/11/19" >
-	<meta name="DC.Source"        content="@(#) EnDe.html 3.58 20/11/19 07:04:05"  >
+	<meta name="DC.modified"      content="20/12/13" >
+	<meta name="DC.Source"        content="@(#) EnDe.html 3.59 20/12/13 14:16:21"  >
 	<meta name="DC.Date"          content="07-apr-07" >
 	<meta name="DC.creator"       content="Achim Hoffmann" >
 	<meta name="DC.Author"        content="Achim Hoffmann, mailto: ??" >
@@ -72,6 +72,7 @@
 	<br>
 	<a id="EnDeDOM.icon" title="about"  href="" onClick="return EnDeGUI.help('ABOUT');"><img src="img/ende-128x128.png" alt="EnDe Icon" width=28 height=28 ></a>
 	<a id="EnDeDOM.logo" title="sponsored by sic[!]sec GmbH" href="http://sicsec.de/" target="_sicsec"><img src="img/sicsec-87x26.png" alt="sic[!]sec" ></a>
+
 	<fieldset   id="EnDeDOM.f.DBX">
 		<div    id="EnDeDOM.DBX.bf" class="head">
 			<span>
@@ -115,6 +116,7 @@
 			<button     id="EnDeDOM.DBX.bs" onClick="return EnDeGUI.scratch('DBX', $('EnDeDOM.DBX.text').value)" >Scratchpad ..</button>
 		</div>
 	</fieldset>
+
 	<fieldset   id="EnDeDOM.f.TST">
 		<div    id="EnDeDOM.TST.bf" class="head">
 			<span>
@@ -138,6 +140,21 @@
 			<a          id="EnDeDOM.TST.ah" href="EnDeHTTP-Test.html" >HTTP-Test</a>
 			<div        id="EnDeDOM.TST.tst" class="test" ><!-- added by EnDeGUI.test() --></div>
 		</div>
+	</fieldset>
+
+	<fieldset   id="EnDeDOM.f.QB"   class="options">
+		<span   id="EnDeDOM.GUI.QB" class="quick head">
+			<span>&#160;&#160;
+				<button id="EnDeDOM.GUI.qq"     onClick="return EnDeGUI.show(this);">x</button>
+				<button id="EnDeDOM.GUI.qh"     onClick="return EnDeGUI.help('GUI');">?</button>
+			</span>
+			<!-- <h2><label>Quick Bar</label></h2> -->
+			<label for="EnDeDOM.GUI.append" >append    <input   id="EnDeDOM.GUI.append" type="checkbox" ></label>
+			<label for="EnDeDOM.GUI.select" >selection <input   id="EnDeDOM.GUI.select" type="checkbox" ></label>
+			<button     id="EnDeDOM.GUI.FF" onClick="return EnDeGUI.show(this);">Functions</button>
+			<button     id="EnDeDOM.GUI.MP" onClick="return EnDeGUI.show(this);">Replace Map</button>
+			<button     id="EnDeDOM.GUI.bS" onClick="return EnDeGUI.copy();" hide="1">Shuffle</button>
+		</span>
 	</fieldset>
 
 	<fieldset   id="EnDeDOM.f.GUI"  class="options">
@@ -197,17 +214,6 @@
 				<label class="bold">&#160;&#160;&#160;&#160;:</label>
 -->
 		</div>
-		<span   id="EnDeDOM.GUI.QB" class="quick head">
-			<span>&#160;&#160;
-				<button id="EnDeDOM.GUI.qq"     onClick="return EnDeGUI.show(this);">x</button>
-				<button id="EnDeDOM.GUI.qh"     onClick="return EnDeGUI.help('GUI');">?</button>
-			</span>
-			<label for="EnDeDOM.GUI.append" >append    <input   id="EnDeDOM.GUI.append" type="checkbox" ></label>
-			<label for="EnDeDOM.GUI.select" >selection <input   id="EnDeDOM.GUI.select" type="checkbox" ></label>
-			<button     id="EnDeDOM.GUI.FF" onClick="return EnDeGUI.show(this);">Functions</button>
-			<button     id="EnDeDOM.GUI.MP" onClick="return EnDeGUI.show(this);">Replace Map</button>
-			<button     id="EnDeDOM.GUI.bS" onClick="return EnDeGUI.copy();" hide="1">Shuffle</button>
-		</span>
 	</fieldset>
 
 	<fieldset   id="EnDeDOM.f.API"  class="options">
@@ -279,7 +285,7 @@
 			<button id="EnDeDOM.MP.bq"      onClick="return EnDeGUI.show(this);" >x</button>
 			<button id="EnDeDOM.MP.bh"      onClick="return EnDeGUI.help('MAP');">?</button>
 			</span>
-			<h2>Replace Characters Map</h2>
+			<h2><label>Replace Characters Map</label></h2>
 		</div>
 		<div  id="EnDeDOM.MP">
 			character encoding<br>
@@ -306,7 +312,6 @@
 			<input      id="EnDeDOM.MP.oldC" type="text"    value=""    class="blind" >
 			<input      id="EnDeDOM.MP.newC" type="text"    value="" >
 			<input      id="EnDeDOM.MP.add"  type="button"  value="add" onClick="EnDeGUI.MP.setChar(this,EnDeGUI.MP.getUnicode($('EnDeDOM.MP.see').value,$('EnDeDOM.MP.newC').value))" >
-
 			<div      id="EnDeDOM.MP.Menu"  class="select" >specials :&#160;  <!-- SELECT added by init() --></div>
 			<input    id="EnDeDOM.MP.row"   type="button"   value="+"   onClick="EnDeGUI.MP.newrow()" >
 			&#160;&#160; | &#160;&#160;
@@ -323,7 +328,7 @@
 				<button id="EnDeDOM.FF.bq"  onClick="return EnDeGUI.show(this);"  >x</button>
 				<button id="EnDeDOM.FF.bh"  onClick="return EnDeGUI.help('MODE');">?</button>
 			</span>
-			<h2>Functions</h2>
+			<h2><label>Functions</label></h2>
 		</div>
 		<div  id="EnDeDOM.FF">
 			<div class="opt">
@@ -334,7 +339,6 @@
 			<input  id="EnDeDOM.FF.varval1" type="radio" value="value"      name="varval" >value
 			</label>
 			</div><!-- class="opt" // this comment mandatory for Makefile -->
-
 			<div class="select middle"  id="EnDeDOM.FF.Actions"><!-- SELECT added by init() --></div>
 			<div class="left">
 				<textarea   id="EnDeDOM.FF.text"    accesskey="F"></textarea>
@@ -396,12 +400,6 @@
 				    <input id="EnDeDOM.CH.lng"  type="text"     value="" class="text" size="44" onKeypress="return EnDeGUI.CH.dispatch(this,'lng');" >
 				</td>
 				</tr>
-<!--
-				<tr><td>&#160;</td></tr>
-				<tr><td>&#160;</td></tr>
-				<tr><td>&#160;</td></tr>
-				<tr><td>&#160;</td></tr>
--->
 			</table>
 	</fieldset>
 
@@ -420,10 +418,8 @@
 			<label for="EnDeDOM.ED.0d"> <input  id="EnDeDOM.ED.0d"  type="checkbox" > 0x0d </label>
 			<label for="EnDeDOM.ED.da"> <input  id="EnDeDOM.ED.da"  type="checkbox" > 0x0d0a</label>
 			<label for="EnDeDOM.ED.aa"> <input  id="EnDeDOM.ED.aa"  type="checkbox" > 0x1a </label>
-
 			<label class="bold" style="border-left:1px solid black"> en-/decode: </label>
 			<label for="EnDeDOM.ED.uri"><input  id="EnDeDOM.ED.uri" type="checkbox" > URI/URL </label>
-
 			<label class="bold" style="border-left:1px solid black"> Sep. </label>
 			<label for="EnDeDOM.ED.su"> <input  id="EnDeDOM.ED.su"  type="radio" name="sep" value="&" checked="1" > &amp; </label>
 			<label for="EnDeDOM.ED.sa"> <input  id="EnDeDOM.ED.sa"  type="radio" name="sep" value=":"  > <b>:</b></label>
@@ -431,6 +427,7 @@
 			<label for="EnDeDOM.ED.sn"> <input  id="EnDeDOM.ED.sn"  type="radio" name="sep" value="n"  > \n </label>
 			<hr>
 		</div>
+
 		<fieldset id="EnDeDOM.f.EN"><legend> Encoding</legend>
 			<div  id="EnDeDOM.EN">
 			<div  id="EnDeDOM.EN.Actions"   class="select left"><!-- SELECT added by init() --></div>
@@ -452,6 +449,7 @@
 			</div>
 			</div>
 		</fieldset>
+
 		<fieldset id="EnDeDOM.f.DE"><legend> Decoding</legend>
 			<div  id="EnDeDOM.DE">
 			<div  id="EnDeDOM.DE.Actions"   class="select left"><!-- SELECT added by init() --></div>
@@ -473,6 +471,7 @@
 			</div>
 			</div>
 		</fieldset>
+
 	</fieldset>
 
 	<fieldset   id="EnDeDOM.f.IP"   class="borderbox">
@@ -817,7 +816,7 @@
 			<button id="EnDeDOM.QQ.bq"  onClick="return EnDeGUI.show(this);">x</button>
 			<button id="EnDeDOM.QQ.bh"  onClick="return EnDeGUI.help('QQ');">?</button>
 			</span>
-			<h2>Browser Quirks</h2>
+			<h2><label>Browser Quirks</label></h2>
 		</div>
 		<div  id="EnDeDOM.QQ"       class="quirks" >
 			<span>
@@ -982,7 +981,7 @@
 			<button id="EnDeDOM.XX.bq"  onClick="return EnDeGUI.show(this);">x</button>
 			<button id="EnDeDOM.XX.bh"  onClick="return EnDeGUI.help('XX');">?</button>
 			</span>
-			<h2>Browser Restart required</h2>
+			<h2><label>Browser Restart required</label></h2>
 		</div>
 		<div  id="EnDeDOM.XX"       class="quirks">
 			<span>
@@ -1042,7 +1041,10 @@ EnDeGUI.titles  = {
 	'EnDeDOM.PW.bq':    "testing password strength EXPERIMENTAL (click to expand/fold)",
 	'EnDeDOM.TST.bq':   "test tool (click to expand/fold)",
 	'EnDeDOM.DBX.bq':   "trace output and debug tool (click to expand/fold)",
-	'EnDeDOM.f.GUI':    "set options for GUI",
+	'EnDeDOM.f.DBX':    "trace output and debug tool",
+	'EnDeDOM.f.TST':    "test tool",
+	'EnDeDOM.f.QB':     "options for GUI (in quick bar)",
+	'EnDeDOM.f.GUI':    "options for GUI",
 	'EnDeDOM.f.API':    "options for API",
 	'EnDeDOM.API.JSReg':"options for JSReg",
 	'EnDeDOM.f.CH':     "single character convertion tool",
@@ -1050,10 +1052,8 @@ EnDeGUI.titles  = {
 	'EnDeDOM.f.IP':     "IP convertion tool",
 	'EnDeDOM.f.TS':     "IP timestamp convertion tool",
 	'EnDeDOM.f.RX':     "explain and pretty print regEx tool",
-	'EnDeDOM.f.TST':    "test tool",
-	'EnDeDOM.f.DBX':    "trace output and debug tool",
-	'EnDeDOM.f.PW':     "testing password strength EXPERIMENTAL",
-	'EnDeDOM.SB.bp':    "top or bottom position",
+	'EnDeDOM.f.PW':     "testing password strength tool; EXPERIMENTAL",
+	'EnDeDOM.SB.bp':    "status bar: top or bottom position",
 	'EnDeDOM.DBX.text': "trace/debug output",
 	'EnDeDOM.DBX.bc':   "clear trace/debug output",
 	'EnDeDOM.DBX.bl':   "show list of loaded files",

@@ -35,7 +35,7 @@
 #?      EnDeGUI.js
 #?
 #? VERSION
-#?      @(#) EnDeUser.xml 4.4 17/09/08 00:07:48
+#?      @(#) EnDeUser.xml 4.5 20/12/14 11:45:30
 #?
 #? AUTHOR
 #?      10-10-08 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -276,6 +276,10 @@ EnDe.EN.dispatch(
   "","","").replace(/=/mg,'') + '.' +
   ((is64===false) ? sig : EnDe.EN.dispatch("base64","lazy",$('EnDeDOM.API.uppercase').checked,sig,"","","").replace(/=/mg,''));
     ]]></code>
+	<!-- above is a lazy approach because: -->
+	<!-- * JWT's base64 encoding may miss padding characters, need to be removed -->
+	<!-- * JWT's base64 encoded signature uses "Base64 SAP (-_ instead of +/) -->
+	<!-- * JWT's base64 encoded signature needs a salt (not yet implemented)  -->
     </attack>
 
     <attack>
@@ -608,6 +612,9 @@ decsig +
 'EnDe-JWT-signature-is-base64=' + (encsig!=decsig);
 /* remember if signature is base64 encoded */
     ]]></code>
+	<!-- above is a lazy approach because: -->
+	<!-- * JWT's base64 encoding may miss padding characters -->
+	<!-- * JWT's base64 encoded signature uses "Base64 SAP (-_ instead of +/) -->
     </attack>
 
     <attack>

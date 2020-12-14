@@ -104,7 +104,7 @@
 #    building the GUI, EnDeGUI.init() will show the "Browser Quirks" window.
 #?
 #? VERSION
-#?      @(#) EnDeGUI.js 3.117 20/12/13 23:02:20
+#?      @(#) EnDeGUI.js 3.118 20/12/15 00:46:20
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -116,8 +116,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '3.117';
-this.sid        = function() {  return('@(#) EnDeGUI.js 3.117 20/12/13 23:02:20 EnDeGUI'); };
+this.SID        = '3.118';
+this.sid        = function() {  return('@(#) EnDeGUI.js 3.118 20/12/15 00:46:20 EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 
@@ -1827,16 +1827,36 @@ this.showMap    = function() {
 
 	// ToDo: bug 12/2020: destroys functions for example Ende.$(), reason yet unknown
 
-	this.showButton = function (id,txt) {
-	//# return a button which toggle display of group of variables
-		// for example: this.showButton('CST', 'EnDe.CONST');
-		// create a button which toggles display of the tag with id=_table_CST
-		return '<button onClick="'
-		    + "EnDeGUI.display('_table_" + id + "');return false;" + '">'
-		    + txt + '</button><br>';	
-	}; // showButton
+	// ToDo: bug 12/2020: this.setJSvalue() not yet implemented
+	this.setJSvalue = function (arr,idx,val) {
+	//# sets value of correspnding EnDe.* variable
+		// onClick: "arr[idx]+']=$(idx).value;
+		// var = $(txt); var.split('.').splice(1,); // var.EnDe.CONST.CHR.LC => EnDe.CONST.CHR.LC
+		alert(arr + "[" + idx + "] = " + val);
+		//arr[idx]=$(idx).value;
+		return false;
+	}; // setJSvalue
 
-	this.showTableR = function (tag) { // ...args
+	this.createSetButton  = function (txt,val) {
+	//# return a button to set value in EnDe.*
+		// for example: txt = 'EnDe.CONST.CHR.LC' make id = 'var.EnDe.CONST.CHR.LC'
+		// corresponding input tag has id = 'val.EnDe.CONST.CHR.LC'
+		var default_value = val;
+		var ccc = 'var.' + txt;
+		//var kkk = $(ccc).value;
+		var _js = "EnDeGUI.setJSvalue('" + ccc + "','" + val + "');";
+		return '<button id="' + ccc + '" onClick="'+ _js +'" title="set value">' + txt + '</button>';
+	}; // createSetButton
+
+	this.createSetInput   = function (txt,val) {
+	//# return a input containing value in EnDe.*
+		var default_value = val;
+		var ccc = 'val.' + txt;
+		return '<input id="' + ccc +'" value="' + val + '" >';
+			// ToDo + ((bbb.match(/^map/)===null) ? '' : 'disabled')
+	}; // createSetInput
+
+	this.createRow   = function (tag) { // ...args
 	//# return a table row with as many columns as specified
 		var bux = '';
 		for (var i=1; i<arguments.length; i++) {
@@ -1844,31 +1864,81 @@ this.showMap    = function() {
 		}
 		bux = ['<tr>', bux, '</tr>'].join('');
 		return bux;
-	}; // showTableR
+	}; // createRow
 
-	this.showTable  = function (id,txt,border) { // ...args
+	this.createSetRow= function (txt,val) {
+	//# return a table row with button and input tag
+		return this.createRow('td', this.createSetButton(txt, val), this.createSetInput (txt, val));
+	}; // createRow
+
+	this.createRows   = function (id,obj) {
 	//# return a table with caption and first row with nr-of-args columns
-		// for example:  this.showTable('eut', 'EnDe.ebcdicUTF', 1);
-		// creates a table with a tbody id=_table_eut
 		var bux = '';
-		for (var i=3; i<arguments.length; i++) {
+		switch (id) {
+		  case 'EnDe.b64Char':
+			for (var i in obj) {
+				bux += this.createRow('td', i, EnDe.b64Char[i], EnDe.b64Code[EnDe.b64Char[i]]);
+			}
+			break;
+		  case 'EnDe.spaceMap':
+			for (var i in obj) {
+				var h= EnDe.i2h('hex4',i);
+				bux += this.createRow('td', 'U+' + h, '[' + i + ']', obj[i]);
+			}
+			break;
+		  case 'EnDe.dupMap':
+			for (var i in obj) { bux += this.createRow('td', i, obj[i].toString().replace(/,/g, '\t')); } break;
+		  case 'EnDe.ncrMap':
+			for (var i in obj) { bux += this.createRow('td', i, obj[i].toString()); } break;
+		  case 'EnDe.rangeMap':
+		  case 'EnDe.u2superMap':
+		  case 'EnDe.u2subMap':
+		  case 'EnDe.xmlMap':
+			for (var i in obj) { bux += this.createRow('td', i, obj[i]); };
+			break;
+		  case 'EnDe.DIN66003fMap':
+			for (var i in obj) { bux += this.createRow('td', i, obj[i], ''); };
+			break;
+		  case 'EnDe.DIN66003Map':
+		  case 'EnDe.asciiMap':
+		  case 'EnDe.ebcdicMap':
+		  case 'EnDe.ebcdicUTF':
+		  case 'EnDe.romanMap':
+		  case 'EnDe.winMap':
+			for (var i in obj) {
+				if (obj[i][EnDe.mapChr] == undefined) { continue; } // defensive programming
+				bux += this.createRow('td', i, obj[i][EnDe.mapChr], obj[i][EnDe.mapDsc]);
+			};
+			break;
+		}
+		bux += '</table>';
+		return bux;
+	}; // createRows
+
+	this.createButton = function (id,txt) {
+	//# return a button which toggle display of group of variables
+		// for example: this.createButton('_table_CST', 'EnDe.CONST');
+		// create a button which toggles display of the tag with id=_table_CST
+		return '<button onClick="'
+		    + "EnDeGUI.display('" + id + "');return false;" + '">'
+		    + txt + '</button><br>';	
+	}; // createButton
+
+	this.createTable  = function (txt) { // ...args
+	//# return a table with caption and first row with nr-of-args columns
+		// for example:  this.createTable('EnDe.ebcdicUTF', 1);
+		// creates a table with a tbody id=_table_EnDe.ebcdicUTF
+		var bux = '';
+		var ccc = '_table_' + txt;
+		for (var i=1; i<arguments.length; i++) {
 			bux += ['<th>&#160;', arguments[i], '</th>'].join('');
 		}
-		return '<table border="' + border + '" cellpadding="0" cellspacing="0" >'
-			+ '<caption>' + this.showButton(id, txt) + '</caption>'
-			+ '<tbody id="_table_' + id + '" style="display:none">'
+		return '<table>'
+			+ '<caption>' + this.createButton(ccc, txt) + '</caption>'
+			+ '<tbody id="' + ccc + '" style="display:none">'
 			+ ['<tr>', bux, '</tr>'].join('');
-			// ToDo + this.showTableR('th', bux);
-	}; // showTable
-
-	// ToDo: bug 12/2020: this.setJSvalue() not yet implemented
-	this.setJSvalue = function (arr,idx,val) {
-	//# sets value of correspnding EnDe.* variable
-		// onClick: "arr[idx]+']=$(idx).value;
-		alert(arr + "[" + idx + "] = " + val);
-		//arr[idx]=$(idx).value;
-		return false;
-	}; // setJSvalue
+			// ToDo + this.createRow('th', bux);
+	}; // createTable
 
 	_spr('EnDeGUI.showMap');
 	if (true===this.showMapdone)    { return false; }
@@ -1884,8 +1954,8 @@ this.showMap    = function() {
 	/*
 	 * EnDe constants
 	 */
-	kkk  = 'EnDe.';
-	bux += this.showTable('EnDe',  'EnDe',           1, 'name', 'value');
+	kkk  = 'EnDe.';    // because EnDe.toString() does not work
+	bux += this.createTable('EnDe', 'name', 'value');
 	for (bbb in EnDe) {
 		// _dpr('# ' + typeof EnDe[bbb] + '\tEnDe.' + bbb + ' #');
 		if (bbb == 'pairs')             { continue; }
@@ -1896,25 +1966,19 @@ this.showMap    = function() {
 		if (bbb.match(/Map/) !==null)   { continue; }
 		if (EnDe[bbb].toString().match(/function/)!==null) { continue; }
 		if (EnDe[bbb].toString().match(/object/)  !==null) { continue; }
-		_js = "EnDeGUI.setJSvalue('EnDe','" + bbb + "','" + EnDe[bbb] + "');";
-		bux += '<tr><td><button id="c_' + bbb + '" onClick="'+ _js +'" title="set value">' + kkk + bbb + '</button></td>';
-		bux += '<td><input name="' + bbb +'" value="' + EnDe[bbb] + '" '
-			+ ((bbb.match(/^map/)===null) ? '' : 'disabled')
-			+ '></td></tr>';
+		bux += this.createSetRow(kkk + bbb, EnDe[bbb]);
 	}
 	kkk  = 'EnDe.pairs[ ';
 	for (bbb in EnDe.pairs) {
 		if (bbb==='indexOf') { continue; }
-		_js = "EnDeGUI.setJSvalue('EnDe.pairs','" + bbb + "','" + EnDe.pairs[bbb] + "');";
-		bux += '<tr><td><button id="c_' + bbb + '" onClick="'+ _js +'" title="set value">' + kkk + bbb + ' ]</button></td>';
-		bux += '<td><input name="' + bbb +'" value="' + EnDe.pairs[bbb] + '"></td></tr>';
+		bux += this.createSetRow(kkk + bbb + ' ]', EnDe.pairs[bbb]);
 	}
 	bux += '</table>';
 
 	/*
 	 * some constants (character classes, integer, ...)
 	 */
-	bux += this.showTable ('CST', 'EnDe.CONST', 1, 'name', 'value');
+	bux += this.createTable ('EnDe.CONST',     'name', 'value');
 	kkk  = 'EnDe.CONST.CHR.';
 	for (bbb in EnDe.CONST.CHR) {
 	// ToDo: some values from EnDe.CONST.* need to be encoded (contain " or ')
@@ -1923,123 +1987,81 @@ this.showMap    = function() {
 		if (bbb==='sid')       { continue; }
 		if (bbb==='SID')       { continue; }
 		if (bbb==='meta')      { continue; } // ToDo: bug: fails to display proper without HTML entities, need to substitute first
-		_js = "EnDeGUI.setJSvalue('EnDe.CONST.CHR','" + bbb + "','" + EnDe.CONST.CHR[bbb] + "');";
-		bux += '<tr><td><button id="C_' + bbb + '" onClick="'+ _js +'" title="set value">' + kkk + bbb + '</button></td>';
-		bux +=     '<td><input name="'  + bbb + '" value="' + EnDe.CONST.CHR[bbb] + '"></td></tr>';
+		bux += this.createSetRow(kkk + bbb, EnDe.CONST.CHR[bbb]);
 	}
 	kkk  = 'EnDe.CONST.INT.';
 	for (bbb in EnDe.CONST.INT) {
 		if (bbb==='prototype') { continue; }
 		if (bbb==='sid')       { continue; }
 		if (bbb==='SID')       { continue; }
-		_js = "EnDeGUI.setJSvalue('EnDe.CONST.INT','" + bbb + "','" + EnDe.CONST.INT[bbb] + "');";
-		bux += '<tr><td><button id="I_' + bbb + '" onClick="'+ _js +'" title="set value">' + kkk + bbb + '</button></td>';
-		bux += '<td><input name="' + bbb +'" value="' + EnDe.CONST.INT[bbb] + '"></td></tr>';
+		bux += this.createSetRow(kkk + bbb, EnDe.CONST.INT[bbb]);
 	}
 	kkk  = 'EnDe.CONST.CST.';
 	for (bbb in EnDe.CONST.CST) {
 		if (bbb==='prototype') { continue; }
 		if (bbb==='sid')       { continue; }
 		if (bbb==='SID')       { continue; }
-		_js = "EnDeGUI.setJSvalue('EnDe.CONST.CST','" + bbb + "','" + EnDe.CONST.CST[bbb] + "');";
-		bux += '<tr><td><button id="c_' + bbb + '" onClick="'+ _js +'" title="set value">' + kkk + bbb + '</button></td>';
-		bux += '<td><input name="' + bbb +'" value="' + EnDe.CONST.CST[bbb] + '"></td></tr>';
+		bux += this.createSetRow(kkk + bbb, EnDe.CONST.CST[bbb]);
 	}
 	bux += '</table>';
 
 	/*
 	 * build a button to toggle visibility of table with variables
 	 * build table with variables
-	 *          showTable(tag-ID    variable   border  1st col   2nd col   3rd col)
-	 *                  #---------+-----------+-------+---------+---------+-------+
+	 *          createTable( variable          1st col   2nd col   3rd col)
+	 *                    #-------------------+---------+---------+---------+
 	 */
 	// ToDo: some values from EnDe.B64.* need to be encoded (contain " or ')
 	//       known variables: .crnl
-	bux += this.showTable('B64',   'EnDe.B64',       1, 'name', 'value');
+	kkk  = 'EnDe.B64.';
+	bux += this.createTable('EnDe.B64',        'name', 'value');
 	var _b64 = ['line', 'crnl', 'pad', 'LC', 'UC', 'b10', 'b26', 'base64' ];
 	for (bbb in _b64) {
-		_js = "EnDeGUI.setJSvalue('EnDe.B64','" + _b64[bbb] + "','" + EnDe.B64[_b64[bbb]] + "');";
-		bux += '<tr><td><button id="I_' + _b64[bbb] + '" onClick="'+ _js +'" title="set value">EnDe.B64.' + _b64[bbb] + '</button></td>';
-		bux += '<td><input name="' + _b64[bbb] +'" value="' + EnDe.B64[_b64[bbb]] + '"></td></tr>';
+		bbb  = _b64[bbb];
+		bux += this.createSetRow(kkk + bbb, EnDe.B64[bbb]);
 	}
 	kkk  = 'EnDe.B64.map.';
 	for (bbb in EnDe.B64.map) {
 		if (bbb==='prototype') { continue; }
 		if (bbb==='dumm')      { continue; }
-		_js = "EnDeGUI.setJSvalue('EnDe.B64.map','" + bbb + "','" + EnDe.B64.map[bbb] + "');";
-		bux += '<tr><td><button id="I_' + bbb + '" onClick="'+ _js +'" title="set value">' + kkk + bbb + '</button></td>';
-		bux += '<td><input name="' + bbb +'" value="' + EnDe.B64.map[bbb] + '"></td></tr>';
+		bux += this.createSetRow(kkk + bbb, EnDe.B64.map[bbb]);
 	}
 	bux += '</table>';
 
-	bux += this.showTable('b64',   'EnDe.b64Char, EnDe.b64Code[]', 1, 'index', 'b64Char[i]', 'b64Code[i]');
-	for (i=0; i<EnDe.b64Char.length; i++) {
-		bux += this.showTableR('td', i, EnDe.b64Char[i], EnDe.b64Code[EnDe.b64Char[i]]);
-	}
-	bux += '</table>';
+	bux += this.createTable('EnDe.b64Char, EnDe.b64Code', 'index', 'b64Char[i]', 'b64Code[i]');
+	bux += this.createRows( 'EnDe.b64Char', EnDe.b64Char);
 
-	bux += this.showTable('xml',   'EnDe.xmlMap',    1, 'index', 'xmlMap[i]');
-	for (i in EnDe.xmlMap) {
-		bux += this.showTableR('td', i, EnDe.xmlMap[i]);
-	}
-	bux += '</table>';
+	bux += this.createTable('EnDe.xmlMap',     'index', 'xmlMap[i]');
+	bux += this.createRows( 'EnDe.xmlMap', EnDe.xmlMap);
 
-	bux += this.showTable('space', 'EnDe.spaceMap',  1, 'Code<br><sup>not part of map</sup>', 'index', 'spaceMap[i]'); // Unicode Spaces
-	for (i in EnDe.spaceMap) {
-		h    = EnDe.i2h('hex4',i);
-		bux += this.showTableR('td', 'U+' + h, '[' + i + ']', EnDe.spaceMap[i]);
-	}
-	bux += '</table>';
+	bux += this.createTable('EnDe.spaceMap',   'Code<br><sup>not part of map</sup>', 'index', 'spaceMap[i]'); // Unicode Spaces
+	bux += this.createRows( 'EnDe.spaceMap', EnDe.spaceMap);
 
-	bux += this.showTable('asc',   'EnDe.asciiMap',  1, 'index', 'asciiMap[mapChr]', 'asciiMap[mapDsc]');
-	for (i in EnDe.asciiMap) {
-		bux += this.showTableR('td', i, EnDe.asciiMap[i][EnDe.mapChr], EnDe.asciiMap[i][EnDe.mapDsc]);
-	}
-	bux += '</table>';
+	bux += this.createTable('EnDe.asciiMap',   'index', 'asciiMap[mapChr]', 'asciiMap[mapDsc]');
+	bux += this.createRows( 'EnDe.asciiMap', EnDe.asciiMap);
 
-	bux += this.showTable('din',   'EnDe.DIN66003Map',  1, 'index', 'DIN66003Map[mapChr]', 'DIN66003Map[mapDsc]');
-	for (i in EnDe.DIN66003Map) {
-		bux += this.showTableR('td', i, EnDe.DIN66003Map[i][EnDe.mapChr], EnDe.DIN66003Map[i][EnDe.mapDsc]);
-	}
-	bux += '</table>';
+	bux += this.createTable('EnDe.DIN66003Map','index', 'DIN66003Map[mapChr]', 'DIN66003Map[mapDsc]');
+	bux += this.createRows( 'EnDe.DIN66003Map', EnDe.DIN66003Map);
 
-	bux += this.showTable('dinf',  'EnDe.DIN66003fMap', 1, 'index', 'DIN66003fMap[mapChr]', ''); // ToDo mapDsc
-	for (i in EnDe.DIN66003fMap) {
-		bux += this.showTableR('td', i, EnDe.DIN66003fMap[i], '');
-	}
-	bux += '</table>';
+	bux += this.createTable('EnDe.DIN66003fMap', 'index', 'DIN66003fMap[mapChr]', ''); // ToDo mapDsc
+	bux += this.createRows( 'EnDe.DIN66003fMap', EnDe.DIN66003fMap);
 
-	bux += this.showTable('ebc',   'EnDe.ebcdicMap', 1, 'index', 'ebcdicMap[mapChr]', 'ebcdicMap[mapDsc]');
-	for (i in EnDe.ebcdicMap) {
-		bux += this.showTableR('td', i, EnDe.ebcdicMap[i][EnDe.mapChr], EnDe.ebcdicMap[i][EnDe.mapDsc]);
-	}
-	bux += '</table>';
+	bux += this.createTable('EnDe.ebcdicMap',  'index', 'ebcdicMap[mapChr]', 'ebcdicMap[mapDsc]');
+	bux += this.createRows( 'EnDe.ebcdicMap', EnDe.ebcdicMap);
 
-	bux += this.showTable('rom',   'EnDe.romanMap',  1, 'index', 'romanMap[mapChr]', 'romanMap[mapDsc]');
-	for (i in EnDe.romanMap) {
-		bux += this.showTableR('td', i, EnDe.romanMap[i][EnDe.mapChr], EnDe.romanMap[i][EnDe.mapDsc]);
-	}
-	bux += '</table>';
+	bux += this.createTable('EnDe.romanMap',   'index', 'romanMap[mapChr]', 'romanMap[mapDsc]');
+	bux += this.createRows( 'EnDe.romanMap', EnDe.romanMap);
 
-	bux += this.showTable('usup',  'EnDe.u2superMap',1, 'index', 'u2superMap[i]');  // Unicode superscript characters
-	for (i in EnDe.u2superMap) {
-		bux += this.showTableR('td', i, EnDe.u2superMap[i]);
-	}
-	bux += '</table>';
+	bux += this.createTable('EnDe.u2superMap', 'index', 'u2superMap[i]');  // Unicode superscript characters
+	bux += this.createRows( 'EnDe.u2superMap', EnDe.u2superMap);
 
-	bux += this.showTable('usub',  'EnDe.u2subMap',  1, 'index', 'u2subMap[i]'); // Unicode subscript characters
-	for (i in EnDe.u2subMap) {
-		bux += this.showTableR('td', i, EnDe.u2subMap[i]);
-	}
-	bux += '</table>';
+	bux += this.createTable('EnDe.u2subMap',   'index', 'u2subMap[i]'); // Unicode subscript characters
+	bux += this.createRows( 'EnDe.u2subMap', EnDe.u2subMap);
 
 	// ToDo: EnDe.super2uMap EnDe.sub2uMap
 
-	bux += this.showTable('eut',   'EnDe.ebcdicUTF', 1, 'index', 'ebcdicUTF[mapChr]', 'ebcdicUTF[mapDsc]');
-	for (i in EnDe.ebcdicUTF) {
-		bux += this.showTableR('td', i, EnDe.ebcdicUTF[i][EnDe.mapChr], EnDe.ebcdicUTF[i][EnDe.mapDsc]);
-	}
-	bux += '</table>';
+	bux += this.createTable('EnDe.ebcdicUTF',  'index', 'ebcdicUTF[mapChr]', 'ebcdicUTF[mapDsc]');
+	bux += this.createRows( 'EnDe.ebcdicUTF', EnDe.ebcdicUTF);
 
 	/*
 	 * EnDe.dupMap and EnDe.ncrMap are not displayed as HTML table 'cause of
@@ -2049,31 +2071,18 @@ this.showMap    = function() {
 	 *------------------------ up to 12/2020 when this is no longer an issue
      *------------------------ latest version with div tag: EnDeGUI.js 3.112
 	 */
-	var txt  = '| no' + '\t|stand.' + '\t|entity' + '\t| class' + '\t| description';
-	bux += this.showTable('dup',   'EnDe.dupMap[ ]', 1, 'index', txt); // duplicate entries
-	for (i in EnDe.dupMap) {
-		bux += this.showTableR('td', i, EnDe.dupMap[i].toString().replace(/,/g, '\t'));
-	}
-	bux += '</table>';
+	var ccc  = '| no' + '\t|stand.' + '\t|entity' + '\t| class' + '\t| description';
+	bux += this.createTable('EnDe.dupMap',     'index', ccc); // duplicate entries
+	bux += this.createRows( 'EnDe.dupMap', EnDe.dupMap);
 
-	bux += this.showTable('ncr',  'EnDe.ncrMap',     1, 'index', 'ncrMap[i]'); // named charactere references
-	for (i in EnDe.ncrMap) {
-		bux += this.showTableR('td', i, EnDe.ncrMap[i].toString());
-	}
-	bux += '</table>';
+	bux += this.createTable('EnDe.ncrMap',     'index', 'ncrMap[i]'); // named charactere references
+	bux += this.createRows( 'EnDe.ncrMap', EnDe.ncrMap);
 
-	bux += this.showTable('win',  'EnDe.winMap',     1, 'index', 'winMap[mapChr]', 'winMap[mapDsc]');
-	for (i in EnDe.winMap) {
-		if (EnDe.winMap[i][EnDe.mapChr] == undefined) { continue; } // defensive programming
-		bux += this.showTableR('td', i, EnDe.winMap[i][EnDe.mapChr], EnDe.winMap[i][EnDe.mapDsc]);
-	}
-	bux += '</table>';
+	bux += this.createTable('EnDe.winMap',     'index', 'winMap[mapChr]', 'winMap[mapDsc]');
+	bux += this.createRows( 'EnDe.winMap', EnDe.winMap);
 
-	bux += this.showTable('range', 'EnDe.rangeMap',  1, 'index', 'rangeMap[i]'); // Unicode Code Ranges
-	for (i in EnDe.rangeMap) {
-		bux += this.showTableR('td', i, EnDe.rangeMap[i]);
-	}
-	bux += '</table>';
+	bux += this.createTable('EnDe.rangeMap',   'index', 'rangeMap[i]'); // Unicode Code Ranges
+	bux += this.createRows( 'EnDe.rangeMap', EnDe.rangeMap);
 
 	div.innerHTML += bux;
 	return false;

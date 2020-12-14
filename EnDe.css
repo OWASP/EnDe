@@ -9,7 +9,7 @@
 #       Makefile
 #?
 #? VERSION
-#?      @(#) EnDe.css 3.28 20/12/13 23:00:47
+#?      @(#) EnDe.css 3.29 20/12/15 00:47:37
 #?
 #? AUTHOR
 #?      30-may-04 Achim Hoffmann
@@ -106,6 +106,7 @@ span.quick  {
 	border-bottom:  var(--border-inset);
 	border-right:   var(--border-inset);
 	border-left:    var(--border-inset);
+	border-radius:  6px;
 	padding-right:  1em;
 	padding-left:   1em;
 	padding-top:    1.6em;
@@ -113,14 +114,19 @@ span.quick  {
 	margin-left:    10em;   /* tweaked for netbooks */
 	margin-top:     -1.0em;
 	height:         1.5em;
-	border-radius:  6px;
 }
 
 /* debug internal settings  */
 div[id="EnDeDOM.VAR"] button { width:20em; }
-div[id="EnDeDOM.VAR"] input  { width:49em; font-family:monospace; text-align:left; }
-div[id="EnDeDOM.VAR"] table  { border:1px solid black; border-collapse:collapse;   }
+div[id="EnDeDOM.VAR"] input  { width:49em; font-family:monospace; text-align:left; overflow-x:scroll; }
 div[id="EnDeDOM.VAR"] td:nth-child(2)   {  font-family:monospace; white-space:pre; }
+div[id="EnDeDOM.VAR"] table,th,td  {
+	border:         var(--border-1);
+	border-spacing: 0px;
+	border-collapse:collapse;
+	white-space:    nowrap;
+	overflow-x:     scroll;
+}
 
 /* all textareas */
 textarea {
@@ -132,8 +138,8 @@ textarea {
  * need negative margin for Opera < 9.4x to fit .tab and .bat without gap
  * but that also "moves" the other buttons higher, ugly ... 
  */
-	min-height:     16em;
  	width:          auto;
+	min-height:     16em;
  	min-width:      54em;
 	background-color:   var(--bg-input);
 	color:          var(--fg-main);

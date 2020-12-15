@@ -104,7 +104,7 @@
 #    building the GUI, EnDeGUI.init() will show the "Browser Quirks" window.
 #?
 #? VERSION
-#?      @(#) EnDeGUI.js 3.118 20/12/15 00:46:20
+#?      @(#) EnDeGUI.js 3.119 20/12/15 02:21:29
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -116,8 +116,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '3.118';
-this.sid        = function() {  return('@(#) EnDeGUI.js 3.118 20/12/15 00:46:20 EnDeGUI'); };
+this.SID        = '3.119';
+this.sid        = function() {  return('@(#) EnDeGUI.js 3.119 20/12/15 02:21:29 EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 
@@ -1871,11 +1871,73 @@ this.showMap    = function() {
 		return this.createRow('td', this.createSetButton(txt, val), this.createSetInput (txt, val));
 	}; // createRow
 
-	this.createRows   = function (id,obj) {
-	//# return a table with caption and first row with nr-of-args columns
+	this.createSetRows = function (obj,id) {
+	//# return rows for table id with buttons to set value
+		var bbb = null;
+		var bux = '';
+		// ToDo: some values from EnDe.* need to be encoded (contain " or ')
+		//       known variables: .crnl
+		switch (id) {
+		  case 'EnDe.B64':
+			var _b64 = ['line', 'crnl', 'pad', 'LC', 'UC', 'b10', 'b26', 'base64' ];
+			for (bbb in _b64) {
+				bbb  = _b64[bbb];
+				bux += this.createSetRow(id + '.' + bbb,     EnDe.B64[bbb]);
+			}
+			for (bbb in EnDe.B64.map) {
+				if (bbb==='prototype')  { continue; }
+				if (bbb==='dumm')       { continue; }
+				bux += this.createSetRow(id + '.map.' + bbb, EnDe.B64.map[bbb]);
+			}
+			break;
+		  case 'EnDe.CONST':
+			for (bbb in EnDe.CONST.CHR) {
+				if (bbb==='prototype')  { continue; }
+				if (bbb==='sid')        { continue; }
+				if (bbb==='SID')        { continue; }
+				if (bbb==='meta')       { continue; } // ToDo: bug: fails to display proper without HTML entities, need to substitute first
+				bux += this.createSetRow(id + '.CHR.' + bbb, EnDe.CONST.CHR[bbb]);
+			}
+			for (bbb in EnDe.CONST.INT) {
+				if (bbb==='prototype')  { continue; }
+				if (bbb==='sid')        { continue; }
+				if (bbb==='SID')        { continue; }
+				bux += this.createSetRow(id + '.INT.' + bbb, EnDe.CONST.INT[bbb]);
+			}
+			for (bbb in EnDe.CONST.CST) {
+				if (bbb==='prototype')  { continue; }
+				if (bbb==='sid')        { continue; }
+				if (bbb==='SID')        { continue; }
+				bux += this.createSetRow(id + '.CST.' + bbb, EnDe.CONST.CST[bbb]);
+			}
+			break;
+		  case 'EnDe':
+			for (bbb in EnDe) {
+				// _dpr('# ' + typeof EnDe[bbb] + '\tEnDe.' + bbb + ' #');
+				if (bbb == 'prototype') { continue; }
+				if (bbb == 'pairs')     { continue; }
+				if (bbb == 'sid')       { continue; }
+				if (bbb == 'SID')       { continue; }
+				if (bbb.match(/^VER/)!==null)   { continue; }
+				if (bbb.match(/Map/) !==null)   { continue; }
+				if (EnDe[bbb].toString().match(/function/)!==null) { continue; }
+				if (EnDe[bbb].toString().match(/object/)  !==null) { continue; }
+				bux += this.createSetRow(id + '.' + bbb,     EnDe[bbb]);
+			}
+			for (bbb in EnDe.pairs) {
+				if (bbb==='indexOf') { continue; }
+				bux += this.createSetRow(id + '.pairs[ ' + bbb + ' ]', EnDe.pairs[bbb]);
+			}
+			break;
+		}
+		return bux;
+	}; // createSetRows
+
+	this.createRows   = function (obj,id) {
+	//# return rows for table id with all values read-only
 		var bux = '';
 		switch (id) {
-		  case 'EnDe.b64Char':
+		  case 'EnDe.b64Char, EnDe.b64Code':
 			for (var i in obj) {
 				bux += this.createRow('td', i, EnDe.b64Char[i], EnDe.b64Code[EnDe.b64Char[i]]);
 			}
@@ -1924,20 +1986,30 @@ this.showMap    = function() {
 		    + txt + '</button><br>';	
 	}; // createButton
 
-	this.createTable  = function (txt) { // ...args
+	this.createTable  = function (obj,id) { // ...args
 	//# return a table with caption and first row with nr-of-args columns
 		// for example:  this.createTable('EnDe.ebcdicUTF', 1);
 		// creates a table with a tbody id=_table_EnDe.ebcdicUTF
 		var bux = '';
-		var ccc = '_table_' + txt;
-		for (var i=1; i<arguments.length; i++) {
-			bux += ['<th>&#160;', arguments[i], '</th>'].join('');
+		var ccc = '_table_' + id;
+		var kkk = '';
+		for (var i=2; i<arguments.length; i++) {
+			kkk += ['<th>&#160;', arguments[i], '</th>'].join('');
 		}
-		return '<table>'
-			+ '<caption>' + this.createButton(ccc, txt) + '</caption>'
+		bux += '<table>'
+			+ '<caption>' + this.createButton(ccc, id) + '</caption>'
 			+ '<tbody id="' + ccc + '" style="display:none">'
-			+ ['<tr>', bux, '</tr>'].join('');
+			+ ['<tr>', kkk, '</tr>'].join('');
 			// ToDo + this.createRow('th', bux);
+		switch (id) {
+		  case 'EnDe':
+		  case 'EnDe.B64':
+		  case 'EnDe.CONST':
+		  			 bux += this.createSetRows(obj, id); break;
+		  default:   bux += this.createRows(   obj, id); break;
+		}
+		bux += '</table>';
+		return bux;
 	}; // createTable
 
 	_spr('EnDeGUI.showMap');
@@ -1948,120 +2020,31 @@ this.showMap    = function() {
 	if ('none'===div.style.display) { this.display(div); }
 	    div = $('EnDeDOM.VAR');    // get tag
 	var i   = 0;
-	var bbb = null;
 	var bux = '<br><sup>Note that some values may contain non-printable characters!</sup><br>';
-
-	/*
-	 * EnDe constants
-	 */
-	kkk  = 'EnDe.';    // because EnDe.toString() does not work
-	bux += this.createTable('EnDe', 'name', 'value');
-	for (bbb in EnDe) {
-		// _dpr('# ' + typeof EnDe[bbb] + '\tEnDe.' + bbb + ' #');
-		if (bbb == 'pairs')             { continue; }
-		if (bbb == 'prototype')         { continue; }
-		if (bbb == 'sid')               { continue; }
-		if (bbb == 'SID')               { continue; }
-		if (bbb.match(/^VER/)!==null)   { continue; }
-		if (bbb.match(/Map/) !==null)   { continue; }
-		if (EnDe[bbb].toString().match(/function/)!==null) { continue; }
-		if (EnDe[bbb].toString().match(/object/)  !==null) { continue; }
-		bux += this.createSetRow(kkk + bbb, EnDe[bbb]);
-	}
-	kkk  = 'EnDe.pairs[ ';
-	for (bbb in EnDe.pairs) {
-		if (bbb==='indexOf') { continue; }
-		bux += this.createSetRow(kkk + bbb + ' ]', EnDe.pairs[bbb]);
-	}
-	bux += '</table>';
-
-	/*
-	 * some constants (character classes, integer, ...)
-	 */
-	bux += this.createTable ('EnDe.CONST',     'name', 'value');
-	kkk  = 'EnDe.CONST.CHR.';
-	for (bbb in EnDe.CONST.CHR) {
-	// ToDo: some values from EnDe.CONST.* need to be encoded (contain " or ')
-	//       known variables: .binhex .dq .uuAnf .uuEnd .uuEndH
-		if (bbb==='prototype') { continue; }
-		if (bbb==='sid')       { continue; }
-		if (bbb==='SID')       { continue; }
-		if (bbb==='meta')      { continue; } // ToDo: bug: fails to display proper without HTML entities, need to substitute first
-		bux += this.createSetRow(kkk + bbb, EnDe.CONST.CHR[bbb]);
-	}
-	kkk  = 'EnDe.CONST.INT.';
-	for (bbb in EnDe.CONST.INT) {
-		if (bbb==='prototype') { continue; }
-		if (bbb==='sid')       { continue; }
-		if (bbb==='SID')       { continue; }
-		bux += this.createSetRow(kkk + bbb, EnDe.CONST.INT[bbb]);
-	}
-	kkk  = 'EnDe.CONST.CST.';
-	for (bbb in EnDe.CONST.CST) {
-		if (bbb==='prototype') { continue; }
-		if (bbb==='sid')       { continue; }
-		if (bbb==='SID')       { continue; }
-		bux += this.createSetRow(kkk + bbb, EnDe.CONST.CST[bbb]);
-	}
-	bux += '</table>';
 
 	/*
 	 * build a button to toggle visibility of table with variables
 	 * build table with variables
-	 *          createTable( variable          1st col   2nd col   3rd col)
-	 *                    #-------------------+---------+---------+---------+
+	 *          createTable( variable          name                1st col   2nd col   3rd col)
+	 *                    #-------------------+-------------------+---------+---------+---------+
 	 */
-	// ToDo: some values from EnDe.B64.* need to be encoded (contain " or ')
-	//       known variables: .crnl
-	kkk  = 'EnDe.B64.';
-	bux += this.createTable('EnDe.B64',        'name', 'value');
-	var _b64 = ['line', 'crnl', 'pad', 'LC', 'UC', 'b10', 'b26', 'base64' ];
-	for (bbb in _b64) {
-		bbb  = _b64[bbb];
-		bux += this.createSetRow(kkk + bbb, EnDe.B64[bbb]);
-	}
-	kkk  = 'EnDe.B64.map.';
-	for (bbb in EnDe.B64.map) {
-		if (bbb==='prototype') { continue; }
-		if (bbb==='dumm')      { continue; }
-		bux += this.createSetRow(kkk + bbb, EnDe.B64.map[bbb]);
-	}
-	bux += '</table>';
-
-	bux += this.createTable('EnDe.b64Char, EnDe.b64Code', 'index', 'b64Char[i]', 'b64Code[i]');
-	bux += this.createRows( 'EnDe.b64Char', EnDe.b64Char);
-
-	bux += this.createTable('EnDe.xmlMap',     'index', 'xmlMap[i]');
-	bux += this.createRows( 'EnDe.xmlMap', EnDe.xmlMap);
-
-	bux += this.createTable('EnDe.spaceMap',   'Code<br><sup>not part of map</sup>', 'index', 'spaceMap[i]'); // Unicode Spaces
-	bux += this.createRows( 'EnDe.spaceMap', EnDe.spaceMap);
-
-	bux += this.createTable('EnDe.asciiMap',   'index', 'asciiMap[mapChr]', 'asciiMap[mapDsc]');
-	bux += this.createRows( 'EnDe.asciiMap', EnDe.asciiMap);
-
-	bux += this.createTable('EnDe.DIN66003Map','index', 'DIN66003Map[mapChr]', 'DIN66003Map[mapDsc]');
-	bux += this.createRows( 'EnDe.DIN66003Map', EnDe.DIN66003Map);
-
-	bux += this.createTable('EnDe.DIN66003fMap', 'index', 'DIN66003fMap[mapChr]', ''); // ToDo mapDsc
-	bux += this.createRows( 'EnDe.DIN66003fMap', EnDe.DIN66003fMap);
-
-	bux += this.createTable('EnDe.ebcdicMap',  'index', 'ebcdicMap[mapChr]', 'ebcdicMap[mapDsc]');
-	bux += this.createRows( 'EnDe.ebcdicMap', EnDe.ebcdicMap);
-
-	bux += this.createTable('EnDe.romanMap',   'index', 'romanMap[mapChr]', 'romanMap[mapDsc]');
-	bux += this.createRows( 'EnDe.romanMap', EnDe.romanMap);
-
-	bux += this.createTable('EnDe.u2superMap', 'index', 'u2superMap[i]');  // Unicode superscript characters
-	bux += this.createRows( 'EnDe.u2superMap', EnDe.u2superMap);
-
-	bux += this.createTable('EnDe.u2subMap',   'index', 'u2subMap[i]'); // Unicode subscript characters
-	bux += this.createRows( 'EnDe.u2subMap', EnDe.u2subMap);
+	bux += this.createTable(EnDe,              'EnDe',             'name', 'value');
+	bux += this.createTable(EnDe.CONST,        'EnDe.CONST',       'name', 'value');
+	bux += this.createTable(EnDe.B64,          'EnDe.B64',         'name', 'value');
+	bux += this.createTable(EnDe.b64Char,      'EnDe.b64Char, EnDe.b64Code', 'index', 'b64Char[i]', 'b64Code[i]');
+	bux += this.createTable(EnDe.xmlMap,       'EnDe.xmlMap',      'index', 'xmlMap[i]');
+	bux += this.createTable(EnDe.spaceMap,     'EnDe.spaceMap',    'Code<br><sup>not part of map</sup>', 'index', 'spaceMap[i]'); // Unicode Spaces
+	bux += this.createTable(EnDe.asciiMap,     'EnDe.asciiMap',    'index', 'asciiMap[mapChr]', 'asciiMap[mapDsc]');
+	bux += this.createTable(EnDe.DIN66003Map,  'EnDe.DIN66003Map', 'index', 'DIN66003Map[mapChr]', 'DIN66003Map[mapDsc]');
+	bux += this.createTable(EnDe.DIN66003fMap, 'EnDe.DIN66003fMap','index','DIN66003fMap[mapChr]', ''); // ToDo mapDsc
+	bux += this.createTable(EnDe.ebcdicMap,    'EnDe.ebcdicMap',   'index', 'ebcdicMap[mapChr]', 'ebcdicMap[mapDsc]');
+	bux += this.createTable(EnDe.romanMap,     'EnDe.romanMap',    'index', 'romanMap[mapChr]', 'romanMap[mapDsc]');
+	bux += this.createTable(EnDe.u2superMap,   'EnDe.u2superMap',  'index', 'u2superMap[i]');  // Unicode superscript characters
+	bux += this.createTable(EnDe.u2subMap,     'EnDe.u2subMap',    'index', 'u2subMap[i]'); // Unicode subscript characters
 
 	// ToDo: EnDe.super2uMap EnDe.sub2uMap
 
-	bux += this.createTable('EnDe.ebcdicUTF',  'index', 'ebcdicUTF[mapChr]', 'ebcdicUTF[mapDsc]');
-	bux += this.createRows( 'EnDe.ebcdicUTF', EnDe.ebcdicUTF);
+	bux += this.createTable(EnDe.ebcdicUTF,    'EnDe.ebcdicUTF',   'index', 'ebcdicUTF[mapChr]', 'ebcdicUTF[mapDsc]');
 
 	/*
 	 * EnDe.dupMap and EnDe.ncrMap are not displayed as HTML table 'cause of
@@ -2072,17 +2055,10 @@ this.showMap    = function() {
      *------------------------ latest version with div tag: EnDeGUI.js 3.112
 	 */
 	var ccc  = '| no' + '\t|stand.' + '\t|entity' + '\t| class' + '\t| description';
-	bux += this.createTable('EnDe.dupMap',     'index', ccc); // duplicate entries
-	bux += this.createRows( 'EnDe.dupMap', EnDe.dupMap);
-
-	bux += this.createTable('EnDe.ncrMap',     'index', 'ncrMap[i]'); // named charactere references
-	bux += this.createRows( 'EnDe.ncrMap', EnDe.ncrMap);
-
-	bux += this.createTable('EnDe.winMap',     'index', 'winMap[mapChr]', 'winMap[mapDsc]');
-	bux += this.createRows( 'EnDe.winMap', EnDe.winMap);
-
-	bux += this.createTable('EnDe.rangeMap',   'index', 'rangeMap[i]'); // Unicode Code Ranges
-	bux += this.createRows( 'EnDe.rangeMap', EnDe.rangeMap);
+	bux += this.createTable(EnDe.dupMap,       'EnDe.dupMap',      'index', ccc); // duplicate entries
+	bux += this.createTable(EnDe.ncrMap,       'EnDe.ncrMap',      'index', 'ncrMap[i]'); // named charactere references
+	bux += this.createTable(EnDe.winMap,       'EnDe.winMap',      'index', 'winMap[mapChr]', 'winMap[mapDsc]');
+	bux += this.createTable(EnDe.rangeMap,     'EnDe.rangeMap',    'index', 'rangeMap[i]'); // Unicode Code Ranges
 
 	div.innerHTML += bux;
 	return false;

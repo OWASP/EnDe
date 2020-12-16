@@ -104,7 +104,7 @@
 #    building the GUI, EnDeGUI.init() will show the "Browser Quirks" window.
 #?
 #? VERSION
-#?      @(#) EnDeGUI.js 3.119 20/12/15 02:21:29
+#?      @(#) EnDeGUI.js 3.120 20/12/16 23:00:25
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -116,8 +116,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '3.119';
-this.sid        = function() {  return('@(#) EnDeGUI.js 3.119 20/12/15 02:21:29 EnDeGUI'); };
+this.SID        = '3.120';
+this.sid        = function() {  return('@(#) EnDeGUI.js 3.120 20/12/16 23:00:25 EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 
@@ -1825,15 +1825,21 @@ this.showMapdone= false;
 this.showMap    = function() {
 //#? show window with various trace/debug information
 
-	// ToDo: bug 12/2020: destroys functions for example Ende.$(), reason yet unknown
-
-	// ToDo: bug 12/2020: this.setJSvalue() not yet implemented
-	this.setJSvalue = function (arr,idx,val) {
+	this.setJSvalue = function (obj,default_val) {
 	//# sets value of correspnding EnDe.* variable
-		// onClick: "arr[idx]+']=$(idx).value;
-		// var = $(txt); var.split('.').splice(1,); // var.EnDe.CONST.CHR.LC => EnDe.CONST.CHR.LC
-		alert(arr + "[" + idx + "] = " + val);
-		//arr[idx]=$(idx).value;
+		// variable's name is extracted from the object id of the caller (see below)
+		// new value is retrieved from corresponding form field
+		// variable in EnDe. ist set using eval() // ToDo wuick&dirty
+		// example: object id (this) is: var.EnDe.CONST.CHR.LC then the new value
+		//          is found in val.EnDe.CONST.CHR.LC and the variable to be set
+		//          is EnDe.CONST.CHR.LC which is the same as EnDe.CONST.CHR["LC"]
+		var bbb = obj.id.split('.').splice(1,);   // var.EnDe.CONST.CHR.LC => [EnDe, CONST, CHR, LC]
+		var ccc = obj.id.replace(/^var/, 'val');  // var.EnDe.CONST.CHR.LC => val.EnDe.CONST.CHR.LC
+		var kkk = bbb.pop();                      // get key: LC
+		var bux = bbb.join('.');                  // set var: EnDe.CONST.CHR
+		//alert(bbb+"\n"+ccc+"\n"+bux+"["+kkk+"]="+$(ccc).value);
+		_dpr("EnDeGUI.showMap.setJSvalue: " + bux + "[" + kkk + "]=" + $(ccc).value);
+		eval(bux)[kkk] = $(ccc).value;            // EnDe.CONST.CHR[key] = value from form field
 		return false;
 	}; // setJSvalue
 
@@ -1844,7 +1850,8 @@ this.showMap    = function() {
 		var default_value = val;
 		var ccc = 'var.' + txt;
 		//var kkk = $(ccc).value;
-		var _js = "EnDeGUI.setJSvalue('" + ccc + "','" + val + "');";
+		//var _js = "return EnDeGUI.setJSvalue('" + ccc + "','" + val + "');";
+		var _js = "return EnDeGUI.setJSvalue(this,'" + val + "');";
 		return '<button id="' + ccc + '" onClick="'+ _js +'" title="set value">' + txt + '</button>';
 	}; // createSetButton
 

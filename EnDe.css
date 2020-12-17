@@ -9,7 +9,7 @@
 #       Makefile
 #?
 #? VERSION
-#?      @(#) EnDe.css 3.29 20/12/15 00:47:37
+#?      @(#) EnDe.css 3.30 20/12/17 11:39:42
 #?
 #? AUTHOR
 #?      30-may-04 Achim Hoffmann
@@ -74,6 +74,8 @@ a img           { border:0px; display:inline; }
 *[title]:after {content:" ["attr(title)"]"; font-size:var(--font-size);}
 */
 
+table,th,td     { border-spacing:0px; border-collapse:collapse; }
+
 /* status bar */
 div[id="EnDeDOM.SB"]  {
 	z-index:        22;
@@ -114,18 +116,6 @@ span.quick  {
 	margin-left:    10em;   /* tweaked for netbooks */
 	margin-top:     -1.0em;
 	height:         1.5em;
-}
-
-/* debug internal settings  */
-div[id="EnDeDOM.VAR"] button { width:20em; }
-div[id="EnDeDOM.VAR"] input  { width:49em; font-family:monospace; text-align:left; overflow-x:scroll; }
-div[id="EnDeDOM.VAR"] td:nth-child(2)   {  font-family:monospace; white-space:pre; }
-div[id="EnDeDOM.VAR"] table,th,td  {
-	border:         var(--border-1);
-	border-spacing: 0px;
-	border-collapse:collapse;
-	white-space:    nowrap;
-	overflow-x:     scroll;
 }
 
 /* all textareas */
@@ -324,29 +314,36 @@ input.button {
 }
 
 /* tables in test area */
-.tsttable           { border-spacing:0px; border-collapse:collapse; }
 .tsttable td        { border-bottom:var(--border-1); }
-.tsttable th        { border-bottom:var(--border-1);  text-align: right; }
+.tsttable th        { border-bottom:var(--border-1);    text-align: right; }
 .tsttable caption   { background-color:var(--bg-cream); text-align: left; }
 .tsttable caption   { background-color:var(--bg-cream); text-align: left; }
 
+/* tables in debug internal settings  */
+div[id="EnDeDOM.VAR"] button { width:20em; }
+.vartable           { overflow-x:scroll; }
+.vartable input     { overflow-x:scroll; width:49em; font-family:monospace; text-align:left; }
+.vartable th        { border:var(--border-1); white-space:nowrap; }
+.vartable td        { border:var(--border-1); white-space:nowrap; }
+.vartable td:nth-child(2)   { font-family:monospace; white-space:pre; }
+
 /* tables in IP area */
-.iptable th { font-variant:normal; text-align:right; }
-.iptable td { }
+.iptable th         { font-variant:normal; text-align:right; }
+.iptable td         { }
 .iptable td input   { padding:0px; background-color:var(--bg-input); width:12em; }
-.iptable .button    {              background-color:#00bfff; width:3em;
-}
+.iptable .button    {              background-color:#00bfff; width:3em; }
+.iptable td select  { padding:0px; margin-left:0px; width:11em; }
 
 /* tables in Timestamp area */
 /* font-size is contribution to Firefox 3.x */
-table.tstable       { border-spacing:0px; border-collapse:collapse; font-size:10pt; } 
-table.tstable td    { border-right:var(--border-0); min-width:2em;  width:auto; }
-table.tstable td    { margin:0px; padding:0px; }
-table.tstable th    { margin:0px; padding:0px; }
-table.tstable td:last-child  { padding-left:0.2em;border-left:var(--border-1); }
-table.tstable th:first-child { text-align:right; max-width:7em; }
-table.tstable input[id="EnDeDOM.TS.human"]  {    min-width:22em; width:99%; }
-
+.tstable            { font-size:10pt; border-spacing: 2px; } 
+.tstable td         { border-right:var(--border-0); min-width:2em;  width:auto; }
+.tstable td         { padding:0px; margin:0px; }
+.tstable th         { padding:0px; margin:0px; }
+.tstable td:last-child  { padding-left:0.2em;border-left:var(--border-1); }
+.tstable th:first-child { text-align:right; max-width:7em; }
+.tstable input[id="EnDeDOM.TS.human"]     { min-width:22em; width:99%; }
+.tstable input[id="EnDeDOM.TS.timestamp"] { border:var(--border-dotted); }
 
 /* menu using UL LI DIV BUTTON */
 fieldset>div ul.guess   { background-color:#f0f0f0; display:inline; margin-top:0px; border-style:outset; border-width:2px; padding-left:0.5em; padding-right:0.5em; }
@@ -630,8 +627,6 @@ fieldset[id="EnDeDOM.f.DBX"] textarea { width: 99%; }
 .pre  { white-space:pre; font-family:monospace; }
 table.code      {
 	border-left:    1px solid #00f000;
-	border-collapse:collapse; /* separate; */
-	border-spacing: 0px;
 	width:          99%;
 	text-align:     right;
 	vertical-align: top;

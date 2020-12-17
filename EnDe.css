@@ -9,7 +9,7 @@
 #       Makefile
 #?
 #? VERSION
-#?      @(#) EnDe.css 3.30 20/12/17 11:39:42
+#?      @(#) EnDe.css 3.31 20/12/17 19:16:48
 #?
 #? AUTHOR
 #?      30-may-04 Achim Hoffmann
@@ -182,6 +182,7 @@ legend {
 	font-weight:    bold;
 	min-height:	30px;  /* workaround if font-size is not working */
 }
+.head  h2 label { display:block; } /* make whole line clickable */
 /* buttons in fieldsets headers */
 .head span { float:right; padding:0px; margin:0.1em; }
 .head span button {

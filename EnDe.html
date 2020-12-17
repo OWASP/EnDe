@@ -12,7 +12,7 @@
 	<meta name="DC.rights"        content="https://github.com/EnDe/EnDe license.txt" >
 	<meta name="DC.license"       content="https://github.com/EnDe/EnDe license.txt" >
 	<meta name="DC.modified"      content="20/12/17" >
-	<meta name="DC.Source"        content="@(#) EnDe.html 3.62 20/12/17 11:41:38"  >
+	<meta name="DC.Source"        content="@(#) EnDe.html 3.63 20/12/17 19:17:33"  >
 	<meta name="DC.Date"          content="07-apr-07" >
 	<meta name="DC.creator"       content="Achim Hoffmann" >
 	<meta name="DC.Author"        content="Achim Hoffmann, mailto: ??" >
@@ -73,7 +73,7 @@
 	<a id="EnDeDOM.icon" title="about"  href="" onClick="return EnDeGUI.help('ABOUT');"><img src="img/ende-128x128.png" alt="EnDe Icon" width=28 height=28 ></a>
 	<a id="EnDeDOM.logo" title="sponsored by sic[!]sec GmbH" href="http://sicsec.de/" target="_sicsec"><img src="img/sicsec-87x26.png" alt="sic[!]sec" ></a>
 
-	<fieldset   id="EnDeDOM.f.DBX">
+	<fieldset   id="EnDeDOM.f.DBX"  class="options">
 		<div    id="EnDeDOM.DBX.bf" class="head">
 			<span>
 				<button id="EnDeDOM.DBX.bq"     onClick="return EnDeGUI.show(this);" >-</button>
@@ -81,7 +81,8 @@
 			</span>
 			<h2><label for="EnDeDOM.DBX.bq">trace / debug</label></h2>
 		</div>
-		<div    id="EnDeDOM.DBX.opt">
+		<div    id="EnDeDOM.DBX">
+		  <div    id="EnDeDOM.DBX.opt">
 			<label class="bold"> trace levels: </label>
 			<label for="EnDeDOM.DBX.Trace"><input id="EnDeDOM.DBX.Trace" type="checkbox" onClick="return EnDeGUI.settrace(this);"> trace</label>
 			<label for="EnDeDOM.DBX.EnDe">  <input id="EnDeDOM.DBX.EnDe" type="checkbox" onClick="return EnDeGUI.settrace(this);"> EnDe (API) </label>
@@ -101,8 +102,7 @@
 			<label for="EnDeDOM.DBX.UCS">   <input id="EnDeDOM.DBX.UCS"  type="checkbox" onClick="return EnDeGUI.settrace(this);"> UCS  </label>
 -->
 			<hr>
-		</div>
-		<div  id="EnDeDOM.DBX">
+		  </div>
 			<textarea   id="EnDeDOM.DBX.text"></textarea>
 			&#160;&#160;
 			<input      id="EnDeDOM.DBX.bc" onClick="$('EnDeDOM.DBX.text').value='';return false;" type="button" class="button" value="-">
@@ -122,12 +122,12 @@
 				<button id="EnDeDOM.VAR.bq"     onClick="return EnDeGUI.show(this);" >-</button>
 				<button id="EnDeDOM.VAR.bh"     onClick="return EnDeGUI.help('VAR');">?</button>
 			</span>
-			<h2><label for="EnDeDOM.VAR.bq">Debug (internal settings)</label></h2>
+			<h2><label for="EnDeDOM.VAR.bq">Internal Settings</label></h2>
 		</div>
 		<div  id="EnDeDOM.VAR" ><!-- added by EnDeGUI.showMap() --></div>
 	</fieldset>
 
-	<fieldset   id="EnDeDOM.f.TST">
+	<fieldset   id="EnDeDOM.f.TST"  class="options">
 		<div    id="EnDeDOM.TST.bf" class="head">
 			<span>
 				<button id="EnDeDOM.TST.bq"     onClick="return EnDeGUI.show(this);" >-</button>
@@ -415,7 +415,7 @@
 	</fieldset>
 
 	<fieldset   id="EnDeDOM.f.ED"   class="borderbox">
-		<div  class="head">
+		<div    id="EnDeDOM.ED.bf"  class="head">
 			<span>
 				<button id="EnDeDOM.ED.bq"  onClick="return EnDeGUI.show(this);">-</button>
 				<button id="EnDeDOM.ED.bh"  onClick="return EnDeGUI.help('ED');">?</button>
@@ -1038,34 +1038,63 @@
 function $(id) { return document.getElementById(id); };
 if (typeof(EnDeGUI) == 'undefined') { EnDeGUI = {}; }
 EnDeGUI.titles  = {
-	/* define texts to be used as value for title= attributes */
+	// define texts to be used as value for title= attributes; used in EnDeGUI.initTitles()
 	//-----------------+----------------------------------------------------------------------
 	//  object id       text for title attribute
 	//-----------------+----------------------------------------------------------------------
-	'EnDeDOM.GUI.bq':   "set options for GUI (click to expand/fold)",
+	// outermost fieldset: section/tool
+	'EnDeDOM.f.DBX':    "trace output and debug tool",
+	'EnDeDOM.f.TST':    "test tool",
+	'EnDeDOM.f.VAR':    "internal settings tool",
+	'EnDeDOM.f.API':    "API Options tool",
+	'EnDeDOM.f.GUI':    "GUI Options tool",
+	'EnDeDOM.f.CH':     "single character convertion tool",
+	'EnDeDOM.f.ED':     "en-/decoding tool",
+	'EnDeDOM.f.IP':     "IP convertion tool",
+	'EnDeDOM.f.TS':     "IP timestamp convertion tool",
+	'EnDeDOM.f.RX':     "explain and pretty print RegEx tool",
+	'EnDeDOM.f.PW':     "testing password strength tool; EXPERIMENTAL",
+	// other inset windows
+	'EnDeDOM.f.FF':     "Functions inset window",
+	'EnDeDOM.f.XX':     "Browser Restart required inset window",
+	'EnDeDOM.f.MP':     "Replace Characters Map inset window",
+	'EnDeDOM.f.QQ':     "Browser Quirks inset window",
+	'EnDeDOM.f.QB':     "options for GUI (in quick bar)",
+	'EnDeDOM.SB':       "last executed command",
+	'EnDeDOM.API.JSReg':"options for JSReg",
+	// header in outermost fieldset (mainly not visible because label tag consumes all);
+	/* should be used for debugging only
+	'EnDeDOM.DBX.bf':   "trace/debug output header",
+	'EnDeDOM.TST.bf':   "Test output header",
+	'EnDeDOM.VAR.bf':   "Internal Settings header",
+	'EnDeDOM.API.bf':   "API section header",
+	'EnDeDOM.GUI.bf':   "GUI section header",
+	'EnDeDOM.CH.bf':    "Character section header",
+	'EnDeDOM.ED.bf':    "En-/Decoding section header",
+	'EnDeDOM.IP.bf':    "IP section header",
+	'EnDeDOM.TS.bf':    "Timestamp section header",
+	'EnDeDOM.RE.bf':    "RegEx section header",
+	'EnDeDOM.PW.bf':    "Password section header",
+	'EnDeDOM.FF.bf':    "Functions section header",
+	'EnDeDOM.QQ.bf':    "Browser Quirks section header",
+	'EnDeDOM.XX.bf':    "Browser Restart section header",
+	*/
+	// expand/fold button and for= attribute of section label (see EnDeGUI.initTitles())
+	'EnDeDOM.DBX.bq':   "trace output and debug tool (click to expand/fold)",
+	'EnDeDOM.TST.bq':   "test tool (click to expand/fold)",
+	'EnDeDOM.VAR.bq':   "show constants and variables (click to expand/fold)",
 	'EnDeDOM.API.bq':   "set options for API functions (click to expand/fold)",
+	'EnDeDOM.GUI.bq':   "set options for GUI (click to expand/fold)",
 	'EnDeDOM.CH.bq':    "single character convertion tool (click to expand/fold)",
 	'EnDeDOM.ED.bq':    "en-/decoding tool (click to expand/fold)",
 	'EnDeDOM.IP.bq':    "IP convertion tool (click to expand/fold)",
 	'EnDeDOM.TS.bq':    "IP timestamp convertion tool (click to expand/fold)",
 	'EnDeDOM.RE.bq':    "explain and pretty print regEx tool (click to expand/fold)",
 	'EnDeDOM.PW.bq':    "testing password strength EXPERIMENTAL (click to expand/fold)",
-	'EnDeDOM.TST.bq':   "test tool (click to expand/fold)",
-	'EnDeDOM.DBX.bq':   "trace output and debug tool (click to expand/fold)",
-	'EnDeDOM.VAR.bq':   "show constants and variables (click to expand/fold)",
-	'EnDeDOM.f.VAR':    "internal settings tool",
-	'EnDeDOM.f.DBX':    "trace output and debug tool",
-	'EnDeDOM.f.TST':    "test tool",
-	'EnDeDOM.f.QB':     "options for GUI (in quick bar)",
-	'EnDeDOM.f.GUI':    "options for GUI",
-	'EnDeDOM.f.API':    "options for API",
-	'EnDeDOM.API.JSReg':"options for JSReg",
-	'EnDeDOM.f.CH':     "single character convertion tool",
-	'EnDeDOM.f.ED':     "en-/decoding tool",
-	'EnDeDOM.f.IP':     "IP convertion tool",
-	'EnDeDOM.f.TS':     "IP timestamp convertion tool",
-	'EnDeDOM.f.RX':     "explain and pretty print regEx tool",
-	'EnDeDOM.f.PW':     "testing password strength tool; EXPERIMENTAL",
+	'EnDeDOM.MP.bq':    "replace character map (click to expand/fold)",
+	'EnDeDOM.FF.bq':    "Functions (click to expand/fold)",
+	'EnDeDOM.XX.bq':    "browser restart information (click to expand/fold)",
+	// other texts
 	'EnDeDOM.SB.bp':    "status bar: top or bottom position",
 	'EnDeDOM.DBX.text': "trace/debug output",
 	'EnDeDOM.DBX.bc':   "clear trace/debug output",
@@ -1074,7 +1103,6 @@ EnDeGUI.titles  = {
 	'EnDeDOM.DBX.bd':   "check for duplicate tag IDs",
 	'EnDeDOM.DBX.bi':   "show (file) SIDs",
 	'EnDeDOM.DBX.bs':   "show above values in scratchpad",
-	'EnDeDOM.DBX.bf':   "trace/debug output header",
 	'EnDeDOM.DBX.bu':   "check for updates, show current and new version",
 	'EnDeDOM.DBX.Trace':"toggle general trace output",
 	'EnDeDOM.DBX.EnDe': "toggle trace output for EnDe API functions",
@@ -1090,7 +1118,6 @@ EnDeGUI.titles  = {
 	'EnDeDOM.DBX.IP':   "toggle trace output for EnDeIP.js (IP convertion functions)",
 	'EnDeDOM.DBX.TS':   "toggle trace output for EnDeTS.js (timestamp convertion functions)",
 	'EnDeDOM.DBX.UCS':  "toggle trace output for EnDeUCS.js (Unicode en-/de functions)",
-	'EnDeDOM.TST.bf':   "Test output header",
 	'EnDeDOM.TST.b1':   "start test with data from given file (see Load File)",
 	'EnDeDOM.TST.b2':   "start test with data from Encoding textarea input field",
 	'EnDeDOM.TST.toEN': "write last test pattern to Encoding textarea",
@@ -1101,7 +1128,6 @@ EnDeGUI.titles  = {
 	'EnDeDOM.TST.bd':   "test dispatch() function",
 	'EnDeDOM.TST.ac':   "special test page for function from EnDeCheck.js",
 	'EnDeDOM.TST.ah':   "special test page for function from EnDeHTTP.js",
-	'EnDeDOM.GUI.bf':   "GUI section header",
 	'EnDeDOM.GUI.menu': "select file to build menu from",
 	'EnDeDOM.GUI.obj':  "section where to create menu (only if not configured in EnDeFile.txt)",
 	'EnDeDOM.GUI.bx':   "create menu from file",
@@ -1148,7 +1174,6 @@ EnDeGUI.titles  = {
 	'EnDeDOM.QQ.wp':    "",
 	'EnDeDOM.QQ.xp':    "",
 	'EnDeDOM.XX.bq':    "close Browser Restart window",
-	'EnDeDOM.API.bf':   "API section header",
 	'EnDeDOM.API.bl':   "open window with special characters",
 	'EnDeDOM.API.mode0':"function throw exception on error",
 	'EnDeDOM.API.mode1':"function silently ignore errors",
@@ -1192,7 +1217,6 @@ EnDeGUI.titles  = {
 	'EnDeDOM.FF.bs':    "add value to scratchpad",
 	'EnDeDOM.FF.file':  "read content from file",
 	'EnDeDOM.FF.load':  "load function from file",
-	'EnDeDOM.CH.bf':    "Character section header",
 	'EnDeDOM.CH.toEN':  "append character to Encoding textarea",
 	'EnDeDOM.CH.toDE':  "append character to Decoding textarea",
 	'EnDeDOM.CH.toRE':  "append character to RegEx textarea",
@@ -1204,7 +1228,6 @@ EnDeGUI.titles  = {
 	'EnDeDOM.CH.bin':   "character UCS binary notation",
 	'EnDeDOM.CH.utf':   "character UTF-8 hex notation",
 	'EnDeDOM.CH.lng':   "character UTF-8 binary notation",
-	'EnDeDOM.ED.bf':    "En-/Decoding section header",
 	'EnDeDOM.ED.00':    "add null byte (NUL) at end of input text",
 	'EnDeDOM.ED.0a':    "add newline (NL) character at end of input text",
 	'EnDeDOM.ED.0d':    "add carriage return (CR) character at end of input text",
@@ -1231,7 +1254,6 @@ EnDeGUI.titles  = {
 	'EnDeDOM.DE.bg':    "automatically analyses and guesses given format",
 	'EnDeDOM.DE.bw':    "show value in new window",
 	'EnDeDOM.DE.bs':    "add value to scratchpad",
-	'EnDeDOM.IP.bf':    "IP section header",
 	'EnDeDOM.IP.dot':   "use dot as delimiter, 'Delimiter' otherwise",
 	'EnDeDOM.IP.add0':  "use as is",
 	'EnDeDOM.IP.add1':  "add missing 0 octets at beginning",
@@ -1257,7 +1279,6 @@ EnDeGUI.titles  = {
 	'EnDeDOM.IP.bg':    "** not yet implemented**",
 	'EnDeDOM.IP.bw':    "show values in new window",
 	'EnDeDOM.IP.bs':    "add values to scratchpad",
-	'EnDeDOM.TS.bf':    "Timestamp section header",
 	'EnDeDOM.TS.yY':    "if checked use 2 digits year, 4 digits otherwise",
 	'EnDeDOM.TS.mM':    "if checked use month names, numbers otherwise",
 	'EnDeDOM.TS.strict':"if checked use strict matches, lazy matches otherwise",
@@ -1290,7 +1311,6 @@ EnDeGUI.titles  = {
 	'EnDeDOM.TS.ff5':   "** NOT YET IMPLEMENTED **",		/* timestamp UNIX */
 	'EnDeDOM.TS.ff6':   "** NOT YET IMPLEMENTED **",		/* timestamp UNIX long */
 	'EnDeDOM.TS.ff7':   "** NOT YET IMPLEMENTED **",		/* timestamp ? */
-	'EnDeDOM.RE.bf':    "RegEx section header",
 	'EnDeDOM.RE.prefix':"pattern for string prefix befor the regular expression string",
 	'EnDeDOM.RE.raw':   "if checked RegEx will be raw data, otherwise it must be enclosed in proper delimiters and may conatin leading and trailing text",
 	'EnDeDOM.RE.desc':  "if checked parsed RegEx contains descriptive comments (following #)",
@@ -1304,7 +1324,6 @@ EnDeGUI.titles  = {
 	'EnDeDOM.RE.bw':    "show value in new window",
 	'EnDeDOM.RE.bs':    "add value to scratchpad",
 	'EnDeDOM.RE.str':   "text to be matched by RegEx",
-	'EnDeDOM.PW.bf':    "Password section header",
 	'EnDeDOM.PW.min':   "EnDeDOM.PW.min",
 	'EnDeDOM.PW.low':   "EnDeDOM.PW.low",
 	'EnDeDOM.PW.max':   "EnDeDOM.PW.max",

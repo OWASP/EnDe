@@ -11,8 +11,8 @@
 	<meta name="DC.language"      content="en" >
 	<meta name="DC.rights"        content="https://github.com/EnDe/EnDe license.txt" >
 	<meta name="DC.license"       content="https://github.com/EnDe/EnDe license.txt" >
-	<meta name="DC.modified"      content="20/12/13" >
-	<meta name="DC.Source"        content="@(#) EnDe.html 3.61 20/12/13 22:58:46"  >
+	<meta name="DC.modified"      content="20/12/17" >
+	<meta name="DC.Source"        content="@(#) EnDe.html 3.62 20/12/17 11:41:38"  >
 	<meta name="DC.Date"          content="07-apr-07" >
 	<meta name="DC.creator"       content="Achim Hoffmann" >
 	<meta name="DC.Author"        content="Achim Hoffmann, mailto: ??" >
@@ -124,7 +124,7 @@
 			</span>
 			<h2><label for="EnDeDOM.VAR.bq">Debug (internal settings)</label></h2>
 		</div>
-		<div  id="EnDeDOM.VAR" class="test" ><!-- added by EnDeGUI.showMap() --></div>
+		<div  id="EnDeDOM.VAR" ><!-- added by EnDeGUI.showMap() --></div>
 	</fieldset>
 
 	<fieldset   id="EnDeDOM.f.TST">
@@ -236,7 +236,7 @@
 			<h2><label for="EnDeDOM.API.bq">API Options</label></h2>
 		</div>
 		<div  id="EnDeDOM.API">
-			<table cellspacing="0" class="opttable" >
+			<table class="opttable" >
 				<tr>
 					<th>User API Options</th><th>Values</th><th>Prefix</th><th>Suffix</th><th>Delimiter</th><th>Key/Cipher</th><th>Output Format</th><th hide="1">mode</th>
 				</tr>
@@ -381,7 +381,7 @@
 			</span>
 			<h2><label for="EnDeDOM.CH.bq">Character</label></h2>
 		</div>
-			<table cellspacing="0" id="EnDeDOM.CH" >
+			<table id="EnDeDOM.CH" >
 				<tr>
 					<th>Special Unicode Characters</th>
 					<th>Char</th>   <th>hex</th>   <th>decimal</th><th>octal</th>
@@ -509,7 +509,7 @@
 		<hr>
 		<div  class="select left"  id="EnDeDOM.IP.Actions"><!-- SELECT added by init() --></div>
 		<div  class="middle">
-			<table cellspacing="0" id="EnDeDOM.IP.table" class="iptable" >
+			<table id="EnDeDOM.IP.table" class="iptable" >
 				<tr><th>     IP:</th><td><input id="EnDeDOM.IP.ip" type="text" accesskey="I" ></td>
 					<td align="center">
 						<input id="EnDeDOM.IP.bn" class="button" type="button" size="2" onClick="return EnDeGUI.IP.dispatch(this,'normal')"  value=" < " >
@@ -549,9 +549,9 @@
 					</tr>
 				<tr>
 					<td>       <input   id="EnDeDOM.IP.res" type="reset" value="reset" class="button" ></td><!-- // ToDo: button is contribution to buggy browsers -->
-					<td colspan="3">
+					<td colspan="3"     id="EnDeDOM.IP.tr3" >
 					    &#160;&#160;
-						<span           id="EnDeDOM.IP.Menu"    class="select popup"><!-- SELECT added by init() --></span>
+						<span           id="EnDeDOM.IP.Menu"    class="popup"><!-- SELECT added by init() --></span>
 						&#160;&#160;
 			<button     id="EnDeDOM.IP.bg"  onClick="return EnDeGUI.IP.dispatch(this,'guess')" disabled >guess</button>
 			<button     id="EnDeDOM.IP.bw"  onClick="return EnDeGUI.IP.dispatch(this,'show')" >Window ..</button>
@@ -591,7 +591,7 @@
 				<td><input  id="EnDeDOM.TS.ff2"     type="text"     class="text"    size="14" ><br>
 				    <input  id="EnDeDOM.TS.ff3"     type="text"     class="text"    size="14" ></td>
 			</tr>
-			<tr><td colspan="11"><hr></td>
+			<tr><td colspan="11"><hr></td><td dummy="for CSS pseudo class :last-child"><hr></td>
 			</tr>
 <!-- not yet implemented
 			<tr>
@@ -723,7 +723,7 @@
 			<h2><label for="EnDeDOM.PW.bq">Password Strength</label></h2>
 		</div>
 		<div    id="EnDeDOM.PW">
-			<table cellspacing="0" id="EnDeDOM.PW.table" >
+			<table id="EnDeDOM.PW.table" class="pwtable" >
 <!--
 /*
     * Ban particular words (tested case-insensitively).

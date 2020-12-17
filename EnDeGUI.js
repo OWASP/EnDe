@@ -104,7 +104,7 @@
 #    building the GUI, EnDeGUI.init() will show the "Browser Quirks" window.
 #?
 #? VERSION
-#?      @(#) EnDeGUI.js 3.120 20/12/16 23:00:25
+#?      @(#) EnDeGUI.js 3.121 20/12/17 11:43:49
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -116,8 +116,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '3.120';
-this.sid        = function() {  return('@(#) EnDeGUI.js 3.120 20/12/16 23:00:25 EnDeGUI'); };
+this.SID        = '3.121';
+this.sid        = function() {  return('@(#) EnDeGUI.js 3.121 20/12/17 11:43:49 EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 
@@ -2003,7 +2003,7 @@ this.showMap    = function() {
 		for (var i=2; i<arguments.length; i++) {
 			kkk += ['<th>&#160;', arguments[i], '</th>'].join('');
 		}
-		bux += '<table>'
+		bux += '<table class="vartable">'
 			+ '<caption>' + this.createButton(ccc, id) + '</caption>'
 			+ '<tbody id="' + ccc + '" style="display:none">'
 			+ ['<tr>', kkk, '</tr>'].join('');

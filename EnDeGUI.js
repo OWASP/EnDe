@@ -104,7 +104,7 @@
 #    building the GUI, EnDeGUI.init() will show the "Browser Quirks" window.
 #?
 #? VERSION
-#?      @(#) EnDeGUI.js 3.121 20/12/17 11:43:49
+#?      @(#) EnDeGUI.js 3.122 20/12/17 19:18:29
 #?
 #? AUTHOR
 #?      07-apr-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -116,8 +116,8 @@
 // ========================================================================= //
 
 var EnDeGUI = new function() {
-this.SID        = '3.121';
-this.sid        = function() {  return('@(#) EnDeGUI.js 3.121 20/12/17 11:43:49 EnDeGUI'); };
+this.SID        = '3.122';
+this.sid        = function() {  return('@(#) EnDeGUI.js 3.122 20/12/17 19:18:29 EnDeGUI'); };
 
 function $(id) { return document.getElementById(id); };
 
@@ -149,7 +149,7 @@ this.joke       = 'hidden'; // show "non technical" menu entries
 this.sbar       = 'none';   // show "Status Bar"
 this.pimped     = false;// true if pimped GUI
 this.localpath  = '';   // path in local file system used for "load file" functions
-this.titles     = {dumm:0}; // hash to store all title attributes
+this.titles     = {dumm:0}; // hash to store all title attributes, defined in EnDe.html
 		/* dummy key dumm to keep stupid browsers happy with this definition */
 this.dir        ='';    // default directory to search for files
 this.usr        ='usr/';// directory to search for user files
@@ -4335,10 +4335,10 @@ this.showQS     = function(src) {
 	ccc = null;
 }; // showQS
 
-this.initTitle  = function() {
+this.initTitles = function() {
 //#? set all title= attributes
 	/* titles are stored in EnDeGUI.titles{} which is set in EnDe.html */
-	_spr('EnDeGUI.initTitle');
+	_spr('EnDeGUI.initTitles');
 	var ccc = 0;
 	var kkk = null;
 	// set all tags with id attribute
@@ -4367,7 +4367,7 @@ this.initTitle  = function() {
 	}
 	kkk = null;
 	ccc = null;
-}; // initTitle
+}; // initTitles
 
 this.init       = function() {
 //#? initialize GUI: parse query string options, build menus, etc.
@@ -4548,7 +4548,7 @@ this.init       = function() {
 	ccc = null;
 
 	EnDeRE.init();      // EnDeRE has its own initialization
-	this.initTitle();   // set title= attributes
+	this.initTitles();  // set title= attributes
 	this.MP.newrow();   // add additional character entry in Replace Map
 
 	// some object are not visible, just with "experimental" button

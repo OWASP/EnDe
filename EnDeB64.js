@@ -64,7 +64,7 @@
 #?      EnDe.Text is not yet part or the librray.
 #?
 #? VERSION
-#?      @(#) EnDeB64.js 3.8 20/12/19 10:17:14
+#?      @(#) EnDeB64.js 3.9 20/12/19 12:42:04
 #?
 #? AUTHOR
 #?      29-mai-10 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -78,7 +78,7 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.B64    = new function() {
-	this.SID    = '3.8';
+	this.SID    = '3.9';
 	this.sid    = function() {       return(EnDe.sid() + '.B64'); };
 
 	this.trace  = false;
@@ -110,7 +110,14 @@ EnDe.B64    = new function() {
 	this.crnl   = '\r\n';                               // line separator if needed
 	this.pad    = '=';                                  // padding character RFC1521
 	this.map    = {
+/* also known as alphabet */
 		// text encodings
+		'baseDNA':'ACGT',                               //
+		'baseRNA':'UGCA',                               //
+		'base2': '01',                                  //
+		'base4': '0123',                                //
+		'base8': '01234567',                            //
+		'base10': this.b10,                             // [0-9A-F]
 		'base16': this.b10 + 'ABCDEF',                  // [0-9A-F]
 		'base26': this.LC,                              // [a-z]
 		'base32': this.UC  + '234567',                  // [A-Z2-7] RFC3548, RFC4648
@@ -118,45 +125,59 @@ EnDe.B64    = new function() {
 		'base32c':'0123456789ABCDEFGHJKMNPQRSTVWXYZ',   // [0-9A-HJKMNP-TV-Z] Crockford Alphabet
 		'base32n':'0123456789BCDFGHJKLMNPQRSTVWXYZ.',   // [0-9BCDFGHJKLMNPQRSTVWXYZ.] (no vowels)
 		'base32z':'ybndrfg8ejkmcpqxot1uwisza345h769',   // [A-UW-Z3-9] z-Base32 optimized
+		'base34': '123456789ABCDEFGHIJKLMNPQRSTUVWXYZ', // [1-9A-NP-Z]
 		'base36': this.b26 + this.b10,                  // [a-z0-9]
 		'base52': this.UC  + this.LC,                   // [A-Za-z]
-		'base65a':'.,/' + this.UC + this.b10 + this.LC ,// [.,/A-Z0-9a-z] # customer secial
+		'base58': '0123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjklmnpqrstuvwxyz', // [0-9A-Za-z] exclude IOio
+		'base62': this.b10 + this.LC  + this.UC,        // [0-9A-Za-z]
+		'base62x':this.b10 + this.UC  + this.LC,        // [0-9a-zA-Z] alternate
 		'base64': this.base64 + '+/',                   // RFC1521, RFC2045, RFC3548, RFC4648
 		'base64b':'./' + this.base64,                   // modified Base64 for bcrypt
 		'base64c':'./' + this.b10 + this.UC  + this.LC ,// modified Base64 for crypt
 		'base64d':'+.' + this.b10 + this.UC  + this.LC ,// modified Base64 for Xxencoding
+		'base64e':'-.' + this.b10 + this.UC  + this.LC ,// modified Base64 (seen in django)
 		'base64g':'./' + this.b10 + this.UC  + this.LC ,// modified Base64 for GEDCOM 5.5
 		'base64h':this.b10 + this.LC + this.UC + '@_'  ,// modified Base64 for bash
 		'base64i':this.base64 + '+,',                   // modified Base64 for IMAP, RFC3501
+		'base64j':this.base64 + '[]',                   // modified Base64 for IRCU
 		'base64f':this.base64 + '+-',                   // modified Base64 for filenames, SAP
 		'base64p':this.base64 + '_-',                   // modified Base64 for program identifiers (var. 1)
 		'base64q':this.base64 + '._',                   // modified Base64 for program identifiers (var. 2)
 		'base64r':this.base64 + '!-',                   // modified Base64 for regular Expressions
 		'base64u':this.base64 + '-_',                   // modified Base64 for URL, RFC4648
+			/* also known as bas264url or base64 url-save or base64 file- and url-save */
 		'base64x':this.base64 + '.-',                   // modified Base64 for XML name tokens
 		'base64y':this.base64 + '_:',                   // modified Base64 for XML identifiers
+		'base65a':'.,/' + this.UC + this.b10 + this.LC ,// [.,/A-Z0-9a-z] # customer special
+		'base65x':this.b10 + 'AaBbCcDdEeFfGgHhIiJjKklLMmNnOoPpQqRrSsTtUuVvWwXxYyZz._-', // custom unknown
 		'base85': this.b10 + this.UC + this.LC + '!#$%&()*+-;<=>?@^_`{|}~', // RFC1941, RFC1924
 			/* Adobe's PostScript adds 33 to each (4-bit) byte, hence the values are 33 .. 117
 			 * which represents the ASCII range ! .. u
 			 */
 		// number encodings
 		'base91': this.UC + this.LC + this.b10 + '!#$%&()*+,./:;<=>?@[]^_`{|}~"',
+			/* ASCII 0x21-0x7E excluding 0x2d, 0x5c and 0x27 */
 		'basE91': '',  // same as base91, set at end
-		'base34': '123456789ABCDEFGHIJKLMNPQRSTUVWXYZ', // [1-9A-NP-Z]
-		'base62': this.b10 + this.LC  + this.UC,        // [0-9A-Za-z]
-		'base62x':this.b10 + this.UC  + this.LC,        // [0-9a-zA-Z] alternate, // ToDo: is this valid?
-		'base58': '0123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjklmnpqrstuvwxyz', // [0-9A-Za-z] exclude IOio
+		'base89': this.b10 + this.LC + this.UC + '+"@*#%&/|()=?~[]{}$-_.:,;<>', // [0-9A-Za-z] 
+		'base89x':this.b10 + this.UC + this.LC + '+"@*#%&/|()=?~[]{}$-_.:,;<>', // [0-9a-zA-Z] 
 		// misc (unknown) encodings
+		//'base92':
 		'base94': '!#$%&' + "'" + '()*+,-./' + this.b10 + ':;<=>?@' + this.UC + '[\]^_`' + this.LC + '{|}~',
 		'base95': '', // needs be set at end
 		'dumm':  ''
 		};
 	this.bits   = {                                     // number of bits used for encoding
+		'base2':    1,
+		'base4':    2,
+		'base8':    3,
 		'base16':   4,
+		'baseDNA':  4,
+		'baseRNA':  4,
 		'base26':   5,
 		'base32':   5,
 		'base32c':  5,
 		'base32h':  5,
+		'base32n':  5,
 		'base32z':  5,
 		'base34':   6,
 		'base36':   6,
@@ -167,10 +188,12 @@ EnDe.B64    = new function() {
 		'base64b':  6,
 		'base64c':  6,
 		'base64d':  6,
+		'base64e':  6,
 		'base64f':  6,
 		'base64g':  6,
 		'base64h':  6,
 		'base64i':  6,
+		'base64j':  6,
 		'base64p':  6,
 		'base64q':  6,
 		'base64r':  6,
@@ -178,8 +201,12 @@ EnDe.B64    = new function() {
 		'base64x':  6,
 		'base64y':  6,
 		'base65a':  6,
+		'base65x':  6,
 		'base85':   7,
+		'base89':   7,
+		'base89x':  7,
 		'base91':   7,
+		'base92':   7,
 		'base94':   7,
 		'base95':   7,
 		'dumm':     8
@@ -196,6 +223,21 @@ EnDe.B64    = new function() {
 
 	this.isB26  = function(src) { return this.is('base26',  src); };
 	//#? return true if string consist of base26 characters only
+
+	this.isB32  = function(src) { return this.is('base32',  src); };
+	//#? return true if string consist of base32 characters only
+
+	this.isB32c = function(src) { return this.is('base32c', src); };
+	//#? return true if string consist of Crockford base32 characters only
+
+	this.isB32h = function(src) { return this.is('base32h', src); };
+	//#? return true if string consist of base32hex characters only
+
+	this.isB32n = function(src) { return this.is('base32n', src); };
+	//#? return true if string consist of base32 alternate characters only
+
+	this.isB32z = function(src) { return this.is('base32z', src); };
+	//#? return true if string consist of z-base32 characters only
 
 	this.isB34  = function(src) { return this.is('base34',  src); };
 	//#? return true if string consist of base34 characters only
@@ -214,18 +256,6 @@ EnDe.B64    = new function() {
 
 	this.isB65  = function(src) { return this.is('base65a', src); };
 	//#? return true if string consist of base65 characters only
-
-	this.isB32c = function(src) { return this.is('base32c', src); };
-	//#? return true if string consist of Crockford base32 characters only
-
-	this.isB32h = function(src) { return this.is('base32h', src); };
-	//#? return true if string consist of base32hex characters only
-
-	this.isB32z = function(src) { return this.is('base32z', src); };
-	//#? return true if string consist of z-base32 characters only
-
-	this.isB32  = function(src) { return this.is('base32',  src); };
-	//#? return true if string consist of base32 characters only
 
 	this.isB64  = function(src) { return this.is('base64',  src); };
 	//#? return true if string consist of base64 characters only
@@ -252,6 +282,7 @@ EnDe.B64    = new function() {
 		  case 'base26':
 		  case 'base32c':
 		  case 'base32h':
+		  case 'base32n':
 		  case 'base32z':
 		  case 'base32':
 		  case 'base34':
@@ -259,10 +290,17 @@ EnDe.B64    = new function() {
 		  case 'base52':
 		  case 'base58':
 		  case 'base62':
-			return src.match('[^' + this.map[type]  + this.pad + ']')===null ? true : false;
-			break;
+		  case 'base62x':
 		  case 'base64':
+		  case 'base64b':
+		  case 'base64c':
+		  case 'base64d':
+		  case 'base64e':
 		  case 'base64f':
+		  case 'base64g':
+		  case 'base64h':
+		  case 'base64i':
+		  case 'base64j':
 		  case 'base64p':
 		  case 'base64q':
 		  case 'base64r':
@@ -270,7 +308,9 @@ EnDe.B64    = new function() {
 		  case 'base64x':
 		  case 'base64y':
 		  case 'base65a':
+		  case 'base65x':
 		  case 'base85':
+		  case 'base89':
 		  case 'base91':
 		  case 'base94':
 		  case 'base95':
@@ -290,18 +330,22 @@ EnDe.B64    = new function() {
 	//#type? base32:   Base32
 	//#type? base32c:  Base32 (Crockford alphabet)
 	//#type? base32h:  Base32hex
+	//#type? base32n:  Base32 (no vowels)
 	//#type? base32z:  z-Base32
 	//#type? base34:   Base34
 	//#type? base36:   Base36
 	//#type? base52:   Base52
 	//#type? base65a:  Base65
+	//#type? base65x:  Base65 (unknow alphabet)
 	//#type? base64:   Base64 as in RFC1521, RFC2045, RFC3548, RFC4648
 	//#type? base64b:  modified Base64 for bcrypt
 	//#type? base64c:  modified Base64 for crypt
 	//#type? base64d:  modified Base64 for Xxencoding
+	//#type? base64e:  modified Base64 (Django?)
 	//#type? base64g:  modified Base64 for GEDCOM 5.5
 	//#type? base64h:  modified Base64 for bash
 	//#type? base64i:  modified Base64 for IMAP, RFC3501
+	//#type? base64j:  modified Base64 for IRCU
 	//#type? base64f:  modified Base64 for filenames, SAP
 	//#type? base64p:  modified Base64 for program identifiers (var. 1)
 	//#type? base64q:  modified Base64 for program identifiers (var. 2)
@@ -310,6 +354,7 @@ EnDe.B64    = new function() {
 	//#type? base64x:  modified Base64 for XML name tokens
 	//#type? base64y:  modified Base64 for XML identifiers
 	//#type? base85:   Base85
+	//#type? base89:   Base89
 	//#type? base91:   basE91
 	//#type? base94:   base94
 	//#type? base95:   base95
@@ -330,18 +375,23 @@ EnDe.B64    = new function() {
 		  case 'base32':
 		  case 'base32c':
 		  case 'base32h':
+		  case 'base32n':
 		  case 'base32z':
 		  case 'base34':
 		  case 'base36':
 		  case 'base52':
 		  case 'base58':
+		  case 'base62':
+		  case 'base62x':
 		  case 'base64':
 		  case 'base64b':
 		  case 'base64c':
 		  case 'base64d':
+		  case 'base64e':
 		  case 'base64g':
 		  case 'base64h':
 		  case 'base64i':
+		  case 'base64j':
 		  case 'base64f':
 		  case 'base64p':
 		  case 'base64q':
@@ -350,16 +400,19 @@ EnDe.B64    = new function() {
 		  case 'base64x':
 		  case 'base64y':
 		  case 'base65a':
+		  case 'base65x':
 		  case 'base85':
+		  case 'base89':
 		  case 'base91':
 		  case 'base94':
 		  case 'base95':
+			if (undefined===EnDe.B64.bits[type]) { return '[EnDe.B64.b.N: missing EnDe.B64.bits'+type+' ]'; } // internal programming error
 			bits = EnDe.B64.bits[type];
 			break;
-		  default:  // ToDo: NOT YET IMPLEMENTED
+		  default:
 			bits = parseInt(type, 10);
 			if (isNaN(bits)) { bits = 6; }
-			return ''; // ToDo: wrong usage
+			return '[EnDe.B64.b.N: unknown "' + type + '" ]'; // internal programming error
 			break;
 		}
 		mask = (1 << bits) - 1;
@@ -394,14 +447,21 @@ EnDe.B64    = new function() {
 		  case 'base32':
 		  case 'base32c':
 		  case 'base32h':
+		  case 'base32n':
 		  case 'base32z': while ((bux.length%8)>0) { bux[bux.length] = EnDe.B64.pad; }; break;
+		  case 'base52':
+		  case 'base58':
+		  case 'base62':
+		  case 'base62x':
 		  case 'base64':
 		  case 'base64b':
 		  case 'base64c':
 		  case 'base64d':
+		  case 'base64e':
 		  case 'base64g':
 		  case 'base64h':
 		  case 'base64i':
+		  case 'base64j':
 		  case 'base64f':
 		  case 'base64p':
 		  case 'base64q':
@@ -409,7 +469,12 @@ EnDe.B64    = new function() {
 		  case 'base64u':
 		  case 'base64x':
 		  case 'base64y':
-		  case 'base65a': while ((bux.length%4)>0) { bux[bux.length] = EnDe.B64.pad; }; break;
+		  case 'base65a':
+		  case 'base65x':
+		  case 'base85':
+		  case 'base89':
+				while ((bux.length%4)>0) { bux[bux.length] = EnDe.B64.pad; };
+				break;
 		  default:        break; // nothing to do
 		}
 		if (linewrap > 3) {
@@ -492,8 +557,9 @@ EnDe.B64    = new function() {
 			// text encodings
 		  case 'base16':
 		  case 'base26':
-		  case 'base32h':
 		  case 'base32c':
+		  case 'base32h':
+		  case 'base32n':
 		  case 'base32z':
 		  case 'base32':
 		  case 'base36':
@@ -502,9 +568,11 @@ EnDe.B64    = new function() {
 		  case 'base64b':
 		  case 'base64c':
 		  case 'base64d':
+		  case 'base64e':
 		  case 'base64g':
 		  case 'base64h':
 		  case 'base64i':
+		  case 'base64j':
 		  case 'base64f':
 		  case 'base64p':
 		  case 'base64q':
@@ -513,7 +581,9 @@ EnDe.B64    = new function() {
 		  case 'base64x':
 		  case 'base64y':
 		  case 'base65a':
+		  case 'base65x':
 		  case 'base85':
+		  case 'base89':
 		  case 'base91':
 		  case 'base94':
 		  case 'base95':    return this.b_N(type, src, linewrap); break;
@@ -522,7 +592,8 @@ EnDe.B64    = new function() {
 			// number encodings
 		  case 'base34':
 		  case 'base58':
-		  case 'base62':    return this.b62('null',  '', '', src, '', '', linewrap); break;
+		  case 'base62':
+		  case 'base62x':   return this.b62('null',  '', '', src, '', '', linewrap); break;
 			// NOT YET IMPLEMENTED: return empty string
 		  case 'basexx':    return ''; break; // ToDo:
 		  default:                     break;
@@ -587,13 +658,16 @@ EnDe.B64    = new function() {
 	//#type? base36:   Base36
 	//#type? base52:   Base52
 	//#type? base65a:  Base65
+	//#type? base65x:  Base65 (unknow alphabet)
 	//#type? base64:   Base64 as in RFC1521, RFC2045, RFC3548, RFC4648
 	//#type? base64b:  modified Base64 for bcrypt
 	//#type? base64c:  modified Base64 for crypt
 	//#type? base64d:  modified Base64 for Xxencoding
+	//#type? base64e:  modified Base64 (Django?)
 	//#type? base64g:  modified Base64 for GEDCOM 5.5
 	//#type? base64h:  modified Base64 for bash
 	//#type? base64i:  modified Base64 for IMAP, RFC3501
+	//#type? base64j:  modified Base64 for IRCU
 	//#type? base64f:  modified Base64 for filenames, SAP
 	//#type? base64p:  modified Base64 for program identifiers (var. 1)
 	//#type? base64q:  modified Base64 for program identifiers (var. 2)
@@ -630,6 +704,7 @@ EnDe.B64    = new function() {
 		  case 'base64g':
 		  case 'base64h':
 		  case 'base64i':
+		  case 'base64j':
 		  case 'base64f':
 		  case 'base64p':
 		  case 'base64q':
@@ -638,6 +713,7 @@ EnDe.B64    = new function() {
 		  case 'base64x':
 		  case 'base64y':
 		  case 'base65a':
+		  case 'base65x':
 		  case 'base85':
 		  case 'base91':
 		  case 'base94':
@@ -655,10 +731,10 @@ EnDe.B64    = new function() {
 		var regexReg = /[\/\[\]\\]/gi;  // escape / too, as some engines are too stupid
 		var pad = RegExp('[' + EnDe.B64.pad.replace(regexReg, function(c){return '\\' + c;}) + ']' +'*$', 'g');
 		// some engines are strange: /=$/g does not work, must be /=*$/g
-alert("bits="+bits+"\nmask="+mask+"\npad= "+pad+"\n"+src);
+// alert("bits="+bits+"\nmask="+mask+"\npad= "+pad+"\n"+src);
 		src=src.replace(/\n|\r/g,'');   // remove formating line breaks
 		src=src.replace(pad,'');        // remove padding (as many as there are)
-alert(src);
+// alert(src);
 		while (i<src.length) {
 			/*
 			c1 = src.charAt(i);
@@ -673,6 +749,8 @@ alert(src);
 			r[r.length] = (((EnDe.b64Code[c2]&15)<<4) | (EnDe.b64Code[c3]>>2));
 			r[r.length] = (((EnDe.b64Code[c3]&3 )<<6) | (EnDe.b64Code[c4])   );
 			i += 4;
+			*/
+			/*
 			*/
 			i++;
 		}
@@ -753,6 +831,7 @@ alert(src);
 		  case 'base64g':
 		  case 'base64h':
 		  case 'base64i':
+		  case 'base64j':
 		  case 'base64f':
 		  case 'base64p':
 		  case 'base64q':
@@ -761,6 +840,7 @@ alert(src);
 		  case 'base64x':
 		  case 'base64y':
 //		  case 'base65a':
+//		  case 'base65x':
 		  case 'base85':
 		  case 'base91':
 		  case 'base94':

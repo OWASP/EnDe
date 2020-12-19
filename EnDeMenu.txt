@@ -88,7 +88,7 @@
 #?      EnDeGUIx.js, EnDeGUI.js
 #?
 #? VERSION
-#?      @(#) EnDeMenu.txt 3.74 20/12/10 14:33:03
+#?      @(#) EnDeMenu.txt 3.75 20/12/19 12:43:04
 #?
 #? AUTHOR
 #?      09-jun-09 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -641,37 +641,48 @@ item3	ucs32LEb	UTF-32-LE (BOM) 	*experimental*	convert Unicode UTF-32 little end
 
 #------+---------------+-----------------------+------------------------------+
 group	EN.Base-N	Base-N			various Base-N encodings
+# most common first
 item3	base64		Base64			encode to Base64 ([a-zA-Z0-9+/])
-item3	base32		Base32			encode to Base32 ([A-Z2-9])
+item3	base64u		Url64			encode to Url64 (modified Base64 for URL, RFC4648)
+# in alphabetcal order
 item3	base16		Base16			encode to Base16 ([0-9A-F])
 item3	base26		Base26			encode to Base26 ([a-z])
+item3	base32		Base32			encode to Base32 ([A-Z2-9])
+item3	base32c		Base32 (Crockford)	encode to Crockford's Base32 ([0-9A-HJKMNP-TV-Z])
+item3	base32h		Base32 Hex		encode to Base32hex ([0-9A-V])
+item3	base32n		Base32 (no vowels)	encode to Base32 ([0-9BCDFGHJKLMNPQRSTVWXYZ.])
+item3	base32z		z-Base32		encode to z-Base32 ([A-UW-Z3-9])
+item3	base34		Base34			encode to Base34 ([1-9A-NP-Z])
 item3	base36		Base36			encode to Base36 ([a-z0-9])
 item3	base52		Base52			encode to Base52 ([a-zA-Z])
-item3	base65a		.,/ Base65		encode to Base65 ([a-zA-Z0-9.,/])
+item3	base58		Base58			encode to Base58 ([a-zA-Z0-9]) without IOio
+item3	base62		Base62			encode to Base62 ([0-9a-zA-Z])
+item3	base62x		Base62 (alternate)	encode to Base62 ([0-9A-Za-z])
 item3	base64		Base64 +/		encode to Base64 as in RFC1521, RFC2045, RFC3548, RFC4648
 item3	base64b		./ Base64		encode to modified Base64 for bcrypt
 item3	base64c		./ Base64		encode to modified Base64 for crypt
-item3	base64d		Base64 +.		encode to modified Base64 for Xxencoding
+item3	base64d		+. Base64		encode to modified Base64 for Xxencoding
+item3	base64e		-. Base64		encode to modified Base64 (Django?)
 item3	base64g		./ Base64		encode to modified Base64 for GEDCOM 5.5
+item3	base64f		Base64 +-		encode to modified Base64 for filenames
 item3	base64h		Base64 @_		encode to modified Base64 for bash
 item3	base64i		Base64 +,		encode to modified Base64 for IMAP, RFC3501
-item3	base64f		Base64 +-		encode to modified Base64 for filenames
+item3	base64j		Base64 []		encode to modified Base64 for IRCU
 item3	base64p		Base64 _-		encode to modified Base64 for program identifiers (variant 1)
 item3	base64q		Base64 ._		encode to modified Base64 for program identifiers (variant 2)
 item3	base64r		Base64 !-		encode to modified Base64 for regular Expressions
 item3	base64u		Base64 -_		encode to modified Base64 for URL, RFC4648
 item3	base64x		Base64 .-		encode to modified Base64 for XML name tokens
 item3	base64y		Base64 _:		encode to modified Base64 for XML identifiers
-item3	base32h		Base32 Hex		encode to Base32hex ([0-9A-V])
-item3	base32c		Base32 (Crockford)	encode to Crockford's Base32 ([0-9A-HJKMNP-TV-Z])
-item3	base32z		z-Base32		encode to z-Base32 ([[A-UW-Z3-9]])
+item3	base65a		.,/ Base65		encode to Base65 ([a-zA-Z0-9.,/])
+item3	base65x		Base65 ._-		encode to Base65 ([a-zA-Z0-9._-])
 # same as above, but other name
-item3	base64u		Url64			encode to Url64 (modified Base64 for URL, RFC4648)
 item3	base64f		Url64 (SAP)		encode to Url64 (modified Base64 for URL, RFC4648)
 hide3	base64old	Base64			encode to Base64 ([a-zA-Z0-9+/]) (old algorithm)
 hide3	url64		Url64			encode to Url64 (old algorithm)
-item3	base62		Base62			encode to Base62 ([a-zA-Z0-9])
+# experimental implementation
 item3	base85		Base85			*experimental* encode to Base85
+item3	base89		Base89			*experimental* encode to Base89
 item3	base91		basE91			*experimental* encode to basE91
 item3	base94		Base94			*experimental* encode to Base94
 item3	base95		Base95			*experimental* encode to Base95
@@ -927,37 +938,48 @@ item3	ucsSub		from subscript		convert subscript Unicode to (halfwidth) Unicode
 
 #------+---------------+-----------------------+------------------------------+
 group	DE.Base-N	Base-N			various Base-N decodings
+# most common first
 item3	base64		Base64			decode from Base64 ([a-zA-Z0-9+/])
-item3	base32		Base32			decode from Base32 ([A-Z2-9])
+item3	base64u		Url64			decode from Url64 (modified Base64 for URL, RFC4648)
+# in alphabetcal order
 item3	base16		Base16			decode from Base16 ([0-9A-F])
 item3	base26		Base26			decode from Base26 ([a-z])
+item3	base32		Base32			decode from Base32 ([A-Z2-9])
+item3	base32c		Base32 (Crockford)	decode from Crockford's Base32 ([0-9A-HJKMNP-TV-Z])
+item3	base32h		Base32 Hex		decode from Base32hex ([0-9A-V])
+item3	base32n		Base32 (no vowels)	decode from Base32 ([0-9BCDFGHJKLMNPQRSTVWXYZ.])
+item3	base32z		z-Base32		decode from z-Base32 ([A-UW-Z3-9])
+item3	base34		Base34			decode from Base34 ([1-9A-NP-Z])
 item3	base36		Base36			decode from Base36 ([a-z0-9])
 item3	base52		Base52			decode from Base52 ([a-zA-Z])
-item3	base65a		.,/ Base65		decode from Base65 ([a-zA-Z0-9.,/])
+item3	base58		Base58			decode from Base58 ([a-zA-Z0-9]) without IOio
+item3	base62		Base62			decode from Base62 ([0-9a-zA-Z])
+item3	base62x		Base62 (alternate)	decode from Base62 ([0-9A-Za-z])
 item3	base64		Base64 +/		decode from Base64 as in RFC1521, RFC2045, RFC3548, RFC4648
 item3	base64b		./ Base64		decode from modified Base64 for bcrypt
 item3	base64c		./ Base64		decode from modified Base64 for crypt
-item3	base64d		Base64 +.		decode from modified Base64 for Xxencoding
+item3	base64d		+. Base64		decode from modified Base64 for Xxencoding
+item3	base64e		-. Base64		decode from modified Base64 (Django?)
 item3	base64g		./ Base64		decode from modified Base64 for GEDCOM 5.5
+item3	base64f		Base64 +-		decode from modified Base64 for filenames
 item3	base64h		Base64 @_		decode from modified Base64 for bash
 item3	base64i		Base64 +,		decode from modified Base64 for IMAP, RFC3501
-item3	base64f		Base64 +-		decode from modified Base64 for filenames
+item3	base64j		Base64 []		decode from modified Base64 for IRCU
 item3	base64p		Base64 _-		decode from modified Base64 for program identifiers (variant 1)
 item3	base64q		Base64 ._		decode from modified Base64 for program identifiers (variant 2)
 item3	base64r		Base64 !-		decode from modified Base64 for regular Expressions
 item3	base64u		Base64 -_		decode from modified Base64 for URL, RFC4648
 item3	base64x		Base64 .-		decode from modified Base64 for XML name tokens
 item3	base64y		Base64 _:		decode from modified Base64 for XML identifiers
-item3	base32h		Base32 Hex		decode from Base32hex ([0-9A-V])
-item3	base32c		Base32 (Crockford)	decode from Crockford's Base32 ([0-9A-HJKMNP-TV-Z])
-item3	base32z		z-Base32		decode from z-Base32 ([[A-UW-Z3-9]])
+item3	base65a		.,/ Base65		decode from Base65 ([a-zA-Z0-9.,/])
+item3	base65x		Base65 ._-		decode from Base65 ([a-zA-Z0-9._-])
 # same as above, but other name
-item3	base64u		Url64			decode from Url64 (modified Base64 for URL, RFC4648)
 item3	base64f		Url64 (SAP)		decode from Url64 (modified Base64 for URL, RFC4648)
 hide3	base64old	Base64			decode from Base64 ([a-zA-Z0-9+/]) (old algorithm)
 hide3	url64		Url64			decode from Url64 (old algorithm)
-item3	base62		Base62			decode from Base62 ([a-zA-Z0-9])
+# experimental
 item3	base85		Base85			*experimental* decode from Base85
+item3	base89		Base89			*experimental* decode from Base89
 item3	base91		basE91			*experimental* decode from basE91
 item3	base94		Base94			*experimental* decode from Base94
 item3	base95		Base95			*experimental* decode from Base95

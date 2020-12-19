@@ -1,6 +1,4 @@
 /* ========================================================================= //
-# vi:  set ts=4:
-# vim: set ts=4:
 #
 # // ToDo: http://blog.modsecurity.org/2010/04/impedance-mismatch-and-base64.html
 # // ToDo:      Impedance Mismatch and Base64
@@ -66,7 +64,7 @@
 #?      EnDe.Text is not yet part or the librray.
 #?
 #? VERSION
-#?      @(#) EnDeB64.js 3.7 20/12/10 14:31:43
+#?      @(#) EnDeB64.js 3.8 20/12/19 10:17:14
 #?
 #? AUTHOR
 #?      29-mai-10 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -80,7 +78,7 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.B64    = new function() {
-	this.SID    = '3.7';
+	this.SID    = '3.8';
 	this.sid    = function() {       return(EnDe.sid() + '.B64'); };
 
 	this.trace  = false;
@@ -95,6 +93,8 @@ EnDe.B64    = new function() {
 	// ===================================================================== //
 	// global constants                                                      //
 	// ===================================================================== //
+
+	// no debug output possible here, use "Internal Settings" button in GUI
 
 	// borrow from EnDe.CONST.CHR. ...
 	this.LC     = EnDe.CONST.CHR.LC;                    // [a-z]
@@ -651,10 +651,20 @@ EnDe.B64    = new function() {
 			break;
 		}
 		mask = (1 << bits) - 1;
+		var c1  = 0, c2 = 0, c3 = 0, c4 = 0;
+		var regexReg = /[\/\[\]\\]/gi;  // escape / too, as some engines are too stupid
+		var pad = RegExp('[' + EnDe.B64.pad.replace(regexReg, function(c){return '\\' + c;}) + ']' +'*$', 'g');
+		// some engines are strange: /=$/g does not work, must be /=*$/g
+alert("bits="+bits+"\nmask="+mask+"\npad= "+pad+"\n"+src);
 		src=src.replace(/\n|\r/g,'');   // remove formating line breaks
-		src=src.replace(/=/g,'');       // remove padding
+		src=src.replace(pad,'');        // remove padding (as many as there are)
+alert(src);
 		while (i<src.length) {
 			/*
+			c1 = src.charAt(i);
+			c2 = src.charAt(i+1);
+			c3 = src.charAt(i+2);
+			c4 = src.charAt(i+3);
 			if ((8 - pos)>=bits) {
 				ccc = src.charAt(i) << (8 - bits - pos);
 			} else {
@@ -666,6 +676,7 @@ EnDe.B64    = new function() {
 			*/
 			i++;
 		}
+	bux = "NOT YET IMPLEMENTED: EnDe.B64.DE.b_N()";
 		__dbx('EnDe.B64.DE.b_N: >>' + EnDe.Text.Entity(bux) + '<<');
 	 	return bux;
 	}; // .b_N
@@ -678,8 +689,11 @@ EnDe.B64    = new function() {
 		var r   = [];
 		var i   = 0;
 		var c1  = 0, c2 = 0, c3 = 0, c4 = 0;
+		var regexReg = /[\/\[\]\\]/gi;  // escape / too, as some engines are too stupid
+		var pad = RegExp('[' + EnDe.B64.pad.replace(regexReg, function(c){return '\\' + c;}) + ']' +'*$', 'g');
+		// some engines are strange: /=$/g does not work, must be /=*$/g
 		src=src.replace(/\n|\r/g,'');   // remove formating line breaks
-		src=src.replace(/=/g,'');       // remove padding
+		src=src.replace(pad,'');        // remove padding (as many as there are)
 		while (i<src.length) {
 			c1 = src.charAt(i);
 			c2 = src.charAt(i+1);

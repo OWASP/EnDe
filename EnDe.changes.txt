@@ -1,6 +1,15 @@
 
 CHANGE HISTORY
 
+1.3rc01 20-nov-20
+    * LIB, API
+	"EnDeB64.js" 
+    * GUI
+	"EnDeMenu.txt" Base* entries corrected
+	"EnDeGUI.js" [constants and maps] button renamed to [Internal Settings]
+	"EnDeGUI.js" showMap() impoved for section internal settings
+	"EnDe.html" section internal settings
+
 1.2rc01 16-nov-16
     * LIB, API
 	"EnDeB64.js" Base65 implemented
@@ -1153,7 +1162,7 @@ CHANGE HISTORY
 
 VERSION
 
-	@# EnDe <!-- @(#) EnDe.changes.txt 3.15 17/09/07 22:02:15 -->
+	@# EnDe <!-- @(#)  3.16 21/02/28 11:47:25 -->
 
 
 AUTHOR

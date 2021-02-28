@@ -88,7 +88,7 @@
 #?      EnDeGUIx.js, EnDeGUI.js
 #?
 #? VERSION
-#?      @(#) EnDeMenu.txt 3.75 20/12/19 12:43:04
+#?      @(#) EnDeMenu.txt 3.76 21/02/28 11:25:13
 #?
 #? AUTHOR
 #?      09-jun-09 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -1939,6 +1939,36 @@ item3	9358	7.	digit seven full stop
 item3	9359	8.	digit eight full stop
 item3	9360	9.	digit nine full stop
 # more til 20.
+# following need modern characters sets (> 2019)
+item3	61446	1	privat digit one
+item3	61447	2	privat digit two
+item3	61448	3	privat digit three
+item3	61449	4	privat digit four
+item3	61450	5	privat digit five
+item3	61451	7	privat digit seven
+item3	61452	8	privat digit eight
+# following need modern characters sets (> 2019)
+item3	63280	0	arabic? digit zero
+item3	63281	1	arabic? digit one
+item3	63282	2	arabic? digit two
+item3	63283	3	arabic? digit three
+item3	63284	4	arabic? digit four
+item3	63285	5	arabic? digit five
+item3	63286	6	arabic? digit six
+item3	63287	7	arabic? digit seven
+item3	63288	8	arabic? digit eight
+item3	63289	9	arabic? digit nine
+# following need modern characters sets (> 2019)
+item3	63296	0	fullwidth digit zero
+item3	63297	1	fullwidth digit one
+item3	63298	2	fullwidth digit two
+item3	63299	3	fullwidth digit three
+item3	63300	4	fullwidth digit four
+item3	63301	5	fullwidth digit five
+item3	63302	6	fullwidth digit six
+item3	63303	7	fullwidth digit seven
+item3	63304	8	fullwidth digit eight
+item3	63305	9	fullwidth digit nine
 
 #------+-------+-------+----------------------------------
 group	UCS.Dingbats	Unicode Dingbats		Unicode Dingbats

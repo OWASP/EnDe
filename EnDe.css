@@ -9,7 +9,7 @@
 #       Makefile
 #?
 #? VERSION
-#?      @(#) EnDe.css 3.31 20/12/17 19:16:48
+#?      @(#) EnDe.css 3.32 21/11/04 17:15:26
 #?
 #? AUTHOR
 #?      30-may-04 Achim Hoffmann
@@ -406,11 +406,19 @@ div.menu button {
 	display:        none;
 	z-index:        42;
 	position:       absolute;
+	margin-top:     -1.2em;
 	margin-left:    2.5em;
 	min-width:      12em;
+	padding:        3px;
 	border:         var(--border-1);
+	/* margin-top:
+	 *  first item in sub-menu should be in same line as the link itself
+	 * padding:
+	 *  add some space to the whole sub-menu
+	 * all settings should ensure that leaving the sub-menu on bottom or
+	 * on top selects the parent visible there
+	 */
 /*
-	margin-top:    -1.6em;
 	overflow: auto;
 */
 }

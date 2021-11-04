@@ -9,7 +9,7 @@
 #       Makefile
 #?
 #? VERSION
-#?      @(#) EnDe.css 3.32 21/11/04 17:15:26
+#?      @(#) EnDe.css 3.33 21/11/04 17:51:17
 #?
 #? AUTHOR
 #?      30-may-04 Achim Hoffmann
@@ -561,7 +561,7 @@ span.popup                 { float:     none; }
 	float:          left;
 }
 /* need a wider window for "Browser restart" (is class=funtion too) */
-fieldset[id="EnDeDOM.f.XX"] { width:55em; }
+fieldset[id="EnDeDOM.f.XX"] { width:55em; height:55em; }
 fieldset[id="EnDeDOM.f.XX"] span[id="EnDeDOM.XX"] { width:55em; }
 /* following buttons are special */
 .function fieldset input[id="EnDeDOM.FF.Actions.s.enc"] { background-color:#00dfff; }

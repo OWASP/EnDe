@@ -80,6 +80,8 @@ Troubleshooting (GUI only)
 	Webkit-based browsers inhibit XMLHttpRequest to read from  'file://' .
 	However, some browsers may support a special command line option (i.e.
 	"--allow-file-access-from-files") to disable this security feature.
+	More hints will be show by in the section  GUI OPTIONS with the button
+	[Show Browser Startup Options] .
 
 Miscellaneous
 
@@ -130,7 +132,7 @@ Administration
 	Currently Ende has it's own repository there:
 		https://github.com/EnDe/EnDe  (2016)
 		https://github.com/OWASP/EnDe (2020)
-	Ther have been plans to move it to
+	There have been plans to move it to:
 		https://github.com/OWASP/OWASP-EnDe
 
     Why is there no public editable source of EnDe?
@@ -156,8 +158,8 @@ Administration
 	Currently there is no need to build  a sophisticated update service as
 	the installation is such simple as to download and unpack the tarball.
 
-	Future versions my support at least an update check. See the [showSID]
-	button in the Test section for a quick overview.
+	Future versions may at least support "check update". See the [showSID]
+	button in the  Test  section for a quick overview.
 
 
 Development
@@ -196,5 +198,5 @@ Development
 
 Version of FAQ
 
-	@(#) EnDe.FAQ.txt 3.5 20/11/17 01:32:15
+	@(#) EnDe.FAQ.txt 3.6 21/11/04 16:58:26
 

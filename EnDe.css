@@ -9,7 +9,7 @@
 #       Makefile
 #?
 #? VERSION
-#?      @(#) EnDe.css 3.33 21/11/04 17:51:17
+#?      @(#) EnDe.css 3.34 21/11/08 23:25:11
 #?
 #? AUTHOR
 #?      30-may-04 Achim Hoffmann
@@ -316,9 +316,9 @@ input.button {
 
 /* tables in test area */
 .tsttable td        { border-bottom:var(--border-1); }
-.tsttable th        { border-bottom:var(--border-1);    text-align: right; }
-.tsttable caption   { background-color:var(--bg-cream); text-align: left; }
-.tsttable caption   { background-color:var(--bg-cream); text-align: left; }
+.tsttable th        { border-bottom:var(--border-1);    text-align:right; }
+.tsttable caption   { background-color:var(--bg-cream); text-align:left; }
+.tsttable caption   { background-color:var(--bg-cream); text-align:left; }
 
 /* tables in debug internal settings  */
 div[id="EnDeDOM.VAR"] button { width:20em; }
@@ -570,7 +570,7 @@ fieldset[id="EnDeDOM.f.XX"] span[id="EnDeDOM.XX"] { width:55em; }
 .function textarea { min-height:  16em; } /* 16 should fit on netbooks too */
 .function div[id="EnDeDOM.MP"]      input[type="text"]  { width:4em; }
 .function div[id="EnDeDOM.MP.list"] input[type="text"]  { width:4em; }
-.function div[id="EnDeDOM.MP.list"] div span { float:none;width:5em; min-width:5em; }
+.function div[id="EnDeDOM.MP.list"] div span { float:none;width:4em; min-width:4em; display:inline-block; }
 .function div[id="EnDeDOM.MP.list"] div span label { text-align:right; }
 
 .test table    { border:var(--border-1); }
@@ -579,8 +579,8 @@ fieldset[id="EnDeDOM.f.XX"] span[id="EnDeDOM.XX"] { width:55em; }
 .test table td.data { text-align:left; padding-left:1em; border-top:var(--border-1);    background-color:var(--bg-input); font-size:10pt; }
 .test table td.parm { text-align:left; padding-left:1em; border-top:var(--border-0);    background-color:#ffffaf; font-size:8pt; }
 .test table td.error{ text-align:left; padding-left:1em; border-top:var(--border-dotted); background-color:#ffcfcf; font-size:8pt; }
-.test table td pre  { display: inline; overflow: auto; }
-.test table td span {             background-color:#ffcfcf; max-width:99%; overflow: auto; }
+.test table td pre  { display:inline; overflow:auto; }
+.test table td span {             background-color:#ffcfcf; max-width:99%; overflow:auto; }
 .test table td span:first-child { background-color:#cfffcf; }
 
 /* definitions for tab-style buttons */
@@ -618,7 +618,7 @@ input.text {
 /* disabled (not visible) at startup */
 fieldset[id="EnDeDOM.f.TST"] { display:none; }
 fieldset[id="EnDeDOM.f.DBX"] { display:none; }
-fieldset[id="EnDeDOM.f.DBX"] textarea { width: 99%; }
+fieldset[id="EnDeDOM.f.DBX"] textarea { width:99%; }
 
 /* tabular data with a right aligned label text */
 .labeled    { font: var(--font-mono); }
@@ -626,7 +626,7 @@ fieldset[id="EnDeDOM.f.DBX"] textarea { width: 99%; }
 .labeled td { }
 
 /* file load box: hide browser default */
-.browse { display:inline; font: var(--font-mono); font-weight:bold; }
+.browse { display:inline; font:var(--font-mono); font-weight:bold; }
 .file	{ z-index:3; position:absolute; width:28.5em; }
 .fake	{ z-index:1; position:absolute; width:7em;    padding:0px; margin-top:1px; left:33em; } /* margin-top good for all, except FF2 */
 .hide	{ z-index:2; position:relative; width:37.5em; padding:0px; text-align:right; }
@@ -734,16 +734,16 @@ button.guess {
 
 /* all following for RegEx*/
 /* help: monospaced code */
-div#Oglamar { border: var(--border-0);      margin-left: 0em;   white-space: pre;   display:inline; font: var(--font-mono); }
-samp        { border: var(--border-dashed); margin-left: 5.5em; margin-top:  0.7em; margin-bottom:0.7em; overflow: auto; }
-.samp       { border: var(--border-dashed); margin-left: 5.5em; margin-top:  0.7em; margin-bottom:0.7em; overflow: auto; }
-li .samp    { border: var(--border-dashed); margin-left: 0.5em; margin-top:  0.7em; margin-bottom:0.7em; overflow: auto; }
-tt          { border: var(--border-dashed); margin-left: 0.5em; padding-left:0.3em; padding-right:0.3em; background-color:var(--bg-input);  }
-dfn         { border: var(--border-1);                          padding-left:0.1em; padding-right:0.1em; padding-top:0.0em; font-weight:bold; }
-.go         { border: 1px solid  #aaaaaa;                       padding-left:0.5em; padding-right:0.5em; padding-top:0.2em; font-weight:bold;
-	background-color:     #ebeae0;
-	border-radius:  3px;
-	box-shadow:            0px 1px 2px var(--shadow);
+div#Oglamar { border:var(--border-0);      margin-left:0em;   white-space: pre;   display:inline; font:var(--font-mono); }
+samp        { border:var(--border-dashed); margin-left:5.5em; margin-top:  0.7em; margin-bottom:0.7em; overflow:auto; }
+.samp       { border:var(--border-dashed); margin-left:5.5em; margin-top:  0.7em; margin-bottom:0.7em; overflow:auto; }
+li .samp    { border:var(--border-dashed); margin-left:0.5em; margin-top:  0.7em; margin-bottom:0.7em; overflow:auto; }
+tt          { border:var(--border-dashed); margin-left:0.5em; padding-left:0.3em; padding-right:0.3em; background-color:var(--bg-input);  }
+dfn         { border:var(--border-1);                         padding-left:0.1em; padding-right:0.1em; padding-top:0.0em; font-weight:bold; }
+.go         { border:1px solid  #aaaaaa;                      padding-left:0.5em; padding-right:0.5em; padding-top:0.2em; font-weight:bold;
+	background-color:   #ebeae0;
+	border-radius:      3px;
+	box-shadow:         0px 1px 2px var(--shadow);
 }
 em          { font-weight:  bold; }
 div#Oglamar a                { text-decoration:none;      color:#555fff; }
@@ -775,5 +775,5 @@ table.overview td.x     {                                text-align:center; back
 table.overview td.k     {                                text-align:center; background-color:#00f000; }
 table.overview th.left  { border:       var(--border-1); text-align:left;   background-color:#c0c0c0; }
 .legend                 { border:       var(--border-1); padding: 1em;      background-color:#f0f0f0; }
-span#body-font-height   { position: absolute; top: -999px; left: -9999px; }
+span#body-font-height   { position:absolute; top:-999px; left:-9999px; }
 

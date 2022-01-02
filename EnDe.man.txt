@@ -657,10 +657,15 @@ GUI
 		Use '\n' as separator characters in text (DWR style)
 	
 	They are used when clicking  [Text], [Hex] or [parsed]  button.
-
-	NOTE: These buttons provide a simple split of the text on the selected
-	character only.  More sophisticated `parsing' is provided in the inset
-	window "User functions", see  FUNCTIONS  below.
+	
+	NOTE:  When checked,  these buttons provide a simple split of the text
+	on the selected character only.   More sophisticated `parsing' will be
+	provided in the inset window "User functions", see  FUNCTIONS  below.
+	
+	The  "UTF8"  checkbox
+	"on"
+		If checked, decoded data will be UTF8-decoded
+		(01/2022: used for decoding Viewstates only)
 	
 	Common Menu
 	=======================================
@@ -2843,7 +2848,7 @@ EPILOG
 	
 VERSION
 	
-	@# EnDe <!-- @(#) EnDe.man.txt 3.52 23:10:07 20/12/13 -->
+	@# EnDe <!-- @(#) EnDe.man.txt 3.53 02:10:42 22/01/02 -->
 	
 	
 AUTHOR

@@ -47,7 +47,7 @@
 #       Simple debugging available if  userdebug  given in QUERY_STRING.
 #
 #? VERSION
-#?      @(#) EnDeUser.js 3.22 13/05/12 10:58:14
+#?      @(#) EnDeUser.js 3.23 22/01/02 01:38:23
 #?
 #? AUTHOR
 #?      27-nov-07 Achim Hoffmann, mailto: EnDe (at) my (dash) stp (dot) net
@@ -61,8 +61,8 @@
 if (typeof(EnDe)==='undefined') { EnDe = new function() {}; }
 
 EnDe.User   = new function() {
-	this.SID    = '3.22';
-	this.sid    = function() { return('@(#) EnDeUser.js 3.22 13/05/12 10:58:14 EnDe.User'); };
+	this.SID    = '3.23';
+	this.sid    = function() { return('@(#) EnDeUser.js 3.23 22/01/02 01:38:23 EnDe.User'); };
 
 	// ===================================================================== //
 	// global variables                                                      //
@@ -518,7 +518,12 @@ this.DE     = new function() {
 				//	// we have one more bytes
 				//	_v2 += '\n<ERROR pos=' + EnDe.User.pos + ' "unknown string size; following data corrupted" />\n';
 				//}
-				_v2 += _daten(mode,_string(mode,ccc));
+				if ($('EnDeDOM.ED.u8').checked===true) {
+					// only data needs to be UTF8 decoded!
+					_v2 += _daten(mode,EnDe.DE.utf8("","",_string(mode,ccc),"","",""));
+				} else{
+					_v2 += _daten(mode,_string(mode,ccc));
+				}
 				EnDe.User.pos++;
 				bbb = null;
 				break;

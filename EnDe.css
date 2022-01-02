@@ -9,7 +9,7 @@
 #       Makefile
 #?
 #? VERSION
-#?      @(#) EnDe.css 3.34 21/11/08 23:25:11
+#?      @(#) EnDe.css 3.35 22/01/02 01:49:33
 #?
 #? AUTHOR
 #?      30-may-04 Achim Hoffmann
@@ -128,8 +128,8 @@ textarea {
  * need negative margin for Opera < 9.4x to fit .tab and .bat without gap
  * but that also "moves" the other buttons higher, ugly ... 
  */
- 	width:          auto;
-	min-height:     16em;
+ 	width:          100%;
+	min-height:     19em;
  	min-width:      54em;
 	background-color:   var(--bg-input);
 	color:          var(--fg-main);

@@ -11,8 +11,8 @@
 	<meta name="DC.language"      content="en" >
 	<meta name="DC.rights"        content="https://github.com/EnDe/EnDe license.txt" >
 	<meta name="DC.license"       content="https://github.com/EnDe/EnDe license.txt" >
-	<meta name="DC.modified"      content="21/11/04" >
-	<meta name="DC.Source"        content="@(#) EnDe.html 3.65 21/11/04 17:21:58"  >
+	<meta name="DC.modified"      content="22/01/02" >
+	<meta name="DC.Source"        content="@(#) EnDe.html 3.66 22/01/02 01:22:55"  >
 	<meta name="DC.Date"          content="07-apr-07" >
 	<meta name="DC.creator"       content="Achim Hoffmann" >
 	<meta name="DC.Author"        content="Achim Hoffmann, mailto: ??" >
@@ -436,6 +436,8 @@
 			<label for="EnDeDOM.ED.sa"> <input  id="EnDeDOM.ED.sa"  type="radio" name="sep" value=":"  > <b>:</b></label>
 			<label for="EnDeDOM.ED.sb"> <input  id="EnDeDOM.ED.sb"  type="radio" name="sep" value="|"  > <b>|</b></label> <!-- bold for better visinility -->
 			<label for="EnDeDOM.ED.sn"> <input  id="EnDeDOM.ED.sn"  type="radio" name="sep" value="n"  > \n </label>
+			<label class="bold" style="border-left:1px solid black"> UTF8 </label>
+			<label for="EnDeDOM.ED.u8"> <input  id="EnDeDOM.ED.u8"  type="checkbox" > on </label>
 			<hr>
 		</div>
 
@@ -1237,6 +1239,7 @@ EnDeGUI.titles  = {
 	'EnDeDOM.ED.sa':    "use  :  for spliting string (used in 'parsed' button)",
 	'EnDeDOM.ED.sb':    "use  |  for spliting string (used in 'parsed' button)",
 	'EnDeDOM.ED.sn':    "use  \n  for spliting string (used in 'parsed' button)",
+	'EnDeDOM.ED.u8':    "UTF8-decode data in result (used for 'viewstate' only)",
 	'EnDeDOM.ED.uri':   "URL-encode after encoding, URL-decode before decoding",
 	'EnDeDOM.EN.text':  "decoded text",
 	'EnDeDOM.EN.isTxt': "show text literaly",

@@ -78,6 +78,7 @@ INTRODUCTION
 |	 tool        base64       urlUTF-8             MD5(hex)
 |	----------+-----------+-------------+---------------------------------
 |	  [99]      IKx1cm8=    %e2%82%acuro   08c1d37a0b3394da278b77116cc4e615
+|	  [29]      4oKsdXJv    %E2%82%ACuro   36f9d3bb76279be66536e2d4e250c7ad
 |	  [31]                                 916f2296b42011db9c5e780b02bd3d5f
 |	  [32]      rHVybw==    %E2%82%ACuro
 |	  [33]      4oKsdXJv                   36F9D3BB76279BE66536E2D4E250C7AD
@@ -141,6 +142,7 @@ INTRODUCTION
 	the charset of the input data.
 	
 	Online Browser Tools
+	[29]  (2024) https://toolbox.googleapps.com/apps/encode_decode/
 	[32]  (2010) http://www.businessinfo.co.uk/labs/hackvertor/hackvertor.php 
 	[33]  (2010) http://textop.us/ 
 	[34]  (2010) http://h4k.in/encoding/index.php 
@@ -203,6 +205,7 @@ INTRODUCTION
 |	 tool        base64       decoded
 |	----------+-----------+-------------
 |	  [99]      IKx1cm8     €uro
+|	  [29]      4oKsdXJv    �uro
 |	  [32]      rHVybw      <error>
 |	  [33]      4oKsdXJv    €uro
 |	  [34]      4oKsdXJv    €uro
@@ -2848,7 +2851,7 @@ EPILOG
 	
 VERSION
 	
-	@# EnDe <!-- @(#) EnDe.man.txt 3.53 02:10:42 22/01/02 -->
+	@# EnDe <!-- @(#) EnDe.man.txt 3.54 18:41:30 24/03/25 -->
 	
 	
 AUTHOR

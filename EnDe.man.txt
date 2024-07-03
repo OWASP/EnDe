@@ -71,7 +71,7 @@ INTRODUCTION
 	different result depending on the tool. See following examples.
 	
     OTHER TOOLS
-	
+
 	Here is a small list of tools and their results (as for 2010/2011):
 	
 +-
@@ -204,37 +204,37 @@ INTRODUCTION
 +-
 |	 tool        base64       decoded
 |	----------+-----------+-------------
-|	  [99]      IKx1cm8     €uro
-|	  [29]      4oKsdXJv    �uro
+|	  [99]      IKx1cm8     â¬uro
+|	  [29]      4oKsdXJv    ¿uro
 |	  [32]      rHVybw      <error>
-|	  [33]      4oKsdXJv    €uro
-|	  [34]      4oKsdXJv    €uro
-|	  [39]      4oKsdXJv    €ur
+|	  [33]      4oKsdXJv    â¬uro
+|	  [34]      4oKsdXJv    â¬uro
+|	  [39]      4oKsdXJv    â¬ur
 |	  [40] undefinedHVybw   
 |	  [41]      HVybw       
-|	  [47]      4oKsdXJv    €uro
-|	  [48]      IKx1cm8=    �ro
+|	  [47]      4oKsdXJv    â¬uro
+|	  [48]      IKx1cm8=    ¿ro
 |	  [48]      IKx1cm8     
-|	  [49]      HVybw==     \��
+|	  [49]      HVybw==     \À
 |	  [51]      4oKsdXJv    
-|	  [52]      rHVybw       ¬urbw
-|	  [62]      gHVybw      €uror
-|	  [63]      rHVybw       ¬urbw
-|	  [64a]     23Vybw      €ur
-|	  [64b]     gHVybw      €ur
+|	  [52]      rHVybw      슬urbw
+|	  [62]      gHVybw      â¬uror
+|	  [63]      rHVybw      슬urbw
+|	  [64a]     23Vybw      â¬ur
+|	  [64b]     gHVybw      â¬ur
 |	  [64c]     P3Vybw      --nothing--
 |	  [65a]     P3Vybw      ?ur
 |	  [65b]     P3Vybw      ?ur
 |	  [66a]     P3Vybw      --nothing--
 |	  [69]      gHVybw      Exception! java.lang.ArrayIndexOutOfBoundsException: 6
-|	  [71]      gHVyb3      €uro
+|	  [71]      gHVyb3      â¬uro
 |	  [72]      gHVyb3      --nothing--
 |	  [73]      P3Vybw      --nothing--
-|	  [74]      4oKsdXJv    €uro
+|	  [74]      4oKsdXJv    â¬uro
 |	  [74]      4oKsdXJvMQ  Error: Ungültige Länge für einen Base-64-Zeichenarray.
 |	  [75]      rHVybw      
-|	  [81]      IKx1cm8     �uro
-|	  [81]      rHVybw==    �uro
+|	  [81]      IKx1cm8     ¬uro
+|	  [81]      rHVybw==    ¬uro
 +-
 	Unfortunatelly some of the tools even fail to decode correctly without
 	removing the trailing '='. This is not mentioned in above table.
@@ -244,6 +244,9 @@ INTRODUCTION
 	
 	Finally, this introduction  was compiled in 2010 and 2011  where these
 	problems still exist (however, EnDe development began in 2006).
+	
+	Update 2024: many tools no longer exist or have been corrected. Please
+        check yourself like:  echo €uro | my-encode | my-decode
 	
     BROWSER TOOL - EnDe
 	
@@ -2525,7 +2528,7 @@ GLOSSAR
 	JTC1    - Joint Technical Committee 1
 	KEA     - Key Exchange Algorithm (see http://tools.ietf.org/html/rfc2773 )
 	KEK     - Key Encryption Key
-	KPN     - Kartenpr�fnummer
+	KPN     - Kartenprüfnummer
 	LDML    - Locale Data Markup Language
 	LSB     - least significant byte
 	LZW     - Lempel-Ziv-Welch (compression algorithm)
@@ -2753,7 +2756,7 @@ LINKS
 	* http://www.yellowpipe.com/yis/tools/encrypter/index.php Encrypter /Decoder online
 <!-- ASCII to Binary, Binary to ASCII, ASCII to Hex, Hex to ASCII, Binary to Hex, Hex to Binary, Backwards,
      Base 64 Encode, Base 64 Decode, Caesar Bruteforce, DES Crypt (one way), HTML Entities Encode, HTML Entities Decode,
-     l33t 5p34k 3nc0d3, l33t 5p34k d3c0d3, MD5 Crypt (one way), Igpay Atinlay, Un-Pig Latin, ROT-13, URL Encode, URL Decod, �SHA-1 -->
+     l33t 5p34k 3nc0d3, l33t 5p34k d3c0d3, MD5 Crypt (one way), Igpay Atinlay, Un-Pig Latin, ROT-13, URL Encode, URL Decod, SHA-1 -->
 	
 	Personal preferences for additional useful tools:
 	* https://addons.mozilla.org/firefox/addon/5235 (Firefox Extension) Unicode Converter
@@ -2851,7 +2854,7 @@ EPILOG
 	
 VERSION
 	
-	@# EnDe <!-- @(#) EnDe.man.txt 3.54 18:41:30 24/03/25 -->
+	@# EnDe <!-- @(#) EnDe.man.txt 3.55 13:04:35 24/07/03 -->
 	
 	
 AUTHOR
